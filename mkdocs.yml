@@ -1,0 +1,61 @@
+# Project information
+
+site_name: Identity Round Robin
+site_short_name: Identity Round Robin
+site_description: 'A hands-on workshop to learn about a variety of AWS identity topics.'
+site_author: 'aws-security-workshops@amazon.com'
+site_url: 'https://identity-round-robin.awssecworkshops.com/'
+
+# Repository
+repo_name: 'aws-samples/aws-identity-round-robin-workshop'
+repo_url: 'https://github.com/aws-samples/aws-identity-round-robin-workshop'
+
+# Copyright
+copyright: '&copy; 2019, Amazon Web Services, Inc. or its affiliates. All rights reserved.'
+
+# Configuration
+theme:
+  name: 'material'
+  logo: 'assets/images/aws_smile_logo.png'
+  favicon: 'assets/images/aws-favicon.ico'
+  feature:
+    tabs: true
+  custom_dir: 'docs/theme'
+
+# Customization
+extra_css:
+  - 'stylesheets/custom.css'
+extra:
+  social:
+    - type: 'home'
+      link: 'https://awssecworkshops.com'
+    - type: 'shield'
+      link: 'https://aws.amazon.com/security/'
+    - type: 'twitter'
+      link: 'https://twitter.com/awssecurityinfo?lang=en'
+    - type: 'rss'
+      link: 'https://aws.amazon.com/blogs/security/'
+
+# Extensions
+markdown_extensions:
+  - admonition
+  - codehilite
+  - pymdownx.details
+
+# Navigation
+nav:
+  - 'Overview': 'index.md'
+  - 'Serverless Round':
+    - 'Scenario': 'serverless/index.md'
+    - 'Build Phase': 'serverless/build.md'
+    - 'Verify Phase': 'serverless/verify.md'
+  - 'Security Services Round':
+    - 'Scenario': 'ess/index.md'
+    - 'Build Phase': 'ess/build.md'
+    - 'Verify Phase': 'ess/verify.md'
+  - 'Permission Boundary Round':
+    - 'Scenario': 'permission-boundaries/index.md'
+    - 'Build Phase': 'permission-boundaries/build.md'
+    - 'Verify Phase': 'permission-boundaries/verify.md'
+  - Contributing: 'contribute.md'
+  - License: 'license.md'
