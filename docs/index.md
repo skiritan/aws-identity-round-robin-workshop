@@ -15,7 +15,3 @@
 1. [Serverless](./serverless/index.md)
 2. [External Security Services](./ess/index.md)
 3. [Permissions boundaries](./permission-boundaries/index.md) 
-
-## Upcoming rounds
-
-Under construction...

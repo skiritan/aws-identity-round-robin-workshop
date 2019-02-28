@@ -42,9 +42,10 @@ markdown_extensions:
   - codehilite
   - pymdownx.details
 
+
 # Navigation
 nav:
-  - 'Overview': 'index.md'
+  - Overview: 'index.md'
   - 'Serverless Round':
     - 'Scenario': 'serverless/index.md'
     - 'Build Phase': 'serverless/build.md'

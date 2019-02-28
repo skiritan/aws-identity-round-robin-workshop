@@ -38,11 +38,17 @@
 
 /* Language Drop Down */
 .md-header-nav__lang {
-    padding: 10px 40px 0 10px;
-    display: inline-block;
+    padding: 0 0.5rem;
+    line-height: 4.8rem;
     font-family: "Roboto","Helvetica Neue",Helvetica,Arial,sans-serif;
     width: 30px;
-    font-size: x-large;
+}
+
+.md-lang-drop {
+    position: relative;
+    display: inline-block;
+    font-size: 1.9rem;
+    padding: 0 0 0 5px;
 }
 
 .md-lang-dropbtn {
@@ -54,7 +60,7 @@
 }
 
 .md-lang-dropbtn:hover, .md-lang-dropbtn:focus {
-    opacity: 0.7;
+    color: #f8991d;
 }
 
 .md-dropdown-content {
@@ -89,11 +95,6 @@
 .md-tabs {
     background-image: url(../assets/images/second-nav-blue.png);
     background-color: #1f4e79 !important;
-    padding-top: 10px;
-}
-
-.md-tabs__list {
-    display:none;
 }
 
 .md-tabs__item {
