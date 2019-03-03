@@ -38,7 +38,7 @@
         <meta name="lang:search.tokenizer" content="[\s\-]+">
       
       <link rel="shortcut icon" href="../../assets/images/aws-favicon.ico">
-      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-3.1.0">
+      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-3.0.6">
     
     
       
@@ -46,12 +46,12 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/application.11e41852.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/application.451f80e5.css">
       
       
     
     
-      <script src="../../assets/javascripts/modernizr.20ef595d.js"></script>
+      <script src="../../assets/javascripts/modernizr.1aa3b519.js"></script>
     
     
       
@@ -61,7 +61,6 @@
       
     
     <link rel="stylesheet" href="../../assets/fonts/material-icons.css">
-    
     
       <link rel="stylesheet" href="../../stylesheets/custom.css">
     
@@ -894,11 +893,11 @@
 <h3 id="walk-through">Walk Through</h3>
 <ul>
 <li>Browse to the <a href="https://console.aws.amazon.com/iam/home">IAM console</a>.</li>
-<li>On the first screen you see in the IAM console (which should be the Dashboard) you will see an <strong>IAM users sign-in link</strong>. Copy that link because you will need the account ID in the URL for the policies and you will need the entire URL when you hand this account to another team for the <strong>VERIFY</strong> phase. 
+<li>On the first screen you see in the IAM console (which should be the Dashboard) find the <strong>IAM users sign-in link</strong>. Copy that link because you will need the account ID in the URL for the policies and you will need the entire URL when you hand this account to another team for the <strong>VERIFY</strong> phase. 
 <img alt="image1" src="../images/iam-dashboard.png" /></li>
 <li>Click <strong>Users</strong> on the left menu and create a new IAM user named <strong><code>webadmin</code></strong>. Check <strong>AWS Management Console access</strong> and then either autogenerate a password or set a custom password. Uncheck <strong>Require password reset</strong>. Attach the AWS managed policies <strong>IAMReadOnlyAccess</strong> &amp; <strong>AWSLambdaReadOnlyAccess</strong> to the user.
 <img alt="image1" src="../images/create-iam-user.png" /></li>
-<li>Next click <strong>Policies</strong> on the left menu. Create a new IAM policy based on the hint below. Attach this policy to the IAM user you created.</li>
+<li>Next click <strong>Policies</strong> on the left menu. Create a new IAM policy based on the hint below. Attach this policy to the <strong><code>webadmin</code></strong> IAM user you just created.</li>
 </ul>
 <div class="admonition hint">
 <p class="admonition-title">Hint</p>
@@ -961,21 +960,21 @@
 </pre></div>
 
 
+<p>As you complete the following tests, keep in mind the resource restriction you set up in the policy above (<strong>????</strong>). Use the <strong>IAM users sign-in link</strong> you gathered earlier to login: </p>
 <ul>
-<li>You should login with the <strong>webadmin</strong> IAM user (using a different browser) to verify the user can create a policy (while following the resource restriction.) Use the <strong>IAM users sign-in link</strong> you gathered earlier to login. The permissions assigned to the policy do not matter for the test.</li>
-<li>From the browser where you are logged into the console as the <strong>webadmin</strong>, verify  you can create a role (while following the resource restriction.) This role should use Lambda as the trusted entity (we will use this role to test the next task). The policy attached to the role do not matter at this point. </li>
-<li>Again from the browser where you are logged into the console as the <strong>webadmin</strong>, verify the user can create a lambda function (while following the resource restriction.) </li>
+<li>Login with the <strong>webadmin</strong> IAM user (using a different browser) to verify the user can create a policy. The permissions you set on the policy do not matter at this point. </li>
+<li>Also verify you can create a role (while following the resource restriction.) This role should use Lambda as the trusted entity (we will use this role to test the next task) an attach the policy you just created to it. </li>
+<li>Finally verify the user can create a lambda function with the role you just created attached.</li>
 </ul>
 <div class="admonition question">
 <p class="admonition-title">Question</p>
 <ul>
 <li>Why are we using resource restrictions here?</li>
-<li>There are two ways of doing resource restrictions: naming and pathing. Which option allows you to create policies using both the AWS Console and CLI?</li>
-<li>Are resource restrictions in this case of Lambda function creation really necessary?</li>
+<li>There are two ways of doing resource restrictions: naming and pathing. Which option are we using here? Which option allows you to create policies using both the AWS Console and CLI?</li>
 </ul>
 </div>
 <h2 id="task-2-create-a-permissions-boundary">Task 2 <small>Create a permissions boundary</small></h2>
-<p>The webadmins can create IAM polices, IAM role and Lambda functions. We now need to limit the permissions of the roles they create though. If not then the web admins could simply create new policies with full admin rights, attach these to the roles, pass these roles to Lambda functions and escalate their permissions (either intentionally or inadvertently). We will use permissions boundaries to limits the effective permissions of the roles. The permissions boundary should allow the following <a href="https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_evaluation-logic.html">effective permissions</a> for any role created by the web admins:</p>
+<p>The webadmin user can create IAM polices, IAM role and Lambda functions. We now need to limit the permissions of the roles the user create. If not then the web admins could simply create new policies with full admin rights, attach these to the roles, pass these roles to Lambda functions and escalate their permissions (either intentionally or inadvertently). We will use permissions boundaries to limits the effective permissions of the roles. The permissions boundary should allow the following <a href="https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_evaluation-logic.html">effective permissions</a> for any role created by the web admins:</p>
 <blockquote>
 <p>i. Create log groups (but can not overwrite any other log groups)</p>
 <p>ii. Create log streams and put logs</p>
@@ -983,7 +982,7 @@
 </blockquote>
 <h3 id="walk-through_1">Walk Through:</h3>
 <ul>
-<li>Create a new IAM policy that will act as the permissions boundary for the web admins. Name the policy <strong><code>webadminpermissionboundary</code></strong></li>
+<li>Create a new IAM policy that will act as the permissions boundary for the web admins.</li>
 </ul>
 <div class="admonition hint">
 <p class="admonition-title">Hint</p>
@@ -1020,22 +1019,19 @@
 </pre></div>
 
 
+<p>Name the policy <strong><code>webadminpermissionboundary</code></strong></p>
 <div class="admonition question">
 <p class="admonition-title">Question</p>
 <ul>
 <li>What do you attach the permission boundary to?</li>
+<li>How does a permissions boundary differ from a standard IAM policy?</li>
 <li>How could you test the permissions boundary at this point?</li>
-<li>From the standpoint of the policy language and how it is presented in the console, how does a permissions boundary differ from a standard IAM policy?</li>
 </ul>
 </div>
 <h2 id="task-3-update-the-permission-policy-for-the-webadmin-to-incorporate-the-permissions-boundary-condition">Task 3 <small>Update the permission policy for the webadmin to incorporate the permissions boundary condition</small></h2>
 <h3 id="walk-through_2">Walk Through</h3>
-<p>You now need to update the policy you created in Task 1 with the permissions boundary condition. It is recommended that you just create a new policy and use the example below. </p>
-<p>Note that the policy below contains two additional sections (the last two sections) that we did not address in the earlier tasks. The additions are focused on denying the ability to change or delete the permission policy or the permissions boundary. Also the policy below includes the permissions boundary conditions.</p>
-<ul>
-<li>Name the new policy <strong><code>webadminpermissionpolicy</code></strong> and attach it to the webadmin user. Remove the earlier policy you added during the testing.</li>
-<li>When you are done the <strong>webadmin</strong> user should have only three policies attached: webadminpermissionpolicy, IAMReadOnlyAccess &amp; AWSLambdaReadOnlyAccess.</li>
-</ul>
+<p>Create a policy that references the permissions boundary we just created. It is recommended that you just create a new policy and use the example below. </p>
+<p>Note that the policy below contains two additional sections (the last two sections) that we did not address in the earlier tasks. The additions are focused on denying the ability to change or delete the permission policy and the permissions boundary. </p>
 <div class="admonition hint">
 <p class="admonition-title">Hint</p>
 <p><a href="https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_boundaries.html">permissions boundaries</a>: The question marks <strong><code>????</code></strong> in the resource elements below should be replaced with something that could act as a resource restriction. </p>
@@ -1130,13 +1126,19 @@
 
 
 <ul>
-<li>Again from the browser where you are logged into the console as the <strong>webadmin</strong>, verify the user can create a policy, create a role (attaching both a permission policy and permissions boundary to the role) and finally create a Lambda function into which you will pass that role. All of the preceding steps need to be done will also following the resource restrictions. </li>
+<li>Name the new policy <strong><code>webadminpermissionpolicy</code></strong> and attach it to the webadmin user. Remove the earlier policy you added during the testing.</li>
+<li>
+<p>When you are done the <strong>webadmin</strong> user should have only three policies attached: webadminpermissionpolicy, IAMReadOnlyAccess &amp; AWSLambdaReadOnlyAccess.</p>
+</li>
+<li>
+<p>Again from the browser where you are logged into the console as the <strong>webadmin</strong>, verify the user can create a policy, create a role (attaching both a permission policy and permissions boundary to the role) and finally create a Lambda function into which you will pass that role. Keep in mind the resource restriction. </p>
+</li>
 </ul>
 <div class="admonition question">
 <p class="admonition-title">Question</p>
 <ul>
-<li>"Why do we add the Deny for DeletePolicy actions?"</li>
-<li>"What would happen if we didn't deny the ability to delete permissions boundaries?"</li>
+<li>Why do we add the Deny for DeletePolicy actions regarding the webadminpermissionboundary &amp; webadminpermissionpolicy?</li>
+<li>What would happen if we didn't deny the ability to delete permissions boundaries?</li>
 </ul>
 </div>
 <h2 id="task-4-gather-info-needed-for-the-verify-phase">Task 4 <small>Gather info needed for the <strong>VERIFY</strong> phase</small></h2>
@@ -1244,7 +1246,7 @@
       
     </div>
     
-      <script src="../../assets/javascripts/application.9e1f3b71.js"></script>
+      <script src="../../assets/javascripts/application.5e60981f.js"></script>
       
       <script>app.initialize({version:"1.0.4",url:{base:"../.."}})</script>
       
