@@ -58,11 +58,11 @@ Build an IAM policy so that web admins can create customer managed policies, IAM
 ### Walk Through
 
 * Browse to the [IAM console](https://console.aws.amazon.com/iam/home).
-* On the first screen you see in the IAM console (which should be the Dashboard) you will see an **IAM users sign-in link**. Copy that link because you will need the account ID in the URL for the policies and you will need the entire URL when you hand this account to another team for the **VERIFY** phase. 
+* On the first screen you see in the IAM console (which should be the Dashboard) find the **IAM users sign-in link**. Copy that link because you will need the account ID in the URL for the policies and you will need the entire URL when you hand this account to another team for the **VERIFY** phase. 
 ![image1](./images/iam-dashboard.png)
 * Click **Users** on the left menu and create a new IAM user named **`webadmin`**. Check **AWS Management Console access** and then either autogenerate a password or set a custom password. Uncheck **Require password reset**. Attach the AWS managed policies **IAMReadOnlyAccess** & **AWSLambdaReadOnlyAccess** to the user.
 ![image1](./images/create-iam-user.png)
-* Next click **Policies** on the left menu. Create a new IAM policy based on the hint below. Attach this policy to the IAM user you created.
+* Next click **Policies** on the left menu. Create a new IAM policy based on the hint below. Attach this policy to the **`webadmin`** IAM user you just created.
 
 !!! hint
 	[IAM Identifiers](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_identifiers.html): You will want to use either naming or pathing resource restrictions in the IAM policy. The question marks "**????**" in the resource element below should be replaced with something that could act as a resource restriction. Examine the existing resources (roles, Lambda functions) to make sure the policy will give access to existing resources owned by the web admins. Replacing the question marks is really the key to this round. 
@@ -124,18 +124,19 @@ Build an IAM policy so that web admins can create customer managed policies, IAM
 }
 ```
 
-* You should login with the **webadmin** IAM user (using a different browser) to verify the user can create a policy (while following the resource restriction.) Use the **IAM users sign-in link** you gathered earlier to login. The permissions assigned to the policy do not matter for the test.
-* From the browser where you are logged into the console as the **webadmin**, verify  you can create a role (while following the resource restriction.) This role should use Lambda as the trusted entity (we will use this role to test the next task). The policy attached to the role do not matter at this point. 
-* Again from the browser where you are logged into the console as the **webadmin**, verify the user can create a lambda function (while following the resource restriction.) 
+As you complete the following tests, keep in mind the resource restriction you set up in the policy above (**????**). Use the **IAM users sign-in link** you gathered earlier to login: 
+
+* Login with the **webadmin** IAM user (using a different browser) to verify the user can create a policy. The permissions you set on the policy do not matter at this point. 
+* Also verify you can create a role (while following the resource restriction.) This role should use Lambda as the trusted entity (we will use this role to test the next task) an attach the policy you just created to it. 
+* Finally verify the user can create a lambda function with the role you just created attached.
 
 !!! question
 	* Why are we using resource restrictions here?
-	* There are two ways of doing resource restrictions: naming and pathing. Which option allows you to create policies using both the AWS Console and CLI?
-	* Are resource restrictions in this case of Lambda function creation really necessary?
+	* There are two ways of doing resource restrictions: naming and pathing. Which option are we using here? Which option allows you to create policies using both the AWS Console and CLI?
 
 ## Task 2 <small>Create a permissions boundary</small>
 
-The webadmins can create IAM polices, IAM role and Lambda functions. We now need to limit the permissions of the roles they create though. If not then the web admins could simply create new policies with full admin rights, attach these to the roles, pass these roles to Lambda functions and escalate their permissions (either intentionally or inadvertently). We will use permissions boundaries to limits the effective permissions of the roles. The permissions boundary should allow the following [effective permissions](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_evaluation-logic.html) for any role created by the web admins:
+The webadmin user can create IAM polices, IAM role and Lambda functions. We now need to limit the permissions of the roles the user create. If not then the web admins could simply create new policies with full admin rights, attach these to the roles, pass these roles to Lambda functions and escalate their permissions (either intentionally or inadvertently). We will use permissions boundaries to limits the effective permissions of the roles. The permissions boundary should allow the following [effective permissions](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_evaluation-logic.html) for any role created by the web admins:
 
 >	i. Create log groups (but can not overwrite any other log groups)
 
@@ -145,7 +146,7 @@ The webadmins can create IAM polices, IAM role and Lambda functions. We now need
 
 ### Walk Through: 
 
-* Create a new IAM policy that will act as the permissions boundary for the web admins. Name the policy **`webadminpermissionboundary`**
+* Create a new IAM policy that will act as the permissions boundary for the web admins.
 
 !!! hint
 	[IAM Identifiers](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_identifiers.html): The question marks **`????`** in the resource element below should be replaced with something that could act as a resource restriction. 
@@ -181,22 +182,21 @@ The webadmins can create IAM polices, IAM role and Lambda functions. We now need
 }
 ```
 
+Name the policy **`webadminpermissionboundary`**
+
 !!! question
 	* What do you attach the permission boundary to?
+	* How does a permissions boundary differ from a standard IAM policy?
 	* How could you test the permissions boundary at this point?
-	* From the standpoint of the policy language and how it is presented in the console, how does a permissions boundary differ from a standard IAM policy?
 
 ## Task 3 <small>Update the permission policy for the webadmin to incorporate the permissions boundary condition</small>
 
 ### Walk Through
 
-You now need to update the policy you created in Task 1 with the permissions boundary condition. It is recommended that you just create a new policy and use the example below. 
+Create a policy that references the permissions boundary we just created. It is recommended that you just create a new policy and use the example below. 
 
-Note that the policy below contains two additional sections (the last two sections) that we did not address in the earlier tasks. The additions are focused on denying the ability to change or delete the permission policy or the permissions boundary. Also the policy below includes the permissions boundary conditions.
+Note that the policy below contains two additional sections (the last two sections) that we did not address in the earlier tasks. The additions are focused on denying the ability to change or delete the permission policy and the permissions boundary. 
 
-* Name the new policy **`webadminpermissionpolicy`** and attach it to the webadmin user. Remove the earlier policy you added during the testing.
-* When you are done the **webadmin** user should have only three policies attached: webadminpermissionpolicy, IAMReadOnlyAccess & AWSLambdaReadOnlyAccess.
-		
 !!! hint 
 	[permissions boundaries](https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_boundaries.html): The question marks **`????`** in the resource elements below should be replaced with something that could act as a resource restriction. 
 
@@ -289,11 +289,14 @@ Note that the policy below contains two additional sections (the last two sectio
 }
 ```
 
-* Again from the browser where you are logged into the console as the **webadmin**, verify the user can create a policy, create a role (attaching both a permission policy and permissions boundary to the role) and finally create a Lambda function into which you will pass that role. All of the preceding steps need to be done will also following the resource restrictions. 
+* Name the new policy **`webadminpermissionpolicy`** and attach it to the webadmin user. Remove the earlier policy you added during the testing.
+* When you are done the **webadmin** user should have only three policies attached: webadminpermissionpolicy, IAMReadOnlyAccess & AWSLambdaReadOnlyAccess.
+		
+* Again from the browser where you are logged into the console as the **webadmin**, verify the user can create a policy, create a role (attaching both a permission policy and permissions boundary to the role) and finally create a Lambda function into which you will pass that role. Keep in mind the resource restriction. 
 
 !!! question
-	* "Why do we add the Deny for DeletePolicy actions?"
-	* "What would happen if we didn't deny the ability to delete permissions boundaries?"
+	* Why do we add the Deny for DeletePolicy actions regarding the webadminpermissionboundary & webadminpermissionpolicy?
+	* What would happen if we didn't deny the ability to delete permissions boundaries?
 
 ## Task 4 <small>Gather info needed for the **VERIFY** phase</small>
 
