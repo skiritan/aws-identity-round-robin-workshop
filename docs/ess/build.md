@@ -154,15 +154,8 @@ You can also select a color that will be used to display the role you assume in 
 4. Now go to the Amazon Inspector Console.  Click **Assessment Templates** and check the box to the left of the template name that begins with *LampInspectorAssessmentTemplate* and click **Run**.
 You have just launched an new assessment run which requires administrative access.
 
-5. Now go to the GuardDuty console and select the Settings menu item..
-Notice that you have an error message at the top as shown below.
-
-    ![GuardDutyIAMError](./images/IamEssGuardDutyIAMError.png)
-
-    It is important to understand why you are seeing this message.   The SecAdministrator role gives you full permissions for the *GuardDuty* service.  The GuardDuty console, however, tries to displays some additional information about the IAM service role that GuardDuty uses.  This requires *IAM* permissions that you do not have.
-
-    To verify that you do have administrative capabilities, scroll down to the field named *Updated findings* and change the value to **Send notification every 1 hour** and click **Save settings** at the bottom of the window (you may need to scroll down further).
-You will see a message at the top of your window (you may need to scroll up) saying that the settings have been saved.  This shows you do have full access to *GuardDuty* (but, again, not to *IAM*).
+5. Now go to the GuardDuty console and select the Settings menu item.  To verify that you do have administrative capabilities, scroll down to the field named *Updated findings* and change the value to **Send notification every 1 hour** and click **Save settings** at the bottom of the window (you may need to scroll down further).
+You will see a message at the top of your window (you may need to scroll up) saying that the settings have been saved.  This shows you do have full access to *GuardDuty*.
 
 6.  Go to the Macie console, select the US West (Oregon) region, click Settings, and click on the Content Type icon.
 You will see a list of file types appear.
