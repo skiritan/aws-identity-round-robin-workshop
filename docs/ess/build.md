@@ -156,7 +156,7 @@ You have just launched an new assessment run which requires administrative acces
 
 5. Now go to the GuardDuty console and select the Settings menu item.  You may see an error message at the top of the screen about **iam:ListPolicyVersions**.  The reason for this is that you do not have full IAM permissions.  Ignore this message.
 
-   To verify that you do have administrative capabilities for GuardDuty, scroll down to the field named *Updated findings* and change the value to **Send notification every 1 hour** and click **Save settings** at the bottom of the window (you may need to scroll down further).
+    To verify that you do have administrative capabilities for GuardDuty, scroll down to the field named *Updated findings* and change the value to **Send notification every 1 hour** and click **Save settings** at the bottom of the window (you may need to scroll down further).
 You will see a message at the top of your window (you may need to scroll up) saying that the settings have been saved.  This shows you do have full access to *GuardDuty*.
 
 6.  Go to the Macie console, select the US West (Oregon) region, click Settings, and click on the Content Type icon.
