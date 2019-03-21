@@ -38,7 +38,7 @@
         <meta name="lang:search.tokenizer" content="[\s\-]+">
       
       <link rel="shortcut icon" href="../../assets/images/aws-favicon.ico">
-      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.0.2">
+      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.0.1">
     
     
       
@@ -915,7 +915,7 @@ You can also select a color that will be used to display the role you assume in 
 You have just launched an new assessment run which requires administrative access.</p>
 </li>
 <li>
-<p>Now go to the GuardDuty console and select the Settings menu item.  To verify that you do have administrative capabilities, scroll down to the field named <em>Updated findings</em> and change the value to <strong>Send notification every 1 hour</strong> and click <strong>Save settings</strong> at the bottom of the window (you may need to scroll down further).
+<p>Now go to the GuardDuty console and select the Settings menu item.  You may see an error message at the top of the screen about <strong>iam:ListPolicyVersions</strong>.  The reason for this is that you do not have full IAM permissions.  To verify that you do have administrative capabilities for GuardDuty, scroll down to the field named <em>Updated findings</em> and change the value to <strong>Send notification every 1 hour</strong> and click <strong>Save settings</strong> at the bottom of the window (you may need to scroll down further).
 You will see a message at the top of your window (you may need to scroll up) saying that the settings have been saved.  This shows you do have full access to <em>GuardDuty</em>.</p>
 </li>
 <li>
@@ -1103,7 +1103,7 @@ Click <a href="../verify/">here</a> to proceed to the Verify Phase.</p>
       
     </div>
     
-      <script src="../../assets/javascripts/application.d9aa80ab.js"></script>
+      <script src="../../assets/javascripts/application.b806dc00.js"></script>
       
       <script>app.initialize({version:"1.0.4",url:{base:"../.."}})</script>
       
