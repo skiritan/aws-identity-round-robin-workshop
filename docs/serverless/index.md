@@ -1,8 +1,5 @@
 # Serverless Round
 
-!!! warning "Please complete the pre-workshop knowledge check."
-    #### **<a href="https://amazonmr.au1.qualtrics.com/jfe/form/SV_6upcuycwqknPI0Z" target="_blank">Knowledge Check</a>**
-
 Welcome to the world of serverless!  Now you may be asking yourself, *What is serverless*? Well, it is an architecture paradigm that allows you to create your applications without provisioning or managing any servers.  Sounds great, right?  Organizations look at building serverless applications as a way of improving their scalability and reducing their operational overhead.  The responsibility of the underlying infrastructure is shifted off your plate so you can spend more time focusing on building your applications.
 
 So with less infrastructure to manage you are no longer responsible for patching  your operating systems and the attack surface you need to worry about has been significantly reduced.  But with the use of serverless technologies comes *other* responsibility.  When you hear the word serverless you may think specifically of <a href="https://aws.amazon.com/lambda/" target="_blank">AWS Lambda</a> but it is important to remember that there are other services used within a serverless application and securing an application involves more than just securing your Lambda functions.  

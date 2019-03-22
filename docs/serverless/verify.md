@@ -72,9 +72,6 @@ Now that you are logged into the Build AWS account you can access find their app
 
 ![Architecture](./images/architecture-final.png)
 
-!!! warning "Please complete the post-workshop knowledge check."
-    #### **<a href="https://amazonmr.au1.qualtrics.com/jfe/form/SV_cMukUtteV5cmo73" target="_blank">Knowledge Check</a>**
-
 ## Cleanup
 
 In order to prevent charges to your account we recommend cleaning up the infrastructure that was created, especially if you are doing other Identity rounds. Expand one of the following dropdown sections and follow the instructions:
