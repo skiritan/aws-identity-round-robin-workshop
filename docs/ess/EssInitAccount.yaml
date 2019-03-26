@@ -69,7 +69,7 @@ Parameters:
 Mappings:
   Constants:
     Values:
-      HostInstanceType: 't2.micro'
+      HostInstanceType: 'm5.large'
       NamePrefix: 'esslab'
       ProjectTag: 'esslab'
       PasswordLength: '12'
@@ -176,16 +176,7 @@ Resources:
   SGWeb:
     Type: AWS::EC2::SecurityGroup
     Properties:
-      GroupDescription: Enable SSH access via port 22
-      SecurityGroupIngress:
-      - IpProtocol: tcp
-        FromPort: '80'
-        ToPort: '80'
-        CidrIp: !FindInMap [Constants, Values, 'SGWebCidr']
-      - IpProtocol: tcp
-        FromPort: '443'
-        ToPort: '443'
-        CidrIp: !FindInMap [Constants, Values, 'SGWebCidr']
+      GroupDescription: Enable inbound access to server
       Tags:
       - Key: Name
         Value: !Join 
@@ -237,6 +228,7 @@ Resources:
           - Effect: Allow
             Action:
             - 'macie:*'
+            - 'guardduty:*'
             Resource: "*"
           - Effect: Allow
             Action:
@@ -596,6 +588,154 @@ Resources:
       TemplateURL: 'https://s3.amazonaws.com/amazon-macie-activity-generator-us-east-1-fb58a9df3468/CloudFormationTemplate.yml'
       TimeoutInMinutes: 10
 
+
+# PostMacieSetupFunction - Associate an S3 Bucket with Amazon Macie
+
+  PostMacieSetupFunction:
+    Type: AWS::Lambda::Function
+    DependsOn:
+    - MacieSetup
+    Properties: 
+      Description: 'Associate an S3 Bucket with Amazon Macie'
+      Handler: index.handler
+      MemorySize: 128
+      Role: !GetAtt LambdaExecutionRole.Arn
+      Runtime: 'python3.6'
+      Timeout: 30
+      Tags: 
+      - Key: Project
+        Value: !FindInMap [Constants, Values, 'ProjectTag']
+      Code:
+        ZipFile: !Sub |
+          import json
+          import boto3
+          import cfnresponse
+          import string
+          import random
+          def handler(event, context):
+            if event['RequestType'] == 'Delete':
+              responseData = {}      
+              cfnresponse.send(event, context, cfnresponse.SUCCESS, responseData)
+              return
+            
+            client = boto3.client('macie')
+            responseData = {}
+            
+            try:
+              response = client.associate_s3_resources(
+                memberAccountId='${AWS::AccountId}',
+                s3Resources=[
+                  {
+                   'bucketName': '${MacieSetup.Outputs.DefaultS3Bucket}',
+                   'classificationType': {
+                     'oneTime': 'FULL',
+                     'continuous': 'FULL'
+                    }
+                  }
+                ]
+              )
+              cfnresponse.send(event, context, cfnresponse.SUCCESS, responseData)
+            except:
+              cfnresponse.send(event, context, cfnresponse.FAILED, responseData)
+            
+            return
+
+# PostMacieSetup - Perform the association of the Macie Acitivity Generator Bucket
+#
+# Parameters
+#
+# ServiceToken - a pointer to the AWS Lambda function
+
+  PostMacieSetup:
+    Type: Custom::PostMacieSetup
+    Properties:
+      ServiceToken: !GetAtt PostMacieSetupFunction.Arn
+
+# GuardDutySetupFunction - Configure GuardDuty
+#
+# (1) Create a detector if one doesn't exist.
+# (2) Be sure the detector is enabled.
+# (3) Generate sample findings.
+
+  GuardDutySetupFunction:
+    Type: AWS::Lambda::Function
+    Properties: 
+      Description: 'Set up Amazon GuardDuty'
+      Handler: index.handler
+      MemorySize: 128
+      Role: !GetAtt LambdaExecutionRole.Arn
+      Runtime: 'python3.6'
+      Timeout: 30
+      Tags: 
+      - Key: Project
+        Value: !FindInMap [Constants, Values, 'ProjectTag']
+      Code:
+        ZipFile: !Sub |
+          import json
+          import boto3
+          import cfnresponse
+          import string
+          import random
+          def handler(event, context):
+            responseData = {}      
+            
+            if event['RequestType'] == 'Delete':
+              cfnresponse.send(event, context, cfnresponse.SUCCESS, responseData)
+              return
+            
+            if event['RequestType'] == 'Update':
+              cfnresponse.send(event, context, cfnresponse.SUCCESS, responseData)
+              return
+            
+            client = boto3.client('guardduty')
+            
+            try:
+              response = client.list_detectors(
+                MaxResults=1
+              )
+            except:
+              cfnresponse.send(event, context, cfnresponse.FAILED, responseData)
+              return
+            
+            if len(response['DetectorIds']) != 0:
+              detectorId = response['DetectorIds'][0]
+            else:
+              try:
+                response = client.create_detector(
+                  Enable=True
+                )
+                detectorId = response['DetectorId']
+              except:
+                cfnresponse.send(event, context, cfnresponse.FAILED, responseData)
+                return
+
+            try:
+              response = client.update_detector(
+                DetectorId=detectorId,
+                Enable=True
+              )
+              response = client.create_sample_findings(
+                DetectorId=detectorId
+              )
+            except:
+              cfnresponse.send(event, context, cfnresponse.FAILED, responseData)
+              return
+            
+            cfnresponse.send(event, context, cfnresponse.SUCCESS, responseData)
+            return
+
+# GuardDutySetup - Perform the GuardDuty setup using the GuardDutySetup
+# Lambda function
+#
+# Parameters
+#
+# ServiceToken - a pointer to the AWS Lambda function
+
+  GuardDutySetup:
+    Type: Custom::GuardDutySetup
+    Properties:
+      ServiceToken: !GetAtt GuardDutySetupFunction.Arn
+
 # LinuxInstanceRole - The IAM role that will be attached to the Amazon EC2
 # instance.  In addition to the policy above, we also need to have the
 # managed policy ARN for Amazon Inspector so that the service linked role
@@ -667,14 +807,9 @@ Resources:
 # (1) Creates a GuardDuty dectector if one is not running and enable
 # GuardDuty.
 #
-# (2) Generates GuardDuty sample findings.
+# (2) Installs the Amazon Inspector agent.
 #
-# (3) Installs the Amazon Inspector agent.
-#
-# (4) Starts a 15 minute Inspector assessment run.
-#
-# (5) Associates the bucket created by the Macie Activity Generator with
-# Amazon Macie.
+# (3) Starts a 15 minute Inspector assessment run.
 #
 # Much of the set up work is done through cfn-init and the instance
 # Metadata.  Using the Netadata and cfn-init allows us to conserve userdata
@@ -686,121 +821,10 @@ Resources:
     DependsOn:
     - VpcIgwAttachment
     - LampInspectorAssessmentTemplate
-    - MacieSetup
 
     CreationPolicy:
       ResourceSignal:
         Timeout: PT15M
-
-    Metadata: 
-      AWS::CloudFormation::Init: 
-        config: 
-          packages: 
-            yum: 
-              httpd: []
-          files: 
-            /home/ec2-user/guardduty-detector.sh:
-              mode: 700
-              owner: ec2-user
-              group: ec2-user
-              content: !Sub |
-                #!/bin/bash
-                #
-                # guardduty-detector.sh
-                #
-                # (1) Create an AWS GuardDuty detector if one is not already present.
-                # (2) Enable the AWS GuardDuty detector.
-
-                DETECTOR_ID=`aws guardduty list-detectors --region ${AWS::Region} --output text --query 'DetectorIds[0]'`
-                if [ "$DETECTOR_ID" = "None" ]
-                then
-                  echo No AWS GuardDuty detector found.
-                  echo Starting AWS GuardDuty detector...
-                  aws guardduty create-detector --region ${AWS::Region}
-                else
-                  echo AWS GuardDuty detector found.
-                fi
-
-                DETECTOR_ID=`aws guardduty list-detectors --region ${AWS::Region} --output text --query 'DetectorIds[0]'`
-                echo Making sure AWS GuardDuty detector is enabled...
-                aws guardduty update-detector --detector-id $DETECTOR_ID --enable --region ${AWS::Region}
-
-            /home/ec2-user/guardduty-samplefindings.sh:
-              mode: 700
-              owner: ec2-user
-              group: ec2-user
-              content: !Sub |
-                #!/bin/bash
-                #
-                # guardduty-samplefindings.sh
-                #
-                # (1) Make sure there is a detector.  If there is no detector, exit.
-                # (2) Enable the AWS GuardDuty detector.
-                # (3) Generate the sample findings.
-
-                DETECTOR_ID=`aws guardduty list-detectors --region ${AWS::Region} --output text --query 'DetectorIds[0]'`
-                if [ "$DETECTOR_ID" = "None" ]
-                then
-                  echo No AWS GuardDuty detector found. Run guardduty-install.sh.
-                  exit 1
-                fi
-
-                echo Making sure AWS GuardDuty detector is enabled...
-                aws guardduty update-detector --detector-id $DETECTOR_ID --enable --region ${AWS::Region}
-                echo Creating AWS GuardDuty sample findings...
-                aws guardduty create-sample-findings --detector-id $DETECTOR_ID --region ${AWS::Region}
-
-            /home/ec2-user/inspector-install.sh:
-              mode: 700
-              owner: ec2-user
-              group: ec2-user
-              source:  https://d1wk0tztpsntt1.cloudfront.net/linux/latest/install
-
-            /home/ec2-user/inspector-runassessment.sh:
-              mode: 700
-              owner: ec2-user
-              group: ec2-user
-              content: !Sub |
-                #!/bin/bash
-                echo Launching AWS Inspector run...
-                aws \
-                  inspector \
-                  start-assessment-run \
-                  --assessment-template-arn ${LampInspectorAssessmentTemplate.Arn} \
-                  --region ${AWS::Region}
-
-            /home/ec2-user/macie-associates3bucket.sh:
-              mode: 700
-              owner: ec2-user
-              group: ec2-user
-              content: !Sub |
-                #!/bin/bash
-                #
-                # Associate the S3 bucket from the Macie Activity Generator
-                # to Amazon Macie.
-                echo Associating S3 bucket with Amazon Macie...
-                aws macie \
-                  associate-s3-resources \
-                  --s3-resources \
-                  bucketName=${MacieSetup.Outputs.DefaultS3Bucket},classificationType=\{oneTime=FULL,continuous=FULL\} \
-                  --region ${AWS::Region}
-
-          commands: 
-            cmd010:
-              command: /home/ec2-user/inspector-install.sh
-              cwd: /home/ec2-user
-            cmd020:
-              command: /home/ec2-user/inspector-runassessment.sh
-              cwd: /home/ec2-user
-            cmd030:
-              command: /home/ec2-user/guardduty-detector.sh
-              cwd: /home/ec2-user
-            cmd040:
-              command: /home/ec2-user/guardduty-samplefindings.sh
-              cwd: /home/ec2-user
-            cmd050:
-              command: /home/ec2-user/macie-associates3bucket.sh
-              cwd: /home/ec2-user
 
     Properties:
       AvailabilityZone: !GetAtt PublicSubnet.AvailabilityZone
@@ -829,39 +853,49 @@ Resources:
         Fn::Base64: !Sub |
           #!/bin/bash -xe
           HOMEDIR=/home/ec2-user
-
+          
           yum install -y deltarpm
           yum update -y
           yum install -y aws-cfn-bootstrap
-
+         
           # Update the AWS Systems Manager Agent
-          EC2_INSTANCE_ID=`wget -q -O - http://169.254.169.254/latest/meta-data/instance-id`
-          aws ssm create-association \
-          --targets Key=instanceids,Values=$EC2_INSTANCE_ID \
-          --name AWS-UpdateSSMAgent \
-          --schedule-expression "cron(0 0 2 ? * SUN *)" \
-          --region ${AWS::Region}
+          #EC2_INSTANCE_ID=`wget -q -O - http://169.254.169.254/latest/meta-data/instance-id`
+         
+          #aws ssm create-association \
+          #--targets Key=instanceids,Values=$EC2_INSTANCE_ID \
+          #--name AWS-UpdateSSMAgent \
+          #--region ${AWS::Region}
           
-          /opt/aws/bin/cfn-init \
-            --stack ${AWS::StackName} \
-            --resource LinuxInstance \
-            --region ${AWS::Region}
-          
-          echo Configuring Apache...
-          usermod -a -G apache ec2-user
-          chown -R ec2-user:apache /var/www
-          chmod 2775 /var/www && find /var/www -type d -exec chmod 2775 {} \;
-          find /var/www -type f -exec chmod 0664 {} \;
-
-          echo Starting Apache...
-          sudo service httpd start
-          sudo chkconfig httpd on
-
           /opt/aws/bin/cfn-signal \
             -e $? \
             --stack ${AWS::StackName} \
             --resource LinuxInstance \
             --region ${AWS::Region}
+
+# SSMagent
+
+  SSMAgent:
+    DependsOn: LinuxInstance
+    Type: AWS::SSM::Association
+    Properties:
+      Name: AWS-UpdateSSMAgent
+      Targets:
+      - Key: InstanceIds
+        Values: [!Ref LinuxInstance]
+
+# InspectorAgent
+
+  InspectorAgent:
+    DependsOn: SSMAgent
+    Type: AWS::SSM::Association
+    Properties:
+      Name: AmazonInspector-ManageAWSAgent
+      Parameters:
+        Operation:
+        - Install
+      Targets:
+      - Key: InstanceIds
+        Values: [!Ref LinuxInstance]
 
 # LoggingBucket
 
