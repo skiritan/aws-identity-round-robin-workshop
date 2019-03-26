@@ -1,4 +1,4 @@
-# External Security Services Round (Build Phase)
+# Access Delegation Round (Build Phase)
 
 | IMPORTANT NOTE!  |
 |---|

@@ -1,4 +1,4 @@
-# External Security Services Round (Verify Phase)
+# Access Delegation Round (Verify Phase)
 
 | IMPORTANT NOTE!  |
 |---|
