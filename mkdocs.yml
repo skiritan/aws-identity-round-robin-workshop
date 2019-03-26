@@ -50,7 +50,7 @@ nav:
     - 'Scenario': 'serverless/index.md'
     - 'Build Phase': 'serverless/build.md'
     - 'Verify Phase': 'serverless/verify.md'
-  - 'Security Services Round':
+  - 'Access Delegation Round':
     - 'Scenario': 'ess/index.md'
     - 'Build Phase': 'ess/build.md'
     - 'Verify Phase': 'ess/verify.md'
