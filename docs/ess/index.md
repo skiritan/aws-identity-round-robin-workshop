@@ -1,21 +1,21 @@
-# External Security Services Round
+# Access Delegation Round
 
-Welcome to the world of AWS External Security Services!
-AWS External Services consists of Amazon GuardDuty, Amazon Inspector, and Amazon Macie.
+Welcome to the world of Access Delegation!
 
 In this round, you are going to work through a scenario that could arise in an organization that uses Amazon Web Services for production workloads.
 You will play the role of an AWS "superuser" administrator.
 You have heard that Amazon GuardDuty, Inspector, and Macie are services that can help you monitor the data, host, and network traffic within your AWS environment and detect anomalous behaviors.
-In this round of the workshop, you will learn how to use Amazon IAM to control access to these services.
+In this round of the workshop, you will learn how to use Amazon IAM to delegate access to these services to AWS Security Administrators and AWS Security Operators.
+AWS Security Administrators require full access to AWS security services while AWS Security Operators only require "read only" access to the services.  You will use AWS IAM roles to do this and thereby promote the Principle of Least Privilege - giving users the minimum level of privilege they need to do their tasks.
 
 
 **AWS Service/Feature Coverage**: 
 
+* AWS Identity and Access Management (IAM)
+* Console role-switching
 * Amazon GuardDuty
 * Amazon Inspector
 * Amazon Macie
-* AWS Identity and Access Management (IAM)
-* Console role-switching
 
 ## Agenda
 

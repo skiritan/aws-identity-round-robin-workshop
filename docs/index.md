@@ -5,7 +5,7 @@
 * **Level**: 300
 * **Duration**: Each workshop takes 2 hours and can be done separately:
 	* Serverless (2 hours)
-	* External Security Services (ESS) (2 hours)
+	* Access Delegation (2 hours)
 	* Permissions boundaries (2 hours)
 * **CSF Functions**: Protect
 * **CAF Components**: Preventive
@@ -13,5 +13,5 @@
 
 ## Published rounds
 1. [Serverless](./serverless/index.md)
-2. [External Security Services](./ess/index.md)
+2. [Access Delegation](./ess/index.md)
 3. [Permissions boundaries](./permission-boundaries/index.md) 
