@@ -21,17 +21,17 @@
      <changefreq>daily</changefreq>
     </url>
     <url>
-     <loc>https://identity-round-robin.awssecworkshops.com/ess/</loc>
+     <loc>https://identity-round-robin.awssecworkshops.com/delegation/</loc>
      <lastmod>2019-03-26</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
-     <loc>https://identity-round-robin.awssecworkshops.com/ess/build/</loc>
+     <loc>https://identity-round-robin.awssecworkshops.com/delegation/build/</loc>
      <lastmod>2019-03-26</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
-     <loc>https://identity-round-robin.awssecworkshops.com/ess/verify/</loc>
+     <loc>https://identity-round-robin.awssecworkshops.com/delegation/verify/</loc>
      <lastmod>2019-03-26</lastmod>
      <changefreq>daily</changefreq>
     </url>
