@@ -13,5 +13,5 @@
 
 ## Published rounds
 1. [Serverless](./serverless/index.md)
-2. [Access Delegation](./ess/index.md)
+2. [Access Delegation](./delegation/index.md)
 3. [Permissions boundaries](./permission-boundaries/index.md) 
