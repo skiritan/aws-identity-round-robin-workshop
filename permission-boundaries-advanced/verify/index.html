@@ -1,0 +1,857 @@
+
+
+
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      <meta http-equiv="x-ua-compatible" content="ie=edge">
+      
+        <meta name="description" content="A hands-on workshop to learn about a variety of AWS identity topics.">
+      
+      
+        <link rel="canonical" href="https://identity-round-robin.awssecworkshops.com/permission-boundaries-advanced/verify/">
+      
+      
+        <meta name="author" content="aws-security-workshops@amazon.com">
+      
+      
+        <meta name="lang:clipboard.copy" content="Copy to clipboard">
+      
+        <meta name="lang:clipboard.copied" content="Copied to clipboard">
+      
+        <meta name="lang:search.language" content="en">
+      
+        <meta name="lang:search.pipeline.stopwords" content="True">
+      
+        <meta name="lang:search.pipeline.trimmer" content="True">
+      
+        <meta name="lang:search.result.none" content="No matching documents">
+      
+        <meta name="lang:search.result.one" content="1 matching document">
+      
+        <meta name="lang:search.result.other" content="# matching documents">
+      
+        <meta name="lang:search.tokenizer" content="[\s\-]+">
+      
+      <link rel="shortcut icon" href="../../assets/images/aws-favicon.ico">
+      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.0.2">
+    
+    
+      
+        <title>Permission boundaries workshop <small>VERIFY phase</small> - Identity Round Robin</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/application.982221ab.css">
+      
+      
+    
+    
+      <script src="../../assets/javascripts/modernizr.1f0bcf2b.js"></script>
+    
+    
+      
+        <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700|Roboto+Mono">
+        <style>body,input{font-family:"Roboto","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono","Courier New",Courier,monospace}</style>
+      
+    
+    <link rel="stylesheet" href="../../assets/fonts/material-icons.css">
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/custom.css">
+    
+    
+      
+    
+    
+  </head>
+  
+    <body dir="ltr">
+  
+    <svg class="md-svg">
+      <defs>
+        
+        
+          <svg xmlns="http://www.w3.org/2000/svg" width="416" height="448"
+    viewBox="0 0 416 448" id="__github">
+  <path fill="currentColor" d="M160 304q0 10-3.125 20.5t-10.75 19-18.125
+        8.5-18.125-8.5-10.75-19-3.125-20.5 3.125-20.5 10.75-19 18.125-8.5
+        18.125 8.5 10.75 19 3.125 20.5zM320 304q0 10-3.125 20.5t-10.75
+        19-18.125 8.5-18.125-8.5-10.75-19-3.125-20.5 3.125-20.5 10.75-19
+        18.125-8.5 18.125 8.5 10.75 19 3.125 20.5zM360
+        304q0-30-17.25-51t-46.75-21q-10.25 0-48.75 5.25-17.75 2.75-39.25
+        2.75t-39.25-2.75q-38-5.25-48.75-5.25-29.5 0-46.75 21t-17.25 51q0 22 8
+        38.375t20.25 25.75 30.5 15 35 7.375 37.25 1.75h42q20.5 0
+        37.25-1.75t35-7.375 30.5-15 20.25-25.75 8-38.375zM416 260q0 51.75-15.25
+        82.75-9.5 19.25-26.375 33.25t-35.25 21.5-42.5 11.875-42.875 5.5-41.75
+        1.125q-19.5 0-35.5-0.75t-36.875-3.125-38.125-7.5-34.25-12.875-30.25-20.25-21.5-28.75q-15.5-30.75-15.5-82.75
+        0-59.25 34-99-6.75-20.5-6.75-42.5 0-29 12.75-54.5 27 0 47.5 9.875t47.25
+        30.875q36.75-8.75 77.25-8.75 37 0 70 8 26.25-20.5
+        46.75-30.25t47.25-9.75q12.75 25.5 12.75 54.5 0 21.75-6.75 42 34 40 34
+        99.5z" />
+</svg>
+        
+      </defs>
+    </svg>
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
+    
+      <a href="#permission-boundaries-workshop-verify-phase" tabindex="1" class="md-skip">
+        Skip to content
+      </a>
+    
+    
+      <!--
+  Copyright (c) 2016-2018 Martin Donath <martin.donath@squidfunk.com>
+  Permission is hereby granted, free of charge, to any person obtaining a copy
+  of this software and associated documentation files (the "Software"), to
+  deal in the Software without restriction, including without limitation the
+  rights to use, copy, modify, merge, publish, distribute, sublicense, and/or
+  sell copies of the Software, and to permit persons to whom the Software is
+  furnished to do so, subject to the following conditions:
+  The above copyright notice and this permission notice shall be included in
+  all copies or substantial portions of the Software.
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT. IN NO EVENT SHALL THE
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
+  IN THE SOFTWARE.
+-->
+
+<!-- Application header -->
+<header class="md-header" data-md-component="header">
+
+    <!-- Top-level navigation -->
+    <nav class="md-header-nav md-grid">
+      <div class="md-flex">
+  
+        <!-- Link to home -->
+        <div class="md-flex__cell md-flex__cell--shrink">
+          <a href="https://aws.amazon.com/"
+              title="Amazon Web Services"
+              class="md-header-nav__button md-logo">
+            
+              <img src="../../assets/images/aws_smile_logo.png" width="40" height="24" />
+            
+          </a>
+        </div>
+  
+        <!-- Button to toggle drawer -->
+        <div class="md-flex__cell md-flex__cell--shrink">
+          <label class="md-icon md-icon--menu md-header-nav__button"
+              for="__drawer"></label>
+        </div>
+  
+        <!-- Header title -->
+        <div class="md-flex__cell md-flex__cell--stretch">
+          <div class="md-flex__ellipsis md-header-nav__title"
+              data-md-component="title">
+            
+              
+                <span class="md-header-nav__topic">
+                  Identity Round Robin
+                </span>
+                <span class="md-header-nav__topic">
+                  Permission boundaries workshop <small>VERIFY phase</small>
+                </span>
+              
+            
+          </div>
+        </div>
+  
+        <!-- Button to open search dialogue -->
+        <div class="md-flex__cell md-flex__cell--shrink">
+          
+            
+              <label class="md-icon md-icon--search md-header-nav__button"
+                  for="__search"></label>
+  
+              <!-- Search interface -->
+              
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="query" data-md-state="active">
+      <label class="md-icon md-search__icon" for="__search"></label>
+      <button type="reset" class="md-icon md-search__icon" data-md-component="reset" tabindex="-1">
+        &#xE5CD;
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="result">
+          <div class="md-search-result__meta">
+            Type to start searching
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+            
+          
+        </div>
+        <div class="md-flex__cell md-flex__cell--shrink">
+            <div class="md-flex__ellipsis md-header-nav__lang">
+                <div class="md-lang-drop">
+                    <button onclick="window.location.href='https://awssecworkshops.com/'" class="md-lang-dropbtn fa fa-home"></button>
+                    <!--
+                    <div id="mdDropMenu" class="md-dropdown-content">
+                        <a href="#">JP</a>
+                    </div>
+                    -->
+                </div>
+            </div>
+        </div>
+  
+        <!-- Repository containing source -->
+        
+          <div class="md-flex__cell md-flex__cell--shrink">
+            <div class="md-header-nav__source">
+              
+
+
+  
+
+<a href="https://github.com/aws-samples/aws-identity-round-robin-workshop/" title="Go to repository" class="md-source" data-md-source="github">
+  
+    <div class="md-source__icon">
+      <svg viewBox="0 0 24 24" width="24" height="24">
+        <use xlink:href="#__github" width="24" height="24"></use>
+      </svg>
+    </div>
+  
+  <div class="md-source__repository">
+    aws-samples/aws-identity-round-robin-workshop
+  </div>
+</a>
+            </div>
+          </div>
+        
+      </div>
+    </nav>
+  </header>
+    
+    <div class="md-container">
+      
+        
+      
+      
+        
+
+<nav class="md-tabs" data-md-component="tabs">
+  <div class="md-tabs__inner md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  <li class="md-tabs__item">
+    
+      <a href="../.." title="Overview" class="md-tabs__link md-tabs__link--active">
+        Overview
+      </a>
+    
+  </li>
+
+      
+        
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href="../../serverless/" title="Serverless Round" class="md-tabs__link">
+          Serverless Round
+        </a>
+      
+    </li>
+  
+
+      
+        
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href="../../delegation/" title="Access Delegation Round" class="md-tabs__link">
+          Access Delegation Round
+        </a>
+      
+    </li>
+  
+
+      
+        
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href="../../permission-boundaries/" title="Permission Boundary Round" class="md-tabs__link">
+          Permission Boundary Round
+        </a>
+      
+    </li>
+  
+
+      
+        
+      
+        
+      
+    </ul>
+  </div>
+</nav>
+      
+      <main class="md-main">
+        <div class="md-main__inner md-grid" data-md-component="container">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    <!--
+  Copyright (c) 2016-2019 Martin Donath <martin.donath@squidfunk.com>
+  Permission is hereby granted, free of charge, to any person obtaining a copy
+  of this software and associated documentation files (the "Software"), to
+  deal in the Software without restriction, including without limitation the
+  rights to use, copy, modify, merge, publish, distribute, sublicense, and/or
+  sell copies of the Software, and to permit persons to whom the Software is
+  furnished to do so, subject to the following conditions:
+  The above copyright notice and this permission notice shall be included in
+  all copies or substantial portions of the Software.
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT. IN NO EVENT SHALL THE
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
+  IN THE SOFTWARE.
+-->
+
+<!-- Main navigation -->
+<nav class="md-nav md-nav--primary" data-md-level="0">
+
+  <!-- Site title -->
+  <label class="md-nav__title md-nav__title--site" for="__drawer">
+    <a href="https://identity-round-robin.awssecworkshops.com/"
+        title="Identity Round Robin" class="md-nav__button md-logo">
+      
+        <img src="../../assets/images/aws_smile_logo.png" width="48" height="48" />
+      
+    </a>
+    Identity Round Robin
+  </label>
+
+  <!-- Repository containing source -->
+  
+    <div class="md-nav__source">
+      
+
+
+  
+
+<a href="https://github.com/aws-samples/aws-identity-round-robin-workshop/" title="Go to repository" class="md-source" data-md-source="github">
+  
+    <div class="md-source__icon">
+      <svg viewBox="0 0 24 24" width="24" height="24">
+        <use xlink:href="#__github" width="24" height="24"></use>
+      </svg>
+    </div>
+  
+  <div class="md-source__repository">
+    aws-samples/aws-identity-round-robin-workshop
+  </div>
+</a>
+    </div>
+  
+
+  <!-- Render item list -->
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../.." title="Overview" class="md-nav__link">
+      Overview
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2">
+    
+    <label class="md-nav__link" for="nav-2">
+      Serverless Round
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-2">
+        Serverless Round
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../serverless/" title="Scenario" class="md-nav__link">
+      Scenario
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../serverless/build/" title="Build Phase" class="md-nav__link">
+      Build Phase
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../serverless/verify/" title="Verify Phase" class="md-nav__link">
+      Verify Phase
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3">
+    
+    <label class="md-nav__link" for="nav-3">
+      Access Delegation Round
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-3">
+        Access Delegation Round
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../delegation/" title="Scenario" class="md-nav__link">
+      Scenario
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../delegation/build/" title="Build Phase" class="md-nav__link">
+      Build Phase
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../delegation/verify/" title="Verify Phase" class="md-nav__link">
+      Verify Phase
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4">
+    
+    <label class="md-nav__link" for="nav-4">
+      Permission Boundary Round
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-4">
+        Permission Boundary Round
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../permission-boundaries/" title="Scenario" class="md-nav__link">
+      Scenario
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../permission-boundaries/build/" title="Build Phase" class="md-nav__link">
+      Build Phase
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../permission-boundaries/verify/" title="Verify Phase" class="md-nav__link">
+      Verify Phase
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../../contribute/" title="Contributing" class="md-nav__link">
+      Contributing
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../../license/" title="License" class="md-nav__link">
+      License
+    </a>
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#task-1-create-a-policy" title="Task 1 Create a policy" class="md-nav__link">
+    Task 1 Create a policy
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-policy-will-be-used-for-the-role-you-create-in-task-2-which-will-then-be-passed-to-a-lambda-function-you-create-in-task-3" title="The policy will be used for the role you create in Task 2 which will then be passed to a Lambda function you create in Task 3" class="md-nav__link">
+    The policy will be used for the role you create in Task 2 which will then be passed to a Lambda function you create in Task 3
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#walk-through" title="Walk Through" class="md-nav__link">
+    Walk Through
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#task-2-create-a-role" title="Task 2 Create a role" class="md-nav__link">
+    Task 2 Create a role
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-role-will-be-passed-to-the-lambda-function-you-create-in-task-3" title="The role will be passed to the Lambda function you create in Task 3" class="md-nav__link">
+    The role will be passed to the Lambda function you create in Task 3
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#walk-through_1" title="Walk Through" class="md-nav__link">
+    Walk Through
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#task-3-create-and-test-a-lambda-function" title="Task 3 Create and test a Lambda function" class="md-nav__link">
+    Task 3 Create and test a Lambda function
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#finally-you-will-create-a-nodejs-810-lambda-function-using-the-sample-code-below-and-pass-the-iam-role-you-created-in-task-2" title="Finally you will create a Node.js 8.10 Lambda function using the sample code below and pass the IAM role you created in Task 2" class="md-nav__link">
+    Finally you will create a Node.js 8.10 Lambda function using the sample code below and pass the IAM role you created in Task 2
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#walk-through_2" title="Walk Through" class="md-nav__link">
+    Walk Through
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#task-4-investigate-if-you-are-able-to-do-anything-else" title="Task 4 Investigate if you are able to do anything else" class="md-nav__link">
+    Task 4 Investigate if you are able to do anything else
+  </a>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                  <a href="https://github.com/aws-samples/aws-identity-round-robin-workshop/edit/master/docs/permission-boundaries-advanced/verify.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
+                
+                
+                <h1 id="permission-boundaries-workshop-verify-phase">Permission boundaries workshop <small>VERIFY phase</small></h1>
+<p>You are now in the <strong>VERIFY</strong> phase. It is time to put on the hat of the webadmins and test out their access. Permissions boundaries are about delegation so handing this access off to another grouop will simulate that experience.</p>
+<p>You should have receieved from another team the following information:
+<em> IAM role name:    <strong>webadmin</strong>
+</em> Resource restriction for both the roles and policies: /Path/Name
+<em> permissions boundary name: <strong>webadminspermissionsboundary</strong>
+</em> Permission policy name: <strong>webadminspermissionpolicy</strong></p>
+<p>You will be creating up an IAM policy, an IAM role and a Lambda function. The Lambda function should be able to list files in a particular S3 bucket. The webadmins should not be able to impact any resources in the account that they do not own.</p>
+<p>Application architecture: <img alt="image1" src="../images/architecture.png" /></p>
+<h2 id="task-1-create-a-policy">Task 1 <small>Create a policy</small></h2>
+<h4 id="the-policy-will-be-used-for-the-role-you-create-in-task-2-which-will-then-be-passed-to-a-lambda-function-you-create-in-task-3">The policy will be used for the role you create in Task 2 which will then be passed to a Lambda function you create in Task 3</h4>
+<h3 id="walk-through">Walk Through</h3>
+<ul>
+<li>You can use the following for the policy statement:<ul>
+<li><code>{"Version":"2012-10-17","Statement":[{"Effect":"Allow","Action":["logs:CreateLogGroup","logs:CreateLogStream","logs:PutLogEvents","s3:*"],"Resource":"*"}]}</code></li>
+</ul>
+</li>
+<li>Create the policy<ul>
+<li><code>aws iam create-policy --policy-name NAME_OF_POLICY --path /NAME_OF_PATH/ --policy-document file://verifypolicy</code></li>
+</ul>
+</li>
+</ul>
+<h2 id="task-2-create-a-role">Task 2 <small>Create a role</small></h2>
+<h4 id="the-role-will-be-passed-to-the-lambda-function-you-create-in-task-3">The role will be passed to the Lambda function you create in Task 3</h4>
+<h3 id="walk-through_1">Walk Through</h3>
+<ul>
+<li>You can use the following for the assume role policy: <ul>
+<li><code>{ "Version": "2012-10-17", "Statement": { "Effect": "Allow", "Principal": { "Service": "lambda.amazonaws.com"}, "Action": "sts:AssumeRole" } }</code></li>
+</ul>
+</li>
+<li>Create the role:<ul>
+<li><code>aws iam create-role --role-name NAME_OF_ROLE --path NAME_OF_PATH --assume-role-policy-document --permissions-boundary arn:aws:iam::Account_ID:policy/webadminspermissionsboundary  file://verifyassumerole</code></li>
+</ul>
+</li>
+<li>Add the polcy you create in Task 1 to the role<ul>
+<li><code>aws iam attach-role-policy --policy-arn arn:aws:iam::Account_ID:policy/NAME_OF_PATH/NAME_OF_POLICY --role-name NAME_OF_ROLE</code></li>
+</ul>
+</li>
+</ul>
+<h2 id="task-3-create-and-test-a-lambda-function">Task 3 <small>Create and test a Lambda function</small></h2>
+<h4 id="finally-you-will-create-a-nodejs-810-lambda-function-using-the-sample-code-below-and-pass-the-iam-role-you-created-in-task-2">Finally you will create a <strong>Node.js 8.10</strong> Lambda function using the sample code below and pass the IAM role you created in Task 2</h4>
+<h3 id="walk-through_2">Walk Through</h3>
+<ul>
+<li>Create a file <code>index.js</code> using the code sample below and then zip the file (replace <code>"WEB_ADMIN_BUCKET_NAME"</code> with the name of bucket from the account that begins with <code>"web-admins-"</code> and ends in <code>"-data"</code> - in order to get the bucket name, just run <code>aws s3 ls</code> using the webadmins role.)<ul>
+<li><code>aws lambda create-function --function-name NAME_OF_FUNCTION --runtime nodejs8.10 --role arn:aws:iam::Account_ID:role/NAME_OF_PATH/NAME_OF_ROLE --handler index.handler --region us-east-2 --zip-file fileb://NAME_OF_ZIP_FILE</code></li>
+</ul>
+</li>
+<li>Invoke the Lambda function and make sure it is generating logs in CloudWatch logs and that it is able to list the objects in the bucket.<ul>
+<li><code>aws lambda invoke --function-name NAME_OF_FUNCTION --region us-east-2 --invocation-type RequestResponse outputfile.txt</code></li>
+</ul>
+</li>
+<li>Examine the output file. It should show a number of log files in the S3 bucket that the Lambda function read. </li>
+</ul>
+<div class="codehilite"><pre><span></span><span class="nt">const</span> <span class="nt">AWS</span> <span class="o">=</span> <span class="nt">require</span><span class="o">(</span><span class="s1">&#39;aws-sdk&#39;</span><span class="o">);</span>
+<span class="nt">const</span> <span class="nt">s3</span> <span class="o">=</span> <span class="nt">new</span> <span class="nt">AWS</span><span class="p">.</span><span class="nc">S3</span><span class="o">();</span>
+
+<span class="nt">exports</span><span class="p">.</span><span class="nc">handler</span> <span class="o">=</span> <span class="nt">async</span> <span class="o">(</span><span class="nt">event</span><span class="o">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="err">console.log(&#39;Loading</span> <span class="err">function&#39;)</span><span class="p">;</span>
+  <span class="err">const</span> <span class="err">allKeys</span> <span class="err">=</span> <span class="cp">[]</span><span class="p">;</span>
+  <span class="err">await</span> <span class="err">getKeys({</span> <span class="n">Bucket</span><span class="p">:</span> <span class="s1">&#39;WEB_ADMIN_BUCKET_NAME&#39;</span> <span class="p">}</span><span class="o">,</span> <span class="nt">allKeys</span><span class="o">);</span>
+  <span class="nt">return</span> <span class="nt">allKeys</span><span class="o">;</span>
+<span class="err">}</span><span class="o">;</span>
+
+<span class="nt">async</span> <span class="nt">function</span> <span class="nt">getKeys</span><span class="o">(</span><span class="nt">params</span><span class="o">,</span> <span class="nt">keys</span><span class="o">)</span><span class="p">{</span>
+  <span class="err">const</span> <span class="err">response</span> <span class="err">=</span> <span class="err">await</span> <span class="err">s3.listObjectsV2(params).promise()</span><span class="p">;</span>
+  <span class="err">response.Contents.forEach(obj</span> <span class="err">=&gt;</span> <span class="err">keys.push(obj.Key))</span><span class="p">;</span>
+
+  <span class="err">if</span> <span class="err">(response.IsTruncated)</span> <span class="err">{</span>
+    <span class="err">const</span> <span class="err">newParams</span> <span class="err">=</span> <span class="err">Object.assign({</span><span class="p">}</span><span class="o">,</span> <span class="nt">params</span><span class="o">);</span>
+    <span class="nt">newParams</span><span class="p">.</span><span class="nc">ContinuationToken</span> <span class="o">=</span> <span class="nt">response</span><span class="p">.</span><span class="nc">NextContinuationToken</span><span class="o">;</span>
+    <span class="nt">await</span> <span class="nt">getKeys</span><span class="o">(</span><span class="nt">newParams</span><span class="o">,</span> <span class="nt">keys</span><span class="o">);</span> 
+  <span class="err">}</span>
+<span class="err">}</span>
+</pre></div>
+
+
+<h2 id="task-4-investigate-if-you-are-able-to-do-anything-else">Task 4 <small>Investigate if you are able to do anything else</small></h2>
+<p>The final step is to determine if you can do anything else in the account. Can you impact any resources not owned by the web admins?</p>
+                
+                  
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+          <div class="md-footer-copyright__highlight">
+            &copy; 2019, Amazon Web Services, Inc. or its affiliates. All rights reserved.
+          </div>
+        
+        powered by
+        <a href="https://www.mkdocs.org">MkDocs</a>
+        and
+        <a href="https://squidfunk.github.io/mkdocs-material/">
+          Material for MkDocs</a>
+      </div>
+      
+  <div class="md-footer-social">
+    <link rel="stylesheet" href="../../assets/fonts/font-awesome.css">
+    
+      <a href="https://awssecworkshops.com" class="md-footer-social__link fa fa-home"></a>
+    
+      <a href="https://aws.amazon.com/security/" class="md-footer-social__link fa fa-shield"></a>
+    
+      <a href="https://twitter.com/awssecurityinfo?lang=en" class="md-footer-social__link fa fa-twitter"></a>
+    
+      <a href="https://aws.amazon.com/blogs/security/" class="md-footer-social__link fa fa-rss"></a>
+    
+  </div>
+
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    
+      <script src="../../assets/javascripts/application.d9aa80ab.js"></script>
+      
+      <script>app.initialize({version:"1.0.4",url:{base:"../.."}})</script>
+      
+    
+  </body>
+</html>
