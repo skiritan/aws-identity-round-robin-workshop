@@ -1,6 +1,6 @@
 # Permission boundaries round
 
-Your customer has deployed a three tier web application in production. Different teams work on different aspects of the architecture but they don't always communicate well. Just recently the team responsible for the web front end set up a Lambda function that inadvertently impacted the application team's resources. The VP of Operations was furious. The VP has tasked you with setting up permissions for the web admins so that they can only impact they own resources while still being able to do their job. 
+Your customer has deployed a three tier web application in production. Different teams work on different aspects of the architecture but they don't always communicate well. Just recently the team responsible for the web front end set up a Lambda function that inadvertently impacted the application team's resources. The VP of Operations was furious. The VP has tasked you with setting up permissions for the web admins so that they can only impact their own resources while still being able to do their job. 
 
 **AWS Service/Feature Coverage**: 
 
