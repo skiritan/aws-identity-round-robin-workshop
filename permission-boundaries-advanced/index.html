@@ -102,7 +102,7 @@
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
     <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
     
-      <a href="#advanced-permissions-boundary-round" tabindex="1" class="md-skip">
+      <a href="#permissions-boundary-workshop-advanced-edition" tabindex="1" class="md-skip">
         Skip to content
       </a>
     
@@ -160,7 +160,7 @@
                   Identity Round Robin
                 </span>
                 <span class="md-header-nav__topic">
-                  Advanced Permissions boundary round
+                  Permissions boundary workshop -<small> Advanced edition </small>
                 </span>
               
             
@@ -609,49 +609,6 @@
     
   
   
-    <label class="md-nav__title" for="__toc">Table of contents</label>
-    <ul class="md-nav__list" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#agenda" title="Agenda" class="md-nav__link">
-    Agenda
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#requirements" title="Requirements" class="md-nav__link">
-    Requirements
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#presentation" title="Presentation" class="md-nav__link">
-    Presentation
-  </a>
-  
-    <nav class="md-nav">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#click-here-to-go-to-the-build-phase" title="Click here to go to the BUILD phase" class="md-nav__link">
-    Click here to go to the BUILD phase
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-      
-      
-      
-      
-    </ul>
-  
 </nav>
                   </div>
                 </div>
@@ -665,44 +622,36 @@
                   <a href="https://github.com/aws-samples/aws-identity-round-robin-workshop/edit/master/docs/permission-boundaries-advanced/index.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
                 
                 
-                <h1 id="advanced-permissions-boundary-round">Advanced Permissions boundary round</h1>
-<p>Your customer has deployed a three tier web application in production. Different teams work on different aspects of the architecture but they don't always communicate well. Just recently the team responsible for the web front end set up a Lambda function that inadvertently impacted the application team's resources. The VP of Operations was furious. The VP has tasked you with setting up permissions for the web admins so that they can only impact they own resources while still being able to do their job. </p>
+                <h1 id="permissions-boundary-workshop-advanced-edition">Permissions boundary workshop -<small> Advanced edition </small></h1>
+<h1 id="overview"><small> Overview </small></h1>
+<p>Your company has deployed a production three tier web application on AWS. Different teams work on different aspects of the architecture including the web admins who need to be able to create IAM roles for Lambda functions. In order to let them quickly iterate it was decided that permissions boundaries would be used to delegate permissions to the web admins so they can create the roles needed without being able to escalate their permissions. </p>
 <p><strong>AWS Service/Feature Coverage</strong>: </p>
 <ul>
+<li>AWS IAM <a href="https://docs.aws.amazon.com/IAM/latest/UserGuide/id.html">users &amp; roles</a></li>
 <li>AWS IAM <a href="https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_boundaries.html">permission boundaries</a> </li>
 <li>AWS IAM <a href="https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_identifiers.html">identifiers or resource restrictions</a></li>
-<li>AWS IAM <a href="https://docs.aws.amazon.com/IAM/latest/UserGuide/id.html">users &amp; roles</a></li>
 <li>AWS <a href="https://docs.aws.amazon.com/lambda/latest/dg/welcome.html">Lambda</a></li>
 </ul>
 <h2 id="agenda">Agenda</h2>
-<p>The round is broken down into a <a href="build/"><strong>BUILD</strong></a> phase followed by a <a href="verify/"><strong>VERIFY</strong></a> phase. </p>
-<p><strong>BUILD</strong> (60 min): First each team will carry out the activities involved in the <strong>BUILD</strong> phase where they will set up access for the web admins and properly lock down the account. Then each team will hand credentials for an IAM role in their account to another team to act in the <strong>VERIFY</strong> phase. The <strong>VERIFY</strong> phase lasts about 30 min.</p>
-<p><strong>VERIFY</strong> (30 min): Each team will carry out the <strong>VERIFY</strong> activities as if they were part of the web admins team. The <strong>VERIFY</strong> activities will include validating that the requirements were set up correctly in the <strong>BUILD</strong> phase and also investigate if the web admins are able to take actions that they shouldn't be allowed to.</p>
+<p>The round consists of a <a href="build/"><strong>BUILD</strong></a> phase followed by a <a href="verify/"><strong>VERIFY</strong></a> phase. </p>
+<h3 id="phases">Phases</h3>
+<p><strong>BUILD</strong> (60 min): First each team will act as the admins of the account and carry out the activities involved in the <strong>BUILD</strong> phase where they will set up access for the web admins. </p>
+<p>Then each team will hand credentials for the webadmins IAM role in their account to another team to carry out the <strong>VERIFY</strong> phase. </p>
+<p><strong>VERIFY</strong> (30 min): In the <strong>Verify</strong> phase each team will then act as the web admins validate that the requirements were set up correctly in the <strong>BUILD</strong> phase.</p>
 <div class="admonition info">
 <p class="admonition-title">Team or Individual Exercise</p>
-<p>This workshop can be done as a team exercise or individually. The instructions are written with assumption that you are working as part of a team but you could just as easily do the steps below on your own. If done as part of an AWS sponsored event then you'll be split into teams of around 4-6 people. Each team will do the <strong>BUILD</strong> phase and then hand off their accounts to another team. Then each team will do the <strong>VERIFY</strong> phase. </p>
+<p>This workshop can be done as a team exercise or individually. If done as part of an AWS sponsored event then you will most likely be split into teams of around 2-3 people (you are of course free to work on your own.) If you are working in a team then try to divide up the tasks. </p>
 </div>
-<p>Using this workshop as an example, the three elements of a permission boundary are represented below. When your team does the <strong>BUILD</strong> tasks you will act as the admin. When your team does the <strong>VERIFY</strong> tasks you will act as the delegated admin. The delegated admins will create roles that can be considered <strong>"bound"</strong> since they will have permission boundaries attached.  </p>
-<p><img alt="mechanism" src="images/permission-boundaries.png" /></p>
-<!--### Point system
-There is a point system for both the **BUILD** and **VERIFY**  activities. Each team also starts out with a number of points they can exchange for hints for various sections.
-
-Points earned during **VERIFY** Phase:
-
-* 5 points for each requirement fulfilled by the team in the **BUILD** phase 
-* 15 points for every major exploit found (components of an individual exploit cannot be combined, e.g. a public bucket that allows Read, Write and List is one exploit. 
--->
-
+<h3 id="presentation">Presentation</h3>
+<p>If you are doing this workshop as part of an AWS event then there will usually be a 30 minute presentation before the hands-on exercise. Here is the <a href="presentation.pdf">presentation deck</a>.</p>
 <h2 id="requirements">Requirements</h2>
 <details class="info"><summary>Click here for the account architecture</summary><p>Account architecture: <img alt="architecture" src="images/architecture.png" /></p>
 </details>
-<p>The ulimate goal of this workshop is to set up the web admins so they can create a Lambda function to read an S3 bucket while making sure they are not able to impact the resources of other teams. The web admins should only have access to the following resources:</p>
+<p>The goal of this workshop is to set up the web admins so they can create an IAM role and attach it to a Lambda function which will then read an S3 bucket. The webadmin need the necessary permissions to do this without also being able to escalate their permissions or impact the resources of other teams in the same AWS account. The web admins should only have access to the following resources:</p>
 <ol>
 <li>IAM policies and roles created by the web admins </li>
-<li>S3 buckets: The web admins are allowed access to the bucket that starts  with<code>"web-admins-"</code> and ends in <code>"-data"</code></li>
+<li>S3 bucket: The web admins are allowed access to the bucket that starts  with<code>"web-admins-"</code> and ends in <code>"-data"</code></li>
 </ol>
-<h2 id="presentation">Presentation</h2>
-<p>If you are doing this workshop as part of an AWS event then there will usually be a 30 minute presentation before the hands-on exercise. Here is the <a href="presentation.pdf">presentation deck</a>.</p>
 <h4 id="click-here-to-go-to-the-build-phase"><a href="build/">Click here to go to the BUILD phase</a></h4>
                 
                   

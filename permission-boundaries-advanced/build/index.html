@@ -42,7 +42,7 @@
     
     
       
-        <title>Permissions boundaries workshop <small>Build Phase</small> - Identity Round Robin</title>
+        <title>Permissions boundaries workshop - <small> Advanced edition </small> - Identity Round Robin</title>
       
     
     
@@ -102,7 +102,7 @@
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
     <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
     
-      <a href="#permissions-boundaries-workshop-build-phase" tabindex="1" class="md-skip">
+      <a href="#permissions-boundaries-workshop-advanced-edition" tabindex="1" class="md-skip">
         Skip to content
       </a>
     
@@ -160,7 +160,7 @@
                   Identity Round Robin
                 </span>
                 <span class="md-header-nav__topic">
-                  Permissions boundaries workshop <small>Build Phase</small>
+                  Permissions boundaries workshop - <small> Advanced edition </small>
                 </span>
               
             
@@ -609,157 +609,6 @@
     
   
   
-    <label class="md-nav__title" for="__toc">Table of contents</label>
-    <ul class="md-nav__list" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#setup-instructions" title="Setup Instructions" class="md-nav__link">
-    Setup Instructions
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#task-1-setup-the-webadmins-role" title="Task 1 Setup the webadmins role" class="md-nav__link">
-    Task 1 Setup the webadmins role
-  </a>
-  
-    <nav class="md-nav">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#create-an-iam-role-so-that-web-admins-can-authenticate-to-the-console" title="Create an IAM role so that web admins can authenticate to the console." class="md-nav__link">
-    Create an IAM role so that web admins can authenticate to the console.
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#walk-through" title="Walk Through" class="md-nav__link">
-    Walk Through
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#task-2-create-the-permissions-boundary-for-the-webadmins" title="Task 2 Create the permissions boundary for the webadmins" class="md-nav__link">
-    Task 2 Create the permissions boundary for the webadmins
-  </a>
-  
-    <nav class="md-nav">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#create-a-policy-named-webadminspermissionsboundary-using-the-example-below" title="Create a policy named webadminspermissionsboundary using the example below" class="md-nav__link">
-    Create a policy named webadminspermissionsboundary using the example below
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#walk-through_1" title="Walk Through:" class="md-nav__link">
-    Walk Through:
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#task-3-create-the-permission-policy-for-the-webadmins" title="Task 3 Create the permission policy for the webadmins" class="md-nav__link">
-    Task 3 Create the permission policy for the webadmins
-  </a>
-  
-    <nav class="md-nav">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#create-a-policy-named-webadminspermissionpolicy-using-the-example-below" title="Create a policy named webadminspermissionpolicy using the example below" class="md-nav__link">
-    Create a policy named webadminspermissionpolicy using the example below
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#walk-through_2" title="Walk Through" class="md-nav__link">
-    Walk Through
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#task-4-test-the-webadmins-access" title="Task 4 Test the webadmins access" class="md-nav__link">
-    Task 4 Test the webadmins access
-  </a>
-  
-    <nav class="md-nav">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#you-should-now-check-that-the-webadmins-role-can-create-a-policy-create-a-role-attaching-both-a-permission-policy-and-permissions-boundary-to-the-role-and-finally-create-a-lambda-function-into-which-you-will-pass-that-role" title="You should now check that the webadmins role can create a policy, create a role (attaching both a permission policy and permissions boundary to the role) and finally create a Lambda function into which you will pass that role." class="md-nav__link">
-    You should now check that the webadmins role can create a policy, create a role (attaching both a permission policy and permissions boundary to the role) and finally create a Lambda function into which you will pass that role.
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#walk-through_3" title="Walk Through" class="md-nav__link">
-    Walk Through
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#task-5-gather-info-needed-for-the-verify-phase" title="Task 5 Gather info needed for the VERIFY phase" class="md-nav__link">
-    Task 5 Gather info needed for the VERIFY phase
-  </a>
-  
-    <nav class="md-nav">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#walk-through_4" title="Walk Through" class="md-nav__link">
-    Walk Through
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#click-here-to-go-to-the-verify-phase" title="Click here to go to the VERIFY phase" class="md-nav__link">
-    Click here to go to the VERIFY phase
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-      
-      
-      
-      
-    </ul>
-  
 </nav>
                   </div>
                 </div>
@@ -773,8 +622,10 @@
                   <a href="https://github.com/aws-samples/aws-identity-round-robin-workshop/edit/master/docs/permission-boundaries-advanced/build.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
                 
                 
-                <h1 id="permissions-boundaries-workshop-build-phase">Permissions boundaries workshop <small>Build Phase</small></h1>
-<p>Below are a series of tasks to delegate permissions to the webadmins. If you are working in a group then try to divide up the tasks. </p>
+                <h1 id="permissions-boundaries-workshop-advanced-edition">Permissions boundaries workshop - <small> Advanced edition </small></h1>
+<h1 id="build-phase"><small> Build phase </small></h1>
+<p>The three elements of a permission boundary are represented below. When your team does the <strong>BUILD</strong> tasks you will act as the admins. When your team does the <strong>VERIFY</strong> tasks you will act as the delegated admins (webadmins). The delegated admins will create roles that can be considered <strong>"bound"</strong> since they will have a permissions boundary attached.  </p>
+<p><img alt="mechanism" src="../images/permission-boundaries.png" /></p>
 <h2 id="setup-instructions">Setup Instructions</h2>
 <p>To setup your environment please expand one of the following drop-downs (depending on how if you are doing this workshop at an <strong>AWS event</strong> or <strong>individually</strong>) and follow the instructions: </p>
 <details class="info"><summary>AWS Sponsored Event</summary><p><strong>Console Login:</strong> if you are attending this workshop at an official AWS event then your team should have the URL and login credentials for your account. This will allow you to login to the account using AWS SSO. Browse to that URL and login. </p>
@@ -830,7 +681,7 @@
 </ol>
 <p>This will bring you back to the CloudFormation console. You can refresh the page to see the stack starting to create. Before moving on, make sure the stack is in a <strong>CREATE_COMPLETE</strong>.</p>
 </details>
-<h2 id="task-1-setup-the-webadmins-role">Task 1 <small>Setup the webadmins role</small></h2>
+<h2 id="task-1-create-the-webadmins-role">Task 1 <small>Create the webadmins role</small></h2>
 <h4 id="create-an-iam-role-so-that-web-admins-can-authenticate-to-the-console">Create an IAM role so that web admins can authenticate to the console.</h4>
 <h3 id="walk-through">Walk Through</h3>
 <ul>
@@ -838,19 +689,20 @@
 </ul>
 <p><img alt="image1" src="../images/sso-temp-creds.png" /></p>
 <ul>
+<li>Paste the credentials into the <a href="https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-files.html">credentials file</a> (~/.aws/credentials if running on a Mac or Linux)</li>
 <li>
-<p>Create an IAM role that will be used by the webadmins (Initially this role will trust your own AWS account but in the Verify phase you will configure it to trust the other group's account.) </p>
+<p>Create an IAM role that will be used by the webadmins (Initially this role will trust your own AWS account but in the <strong>Verify</strong> phase you will configure it to trust the other group's account.) </p>
 <ul>
-<li>You can use the following for the assumerolepolicy (you will need to replace the Account ID): 
+<li>Use the following JSON to create a file name assumerolepolicy for the trust (assume role) policy (replace the Account ID): 
 <code>{ "Version": "2012-10-17", "Statement": { "Effect": "Allow", "Principal": { "AWS": "arn:aws:iam::Account_ID:root"}, "Action": "sts:AssumeRole" } }</code></li>
-<li>Then run this command to create the role:
+<li>Create the role:
 <code>aws iam create-role --role-name webadmins --assume-role-policy-document file://assumerolepolicy  --profile Name_of_the_credential_profile</code></li>
 <li>Add the Lambda Read Only policy to the role
 <code>aws iam attach-role-policy --policy-arn arn:aws:iam::aws:policy/AWSLambdaReadOnlyAccess  --role-name webadmins</code></li>
 </ul>
 </li>
 <li>
-<p>Add the following to the Config file (~/.aws if running on a Mac or Linux -  so you can easily assume the newly created role for the web admins.</p>
+<p>Add the following to the <a href="https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-role.html">AWS CLI config file</a> (~/.aws/config if running on a Mac or Linux) so you can easily assume the newly created role for the web admins.</p>
 </li>
 </ul>
 <div class="codehilite"><pre><span></span><span class="k">[profile webadmins]</span>
@@ -861,7 +713,7 @@
 
 <h2 id="task-2-create-the-permissions-boundary-for-the-webadmins">Task 2 <small>Create the permissions boundary for the webadmins</small></h2>
 <h4 id="create-a-policy-named-webadminspermissionsboundary-using-the-example-below">Create a policy named <strong><code>webadminspermissionsboundary</code></strong> using the example below</h4>
-<p>We will use permissions boundaries to limit the effective permissions of the roles created by the webadmin. The permissions boundary should only allow the following actions for roles created by the webadmins:</p>
+<p>We will use permissions boundaries to limit the effective permissions of the roles created by the webadmins. The permissions boundary should only allow the following actions for roles created by the webadmins:</p>
 <ul>
 <li>Create log groups </li>
 <li>Create log streams and put logs</li>
@@ -870,13 +722,10 @@
 <h3 id="walk-through_1">Walk Through:</h3>
 <div class="admonition attention">
 <p class="admonition-title">Attention</p>
-<p>Keep in mind where you need to add the account ID, correctly use the pathing and change the region specified if needed (although if you are taking this as part of an AWS event, just use the alreeady specified us-east-2.) Missing any of these items can result in problems and errors like <strong>"An error occurred (MalformedPolicyDocument) when calling the CreatePolicy operation: The policy failed legacy parsing"</strong>.</p>
+<p>Keep in mind where you need to add the Account ID, correctly use pathing and change the region specified if needed (although if you are taking this as part of an AWS event, just use the already specified us-east-2.) Missing any of these items can result in problems and errors like <strong>"An error occurred (MalformedPolicyDocument) when calling the CreatePolicy operation: The policy failed legacy parsing"</strong>.</p>
 </div>
 <ul>
-<li>Create the policy (you will first need to generate a file named boundarydoc using the example policy below)<ul>
-<li><code>aws iam create-policy --policy-name webadminspermissionsboundary --policy-document file://boundarydoc</code></li>
-</ul>
-</li>
+<li>Use the following JSON to create a file named boundarydoc for the policy document:</li>
 </ul>
 <div class="codehilite"><pre><span></span><span class="p">{</span>
     <span class="nt">&quot;Version&quot;</span><span class="p">:</span> <span class="s2">&quot;2012-10-17&quot;</span><span class="p">,</span>
@@ -909,6 +758,12 @@
 </pre></div>
 
 
+<ul>
+<li>Create the policy:<ul>
+<li><code>aws iam create-policy --policy-name webadminspermissionsboundary --policy-document file://boundarydoc</code></li>
+</ul>
+</li>
+</ul>
 <div class="admonition question">
 <p class="admonition-title">Question</p>
 <ul>
@@ -921,15 +776,7 @@
 <h4 id="create-a-policy-named-webadminspermissionpolicy-using-the-example-below">Create a policy named <strong><code>webadminspermissionpolicy</code></strong> using the example below</h4>
 <h3 id="walk-through_2">Walk Through</h3>
 <ul>
-<li>Create the policy (you will first need to generate a file named policydoc using the example policy below)<ul>
-<li><code>aws iam create-policy --policy-name webadminspermissionpolicy --policy-document file://policydoc</code></li>
-</ul>
-</li>
-<li>Attach the policy to the webadmins role<ul>
-<li><code>aws iam attach-role-policy --role-name webadmins --policy-arn arn:aws:iam::Account_ID:policy/webadminspermissionpolicy</code></li>
-</ul>
-</li>
-<li>When you are done the <strong>webadmins</strong> role should have these three policies attached: webadminspermissionpolicy, IAMReadOnlyAccess &amp; AWSLambdaReadOnlyAccess.</li>
+<li>Use the following JSON to create a file named policydoc for the policy document:</li>
 </ul>
 <div class="admonition hint">
 <p class="admonition-title">Hint</p>
@@ -1024,6 +871,17 @@
 </pre></div>
 
 
+<ul>
+<li>Create the policy (you will first need to generate a file named policydoc using the example policy below)<ul>
+<li><code>aws iam create-policy --policy-name webadminspermissionpolicy --policy-document file://policydoc</code></li>
+</ul>
+</li>
+<li>Attach the policy to the webadmins role<ul>
+<li><code>aws iam attach-role-policy --role-name webadmins --policy-arn arn:aws:iam::Account_ID:policy/webadminspermissionpolicy</code></li>
+</ul>
+</li>
+<li>When you are done the <strong>webadmins</strong> role should have these two policies attached: webadminspermissionpolicy &amp; AWSLambdaReadOnlyAccess.</li>
+</ul>
 <div class="admonition question">
 <p class="admonition-title">Question</p>
 <ul>
@@ -1033,8 +891,8 @@
 <li>Why do we add the Deny for DeletePolicy actions regarding the webadminspermissionsboundary &amp; webadminspermissionpolicy?</li>
 </ul>
 </div>
-<h2 id="task-4-test-the-webadmins-access">Task 4 <small>Test the webadmins access</small></h2>
-<h4 id="you-should-now-check-that-the-webadmins-role-can-create-a-policy-create-a-role-attaching-both-a-permission-policy-and-permissions-boundary-to-the-role-and-finally-create-a-lambda-function-into-which-you-will-pass-that-role">You should now check that the <strong>webadmins</strong> role can create a policy, create a role (attaching both a permission policy and permissions boundary to the role) and finally create a Lambda function into which you will pass that role.</h4>
+<h2 id="task-4-test-the-webadmins-permissions">Task 4 <small>Test the webadmins permissions</small></h2>
+<h4 id="you-should-now-check-that-using-webadmins-role-you-can-create-a-policy-a-role-attaching-both-a-permission-policy-and-permissions-boundary-to-the-role-and-finally-create-a-lambda-function-into-which-you-will-pass-that-role">You should now check that using <strong>webadmins</strong> role you can create a policy, a role (attaching both a permission policy and permissions boundary to the role) and finally create a Lambda function into which you will pass that role.</h4>
 <h3 id="walk-through_3">Walk Through</h3>
 <p>Using the webadmins role:</p>
 <ul>
@@ -1042,17 +900,13 @@
 <li>Create a role (this role should use Lambda as the trusted entity and attach the policy you just created to it)</li>
 <li>Create a Lambda function, pass the role to it and make sure you can run the function. </li>
 </ul>
-<div class="admonition question">
-<p class="admonition-title">Question</p>
-<p>*.</p>
-</div>
 <h2 id="task-5-gather-info-needed-for-the-verify-phase">Task 5 <small>Gather info needed for the <strong>VERIFY</strong> phase</small></h2>
 <h3 id="walk-through_4">Walk Through</h3>
 <p>Now that you have setup the IAM role for the webadmins, it's time to pass this information on to the next team who will work through the <strong>VERIFY</strong> tasks. If you were given a form to fill out then enter the info into the form and hand it to another group (or send this to the other group using whatever method is easiest.) </p>
 <p>Information to pass (recommended names for certain objects provided below - only change if you didn't go with the recommended names):</p>
 <ul>
-<li>IAM role name:    <strong>webadmin</strong></li>
-<li>Resource restriction for both the roles and policies: /webadmin/<strong><em>_</em></strong><strong><em>_</em></strong>__</li>
+<li>IAM role ARN: arn:aws:iam::<code>Provide ACCOUNT_ID</code>:role/<strong>webadmin</strong></li>
+<li>Resource restriction for both the roles and policies: /webadmins/<code>Provide resource restriction</code></li>
 <li>permissions boundary name: <strong>webadminspermissionsboundary</strong></li>
 <li>Permission policy name: <strong>webadminspermissionpolicy</strong></li>
 </ul>
