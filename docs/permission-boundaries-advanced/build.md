@@ -1,6 +1,9 @@
-# Permissions boundaries workshop <small>Build Phase</small>
+# Permissions boundaries workshop - <small> Advanced edition </small>
+# <small> Build phase </small>
 
-Below are a series of tasks to delegate permissions to the webadmins. If you are working in a group then try to divide up the tasks. 
+The three elements of a permission boundary are represented below. When your team does the **BUILD** tasks you will act as the admins. When your team does the **VERIFY** tasks you will act as the delegated admins (webadmins). The delegated admins will create roles that can be considered **"bound"** since they will have a permissions boundary attached.  
+
+![mechanism](./images/permission-boundaries.png)
 
 ## Setup Instructions
 
@@ -48,7 +51,7 @@ To setup your environment please expand one of the following drop-downs (dependi
 
 	This will bring you back to the CloudFormation console. You can refresh the page to see the stack starting to create. Before moving on, make sure the stack is in a **CREATE_COMPLETE**.
 
-## Task 1 <small>Setup the webadmins role</small>
+## Task 1 <small>Create the webadmins role</small>
 
 #### Create an IAM role so that web admins can authenticate to the console.
 
@@ -58,16 +61,17 @@ To setup your environment please expand one of the following drop-downs (dependi
 
 ![image1](./images/sso-temp-creds.png)
 
-* Create an IAM role that will be used by the webadmins (Initially this role will trust your own AWS account but in the Verify phase you will configure it to trust the other group's account.) 
+* Paste the credentials into the [credentials file](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-files.html) (~/.aws/credentials if running on a Mac or Linux)
+* Create an IAM role that will be used by the webadmins (Initially this role will trust your own AWS account but in the **Verify** phase you will configure it to trust the other group's account.) 
 
-	* You can use the following for the assumerolepolicy (you will need to replace the Account ID): 
+	* Use the following JSON to create a file name assumerolepolicy for the trust (assume role) policy (replace the Account ID): 
 `{ "Version": "2012-10-17", "Statement": { "Effect": "Allow", "Principal": { "AWS": "arn:aws:iam::Account_ID:root"}, "Action": "sts:AssumeRole" } }`
-	* Then run this command to create the role:
+	* Create the role:
 `aws iam create-role --role-name webadmins --assume-role-policy-document file://assumerolepolicy  --profile Name_of_the_credential_profile`
 	* Add the Lambda Read Only policy to the role
 `aws iam attach-role-policy --policy-arn arn:aws:iam::aws:policy/AWSLambdaReadOnlyAccess  --role-name webadmins`
 
-* Add the following to the Config file (~/.aws if running on a Mac or Linux -  so you can easily assume the newly created role for the web admins.
+* Add the following to the [AWS CLI config file](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-role.html) (~/.aws/config if running on a Mac or Linux) so you can easily assume the newly created role for the web admins.
 
 ```
 [profile webadmins]
@@ -79,7 +83,7 @@ source_profile = Name_of_the_SSO_Credential_Profile
 
 #### Create a policy named **`webadminspermissionsboundary`** using the example below
 
-We will use permissions boundaries to limit the effective permissions of the roles created by the webadmin. The permissions boundary should only allow the following actions for roles created by the webadmins:
+We will use permissions boundaries to limit the effective permissions of the roles created by the webadmins. The permissions boundary should only allow the following actions for roles created by the webadmins:
 
 * Create log groups 
 * Create log streams and put logs
@@ -88,10 +92,9 @@ We will use permissions boundaries to limit the effective permissions of the rol
 ### Walk Through: 
 
 !!! Attention
-	Keep in mind where you need to add the account ID, correctly use the pathing and change the region specified if needed (although if you are taking this as part of an AWS event, just use the alreeady specified us-east-2.) Missing any of these items can result in problems and errors like **"An error occurred (MalformedPolicyDocument) when calling the CreatePolicy operation: The policy failed legacy parsing"**.
+	Keep in mind where you need to add the Account ID, correctly use pathing and change the region specified if needed (although if you are taking this as part of an AWS event, just use the already specified us-east-2.) Missing any of these items can result in problems and errors like **"An error occurred (MalformedPolicyDocument) when calling the CreatePolicy operation: The policy failed legacy parsing"**.
 
-* Create the policy (you will first need to generate a file named boundarydoc using the example policy below)
-	* `aws iam create-policy --policy-name webadminspermissionsboundary --policy-document file://boundarydoc`
+* Use the following JSON to create a file named boundarydoc for the policy document:
 	
 ``` json
 {
@@ -123,6 +126,8 @@ We will use permissions boundaries to limit the effective permissions of the rol
     ]
 }
 ```
+* Create the policy:
+	* `aws iam create-policy --policy-name webadminspermissionsboundary --policy-document file://boundarydoc`
 
 !!! question
 	* What will you attach the permissions boundary to?
@@ -134,13 +139,9 @@ We will use permissions boundaries to limit the effective permissions of the rol
 #### Create a policy named **`webadminspermissionpolicy`** using the example below
 
 ### Walk Through
-	
-* Create the policy (you will first need to generate a file named policydoc using the example policy below)
-	* `aws iam create-policy --policy-name webadminspermissionpolicy --policy-document file://policydoc`
-* Attach the policy to the webadmins role
-	* `aws iam attach-role-policy --role-name webadmins --policy-arn arn:aws:iam::Account_ID:policy/webadminspermissionpolicy`
-* When you are done the **webadmins** role should have these three policies attached: webadminspermissionpolicy, IAMReadOnlyAccess & AWSLambdaReadOnlyAccess.
 
+* Use the following JSON to create a file named policydoc for the policy document:
+	
 !!! hint 
 	The question marks **`????`** in the resource elements below should be replaced with something that could act as a resource restriction.  The end result is that you will have a pathing requirement for the roles and policies.
 
@@ -233,6 +234,12 @@ We will use permissions boundaries to limit the effective permissions of the rol
 }
 ```
 
+* Create the policy (you will first need to generate a file named policydoc using the example policy below)
+	* `aws iam create-policy --policy-name webadminspermissionpolicy --policy-document file://policydoc`
+* Attach the policy to the webadmins role
+	* `aws iam attach-role-policy --role-name webadmins --policy-arn arn:aws:iam::Account_ID:policy/webadminspermissionpolicy`
+* When you are done the **webadmins** role should have these two policies attached: webadminspermissionpolicy & AWSLambdaReadOnlyAccess.
+
 !!! question
 
 	* Why were there some elements above that used the permissions boundary and some that did not?
@@ -240,9 +247,9 @@ We will use permissions boundaries to limit the effective permissions of the rol
 	* There are two ways of doing resource restrictions: naming and pathing. Which option allows you to create policies using both the AWS Console and CLI?
 	* Why do we add the Deny for DeletePolicy actions regarding the webadminspermissionsboundary & webadminspermissionpolicy?
 	
-## Task 4 <small>Test the webadmins access</small>
+## Task 4 <small>Test the webadmins permissions</small>
 	
-#### You should now check that the **webadmins** role can create a policy, create a role (attaching both a permission policy and permissions boundary to the role) and finally create a Lambda function into which you will pass that role. 
+#### You should now check that using **webadmins** role you can create a policy, a role (attaching both a permission policy and permissions boundary to the role) and finally create a Lambda function into which you will pass that role. 
 
 ### Walk Through
 
@@ -252,8 +259,6 @@ Using the webadmins role:
 * Create a role (this role should use Lambda as the trusted entity and attach the policy you just created to it)
 * Create a Lambda function, pass the role to it and make sure you can run the function. 
 
-!!! question
-	*.
 
 ## Task 5 <small>Gather info needed for the **VERIFY** phase</small>
 
@@ -263,8 +268,8 @@ Now that you have setup the IAM role for the webadmins, it's time to pass this i
 
 Information to pass (recommended names for certain objects provided below - only change if you didn't go with the recommended names):
 
-* IAM role name:	**webadmin**
-* Resource restriction for both the roles and policies: /webadmin/________________
+* IAM role ARN:	arn:aws:iam::`Provide ACCOUNT_ID`:role/**webadmin**
+* Resource restriction for both the roles and policies: /webadmins/`Provide resource restriction`
 * permissions boundary name: **webadminspermissionsboundary**
 * Permission policy name: **webadminspermissionpolicy**
 
