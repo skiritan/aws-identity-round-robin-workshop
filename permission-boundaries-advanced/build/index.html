@@ -624,10 +624,10 @@
                 
                 <h1 id="permissions-boundaries-workshop-advanced-edition">Permissions boundaries workshop - <small> Advanced edition </small></h1>
 <h1 id="build-phase"><small> Build phase </small></h1>
-<p>The three elements of a permission boundary are represented below. When your team does the <strong>BUILD</strong> tasks you will act as the admins. When your team does the <strong>VERIFY</strong> tasks you will act as the delegated admins (webadmins). The delegated admins will create roles that can be considered <strong>"bound"</strong> since they will have a permissions boundary attached.  </p>
+<p>The three elements of a permissions boundary are represented below. When your team does the <strong>BUILD</strong> tasks you will act as the admins. When your team does the <strong>VERIFY</strong> tasks you will act as the delegated admins (webadmins). The delegated admins will create roles that can be considered <strong>"bound"</strong> since they will have a permissions boundary attached.  </p>
 <p><img alt="mechanism" src="../images/permission-boundaries.png" /></p>
 <h2 id="setup-instructions">Setup Instructions</h2>
-<p>To setup your environment please expand one of the following drop-downs (depending on how if you are doing this workshop at an <strong>AWS event</strong> or <strong>individually</strong>) and follow the instructions: </p>
+<p>To setup your environment please expand one of the following drop-downs (depending on how if you are doing this workshop at either an <strong>AWS event</strong> or <strong>individually</strong>) and follow the instructions: </p>
 <details class="info"><summary>AWS Sponsored Event</summary><p><strong>Console Login:</strong> if you are attending this workshop at an official AWS event then your team should have the URL and login credentials for your account. This will allow you to login to the account using AWS SSO. Browse to that URL and login. </p>
 <p>After you login click <strong>AWS Account</strong> box, then click on the Account ID displayed below that (the red box in the image.) You should see a link below that for <strong>Management console</strong>. Click on that and you will be taken the AWS console. </p>
 <p><img alt="login-page" src="../images/login.png" /></p>
@@ -684,6 +684,10 @@
 <h2 id="task-1-create-the-webadmins-role">Task 1 <small>Create the webadmins role</small></h2>
 <h4 id="create-an-iam-role-so-that-web-admins-can-authenticate-to-the-console">Create an IAM role so that web admins can authenticate to the console.</h4>
 <h3 id="walk-through">Walk Through</h3>
+<div class="admonition attention">
+<p class="admonition-title">Attention</p>
+<p>Throughout the workshop, keep in mind where you need to add the Account ID, correctly use pathing and change the region specified if needed (although if you are taking this as part of an AWS event, just use the already specified us-east-2.) Missing any of these items can result in problems and errors like <strong>"An error occurred (MalformedPolicyDocument) when calling the CreatePolicy operation: The policy failed legacy parsing"</strong>.</p>
+</div>
 <ul>
 <li>Go back to the SSO login page (the first tab you opened should still have that page) and click <strong>Command line or programmatic access</strong>. Copy the temporary credentials using whichever option fits your setup best. </li>
 </ul>
@@ -693,10 +697,10 @@
 <li>
 <p>Create an IAM role that will be used by the webadmins (Initially this role will trust your own AWS account but in the <strong>Verify</strong> phase you will configure it to trust the other group's account.) </p>
 <ul>
-<li>Use the following JSON to create a file name assumerolepolicy for the trust (assume role) policy (replace the Account ID): 
+<li>Use the following JSON to create a file name assumerolepolicy for the trust (assume role) policy: 
 <code>{ "Version": "2012-10-17", "Statement": { "Effect": "Allow", "Principal": { "AWS": "arn:aws:iam::Account_ID:root"}, "Action": "sts:AssumeRole" } }</code></li>
 <li>Create the role:
-<code>aws iam create-role --role-name webadmins --assume-role-policy-document file://assumerolepolicy  --profile Name_of_the_credential_profile</code></li>
+`aws iam create-role --role-name webadmins --assume-role-policy-document file://assumerolepolicy</li>
 <li>Add the Lambda Read Only policy to the role
 <code>aws iam attach-role-policy --policy-arn arn:aws:iam::aws:policy/AWSLambdaReadOnlyAccess  --role-name webadmins</code></li>
 </ul>
@@ -717,13 +721,9 @@
 <ul>
 <li>Create log groups </li>
 <li>Create log streams and put logs</li>
-<li>List the objects from the S3 bucket name that starts with <code>"web-admins-"</code> and ends in <code>"-data"</code></li>
+<li>List the log files in the webadmins folder of the bucket that starts with <code>"shared-logging-"</code> and ends in <code>"-data"</code></li>
 </ul>
 <h3 id="walk-through_1">Walk Through:</h3>
-<div class="admonition attention">
-<p class="admonition-title">Attention</p>
-<p>Keep in mind where you need to add the Account ID, correctly use pathing and change the region specified if needed (although if you are taking this as part of an AWS event, just use the already specified us-east-2.) Missing any of these items can result in problems and errors like <strong>"An error occurred (MalformedPolicyDocument) when calling the CreatePolicy operation: The policy failed legacy parsing"</strong>.</p>
-</div>
 <ul>
 <li>Use the following JSON to create a file named boundarydoc for the policy document:</li>
 </ul>
@@ -751,8 +751,13 @@
             <span class="nt">&quot;Action&quot;</span><span class="p">:</span> <span class="p">[</span>
                 <span class="s2">&quot;s3:List*&quot;</span>
             <span class="p">],</span>
-            <span class="nt">&quot;Resource&quot;</span><span class="p">:</span> <span class="s2">&quot;arn:aws:s3:::web-admins-ACCOUNT_ID-*&quot;</span>
-        <span class="p">}</span>
+            <span class="nt">&quot;Resource&quot;</span><span class="p">:</span> <span class="s2">&quot;arn:aws:s3:::shared-logging-ACCOUNT_ID-us-east-2-data*&quot;</span><span class="p">,</span>
+             <span class="nt">&quot;Condition&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="nt">&quot;StringEquals&quot;</span><span class="p">:</span> <span class="p">{</span>
+                    <span class="nt">&quot;s3:prefix&quot;</span><span class="p">:</span> <span class="s2">&quot;webadmins&quot;</span>
+                    <span class="p">}</span>
+                <span class="p">}</span>
+        <span class="p">}</span>       
     <span class="p">]</span>
 <span class="p">}</span>
 </pre></div>
@@ -767,7 +772,7 @@
 <div class="admonition question">
 <p class="admonition-title">Question</p>
 <ul>
-<li>What will you attach the permissions boundary to?</li>
+<li>What will the webadmins attach the permissions boundary to?</li>
 <li>How does a permissions boundary differ from a standard IAM policy?</li>
 <li>How could you test the permissions boundary at this point?</li>
 </ul>
@@ -775,13 +780,13 @@
 <h2 id="task-3-create-the-permission-policy-for-the-webadmins">Task 3 <small>Create the permission policy for the webadmins</small></h2>
 <h4 id="create-a-policy-named-webadminspermissionpolicy-using-the-example-below">Create a policy named <strong><code>webadminspermissionpolicy</code></strong> using the example below</h4>
 <h3 id="walk-through_2">Walk Through</h3>
-<ul>
-<li>Use the following JSON to create a file named policydoc for the policy document:</li>
-</ul>
 <div class="admonition hint">
 <p class="admonition-title">Hint</p>
 <p>The question marks <strong><code>????</code></strong> in the resource elements below should be replaced with something that could act as a resource restriction.  The end result is that you will have a pathing requirement for the roles and policies.</p>
 </div>
+<ul>
+<li>Use the following JSON to create a file named policydoc for the policy document:</li>
+</ul>
 <div class="codehilite"><pre><span></span><span class="p">{</span>
     <span class="nt">&quot;Version&quot;</span><span class="p">:</span> <span class="s2">&quot;2012-10-17&quot;</span><span class="p">,</span>
     <span class="nt">&quot;Statement&quot;</span><span class="p">:</span> <span class="p">[</span>
@@ -872,7 +877,7 @@
 
 
 <ul>
-<li>Create the policy (you will first need to generate a file named policydoc using the example policy below)<ul>
+<li>Create the policy:<ul>
 <li><code>aws iam create-policy --policy-name webadminspermissionpolicy --policy-document file://policydoc</code></li>
 </ul>
 </li>
@@ -902,10 +907,25 @@
 </ul>
 <h2 id="task-5-gather-info-needed-for-the-verify-phase">Task 5 <small>Gather info needed for the <strong>VERIFY</strong> phase</small></h2>
 <h3 id="walk-through_4">Walk Through</h3>
-<p>Now that you have setup the IAM role for the webadmins, it's time to pass this information on to the next team who will work through the <strong>VERIFY</strong> tasks. If you were given a form to fill out then enter the info into the form and hand it to another group (or send this to the other group using whatever method is easiest.) </p>
-<p>Information to pass (recommended names for certain objects provided below - only change if you didn't go with the recommended names):</p>
+<p>Now that you have setup access for the webadmins, it's time to pass this information on to the next team who will work through the <strong>VERIFY</strong> tasks.</p>
 <ul>
-<li>IAM role ARN: arn:aws:iam::<code>Provide ACCOUNT_ID</code>:role/<strong>webadmin</strong></li>
+<li>
+<p>Get the Account ID from the other team so you can add that to the trust policy on the webadmin role</p>
+<ul>
+<li>Use the following JSON to create a file name assumerolepolicy2 for the trust (assume role) policy (replace <code>ACCOUNT_ID</code> with your account ID so you can still test this and the <code>ACCOUNT_ID_OTHER_TEAM</code> with the other team's account ID:) 
+<code>{"Version":"2012-10-17","Statement":[{"Effect":"Allow","Principal":{"AWS":["arn:aws:iam::ACCOUNT_ID:root","arn:aws:iam::ACCOUNT_ID_OTHER_TEAM:root"]},"Action":"sts:AssumeRole"}]}</code></li>
+</ul>
+</li>
+<li>
+<p>Update the trust policy on the webadmins roles so both your team  and the verify team can assume the role</p>
+<ul>
+<li>aws iam update-assume-role-policy --role-name webadmins --policy-document file://assumerolepolicy2 </li>
+</ul>
+</li>
+</ul>
+<p>If you were given a form to fill out then enter the info into the form and hand it to another group (or send this to the other group using whatever method is easiest.) Information to pass (recommended names for certain objects provided below - only change if you didn't go with the recommended names):</p>
+<ul>
+<li>IAM role ARN: arn:aws:iam::<code>Your ACCOUNT_ID</code>:role/<strong>webadmin</strong></li>
 <li>Resource restriction for both the roles and policies: /webadmins/<code>Provide resource restriction</code></li>
 <li>permissions boundary name: <strong>webadminspermissionsboundary</strong></li>
 <li>Permission policy name: <strong>webadminspermissionpolicy</strong></li>

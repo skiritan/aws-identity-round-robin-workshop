@@ -669,15 +669,15 @@
 <h4 id="finally-you-will-create-a-nodejs-810-lambda-function-using-the-sample-code-below-and-pass-the-iam-role-you-just-created">Finally you will create a <strong>Node.js 8.10</strong> Lambda function using the sample code below and pass the IAM role you just created</h4>
 <h3 id="walk-through_2">Walk Through</h3>
 <ul>
-<li>Create a file <code>index.js</code> using the code sample below and then zip the file (replace <code>"WEB_ADMIN_BUCKET_NAME"</code> with the name of bucket that begins with <code>"web-admins-"</code> and ends in <code>"-data"</code>. In order to get the bucket name, just run <code>aws s3 ls</code> using the webadmins role.)</li>
+<li>Create a file <code>index.js</code> using the code sample below and then zip the file (replace <code>"SHARED_LOGGING_BUCKET_NAME"</code> with the name of bucket that begins with <code>"shared-logging-"</code> and ends in <code>"-data"</code>. In order to get the bucket name, just run <code>aws s3 ls</code> using the webadmins role.)</li>
 </ul>
 <div class="codehilite"><pre><span></span><span class="nt">const</span> <span class="nt">AWS</span> <span class="o">=</span> <span class="nt">require</span><span class="o">(</span><span class="s1">&#39;aws-sdk&#39;</span><span class="o">);</span>
 <span class="nt">const</span> <span class="nt">s3</span> <span class="o">=</span> <span class="nt">new</span> <span class="nt">AWS</span><span class="p">.</span><span class="nc">S3</span><span class="o">();</span>
 
 <span class="nt">exports</span><span class="p">.</span><span class="nc">handler</span> <span class="o">=</span> <span class="nt">async</span> <span class="o">(</span><span class="nt">event</span><span class="o">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
   <span class="err">console.log(&#39;Loading</span> <span class="err">function&#39;)</span><span class="p">;</span>
-  <span class="err">const</span> <span class="err">allKeys</span> <span class="err">=</span> <span class="cp">[]</span><span class="p">;</span>
-  <span class="err">await</span> <span class="err">getKeys({</span> <span class="n">Bucket</span><span class="p">:</span> <span class="s1">&#39;WEB_ADMIN_BUCKET_NAME&#39;</span> <span class="p">}</span><span class="o">,</span> <span class="nt">allKeys</span><span class="o">);</span>
+  <span class="err">const</span> <span class="err">allKeys</span> <span class="err">=</span> <span class="cp">[</span><span class="p">/</span><span class="nx">webadmins</span><span class="cp">]</span><span class="p">;</span>
+  <span class="err">await</span> <span class="err">getKeys({</span> <span class="n">Bucket</span><span class="p">:</span> <span class="s1">&#39;SHARED_LOGGING_BUCKET_NAME&#39;</span> <span class="p">,</span> <span class="n">Prefix</span><span class="o">:</span> <span class="s1">&#39;webadmins&#39;</span><span class="p">}</span><span class="o">,</span> <span class="nt">allKeys</span><span class="o">);</span>
   <span class="nt">return</span> <span class="nt">allKeys</span><span class="o">;</span>
 <span class="err">}</span><span class="o">;</span>
 
