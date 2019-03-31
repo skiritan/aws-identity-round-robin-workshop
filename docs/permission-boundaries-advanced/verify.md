@@ -47,7 +47,7 @@ You will be creating up an IAM policy, an IAM role and a Lambda function. The La
 
 ### Walk Through
 
-* Create a file `index.js` using the code sample below and then zip the file (replace `"WEB_ADMIN_BUCKET_NAME"` with the name of bucket that begins with `"web-admins-"` and ends in `"-data"`. In order to get the bucket name, just run `aws s3 ls` using the webadmins role.)
+* Create a file `index.js` using the code sample below and then zip the file (replace `"SHARED_LOGGING_BUCKET_NAME"` with the name of bucket that begins with `"shared-logging-"` and ends in `"-data"`. In order to get the bucket name, just run `aws s3 ls` using the webadmins role.)
 
 ``` node
 const AWS = require('aws-sdk');
@@ -55,8 +55,8 @@ const s3 = new AWS.S3();
 
 exports.handler = async (event) => {
   console.log('Loading function');
-  const allKeys = [];
-  await getKeys({ Bucket: 'WEB_ADMIN_BUCKET_NAME' }, allKeys);
+  const allKeys = [/webadmins];
+  await getKeys({ Bucket: 'SHARED_LOGGING_BUCKET_NAME' , Prefix: 'webadmins'}, allKeys);
   return allKeys;
 };
 

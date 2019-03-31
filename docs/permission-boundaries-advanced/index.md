@@ -1,7 +1,7 @@
 # Permissions boundary workshop -<small> Advanced edition </small>
 # <small> Overview </small>
 
-Your company has deployed a production three tier web application on AWS. Different teams work on different aspects of the architecture including the web admins who need to be able to create IAM roles for Lambda functions. In order to let them quickly iterate it was decided that permissions boundaries would be used to delegate permissions to the web admins so they can create the roles needed without being able to escalate their permissions. 
+Your company has deployed a production three tier web application on AWS. Various teams work on different aspects of the architecture including the web admins who need to be able to create IAM roles for Lambda functions. In order to let them quickly iterate it was decided that permissions boundaries would be used to delegate permissions to the web admins so they can create the roles needed without being able to escalate their permissions or impact the resources of other teams. 
 
 **AWS Service/Feature Coverage**: 
 
@@ -37,6 +37,6 @@ If you are doing this workshop as part of an AWS event then there will usually b
 The goal of this workshop is to set up the web admins so they can create an IAM role and attach it to a Lambda function which will then read an S3 bucket. The webadmin need the necessary permissions to do this without also being able to escalate their permissions or impact the resources of other teams in the same AWS account. The web admins should only have access to the following resources:
 
 1. IAM policies and roles created by the web admins 
-2. S3 bucket: The web admins are allowed access to the bucket that starts  with`"web-admins-"` and ends in `"-data"`
+2. S3 bucket: The roles the web admins create should only be allowed to list the log files in the webadmins folder of the bucket that starts with `"shared-logging-"` and ends with `"-data"`
 
 #### [Click here to go to the BUILD phase](./build.md)
