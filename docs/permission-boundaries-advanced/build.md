@@ -298,7 +298,7 @@ Now do the following using the webadmins role:
 `{"Version":"2012-10-17","Statement":[{"Effect":"Allow","Principal":{"AWS":["arn:aws:iam::YOUR_ACCOUNT_ID:root","arn:aws:iam::OTHER_TEAM_ACCOUNT_ID_:root"]},"Action":"sts:AssumeRole"}]}`
 
 * Update the trust policy on the webadmins roles so both your team  and the verify team can assume the role
-	* aws iam update-assume-role-policy --role-name webadmins --policy-document file://trustpolicy2 
+	* `aws iam update-assume-role-policy --role-name webadmins --policy-document file://trustpolicy2`
 
  If you were given a form to fill out then enter the info into the form and hand it to another group (or send this to the other group using whatever method is easiest.) Information to pass (recommended names for certain objects provided below - only change if you didn't go with the recommended names):
  
