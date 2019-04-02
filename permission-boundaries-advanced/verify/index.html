@@ -643,8 +643,9 @@
 <li><code>{"Version":"2012-10-17","Statement":[{"Effect":"Allow","Action":["logs:CreateLogGroup","logs:CreateLogStream","logs:PutLogEvents","s3:*"],"Resource":"*"}]}</code></li>
 </ul>
 </li>
-<li>Create the policy<ul>
-<li><code>aws iam create-policy --policy-name NAME_OF_POLICY --path /NAME_OF_PATH/ --policy-document file://verifypolicy</code></li>
+<li>Create the policy (<strong>there is a key parameter missing from the command below</strong>)<ul>
+<li><code>aws iam create-policy --policy-name NAME_OF_POLICY --policy-document file://verifypolicy</code>
+<!-- <code>aws iam create-policy --policy-name NAME_OF_POLICY --path /NAME_OF_PATH/ --policy-document file://verifypolicy</code> --></li>
 </ul>
 </li>
 </ul>
@@ -656,8 +657,9 @@
 <li><code>{ "Version": "2012-10-17", "Statement": { "Effect": "Allow", "Principal": { "Service": "lambda.amazonaws.com"}, "Action": "sts:AssumeRole" } }</code></li>
 </ul>
 </li>
-<li>Create the role:<ul>
-<li><code>aws iam create-role --role-name NAME_OF_ROLE --path /NAME_OF_PATH/ --assume-role-policy-document file://verifytrustpolicy --permissions-boundary arn:aws:iam::Account_ID:policy/webadminspermissionsboundary</code></li>
+<li>Create the role (<strong>there is a key parameter missing from the command below</strong>)<ul>
+<li><code>aws iam create-role --role-name NAME_OF_ROLE --path /NAME_OF_PATH/ --assume-role-policy-document file://verifytrustpolicy</code>
+<!-- <code>aws iam create-role --role-name NAME_OF_ROLE --path /NAME_OF_PATH/ --assume-role-policy-document file://verifytrustpolicy --permissions-boundary arn:aws:iam::Account_ID:policy/webadminspermissionsboundary</code> --></li>
 </ul>
 </li>
 <li>Attach the policy you created in Task 1 to the role:<ul>
