@@ -25,8 +25,8 @@ As the webadmins you will be creating an IAM policy, an IAM role and a Lambda fu
 * Use the following JSON to create a file named verifypolicydoc (replace the Account ID): 
 	* `{"Version":"2012-10-17","Statement":[{"Effect":"Allow","Action":["logs:CreateLogGroup","logs:CreateLogStream","logs:PutLogEvents","s3:*"],"Resource":"*"}]}`
 * Create the policy (**there is a key parameter missing from the command below**)
-	* `aws iam create-policy --policy-name NAME_OF_POLICY --policy-document file://verifypolicy`
-<!-- `aws iam create-policy --policy-name NAME_OF_POLICY --path /NAME_OF_PATH/ --policy-document file://verifypolicy` -->
+	* `aws iam create-policy --policy-name NAME_OF_POLICY --policy-document file://verifypolicydoc`
+<!-- `aws iam create-policy --policy-name NAME_OF_POLICY --path /NAME_OF_PATH/ --policy-document file://verifypolicydoc` -->
 
 ## Task 2 <small>Create a role</small>
 
