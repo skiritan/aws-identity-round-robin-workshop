@@ -11,13 +11,6 @@ Parameters:
     AllowedValues: 
       - identity-wksp-serverless
     Description: Prefix of Resources created for this workshop.  
-  Account: 
-    Type: String
-    Description: AWS Account number (e.g. 123456789012) for the verify phase to assess your configurations.
-  TeamName: 
-    Type: String
-    Default: NA
-    Description: Team Name
 
 Metadata:
   AWS::CloudFormation::Interface:
@@ -27,19 +20,10 @@ Metadata:
           default: "Resource Configuration"
         Parameters:
           - ResourcePrefix
-          - TeamName
-      -
-        Label:
-          default: "Verify Phase"
-        Parameters:
-          - Account
+
     ParameterLabels:
       ResourcePrefix:
         default: "Prefix"
-      Account:
-        default: "Verification Account"
-      TeamName:
-        default: "Team Name"
 
 Mappings:
   Application: 
@@ -50,28 +34,6 @@ Mappings:
 
 Resources:
 
-  # Verify Phase Role
-  VerifyRole:
-    Type: AWS::IAM::Role
-    Properties:
-      RoleName: 
-        Fn::Join:
-          - '-'
-          - [!Ref ResourcePrefix, 'verify']
-      AssumeRolePolicyDocument:
-        Version: 2012-10-17
-        Statement:
-          -
-            Effect: Allow
-            Principal:
-              AWS: 
-                Fn::Join:
-                    - ''
-                    - ['arn:aws:iam::', !Ref Account, ':root']
-            Action: sts:AssumeRole
-      ManagedPolicyArns:
-        - 'arn:aws:iam::aws:policy/ReadOnlyAccess'
-  
   # Website Bucket Resources
   WebsiteBucket:
     Type: 'AWS::S3::Bucket'
@@ -465,12 +427,3 @@ Outputs:
       Fn::Join:
       - ''
       - ['https://', !GetAtt UnicornDistribution.DomainName]
-  VerifyAWSAccount:
-    Value: !Ref Account
-  TeamName:
-    Value: !Ref TeamName
-  VerifyIAMRole:
-    Value: 
-      Fn::Join:
-        - '-'
-        - [!Ref ResourcePrefix, 'verify']
