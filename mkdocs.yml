@@ -46,10 +46,10 @@ markdown_extensions:
 # Navigation
 nav:
   - Overview: 'index.md'
-  - 'Serverless Round':
+  - 'Serverless Identity Round':
     - 'Scenario': 'serverless/index.md'
-    - 'Build Phase': 'serverless/build.md'
-    - 'Verify Phase': 'serverless/verify.md'
+    - 'Task 1': 'serverless/task1.md'
+    - 'Task 2': 'serverless/task2.md'
   - 'Access Delegation Round':
     - 'Scenario': 'delegation/index.md'
     - 'Build Phase': 'delegation/build.md'

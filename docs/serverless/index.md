@@ -1,4 +1,4 @@
-# Serverless Round
+# Serverless Identity Round
 
 Welcome to the world of serverless!  Now you may be asking yourself, *What is serverless*? Well, it is an architecture paradigm that allows you to create your applications without provisioning or managing any servers.  Sounds great, right?  Organizations look at building serverless applications as a way of improving their scalability and reducing their operational overhead.  The responsibility of the underlying infrastructure is shifted off your plate so you can spend more time focusing on building your applications.
 
@@ -16,10 +16,10 @@ In this round you will be focused on improving the identity controls of the Wild
 
 ## Agenda
 
-This round is broken down into a BUILD & VERIFY phase. 
+This round is broken down into two tasks, both with a Build and Verify phase. The Build phase involves evaluating, implementing, and enhancing the identity controls of the WildRydes application based on a set of business level functional and non-functional requirements.  The Verify phase involves putting on the hat of an end user and testing the controls you put in place to ensure the requirements were met. In addition you will also ensure that a systems administrator is still able to manage the resources.
 
-* **BUILD** (60 min): The Build phase involves evaluating, implementing, and enhancing the identity controls of the WildRydes application based on a set of business level functional and non-functional requirements.
-* **VERIFY** (15 min):  The Verify phase involves putting on the hat of an end user and testing the controls you put in place to ensure the requirements were met. In addition you will also ensure that a systems administrator is still able to manage the resources.
+* **Task 1** (40 min): Reduce the attack surface of the S3 origin
+* **Task 2** (35 min): Set up application user management
 
 !!! info "Team or Individual Exercise"
     This workshop can be done as a team exercise or individually. The instructions are written with the assumption that you are working as part of a team but you could just as easily do the steps below individually. If done as part of an AWS sponsored event then you'll be split into teams of around 4-6 people. Each team will do the BUILD phase and then hand off their accounts to another team. Then each team will do the VERIFY phase.
@@ -32,32 +32,29 @@ This round is broken down into a BUILD & VERIFY phase.
 
 To setup your environment please expand one of the following dropdown sections (depending on how you're doing this workshop) and follow the instructions: 
 
-??? info "AWS Sponsored Event"
+!!! info "AWS Sponsored Event"
     * Browse to the URL provided to you and login. 
 
     * After you login click the **AWS Account** box, then click on the Account ID displayed below that (the red box in the image.) You should see a link below that for the **Management console**. Click on that and you will be taken to the AWS console. 
 
     ![login-page](./images/login.png)
 
-??? info "Individual"
-    Launch the CloudFormation stack below to setup the WildRydes application:
+Launch the CloudFormation stack below to setup the WildRydes application:
 
-    Region| Deploy
-    ------|-----
-    US East 1 (N. Virginia) | <a href="https://console.aws.amazon.com/cloudformation/home?region=us-east-1#/stacks/new?stackName=Identity-RR-Wksp-Serverless-Round&templateURL=https://s3-us-west-2.amazonaws.com/sa-security-specialist-workshops-us-west-2/identity-workshop/serverless/environment.yml" target="_blank">![Deploy in us-east-1](./images/deploy-to-aws.png)</a>
+Region| Deploy
+------|-----
+US East 1 (N. Virginia) | <a href="https://console.aws.amazon.com/cloudformation/home?region=us-east-1#/stacks/new?stackName=Identity-RR-Wksp-Serverless-Round&templateURL=https://s3-us-west-2.amazonaws.com/sa-security-specialist-workshops-us-west-2/identity-workshop/serverless/environment.yml" target="_blank">![Deploy in us-east-1](./images/deploy-to-aws.png)</a>
 
-    1. Click the **Deploy to AWS** button above (right click and open in a new tab).  This will automatically take you to the console to run the template.  
+1. Click the **Deploy to AWS** button above (right click and open in a new tab).  This will automatically take you to the console to run the template.  
 
-    2. Click **Next** on the **Specify Template** section.
+2. Click **Next** on the **Specify Template** section.
 
-    3. On the **Specify Details** step, add a **Team Number** and a **validation AWS Account** and then click **Next**. 
- 
-	    > The Team Name is only relevant when running this as a team so that the Verify team can reach out to the Build team with any questions.  The account will be the one the Verify team uses to validate the controls put in place during the BUILD phase.  If you are doing both phases in a single AWS account and as an individual put whatever you want for the team name and the AWS account number for the account you are currently using.
+3. On the **Specify Details** step click **Next**. 
 
-    4. Click **Next** on the **Options** section.
-    5. Finally, acknowledge that the template will create IAM roles under **Capabilities and click **Create**.
+4. Click **Next** on the **Options** section.
+5. Finally, acknowledge that the template will create IAM roles under **Capabilities** and click **Create**.
 
-    This will bring you back to the CloudFormation console. You can refresh the page to see the stack starting to create. Before moving on, make sure the stack is in a **CREATE_COMPLETE**.
+This will bring you back to the CloudFormation console. You can refresh the page to see the stack starting to create. Before moving on, make sure the stack is in a **CREATE_COMPLETE**.
 
 ## WildRydes identity overhaul
 
@@ -78,4 +75,4 @@ After thoroughly evaluating the architecture and doing a threat modeling exercis
 
 ***
 
-Click Next to move on to the **Build Phase**!
+Click Next to move on to  **Task 1**!
