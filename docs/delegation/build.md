@@ -151,7 +151,7 @@ You can also select a color that will be used to display the role you assume in 
 
     ![EFSConsole](./images/IamEssEFSConsole.png)
 
-4. Now go to the Amazon Inspector Console.  Click **Assessment Templates** and check the box to the left of the template name that begins with *LampInspectorAssessmentTemplate* and click **Clone**.  A section of the form will appear.  Scroll down towards the bottom and click the **Create** button.   Refresh the screen.  You should now see two templates that begin with *LampInspectorAssessment*.  You have just cloned an assessment template which requires administrative access.
+4. Now go to the Amazon Inspector Console.  Click **Assessment Templates** and check the box to the left of the template name that begins with *LampInspectorAssessmentTemplate* and click **Clone**.  A section of the form will appear.  Scroll down towards the bottom and click the **Create** button.   Refresh the screen.  You should now see two templates that begin with *LampInspectorAssessment*.  You have just successfully cloned an assessment template which shows that you have administrative access privileges for Inspector.
 
 5. Now go to the GuardDuty console and select the Settings menu item.  You may see an error message at the top of the screen about **iam:ListPolicyVersions**.  The reason for this is that you do not have full IAM permissions.  Ignore this message.
 
