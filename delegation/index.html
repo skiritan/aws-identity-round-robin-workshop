@@ -782,6 +782,7 @@ AWS Security Administrators require full access to AWS security services while A
 <li>You will need an AWS account for this lab and administrative credentials.
 These may be provided by an event sponsor.</li>
 <li>You should be familiar with AWS core services such as AWS CloudFormation and Amazon S3.  You should also be comfortable using the AWS console.</li>
+<li>The instructions are written with the understanding that the account is new or clean.  We strongly recommend that you do not do these labs in work or "production" accounts.</li>
 </ol>
 <h2 id="architecture-overview">Architecture Overview</h2>
 <p>The environment in this round consists of an AWS account in which Amazon GuardDuty, Amazon Inspector, Amazon Macie and Amazon CloudTrail will run.  The CloudTrail logs will be sent to an Amazon S3 bucket.  An Amazon EC2 instance will be launched which will in turn start the <a href="https://github.com/aws-samples/amazon-macie-activity-generator">Amazon Macie Activity Generator</a> and also launch an Amazon Inspector assessment.</p>
