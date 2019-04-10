@@ -22,7 +22,7 @@ Depending on how you're doing this workshop, expand one of the following dropdow
 
 ## Enable Macie
 
-1. Before we build out our environment, you must make sure Amazon Macie is running.
+1. You will need Macie for this lab so you must make sure Amazon Macie is running.
 Select **Macie** from the main console.
 Macie will open in a new browser tab.
 
@@ -31,6 +31,15 @@ Macie will open in a new browser tab.
 3. When the Macie console appears, if a **Getting Started** button appears, it means that Amazon Macie is disabled.
 In that case, click **Getting Started**, confirm that US West (Oregon) is selected as the region, and click **Enable Macie**.
 Close the browser tab containing the Macie console.
+
+## Enable GuardDuty
+
+1. You will also need GuardDuty for this lab so you will now enable GuardDuty.
+Select **GuardDuty** from the main console.  If you see a **Get Started** button, click it.
+
+2. If the region is not set to Oregon, select Oregon for the region.
+
+3. Click **Enable GuardDuty**.
 
 ## Build out the environment
 
@@ -47,12 +56,10 @@ Close the browser tab containing the Macie console.
 6. On the Review page, check **both** of the **I acknowledge** boxes and click **Create**.
 One acknowledgement is requested because of the creation of resources with custom names.
 The CloudFormation template does this when it creates certain resources with names that make it easier to identify them.
-The other acknowledgement is requested because of the nested stack that is created to deploy the Macie Activity Generator.
 
     CloudFormation will now begin to create the resources.
 **Refresh the browser window to view the progress.**
 This takes about five minutes.
-Notice that CloudFormation creates two stacks. In addition to the main stack, CloudFormation also builds a nested stack whose name contains the string MacieSetup. This nested stack is used to run the Macie Activity Generator.
 Wait until the Status value for the **esslab** stack shows **CREATE_COMPLETE**.
 You can refresh the browser window to update the status.
 
@@ -62,16 +69,9 @@ You can refresh the browser window to update the status.
     <summary><strong>Click here to expand</strong></summary><p>
     <br/>
 
-    * We use a [nested CloudFormation stack](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/using-cfn-nested-stacks.html) to run the Macie Activity Generator as mentioned earlier.
+    * The CloudFormation template launches an Amazon EC2 instance that wil be used as a target for Amazon Inspector.
 
-    * After the nexted stack build is completed, the CloudFormation template launches an Amazon EC2 instance that wil be used as a target for Amazon Inspector and as a means to launch other services.
-
-    * The EC2 instance will then:
-
-        * Create an Amazon GuardDuty detector.
-        * Generate GuardDuty sample findings.
-        * Associate the Amazon S3 bucket created by the Macie Activity Generator to Amazon Macie so Macie will begin to process it.
-        * Initiate an Amazon Inspector assessment run.  The assessment takes about 15-20 minutes to complete.  Note that there at times may be no findings.  This is typically the case when a new AMI is released.
+    * The EC2 instance will then initiate an Amazon Inspector assessment run.  The assessment takes about 15-20 minutes to complete.  Note that there at times may be no findings.  This is typically the case when a new AMI is released.
 
     </details>
 
@@ -108,7 +108,7 @@ The policy definition will be similar to the image below.
 
     ![SecAdministratorRolePolicy](./images/IamEssSecAdminPolicy.png)
 
-    There are six managed policies attached to this role, four of them are provided by AWS for GuardDuty, Inspector, CloudTrail, IAM, and SNS.  SNS nd IAM are included because it provides for a better console experience.  There is a sixth managed policy that was created for Amazon Macie to illustrate how custom managed poicies can be developed.   Click on each of the managed policies to see the underlying privileges of each.  Note that there are some services, such as Amazon EFS (Elastic File System), that are not granted by any of these policies.  You will confirm this lack of access later in this workshop.
+    There are six managed policies attached to this role, four of them are provided by AWS for GuardDuty, Inspector, CloudTrail, IAM, and SNS.  SNS and IAM are included because it provides for a better console experience.  There is a sixth managed policy that was created for Amazon Macie to illustrate how custom managed poicies can be developed.   Click on each of the managed policies to see the underlying privileges of each.  Note that there are some services, such as Amazon EFS (Elastic File System), that are not granted by any of these policies.  You will confirm this lack of access later in this workshop.
 
 2. From the main page of the role, click the **Trust relationships** tab.  You will see a section on the page telling you that the trusted entity (the entity that can assume the role) is the 12-digit AWS account ID as shown below.  This means that any principal in the account can assume the role.
 
