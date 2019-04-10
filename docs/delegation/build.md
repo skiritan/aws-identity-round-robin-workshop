@@ -53,8 +53,8 @@ Select **GuardDuty** from the main console.  If you see a **Get Started** button
 
 5. On the Options page, click **Next**.
 
-6. On the Review page, check **both** of the **I acknowledge** boxes and click **Create**.
-One acknowledgement is requested because of the creation of resources with custom names.
+6. On the Review page, check the **I acknowledge** box and click **Create**.
+The acknowledgement is requested because of the creation of resources with custom names.
 The CloudFormation template does this when it creates certain resources with names that make it easier to identify them.
 
     CloudFormation will now begin to create the resources.
