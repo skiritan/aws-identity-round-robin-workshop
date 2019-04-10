@@ -14,52 +14,20 @@
 #
 # (1) VPC and related components
 #
-# (2) An Amazon Linux EC2 instance with Apache.  The instance uses the
-# cfn-init program along with CloudFormation Metadata to start up
-# Amazon GuardDuty, Inspector, and Macie.
-#
-# (3) A nexted CloudFormation stack that brings up the Macie Activity
-# Generator.
+# (2) An Amazon Linux EC2 instance with Apache.
 
 ---
 AWSTemplateFormatVersion: '2010-09-09'
 
 Description: Create ESS Workshop Stack
 
-Metadata: 
-  AWS::CloudFormation::Interface: 
-    ParameterGroups: 
-      - Label: 
-          default: "Required parameters"
-        Parameters: 
-          - AmazonLinux2AmiId
-    ParameterLabels:
-      AmazonLinux2AmiId:
-        default: 'Enter the Parameter Store key of the WordPress Amazon Linux 2 AMI (do not change):'
-
-Parameters:
-
-# AmazonLinux2AmiId - The AMI for Amazon Linux 2.  Note that this uses the
-# reserved AWS space in Systems Manager Parameter Store.
-
-  AmazonLinux2AmiId:
-    Type: 'AWS::SSM::Parameter::Value<String>'
-    Default: '/aws/service/ami-amazon-linux-latest/amzn2-ami-hvm-x86_64-gp2'
-
 # Mappings
 #
 # Constants: Use this mapping table for miscellaneous constant values
 # that should be centralized.
 #
-# HostInstanceType - the instance type for the EC2 instance
 # NamePrefix - a prefix to apply to the Name tag of taggable resources
 # ProjectTag - a value to apply to the Project tag of taggable resource
-# SessionManagerSubnet01Cidr - The CIDR block for the first sesssion manager
-#   subnet
-# SessionManagerSubnet02Cidr - The CIDR block for the second sesssion manager
-#   subnet
-# SGWebCidr - the CIDR block that can access HTTP/HTTPS on the EC2 instance
-# VpcCidr - the CIDR block to use for the VPC
 #
 # RegionMap: Define a mapping for the AWS Inspector rule packages.
 # Note that we only support us-west-2 and us-east-1 since the ESS portion
@@ -69,15 +37,9 @@ Parameters:
 Mappings:
   Constants:
     Values:
-      HostInstanceType: 'm5.large'
       NamePrefix: 'esslab'
       ProjectTag: 'esslab'
-      PasswordLength: '12'
-      VpcCidr: '10.200.0.0/16'
-      PublicSubnetCidr: '10.200.11.0/24'
-      SessionMgrSubnet01Cidr: '10.200.21.0/24'
-      SessionMgrSubnet02Cidr: '10.200.22.0/24'
-      SGWebCidr: '0.0.0.0/0'
+
   RegionMap: 
     us-west-2:
       CVE: 'arn:aws:inspector:us-west-2:758058086616:rulespackage/0-9hgA516p'
@@ -91,102 +53,6 @@ Mappings:
       RBA: 'arn:aws:inspector:us-east-1:316112463485:rulespackage/0-gBONHN9h'
 
 Resources:
-  VpcName:
-    Type: AWS::EC2::VPC
-    Properties:
-      CidrBlock: !FindInMap [Constants, Values, 'VpcCidr']
-      EnableDnsSupport: 'true'
-      EnableDnsHostnames: 'true'
-      Tags:
-      - Key: Name
-        Value: !Join 
-        - '-'
-        - - Fn::FindInMap: [Constants, Values, 'NamePrefix']
-          - 'vpc'
-          - Fn::GetAtt: [ RandomCharString, RandomString ]
-      - Key: Project
-        Value: !FindInMap [Constants, Values, 'ProjectTag']
-
-  PublicSubnet:
-    Type: AWS::EC2::Subnet
-    Properties:
-      AvailabilityZone: !Select
-      - 0
-      - Fn::GetAZs: !Ref 'AWS::Region'
-      CidrBlock: !FindInMap [Constants, Values, 'PublicSubnetCidr']
-      MapPublicIpOnLaunch: 'true'
-      Tags:
-      - Key: Name
-        Value: !Join 
-        - '-'
-        - - Fn::FindInMap: [Constants, Values, 'NamePrefix']
-          - 'sn'
-          - Fn::GetAtt: [ RandomCharString, RandomString ]
-      - Key: Project
-        Value: !FindInMap [Constants, Values, 'ProjectTag']
-      VpcId: !Ref VpcName
-
-  VpcIgw:
-    Type: AWS::EC2::InternetGateway
-    Properties:
-      Tags:
-      - Key: Name
-        Value: !Join 
-        - '-'
-        - - Fn::FindInMap: [Constants, Values, 'NamePrefix']
-          - 'igw'
-          - Fn::GetAtt: [ RandomCharString, RandomString ]
-      - Key: Project
-        Value: !FindInMap [Constants, Values, 'ProjectTag']
-
-  VpcIgwAttachment:
-    Type: AWS::EC2::VPCGatewayAttachment
-    Properties:
-      InternetGatewayId: !Ref VpcIgw
-      VpcId: !Ref VpcName
-
-  RouteTable:
-    Type: AWS::EC2::RouteTable
-    DependsOn: VpcIgwAttachment
-    Properties:
-      VpcId: !Ref VpcName
-      Tags:
-      - Key: Name
-        Value: !Join 
-        - ''
-        - - Fn::FindInMap: [Constants, Values, 'NamePrefix']
-          - 'rtb'
-          - Fn::GetAtt: [ RandomCharString, RandomString ]
-      - Key: Project
-        Value: !FindInMap [Constants, Values, 'ProjectTag']
-
-  DefaultRoute:
-    Type: AWS::EC2::Route
-    Properties:
-      DestinationCidrBlock: 0.0.0.0/0
-      GatewayId: !Ref VpcIgw
-      RouteTableId: !Ref RouteTable
-
-  PublicSubnetRtb01:
-    Type: AWS::EC2::SubnetRouteTableAssociation
-    Properties:
-      RouteTableId: !Ref RouteTable
-      SubnetId: !Ref PublicSubnet
-
-  SGWeb:
-    Type: AWS::EC2::SecurityGroup
-    Properties:
-      GroupDescription: Enable inbound access to server
-      Tags:
-      - Key: Name
-        Value: !Join 
-        - '-'
-        - - Fn::FindInMap: [Constants, Values, 'NamePrefix']
-          - 'websg'
-          - Fn::GetAtt: [ RandomCharString, RandomString ]
-      - Key: Project
-        Value: !FindInMap [Constants, Values, 'ProjectTag']
-      VpcId: !Ref VpcName
 
 # LambdaExecutionRole - The AWS Lambda execution role for custom
 # CloudFormation resources.   This function will be used for the
@@ -230,253 +96,6 @@ Resources:
             - 'macie:*'
             - 'guardduty:*'
             Resource: "*"
-          - Effect: Allow
-            Action:
-            - ec2:DescribeVpcEndpointServices
-            Resource: '*'
-
-# VpcEndpointServiceAzsFunction
-#
-# This is the AWS Lambda function that supports a CloudFormation custom
-# resource that is used to look up the available Availability Zones for
-# a VPC interface endpoint service.  VPC interface endpoints may only be
-# offered in some, perhaps not all, AZs within a given region. This function
-# can help you to design CloudFormation templates that choose subnets based
-# on their ability to provide such endpoint interfaces.
-#
-# Resource properties (e.g. input "parameters") for the function:
-#
-# ServiceName - required - string - the name of the service.  This should be
-# something like 'com.amazonaws.us-east-1.secretsmanager'
-#
-# DesiredNumAzs - required - string - the minimum number of Availability Zones
-# that must offer the service (usually '2' or '3').  This should be a whole
-# number (i.e. a non-negative integer).
-#
-#
-# Return values via GetAtt:
-#
-# NumAzs - string - the number of Availability Zones that offer the interface
-# endpoint.
-#
-# Azs - string - a comma-separated list of the AZs.
-#
-# Errors:
-#
-# If there are any errors, the Lambda function returns a FAILED status which
-# normally triggers a rollback in AWS CloudFormation.   You can see the errors
-# in the Amazon CloudWatch Logs.
-#
-# Notes:
-#
-# (1) Lambda function code inside of CloudFormation templates cannot exceed
-# 4096 characters.
-
-  VpcEndpointServiceAzsFunction:
-    Type: AWS::Lambda::Function
-    Properties: 
-      Description: 'Look up the AZs that are available for a VPC endpoint for a service'
-      Handler: index.handler
-      MemorySize: 128
-      Role: !GetAtt LambdaExecutionRole.Arn
-      Runtime: 'python3.6'
-      Timeout: 30
-      Code:
-        ZipFile: |
-          import boto3
-          import cfnresponse
-          import uuid
-          import json
-
-          def handler(event, context):
-
-            responseData = {}      
-            responseData['StackId'] = event['StackId']
-            responseData['RequestId'] = event['RequestId']
-            responseData['LogicalResourceId'] = event['LogicalResourceId']
-
-            if event['RequestType'] == 'Delete':
-              responseData['Status'] = cfnresponse.SUCCESS
-              cfnresponse.send(event, context, cfnresponse.SUCCESS, responseData)
-              return
-
-            # Since we are creating or updating the resource, create a new
-            # PhysicalResourceId.
-            
-            responseData['PhysicalResourceId'] = (
-              'VpcEndpointServiceAZs' +
-              str(uuid.uuid1())
-            )
-
-            try:
-              desiredNumAzsStr = event['ResourceProperties']['DesiredNumAzs']
-              desiredNumAzs = int(desiredNumAzsStr)
-            except:
-              responseData['Status'] = cfnresponse.FAILED
-              responseData['Reason'] = (
-                'DesiredNumAzs is required and must be a whole number'
-              )
-              print(responseData['Reason'])
-              cfnresponse.send(event, context, cfnresponse.FAILED, responseData)
-              return
-
-            if desiredNumAzs < 0:
-              responseData['Status'] = cfnresponse.FAILED
-              responseData['Reason'] = (
-                'DesiredNumAzs is required and must be a whole number'
-              )
-              print(responseData['Reason'])
-              cfnresponse.send(event, context, cfnresponse.FAILED, responseData)
-              return
-
-            try:
-              ec2=boto3.client('ec2')
-            except:
-              responseData['Status'] = cfnresponse.FAILED
-              responseData['Reason'] = 'unable to set up ec2 client'
-              print(responseData['Reason'])
-              cfnresponse.send(event, context, cfnresponse.FAILED, responseData)
-              return
-            
-            try:
-              serviceName = event['ResourceProperties']['ServiceName']
-              response = ec2.describe_vpc_endpoint_services(
-                ServiceNames = [ serviceName ]
-              )
-            except:
-              responseData['Status'] = cfnresponse.FAILED
-              responseData['Reason'] = 'unable to rerieve endpoint service info'
-              print(responseData['Reason'])
-              cfnresponse.send(event, context, cfnresponse.FAILED, responseData)
-              return
-            
-            print(json.dumps(response))
-            
-            numberOfServices = len(response['ServiceDetails'])
-            if numberOfServices != 1:
-              responseData['Status'] = cfnresponse.FAILED
-              responseData['Reason'] = (
-                'number of services should be 1 but is: ' +
-                str(numberOfServices)
-              )
-              print(responseData['Reason'])
-              cfnresponse.send(event, context, cfnresponse.FAILED, responseData)
-              return
-            
-            Azs = response['ServiceDetails'][0]['AvailabilityZones']
-            numAzs = len(Azs)
-            if numAzs < desiredNumAzs:
-              responseData['Status'] = cfnresponse.FAILED
-              responseData['Reason'] = (
-                'insufficient number of availability zones - found: ' + 
-                str(numAzs)
-              )
-              print(responseData['Reason'])
-              cfnresponse.send(event, context, cfnresponse.FAILED, responseData)
-              return
-            
-            responseData['Status'] = cfnresponse.SUCCESS
-            responseData['NumAzs'] = str(numAzs)
-            responseData['Azs'] = ','.join(Azs)
-            
-            cfnresponse.send(event, context, cfnresponse.SUCCESS, responseData)
-            return
-
-# VpcEndpointSeviceAzsLogGroup - CloudWatch Logs log group for
-# VpcEndPointServiceAzsFunction
-
-  VpcEndpointServiceAzsLogGroup:
-    Type: AWS::Logs::LogGroup
-    Properties: 
-      LogGroupName: !Join [ '', [ '/aws/lambda/', Ref: VpcEndpointServiceAzsFunction ] ]
-      RetentionInDays: 1
-
-# SessionManagerAzs:  Look up the AZs that offer AWS Systems Manager interface
-# endpoints
-
-  SessionManagerAzs:
-    Type: Custom::SessionManagerAzs
-    DependsOn: VpcEndpointServiceAzsLogGroup
-    Properties:
-      ServiceToken: !GetAtt VpcEndpointServiceAzsFunction.Arn
-      ServiceName:
-        !Join
-        - ''
-        - - 'com.amazonaws.'
-          - !Ref 'AWS::Region'
-          - '.ssmmessages'
-      DesiredNumAzs: 2
-
-# SessionMgrSubnet01 and 02: Subnets for the Session Manaager Endpoint
- 
-  SessionMgrSubnet01:
-    Type: AWS::EC2::Subnet
-    Properties:
-      AvailabilityZone: !Select [0, !Split [",", !GetAtt SessionManagerAzs.Azs]]
-      CidrBlock: !FindInMap [Constants, Values, 'SessionMgrSubnet01Cidr']
-      MapPublicIpOnLaunch: 'true'
-      Tags:
-      - Key: Name
-        Value: !Join 
-        - '-'
-        - - Fn::FindInMap: [Constants, Values, 'NamePrefix']
-          - 'sessmgrsn01'
-          - Fn::GetAtt: [ RandomCharString, RandomString ]
-      - Key: Project
-        Value: !FindInMap [Constants, Values, 'ProjectTag']
-      VpcId: !Ref VpcName
-
-  SessionMgrSubnet02:
-    Type: AWS::EC2::Subnet
-    Properties:
-      AvailabilityZone: !Select [1, !Split [",", !GetAtt SessionManagerAzs.Azs]]
-      CidrBlock: !FindInMap [Constants, Values, 'SessionMgrSubnet02Cidr']
-      MapPublicIpOnLaunch: 'true'
-      Tags:
-      - Key: Name
-        Value: !Join 
-        - '-'
-        - - Fn::FindInMap: [Constants, Values, 'NamePrefix']
-          - 'sessmgrsn02'
-          - Fn::GetAtt: [ RandomCharString, RandomString ]
-      - Key: Project
-        Value: !FindInMap [Constants, Values, 'ProjectTag']
-      VpcId: !Ref VpcName
-
-# Associate subnets with the routng table.
-
-  SessionMgrSubnet01Rtb:
-    Type: AWS::EC2::SubnetRouteTableAssociation
-    DependsOn: VpcIgwAttachment
-    Properties:
-      RouteTableId: !Ref RouteTable
-      SubnetId: !Ref SessionMgrSubnet01
-
-  SessionMgrSubnet02Rtb:
-    Type: AWS::EC2::SubnetRouteTableAssociation
-    DependsOn: VpcIgwAttachment
-    Properties:
-      RouteTableId: !Ref RouteTable
-      SubnetId: !Ref SessionMgrSubnet02
-
-# Create Session Manager private interface endpoint.
-
-  SessionManagerEndpoint:
-    Type: 'AWS::EC2::VPCEndpoint'
-    Properties:
-      VpcEndpointType: Interface
-      PrivateDnsEnabled: True
-      SubnetIds:
-      - !Ref SessionMgrSubnet01
-      - !Ref SessionMgrSubnet02
-      SecurityGroupIds:
-      - !Ref SGWeb
-      ServiceName: !Join 
-      - ''
-      - - com.amazonaws.
-        - !Ref 'AWS::Region'
-        - .ssmmessages
-      VpcId: !Ref VpcName
 
 # RandomStrFunction - Generate a string of random characters
 #
@@ -536,366 +155,6 @@ Resources:
     Properties:
       ServiceToken: !GetAtt RandomStrFunction.Arn
       StringLength: '12'
-
-  LampInspectorResourceGroup: 
-    Type: AWS::Inspector::ResourceGroup
-    Properties: 
-      ResourceGroupTags : 
-      - Key: Name
-        Value: !Join 
-        - ''
-        - - Fn::FindInMap: [Constants, Values, 'NamePrefix']
-          - '-server'
-      - Key: Project
-        Value: !FindInMap [Constants, Values, 'ProjectTag']
-    
-  LampInspectorAssessmentTarget:
-    Type: AWS::Inspector::AssessmentTarget
-    Properties:
-      ResourceGroupArn: !GetAtt LampInspectorResourceGroup.Arn
-
-  LampInspectorAssessmentTemplate:
-    Type: AWS::Inspector::AssessmentTemplate
-    Properties:
-      AssessmentTargetArn: !GetAtt LampInspectorAssessmentTarget.Arn
-      DurationInSeconds: 900
-      RulesPackageArns: 
-        - !FindInMap [RegionMap, !Ref 'AWS::Region', CVE]
-      UserAttributesForFindings: 
-      - Key: Name
-        Value: !Join 
-        - '-'
-        - - Fn::FindInMap: [Constants, Values, 'NamePrefix']
-          - 'server'
-          - Fn::GetAtt: [ RandomCharString, RandomString ]
-      - Key: Project
-        Value: !FindInMap [Constants, Values, 'ProjectTag']
-
-  MacieSetup:
-    Type: AWS::CloudFormation::Stack
-    Properties:
-      Parameters: 
-        BlueprintObject: 'DefaultBlueprint.json'
-        LambdaPkgObject: 'LambdaFunction.zip'
-      Tags:
-      - Key: Name
-        Value: !Join 
-        - ''
-        - - Fn::FindInMap: [Constants, Values, 'NamePrefix']
-          - '-maciecf'
-      - Key: Project
-        Value: !FindInMap [Constants, Values, 'ProjectTag']
-      TemplateURL: 'https://s3.amazonaws.com/amazon-macie-activity-generator-us-east-1-fb58a9df3468/CloudFormationTemplate.yml'
-      TimeoutInMinutes: 10
-
-
-# PostMacieSetupFunction - Associate an S3 Bucket with Amazon Macie
-
-  PostMacieSetupFunction:
-    Type: AWS::Lambda::Function
-    DependsOn:
-    - MacieSetup
-    Properties: 
-      Description: 'Associate an S3 Bucket with Amazon Macie'
-      Handler: index.handler
-      MemorySize: 128
-      Role: !GetAtt LambdaExecutionRole.Arn
-      Runtime: 'python3.6'
-      Timeout: 30
-      Tags: 
-      - Key: Project
-        Value: !FindInMap [Constants, Values, 'ProjectTag']
-      Code:
-        ZipFile: !Sub |
-          import json
-          import boto3
-          import cfnresponse
-          import string
-          import random
-          def handler(event, context):
-            if event['RequestType'] == 'Delete':
-              responseData = {}      
-              cfnresponse.send(event, context, cfnresponse.SUCCESS, responseData)
-              return
-            
-            client = boto3.client('macie')
-            responseData = {}
-            
-            try:
-              response = client.associate_s3_resources(
-                memberAccountId='${AWS::AccountId}',
-                s3Resources=[
-                  {
-                   'bucketName': '${MacieSetup.Outputs.DefaultS3Bucket}',
-                   'classificationType': {
-                     'oneTime': 'FULL',
-                     'continuous': 'FULL'
-                    }
-                  }
-                ]
-              )
-              cfnresponse.send(event, context, cfnresponse.SUCCESS, responseData)
-            except:
-              cfnresponse.send(event, context, cfnresponse.FAILED, responseData)
-            
-            return
-
-# PostMacieSetup - Perform the association of the Macie Acitivity Generator Bucket
-#
-# Parameters
-#
-# ServiceToken - a pointer to the AWS Lambda function
-
-  PostMacieSetup:
-    Type: Custom::PostMacieSetup
-    Properties:
-      ServiceToken: !GetAtt PostMacieSetupFunction.Arn
-
-# GuardDutySetupFunction - Configure GuardDuty
-#
-# (1) Create a detector if one doesn't exist.
-# (2) Be sure the detector is enabled.
-# (3) Generate sample findings.
-
-  GuardDutySetupFunction:
-    Type: AWS::Lambda::Function
-    Properties: 
-      Description: 'Set up Amazon GuardDuty'
-      Handler: index.handler
-      MemorySize: 128
-      Role: !GetAtt LambdaExecutionRole.Arn
-      Runtime: 'python3.6'
-      Timeout: 30
-      Tags: 
-      - Key: Project
-        Value: !FindInMap [Constants, Values, 'ProjectTag']
-      Code:
-        ZipFile: !Sub |
-          import json
-          import boto3
-          import cfnresponse
-          import string
-          import random
-          def handler(event, context):
-            responseData = {}      
-            
-            if event['RequestType'] == 'Delete':
-              cfnresponse.send(event, context, cfnresponse.SUCCESS, responseData)
-              return
-            
-            if event['RequestType'] == 'Update':
-              cfnresponse.send(event, context, cfnresponse.SUCCESS, responseData)
-              return
-            
-            client = boto3.client('guardduty')
-            
-            try:
-              response = client.list_detectors(
-                MaxResults=1
-              )
-            except:
-              cfnresponse.send(event, context, cfnresponse.FAILED, responseData)
-              return
-            
-            if len(response['DetectorIds']) != 0:
-              detectorId = response['DetectorIds'][0]
-            else:
-              try:
-                response = client.create_detector(
-                  Enable=True
-                )
-                detectorId = response['DetectorId']
-              except:
-                cfnresponse.send(event, context, cfnresponse.FAILED, responseData)
-                return
-
-            try:
-              response = client.update_detector(
-                DetectorId=detectorId,
-                Enable=True
-              )
-              response = client.create_sample_findings(
-                DetectorId=detectorId
-              )
-            except:
-              cfnresponse.send(event, context, cfnresponse.FAILED, responseData)
-              return
-            
-            cfnresponse.send(event, context, cfnresponse.SUCCESS, responseData)
-            return
-
-# GuardDutySetup - Perform the GuardDuty setup using the GuardDutySetup
-# Lambda function
-#
-# Parameters
-#
-# ServiceToken - a pointer to the AWS Lambda function
-
-  GuardDutySetup:
-    Type: Custom::GuardDutySetup
-    Properties:
-      ServiceToken: !GetAtt GuardDutySetupFunction.Arn
-
-# LinuxInstanceRole - The IAM role that will be attached to the Amazon EC2
-# instance.  In addition to the policy above, we also need to have the
-# managed policy ARN for Amazon Inspector so that the service linked role
-# required by Amazon Inspector can be created.
-
-  LinuxInstanceRole:
-    Type: AWS::IAM::Role
-    Properties:
-      AssumeRolePolicyDocument:
-        Version: '2012-10-17'
-        Statement:
-        - Effect: Allow
-          Principal:
-            Service:
-            - ec2.amazonaws.com
-          Action:
-            - sts:AssumeRole
-      ManagedPolicyArns:
-      - 'arn:aws:iam::aws:policy/AmazonInspectorFullAccess'
-      - 'arn:aws:iam::aws:policy/service-role/AmazonEC2RoleforSSM'
-      - 'arn:aws:iam::aws:policy/AmazonSSMFullAccess'
-      Path: '/'
-      Policies: 
-      - 
-        PolicyName: "root"
-        PolicyDocument:
-          Statement:
-          - Effect: Allow
-            Action:
-            - 'inspector:*'
-            Resource: "*"
-          - Effect: Allow
-            Action:
-            - 'guardduty:*'
-            Resource: '*'
-          - Effect: Allow
-            Action:
-            - 'iam:CreateServiceLinkedRole'
-            Resource: !Sub 'arn:aws:iam::${AWS::AccountId}:role/aws-service-role/guardduty.amazonaws.com/AWSServiceRoleForAmazonGuardDuty'
-            Condition:
-              StringLike:
-                iam:AWSServiceName: guardduty.amazonaws.com
-          - Effect: Allow
-            Action:
-            - 'macie:*'
-            Resource: '*'
-          - Effect: Allow
-            Action:
-            - 'iam:CreateServiceLinkedRole'
-            Resource: '*'
-            Condition:
-              StringLike:
-                iam:AWSServiceName: macie.amazonaws.com
-
-  LinuxInstanceProfile:
-    Type: AWS::IAM::InstanceProfile
-    Properties: 
-      Path: '/'
-      Roles: 
-        - !Ref LinuxInstanceRole
-
-# LinuxInstance - An Amazon Linux EC2 instance running Apache
-#
-# This LAMP instance gives us something we can browse as part of
-# the source account.
-#
-# It also does the following:
-#
-# (1) Creates a GuardDuty dectector if one is not running and enable
-# GuardDuty.
-#
-# (2) Installs the Amazon Inspector agent.
-#
-# (3) Starts a 15 minute Inspector assessment run.
-#
-# Much of the set up work is done through cfn-init and the instance
-# Metadata.  Using the Netadata and cfn-init allows us to conserve userdata
-# space which is limited to 8K.
-
-
-  LinuxInstance:
-    Type: AWS::EC2::Instance
-    DependsOn:
-    - VpcIgwAttachment
-    - LampInspectorAssessmentTemplate
-
-    CreationPolicy:
-      ResourceSignal:
-        Timeout: PT15M
-
-    Properties:
-      AvailabilityZone: !GetAtt PublicSubnet.AvailabilityZone
-      IamInstanceProfile: !Ref LinuxInstanceProfile
-      ImageId: !Ref AmazonLinux2AmiId
-      InstanceInitiatedShutdownBehavior: stop
-      InstanceType: !FindInMap [Constants, Values, 'HostInstanceType']
-      Monitoring: 'true'
-      NetworkInterfaces:
-      - AssociatePublicIpAddress: 'true'
-        DeviceIndex: '0'
-        GroupSet:
-        - !Ref SGWeb
-        SubnetId: !Ref PublicSubnet
-      Tags:
-      - Key: Name
-        Value: !Join 
-        - '-'
-        - - Fn::FindInMap: [Constants, Values, 'NamePrefix']
-          - 'server'
-          - Fn::GetAtt: [ RandomCharString, RandomString ]
-      - Key: Project
-        Value: !FindInMap [Constants, Values, 'ProjectTag']
-      Tenancy: default
-      UserData:
-        Fn::Base64: !Sub |
-          #!/bin/bash -xe
-          HOMEDIR=/home/ec2-user
-          
-          yum install -y deltarpm
-          yum update -y
-          yum install -y aws-cfn-bootstrap
-         
-          # Update the AWS Systems Manager Agent
-          #EC2_INSTANCE_ID=`wget -q -O - http://169.254.169.254/latest/meta-data/instance-id`
-         
-          #aws ssm create-association \
-          #--targets Key=instanceids,Values=$EC2_INSTANCE_ID \
-          #--name AWS-UpdateSSMAgent \
-          #--region ${AWS::Region}
-          
-          /opt/aws/bin/cfn-signal \
-            -e $? \
-            --stack ${AWS::StackName} \
-            --resource LinuxInstance \
-            --region ${AWS::Region}
-
-# SSMagent
-
-  SSMAgent:
-    DependsOn: LinuxInstance
-    Type: AWS::SSM::Association
-    Properties:
-      Name: AWS-UpdateSSMAgent
-      Targets:
-      - Key: InstanceIds
-        Values: [!Ref LinuxInstance]
-
-# InspectorAgent
-
-  InspectorAgent:
-    DependsOn: SSMAgent
-    Type: AWS::SSM::Association
-    Properties:
-      Name: AmazonInspector-ManageAWSAgent
-      Parameters:
-        Operation:
-        - Install
-      Targets:
-      - Key: InstanceIds
-        Values: [!Ref LinuxInstance]
 
 # LoggingBucket
 
@@ -1065,6 +324,40 @@ Resources:
       - arn:aws:iam::aws:policy/AmazonSNSReadOnlyAccess 
       - !Ref SecOperatorMaciePolicy
       MaxSessionDuration: 43200
+
+  LampInspectorResourceGroup:
+    Type: AWS::Inspector::ResourceGroup
+    Properties:
+      ResourceGroupTags :
+      - Key: Name
+        Value: !Join
+        - ''
+        - - Fn::FindInMap: [Constants, Values, 'NamePrefix']
+          - '-server'
+      - Key: Project
+        Value: !FindInMap [Constants, Values, 'ProjectTag']
+
+  LampInspectorAssessmentTarget:
+    Type: AWS::Inspector::AssessmentTarget
+    Properties:
+      ResourceGroupArn: !GetAtt LampInspectorResourceGroup.Arn
+
+  LampInspectorAssessmentTemplate:
+    Type: AWS::Inspector::AssessmentTemplate
+    Properties:
+      AssessmentTargetArn: !GetAtt LampInspectorAssessmentTarget.Arn
+      DurationInSeconds: 900
+      RulesPackageArns:
+        - !FindInMap [RegionMap, !Ref 'AWS::Region', CVE]
+      UserAttributesForFindings:
+      - Key: Name
+        Value: !Join
+        - '-'
+        - - Fn::FindInMap: [Constants, Values, 'NamePrefix']
+          - 'server'
+          - Fn::GetAtt: [ RandomCharString, RandomString ]
+      - Key: Project
+        Value: !FindInMap [Constants, Values, 'ProjectTag']
 
 Outputs:
   SecAdministratorRoleURL:

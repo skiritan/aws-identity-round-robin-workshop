@@ -151,8 +151,7 @@ You can also select a color that will be used to display the role you assume in 
 
     ![EFSConsole](./images/IamEssEFSConsole.png)
 
-4. Now go to the Amazon Inspector Console.  Click **Assessment Templates** and check the box to the left of the template name that begins with *LampInspectorAssessmentTemplate* and click **Run**.
-You have just launched an new assessment run which requires administrative access.
+4. Now go to the Amazon Inspector Console.  Click **Assessment Templates** and check the box to the left of the template name that begins with *LampInspectorAssessmentTemplate* and click **Clone**.  A section of the form will appear.  Scroll down towards the bottom and click the **Create** button.   Refresh the screen.  You should now see two templates that begin with *LampInspectorAssessment*.  You have just cloned an assessment template which requires administrative access.
 
 5. Now go to the GuardDuty console and select the Settings menu item.  You may see an error message at the top of the screen about **iam:ListPolicyVersions**.  The reason for this is that you do not have full IAM permissions.  Ignore this message.
 
@@ -234,7 +233,7 @@ You can also select a color that will be used to display the role you assume in 
 
     This means that your *effective* privileges have been *temporarily*  replaced with those of the SecOperator role.
 
-6. Now go to the Amazon Inspector Console.  Click **Assessment Templates** and check the box to the left of the template name that begins with *LampInspectorAssessmentTemplate* and click **Run**.  After several seconds you will see an error message telling you that you are not authorized to call the StartAssessmentRun action.
+6. Now go to the Amazon Inspector Console.  Click **Assessment Templates** and check the box to the left of both of the template name that begins with *LampInspectorAssessmentTemplate* and click **Delete**.  You will be asked to confirm the deletion.  Click **Yes**.  After 30 or so seconds you will see an error message telling you that you are not authorized to call the inspector:DeleteAssessmentTemplate action.  This is because you have read-only access to Inspector.
 
 
 7. Now go to the GuardDuty console, click **Settings**, change the **Updated findings** field to a different value, and click **Save settings**.  You will see an error message telling you that you are not authorized to perform the UpdateDetector action (the message may appear beneath the first IAM error message).  This is because you have read-only access to GuardDuty.
