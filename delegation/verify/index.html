@@ -803,7 +803,7 @@ Close the Macie window.</p>
 <details class="info"><summary>Individual or an event not sponsored by AWS</summary><p>Follow the steps below to remove the core componenets.</p>
 <ol>
 <li>
-<p><a href="https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/cfn-console-delete-stack.html">Delete the main (not the nested) CloudFormation stack</a>.  This will in turn delete the nested stack that represents the Macie Activity Generator.  Wait until both the main and nested CloudFormation stacks have been deleted.</p>
+<p><a href="https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/cfn-console-delete-stack.html">Delete the CloudFormation stack</a>.  Wait until stack have been deleted.</p>
 </li>
 <li>
 <p><a href="https://docs.aws.amazon.com/macie/latest/userguide/macie-disable.html">Disable Amazon Macie</a>.</p>
@@ -813,6 +813,9 @@ Close the Macie window.</p>
 </li>
 <li>
 <p><a href="https://docs.aws.amazon.com/AmazonS3/latest/user-guide/delete-bucket.html">Delete the logging bucket</a>.</p>
+</li>
+<li>
+<p><a href="https://docs.aws.amazon.com/inspector/latest/userguide/inspector_assessments.html#delete_assessment_via_console">Delete the Amazon Inspector templates</a>.</p>
 </li>
 </ol>
 </details>
