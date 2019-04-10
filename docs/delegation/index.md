@@ -41,6 +41,7 @@ This round is broken down into Build and Verify Phases.
 1. You will need an AWS account for this lab and administrative credentials.
 These may be provided by an event sponsor.
 2. You should be familiar with AWS core services such as AWS CloudFormation and Amazon S3.  You should also be comfortable using the AWS console.
+3. The instructions are written with the understanding that the account is new or clean.  We strongly recommend that you do not do these labs in work or "production" accounts.
 
 ## Architecture Overview
 

@@ -79,15 +79,17 @@ In order to prevent charges to your account we recommend cleaning up the infrast
 
     Follow the steps below to remove the core componenets.
 
-    1. [Delete the CloudFormation stack](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/cfn-console-delete-stack.html).  Wait until stack have been deleted.
+    1. [Delete the SecOperator role](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_manage_delete.html).
 
-    2. [Disable Amazon Macie](https://docs.aws.amazon.com/macie/latest/userguide/macie-disable.html).
+    2. [Delete the CloudFormation stack](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/cfn-console-delete-stack.html).  Wait until stack have been deleted.
 
-    3. [Disable Amazon GuardDuty](https://docs.aws.amazon.com/guardduty/latest/ug/guardduty_suspend-disable.html).
+    3. [Disable Amazon Macie](https://docs.aws.amazon.com/macie/latest/userguide/macie-disable.html).
 
-    4. [Delete the logging bucket](https://docs.aws.amazon.com/AmazonS3/latest/user-guide/delete-bucket.html).
+    4. [Disable Amazon GuardDuty](https://docs.aws.amazon.com/guardduty/latest/ug/guardduty_suspend-disable.html).
 
-    5. [Delete the Amazon Inspector templates](https://docs.aws.amazon.com/inspector/latest/userguide/inspector_assessments.html#delete_assessment_via_console).
+    5. [Delete the logging bucket](https://docs.aws.amazon.com/AmazonS3/latest/user-guide/delete-bucket.html).
+
+    6. [Delete the Amazon Inspector templates](https://docs.aws.amazon.com/inspector/latest/userguide/inspector_assessments.html#delete_assessment_via_console).
 
 
 Congratulations on completing the External Security Services round!
