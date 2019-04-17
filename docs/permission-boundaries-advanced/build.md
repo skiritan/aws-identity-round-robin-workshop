@@ -9,7 +9,7 @@ The three elements of a permissions boundary are represented below. When your te
 
 To setup your environment please expand one of the following drop-downs (depending on how if you are doing this workshop at either an **AWS event** or **individually**) and follow the instructions:
 
-??? info "Click here if doing this workshop at an *AWS Sponsored Event*"
+??? info "Click here if doing this workshop at an *AWS Event and AWS has provided the account to use*"
 
 	**Console Login:** if you are attending this workshop at an official AWS event then your team should have the URL and login credentials for your account. This will allow you to login to the account using AWS SSO. Browse to that URL and login. 
 
@@ -17,13 +17,13 @@ To setup your environment please expand one of the following drop-downs (dependi
 
 	![login-page](./images/login.png)
 
-	Make sure the region is set to Ohio (us-east-2)
+	Make sure the region is set to US East 2 (Ohio)
 
 	**CloudFormation:** Launch the CloudFormation stack below to setup the environment:
 
 	Region| Deploy
 	------|-----
-	US East 2 (Ohio) | [![Deploy permissions boundary round in us-east-2](./images/deploy-to-aws.png)](https://console.aws.amazon.com/cloudformation/home?region=us-east-2#/stacks/new?stackName=Perm-Bound&templateURL=https://s3-us-west-2.amazonaws.com/sa-security-specialist-workshops-us-west-2/identity-workshop/permissionboundary/identity-workshop-web-admins.yaml)
+	US East 2 (Ohio) | <a href="https://console.aws.amazon.com/cloudformation/home?region=us-east-2#/stacks/new?stackName=Perm-Bound-Adv&templateURL=https://s3-us-west-2.amazonaws.com/sa-security-specialist-workshops-us-west-2/identity-workshop/permissionboundary/identity-workshop-web-admins-advanced.yaml" target="_blank">![Deploy in us-east-2](./images/deploy-to-aws.png)</a>
 
 	1. Click the **Deploy to AWS** button above.  This will automatically take you to the console to run the template.  
 	2. Click **Next** on the **Select Template** section.
@@ -39,7 +39,7 @@ To setup your environment please expand one of the following drop-downs (dependi
 
 	* Paste the credentials into the [credentials file](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-files.html) (~/.aws/credentials if running on a Mac or Linux)
 
-??? info "Click here if doing this workshop *online on your own*"
+??? info "Click here if doing this workshop *using your own account at an AWS event or online on your own*"
 
 	Log in to your account however you would normally.
 
@@ -47,7 +47,7 @@ To setup your environment please expand one of the following drop-downs (dependi
 
 	Region| Deploy
 	------|-----
-	US East 2 (Ohio) | [![Deploy permissions boundary round in us-east-2](./images/deploy-to-aws.png)](https://console.aws.amazon.com/cloudformation/home?region=us-east-2#/stacks/new?stackName=Perm-Bound&templateURL=https://s3-us-west-2.amazonaws.com/sa-security-specialist-workshops-us-west-2/identity-workshop/permissionboundary/identity-workshop-web-admins.yaml)
+	US East 2 (Ohio) | <a href="https://console.aws.amazon.com/cloudformation/home?region=us-east-2#/stacks/new?stackName=Perm-Bound-Adv&templateURL=https://s3-us-west-2.amazonaws.com/sa-security-specialist-workshops-us-west-2/identity-workshop/permissionboundary/identity-workshop-web-admins-advanced.yaml" target="_blank">![Deploy in us-east-2](./images/deploy-to-aws.png)</a>
 
 	1. Click the **Deploy to AWS** button above.  This will automatically take you to the console to run the template.  
 	2. Click **Next** on the **Select Template** section.
@@ -56,26 +56,7 @@ To setup your environment please expand one of the following drop-downs (dependi
 	5. Finally, acknowledge that the template will create IAM roles under **Capabilities** and click **Create**.
 
 	This will bring you back to the CloudFormation console. You can refresh the page to see the stack starting to create. Before moving on, make sure the stack is in a **CREATE_COMPLETE**.
-	
-??? info "Click here if doing this workshop at the *Identity Master Class*" 
 
-	Create one [burner account](https://access.amazon.com/aws/burner) per team. Create an IAM user for programmatic access and grab the access keys (you will be doing all the tasks from the CLI.)
-
-	Make sure the region is set to Ohio (us-east-2)
-
-	**CloudFormation:** Launch the CloudFormation stack below to setup the environment:
-
-	Region| Deploy
-	------|-----
-	US East 2 (Ohio) | [![Deploy permissions boundary round in us-east-2](./images/deploy-to-aws.png)](https://console.aws.amazon.com/cloudformation/home?region=us-east-2#/stacks/new?stackName=Perm-Bound&templateURL=https://s3-us-west-2.amazonaws.com/sa-security-specialist-workshops-us-west-2/identity-workshop/permissionboundary/identity-workshop-web-admins.yaml)
-
-	1. Click the **Deploy to AWS** button above.  This will automatically take you to the console to run the template.  
-	2. Click **Next** on the **Select Template** section.
-	3. Click **Next** on the **Specify Details** section (the stack name will be already filled - you can change it or leave it as is)
-	4. Click **Next** on the **Options** section.
-	5. Finally, acknowledge that the template will create IAM roles under **Capabilities** and click **Create**.
-
-	This will bring you back to the CloudFormation console. You can refresh the page to see the stack starting to create. Before moving on, make sure the stack is in a **CREATE_COMPLETE**.
 
 !!! Attention
 	Throughout the workshop, keep in mind where you need to add the Account ID, correctly use pathing and change the region specified if needed (although if you are taking this as part of an AWS event, just use the already specified us-east-2.) Missing any of these items can result in problems and errors like **"An error occurred (MalformedPolicyDocument) when calling the CreatePolicy operation: The policy failed legacy parsing"**.
