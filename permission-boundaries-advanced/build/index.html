@@ -627,12 +627,11 @@
 <p>The three elements of a permissions boundary are represented below. When your team does the <strong>BUILD</strong> tasks you will act as the admins. When your team does the <strong>VERIFY</strong> tasks you will act as the delegated admins (webadmins). The delegated admins (webadmins) will create roles that can be considered <strong>"bound"</strong> since they will have a permissions boundary attached.  </p>
 <p><img alt="mechanism" src="../images/permission-boundaries.png" /></p>
 <h2 id="setup-instructions">Setup Instructions</h2>
-<p>To setup your environment please expand one of the following drop-downs (depending on how if you are doing this workshop at either an <strong>AWS event</strong> or <strong>individually</strong>) and follow the instructions:</p>
-<details class="info"><summary>Click here if doing this workshop at an <em>AWS Event and AWS has provided the account to use</em></summary><p><strong>Console Login:</strong> if you are attending this workshop at an official AWS event then your team should have the URL and login credentials for your account. This will allow you to login to the account using AWS SSO. Browse to that URL and login. </p>
-<p>After you login click <strong>AWS Account</strong> box, then click on the Account ID displayed below that (the red box in the image.) You should see a link below that for <strong>Management console</strong>. Click on that and you will be taken the AWS console. </p>
-<p><img alt="login-page" src="../images/login.png" /></p>
-<p>Make sure the region is set to US East 2 (Ohio)</p>
-<p><strong>CloudFormation:</strong> Launch the CloudFormation stack below to setup the environment:</p>
+<h3 id="to-setup-your-environment-expand-one-of-the-following-drop-downs">To setup your environment <strong>expand one of the following drop-downs</strong>:</h3>
+<details class="info"><summary>Click here if <em>AWS provided an account to you</em> (usually at an AWS event)</summary><h3 id="step-1-login-to-the-console-and-run-the-cloudformation-template">Step 1: Login to the console and run the CloudFormation template</h3>
+<p><strong>Console Login:</strong> Your team should have been given a URL and login credentials. This will allow you to login to the account using AWS SSO. Browse to that URL and login. </p>
+<p>After you login click <strong>AWS Account</strong> box, then click on the Account ID displayed below that (the red box in the image.) You should see a link below that for <strong>Management console</strong>. Click on that and you will be taken the AWS console. Make sure the region is set to US East 2 (Ohio)</p>
+<p><strong> Launch the CloudFormation stack. Click the <em>Deploy to AWS</em> button below. </strong></p>
 <table>
 <thead>
 <tr>
@@ -648,22 +647,20 @@
 </tbody>
 </table>
 <ol>
-<li>Click the <strong>Deploy to AWS</strong> button above.  This will automatically take you to the console to run the template.  </li>
 <li>Click <strong>Next</strong> on the <strong>Select Template</strong> section.</li>
 <li>Click <strong>Next</strong> on the <strong>Specify Details</strong> section (the stack name will be already filled - you can change it or leave it as is)</li>
 <li>Click <strong>Next</strong> on the <strong>Options</strong> section.</li>
 <li>Finally, acknowledge that the template will create IAM roles under <strong>Capabilities</strong> and click <strong>Create</strong>.</li>
+<li>This will bring you back to the CloudFormation console. You can refresh the page to see the stack starting to create. Before moving on, make sure the stack shows <strong>CREATE_COMPLETE</strong>.</li>
 </ol>
-<p>This will bring you back to the CloudFormation console. You can refresh the page to see the stack starting to create. Before moving on, make sure the stack shows <strong>CREATE_COMPLETE</strong>.</p>
-<ul>
-<li>Go back to the SSO login page (the first tab you opened should still have that page) and click <strong>Command line or programmatic access</strong>. Copy the temporary credentials using whichever option fits your setup best. </li>
-</ul>
-<p><img alt="image1" src="../images/sso-temp-creds.png" /></p>
-<ul>
-<li>Paste the credentials into the <a href="https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-files.html">credentials file</a> (~/.aws/credentials if running on a Mac or Linux)</li>
-</ul>
+<h3 id="step-2-connect-to-cloud9-this-is-where-you-will-be-doing-all-the-hands-on-work">Step 2 : Connect to Cloud9 (this is where you will be doing all the hands on work)**</h3>
+<ol>
+<li>Navigate to Cloud9 in the AWS console</li>
+<li>Open the Cloud9 IDE environment called <code>workshop-environment</code> </li>
+<li>This is where you will run the commands. Move on to Task 1.</li>
+</ol>
 </details>
-<details class="info"><summary>Click here if doing this workshop <em>using your own account at an AWS event or online on your own</em></summary><p>Log in to your account however you would normally.</p>
+<details class="info"><summary>Click here if you are <em>using your own AWS account</em> (whether you are at an AWS event, a separate event or online on your own)</summary><p>Log in to your account however you would normally.</p>
 <p><strong>CloudFormation:</strong> Launch the CloudFormation stack below to setup the environment:</p>
 <table>
 <thead>
@@ -687,23 +684,24 @@
 <li>Finally, acknowledge that the template will create IAM roles under <strong>Capabilities</strong> and click <strong>Create</strong>.</li>
 </ol>
 <p>This will bring you back to the CloudFormation console. You can refresh the page to see the stack starting to create. Before moving on, make sure the stack is in a <strong>CREATE_COMPLETE</strong>.</p>
+<p>Move on to Task 1.</p>
 </details>
 <div class="admonition attention">
 <p class="admonition-title">Attention</p>
 <p>Throughout the workshop, keep in mind where you need to add the Account ID, correctly use pathing and change the region specified if needed (although if you are taking this as part of an AWS event, just use the already specified us-east-2.) Missing any of these items can result in problems and errors like <strong>"An error occurred (MalformedPolicyDocument) when calling the CreatePolicy operation: The policy failed legacy parsing"</strong>.</p>
 </div>
 <h2 id="task-1-create-the-webadmins-role">Task 1 <small>Create the webadmins role</small></h2>
+<p>First you will create an IAM role for the webadmins (Initially this role will trust your own AWS account but in the <strong>Verify</strong> phase you will configure it to trust the other team's account.):</p>
 <ul>
-<li>Create an IAM role that will be used by the webadmins (Initially this role will trust your own AWS account but in the <strong>Verify</strong> phase you will configure it to trust the other team's account.) </li>
 <li>Use the following JSON to create a file name trustpolicy1 for the trust (assume role) policy: 
     <code>{ "Version": "2012-10-17", "Statement": { "Effect": "Allow", "Principal": { "AWS": "arn:aws:iam::Account_ID:root"}, "Action": "sts:AssumeRole" } }</code></li>
 <li>Create the webadmin role:
 <code>aws iam create-role --role-name webadmins --assume-role-policy-document file://trustpolicy1</code></li>
 <li>Add the Lambda Read Only policy to the role
-<code>aws iam attach-role-policy --policy-arn arn:aws:iam::aws:policy/AWSLambdaReadOnlyAccess  --role-name webadmins</code></li>
+    <code>aws iam attach-role-policy --policy-arn arn:aws:iam::aws:policy/AWSLambdaReadOnlyAccess  --role-name webadmins</code></li>
 </ul>
 <h2 id="task-2-create-the-permissions-boundary-for-the-webadmins">Task 2 <small>Create the permissions boundary for the webadmins</small></h2>
-<p>We will use permissions boundaries to set the maximum permissions of the roles created by the webadmins. The permissions boundary should only allow the following actions: Create log groups, create log streams and put logs, list the files in the webadmins folder of the bucket that starts with <code>"shared-logging-"</code> and ends in <code>"-data"</code></p>
+<p>Next you will create the policy that will be used as the permissions boundary.  The permissions boundary should only allow the following actions: Create log groups, create log streams, put logs and list the files in the webadmins folder of the bucket that starts with <code>"shared-logging-"</code> and ends in <code>"-data"</code>:</p>
 <ul>
 <li>Use the following JSON to create a file named boundarydoc for the policy document:</li>
 </ul>
@@ -760,8 +758,9 @@
 <h2 id="task-3-create-the-permission-policy-for-the-webadmins">Task 3 <small>Create the permission policy for the webadmins</small></h2>
 <div class="admonition hint">
 <p class="admonition-title">Hint</p>
-<p>The question marks <strong><code>????</code></strong> in the resource elements below should be replaced with something that could act as a resource restriction.  The end result is that you will have a pathing requirement for the roles and policies.</p>
+<p><strong>IMPORTANT!!!!</strong> - The question marks <strong><code>????</code></strong> in the policy below should be replaced with something that could act as part of a resource restriction.  The end result is that you will have a pathing requirement for the roles and policies. Replacing the <strong><code>????</code></strong> is one of the key challenges in this workshop and probably the most confusing part. Talk to a faciliator if you have issues with this. </p>
 </div>
+<p>Next you will create the policy that will be attached to the webadmins role.</p>
 <ul>
 <li>Use the following JSON to create a file named policydoc for the policy document:</li>
 </ul>
@@ -868,43 +867,23 @@
 <div class="admonition question">
 <p class="admonition-title">Question</p>
 <ul>
-<li>Why were there some blocks above that used the permissions boundary condition and some that did not?</li>
+<li>Why were there some blocks above in the policy that used the permissions boundary condition and some that did not?</li>
 <li>Why are we using pathing here?</li>
 <li>There are two ways of doing resource restrictions: naming and pathing. Which option allows you to create policies using both the AWS Console and CLI?</li>
 <li>Why do we add the Deny for DeletePolicy actions regarding the webadminspermissionsboundary &amp; webadminspermissionpolicy?</li>
 </ul>
 </div>
 <h2 id="task-4-test-the-webadmins-permissions">Task 4 <small>Test the webadmins permissions</small></h2>
-<h4 id="you-should-now-check-that-using-webadmins-role-you-can-create-a-policy-a-role-attaching-both-a-permission-policy-and-permissions-boundary-to-the-role-and-finally-create-a-lambda-function-into-which-you-will-pass-that-role">You should now check that using <strong>webadmins</strong> role you can create a policy, a role (attaching both a permission policy and permissions boundary to the role) and finally create a Lambda function into which you will pass that role.</h4>
-<ul>
-<li>Add the following to the AWS CLI <a href="https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-role.html">config file</a> (~/.aws/config if running on a Mac or Linux) so you can easily assume the webadmins role from the CLI.</li>
-</ul>
-<div class="codehilite"><pre><span></span><span class="k">[profile webadmins]</span>
-<span class="na">role_arn</span> <span class="o">=</span> <span class="s">arn:aws:iam::Account_ID:role/webadmins</span>
-<span class="na">source_profile</span> <span class="o">=</span> <span class="s">Name_of_the_Credential_Profile</span>
-</pre></div>
-
-
-<p>Now do the following using the webadmins role:</p>
-<ul>
-<li>Create a policy that allows for s3:<em> and logs:</em></li>
-<li>Create a role (this role should use Lambda as the trusted entity and attach the policy you just created to it)</li>
-<li>Create a Lambda function, pass the role to it and make sure you can run the function. </li>
-</ul>
+<p>It's time to check your work and make sure the webadmins are set up properly. The instructions for doing so are in the <strong>VERIFY</strong> phase. Go to that phase to check your work before handing this off to another team. You are free to skip the check if you are confident in your work and just go on to Task 5.</p>
 <h2 id="task-5-gather-info-needed-for-the-verify-phase">Task 5 <small>Gather info needed for the <strong>VERIFY</strong> phase</small></h2>
-<h4 id="now-that-you-have-setup-access-for-the-webadmins-its-time-to-pass-this-information-on-to-the-next-team-who-will-work-through-the-verify-tasks-if-you-are-doing-this-workshop-online-on-your-own-then-you-can-just-run-through-the-verify-phase-yourself-skip-this-task">Now that you have setup access for the webadmins, it's time to pass this information on to the next team who will work through the <strong>VERIFY</strong> tasks. If you are doing this workshop online on your own then you can just run through the <strong>VERIFY</strong> phase yourself (skip this task).</h4>
-<h3 id="walk-through">Walk Through</h3>
+<p>Now that you have setup access for the webadmins, it's time to pass this information on to the next team who will work through the <strong>VERIFY</strong> tasks. If you are doing this workshop online on your own then you can just run through the <strong>VERIFY</strong> phase yourself (skip this task).</p>
 <ul>
 <li>Get the Account ID from the other team so you can add that to the trust policy on the webadmin role</li>
-<li>
-<p>Use the following JSON to create a file name trustpolicy2 for the trust (assume role) policy (replace <code>ACCOUNT_ID</code> with your account ID so you can still test this and the <code>ACCOUNT_ID_OTHER_TEAM</code> with the other team's account ID:) </p>
-<ul>
+<li>Use the following JSON to create a file name trustpolicy2 for the trust (assume role) policy (replace <code>ACCOUNT_ID</code> with your account ID so you can still test this and the <code>ACCOUNT_ID_OTHER_TEAM</code> with the other team's account ID:) <ul>
 <li><code>{"Version":"2012-10-17","Statement":[{"Effect":"Allow","Principal":{"AWS":["arn:aws:iam::YOUR_ACCOUNT_ID:root","arn:aws:iam::OTHER_TEAM_ACCOUNT_ID_:root"]},"Action":"sts:AssumeRole"}]}</code></li>
 </ul>
 </li>
-<li>
-<p>Update the trust policy on the webadmins roles so both your team  and the verify team can assume the role</p>
-<ul>
+<li>Update the trust policy on the webadmins roles so both your team  and the verify team can assume the role<ul>
 <li><code>aws iam update-assume-role-policy --role-name webadmins --policy-document file://trustpolicy2</code></li>
 </ul>
 </li>

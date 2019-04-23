@@ -2,62 +2,62 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
      <loc>https://identity-round-robin.awssecworkshops.com/</loc>
-     <lastmod>2019-04-16</lastmod>
+     <lastmod>2019-04-22</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://identity-round-robin.awssecworkshops.com/serverless/</loc>
-     <lastmod>2019-04-16</lastmod>
+     <lastmod>2019-04-22</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://identity-round-robin.awssecworkshops.com/serverless/task1/</loc>
-     <lastmod>2019-04-16</lastmod>
+     <lastmod>2019-04-22</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://identity-round-robin.awssecworkshops.com/serverless/task2/</loc>
-     <lastmod>2019-04-16</lastmod>
+     <lastmod>2019-04-22</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://identity-round-robin.awssecworkshops.com/delegation/</loc>
-     <lastmod>2019-04-16</lastmod>
+     <lastmod>2019-04-22</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://identity-round-robin.awssecworkshops.com/delegation/build/</loc>
-     <lastmod>2019-04-16</lastmod>
+     <lastmod>2019-04-22</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://identity-round-robin.awssecworkshops.com/delegation/verify/</loc>
-     <lastmod>2019-04-16</lastmod>
+     <lastmod>2019-04-22</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://identity-round-robin.awssecworkshops.com/permission-boundaries/</loc>
-     <lastmod>2019-04-16</lastmod>
+     <lastmod>2019-04-22</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://identity-round-robin.awssecworkshops.com/permission-boundaries/build/</loc>
-     <lastmod>2019-04-16</lastmod>
+     <lastmod>2019-04-22</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://identity-round-robin.awssecworkshops.com/permission-boundaries/verify/</loc>
-     <lastmod>2019-04-16</lastmod>
+     <lastmod>2019-04-22</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://identity-round-robin.awssecworkshops.com/contribute/</loc>
-     <lastmod>2019-04-16</lastmod>
+     <lastmod>2019-04-22</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://identity-round-robin.awssecworkshops.com/license/</loc>
-     <lastmod>2019-04-16</lastmod>
+     <lastmod>2019-04-22</lastmod>
      <changefreq>daily</changefreq>
     </url>
 </urlset>

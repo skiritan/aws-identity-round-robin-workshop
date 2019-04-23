@@ -624,40 +624,48 @@
                 
                 <h1 id="permission-boundaries-workshop-advanced-edition">Permission boundaries workshop <small>- Advanced edition</small></h1>
 <h1 id="verify-phase"><small>VERIFY phase</small></h1>
-<p>You are now in the <strong>VERIFY</strong> phase. It is time to put on the hat of the webadmins and test out their permissions. Permissions boundaries are about delegation so verifying (acting as the delegated admins) the work of another team that did the build phase (acting as the admins) will simulate that experience.</p>
+<p>You are now in the <strong>VERIFY</strong> phase. It is time to put on the hat of the webadmins and test out their permissions. Permissions boundaries are about delegation so verifying (acting as the delegated admins) the work of another team that did the build phase (acting as the admins) will simulate that experience. As the webadmins you will do the following:
+* Create an IAM policy, create an IAM role (and attach that policy), create a Lambda function (and attach that role)</p>
 <p>If doing this as part of an AWS event you should have received from another team the following information:</p>
+<div class="codehilite"><pre><span></span>* Webadmins role ARN:   arn:aws:iam::`ACCOUNT_ID_of_Other_Team`:role/**webadmins**
+* Resource restriction for both the roles and policies: /webadmins/`Resource restriction`
+* Permissions boundary name: **webadminspermissionsboundary**
+* Permission policy name: **webadminspermissionpolicy**
+</pre></div>
+
+
 <ul>
-<li>Webadmins role ARN:   arn:aws:iam::<code>YOUR_ACCOUNT_ID</code>:role/<strong>webadmins</strong></li>
-<li>Resource restriction for both the roles and policies: /webadmins/<code>Resource restriction you used</code></li>
-<li>Permissions boundary name: <strong>webadminspermissionsboundary</strong></li>
-<li>Permission policy name: <strong>webadminspermissionpolicy</strong></li>
+<li>To carry out these tasks as the webadmins, you will need to assume that role. In order to assume the webadmins role, add the following to the AWS CLI <a href="https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-role.html">config file</a> found in the <code>~/.aws/config</code> directory. Since you are assuming the role of another team, enter the Account ID of that team in the ARN. <strong>Remember to use the --profile parameter for all of the commands in the following tasks.</strong></li>
 </ul>
-<p>As the webadmins you will be creating an IAM policy, an IAM role and a Lambda function. The Lambda function should be able to list files in a particular S3 bucket. The webadmins should not be able to escalate their permissions or impact the IAM policies and roles created by other teams.</p>
+<div class="codehilite"><pre><span></span><span class="k">[profile webadmins]</span>
+<span class="na">role_arn</span> <span class="o">=</span> <span class="s">arn:aws:iam::Account_ID_of_Other_Team:role/webadmins</span>
+<span class="na">source_profile</span> <span class="o">=</span> <span class="s">Name_of_the_Credential_Profile</span>
+</pre></div>
+
+
 <details class="info"><summary>Application architecture</summary><p><img alt="image1" src="../images/architecture.png" /></p>
 </details>
 <h2 id="task-1-create-a-policy">Task 1 <small>Create a policy</small></h2>
-<h4 id="your-goal-is-to-create-a-lambda-function-you-will-need-to-create-an-iam-role-attach-two-policies-a-trust-policy-and-permission-policy-to-it-and-then-pass-the-role-to-the-lambda-function-first-you-create-the-permission-policy-which-just-needs-to-allow-log-file-creation-and-s3listbucket-you-are-in-a-hurry-though-and-give-the-role-s3-the-policy-you-create-here-will-later-be-attached-to-the-role-you-create-in-task-2-which-will-then-be-passed-to-a-lambda-function-you-will-create-in-task-3">Your goal is to create a Lambda function. You will need to create an IAM role, attach two policies (a trust policy and permission policy) to it and then pass the role to the Lambda function. First you create the permission policy which just needs to allow log file creation and s3:ListBucket. You are in a hurry though and give the role s3:*. The policy you create here will later be attached to the role you create in Task 2 which will then be passed to a Lambda function you will create in Task 3</h4>
-<h3 id="walk-through">Walk Through</h3>
+<h4 id="first-you-will-create-a-permission-policy-which-just-needs-to-allow-log-file-creation-and-s3listbucket-you-are-in-a-hurry-though-like-many-developers-and-give-the-role-full-s3-permissions-the-policy-you-create-here-will-later-be-attached-to-the-role-you-create-in-task-2-which-will-then-be-passed-to-a-lambda-function-you-will-create-in-task-3">First you will create a permission policy which just needs to allow log file creation and s3:ListBucket. You are in a hurry though, like many developers, and give the role full S3 permissions. The policy you create here will later be attached to the role you create in Task 2 which will then be passed to a Lambda function you will create in Task 3.</h4>
 <ul>
 <li>Use the following JSON to create a file named verifypolicydoc (replace the Account ID): <ul>
 <li><code>{"Version":"2012-10-17","Statement":[{"Effect":"Allow","Action":["logs:CreateLogGroup","logs:CreateLogStream","logs:PutLogEvents","s3:*"],"Resource":"*"}]}</code></li>
 </ul>
 </li>
-<li>Create the policy (<strong>there is a key parameter missing from the command below</strong>)<ul>
+<li>Create the policy (<strong>there is a key parameter missing from the command below. Check the <a href="https://docs.aws.amazon.com/cli/latest/reference/">AWS CLI documentation</a></strong>)<ul>
 <li><code>aws iam create-policy --policy-name NAME_OF_POLICY --policy-document file://verifypolicydoc</code>
 <!-- <code>aws iam create-policy --policy-name NAME_OF_POLICY --path /NAME_OF_PATH/ --policy-document file://verifypolicydoc</code> --></li>
 </ul>
 </li>
 </ul>
 <h2 id="task-2-create-a-role">Task 2 <small>Create a role</small></h2>
-<h4 id="the-role-you-create-here-will-be-passed-to-the-lambda-function-you-create-in-task-3">The role you create here will be passed to the Lambda function you create in task 3</h4>
-<h3 id="walk-through_1">Walk Through</h3>
+<h4 id="the-role-you-create-here-will-be-passed-to-the-lambda-function-you-create-in-the-next-task">The role you create here will be passed to the Lambda function you create in the next task</h4>
 <ul>
 <li>Use the following JSON to create a file named verifytrustpolicy (replace the Account ID): <ul>
 <li><code>{ "Version": "2012-10-17", "Statement": { "Effect": "Allow", "Principal": { "Service": "lambda.amazonaws.com"}, "Action": "sts:AssumeRole" } }</code></li>
 </ul>
 </li>
-<li>Create the role (<strong>there is a key parameter missing from the command below</strong>)<ul>
+<li>Create the role (<strong>there is a key parameter missing from the command below. Check the <a href="https://docs.aws.amazon.com/cli/latest/reference/">AWS CLI documentation</a></strong>)<ul>
 <li><code>aws iam create-role --role-name NAME_OF_ROLE --path /NAME_OF_PATH/ --assume-role-policy-document file://verifytrustpolicy</code>
 <!-- <code>aws iam create-role --role-name NAME_OF_ROLE --path /NAME_OF_PATH/ --assume-role-policy-document file://verifytrustpolicy --permissions-boundary arn:aws:iam::Account_ID:policy/webadminspermissionsboundary</code> --></li>
 </ul>
@@ -669,9 +677,8 @@
 </ul>
 <h2 id="task-3-create-and-test-a-lambda-function">Task 3 <small>Create and test a Lambda function</small></h2>
 <h4 id="finally-you-will-create-a-nodejs-810-lambda-function-using-the-sample-code-below-and-pass-the-iam-role-you-just-created">Finally you will create a <strong>Node.js 8.10</strong> Lambda function using the sample code below and pass the IAM role you just created</h4>
-<h3 id="walk-through_2">Walk Through</h3>
 <ul>
-<li>Create a file <code>index.js</code> using the code sample below and then zip the file. Replace <code>"SHARED_LOGGING_BUCKET_NAME"</code> with the name of bucket that begins with <code>"shared-logging-"</code> and ends in <code>"-data"</code>. In order to get the bucket name, just run <code>aws s3 ls</code> using the webadmins role.)</li>
+<li>Create a file named <strong><code>index.js</code></strong> using the code sample below and then zip the file (<code>zip lambdafunction.zip index.js</code>). Replace <code>"SHARED_LOGGING_BUCKET_NAME"</code> with the name of bucket that begins with <code>"shared-logging-"</code> and ends in <code>"-data"</code>. In order to get the bucket name, just run <code>aws s3 ls</code> using the webadmins role.)</li>
 </ul>
 <div class="codehilite"><pre><span></span><span class="nt">const</span> <span class="nt">AWS</span> <span class="o">=</span> <span class="nt">require</span><span class="o">(</span><span class="s1">&#39;aws-sdk&#39;</span><span class="o">);</span>
 <span class="nt">const</span> <span class="nt">s3</span> <span class="o">=</span> <span class="nt">new</span> <span class="nt">AWS</span><span class="p">.</span><span class="nc">S3</span><span class="o">();</span>
@@ -707,8 +714,9 @@
 </li>
 <li>Examine the output file. It should show a number of log files in the S3 bucket that the Lambda function read. </li>
 </ul>
-<p>If you see files marked that <strong>webadmins/you-should-SEE-this-file--webadmins...</strong> then you have successfully verified that the webadmins can perform their role. Congratulations!</p>
-<p>Extra Credit: What else could you do here to verify that the webadmins are not able to escalate their permissions or impact other policies and roles in the account?</p>
+<p>If you see files marked that <strong>webadmins/you-should-SEE-this-file--webadmins...</strong> then you have successfully verified that the webadmins can do their job. Congratulations!</p>
+<h2 id="task-3-cleanup">Task 3 <small>Cleanup</small></h2>
+<p>To cleanup you need to delete the CloudFormation stack named <code>Perm-Bound-Adv</code>. This will also remove the Cloud9 environment.</p>
                 
                   
                 

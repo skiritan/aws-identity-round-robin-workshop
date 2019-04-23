@@ -628,8 +628,8 @@
 <p><strong>AWS Service/Feature Coverage</strong>: </p>
 <ul>
 <li>AWS IAM <a href="https://docs.aws.amazon.com/IAM/latest/UserGuide/id.html">users &amp; roles</a></li>
-<li>AWS IAM <a href="https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_boundaries.html">permission boundaries</a> </li>
-<li>AWS IAM <a href="https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_identifiers.html">identifiers or resource restrictions</a></li>
+<li>AWS IAM <a href="https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_boundaries.html">permissions boundaries</a> </li>
+<li>AWS IAM <a href="https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_identifiers.html">IAM friendly names and paths</a></li>
 <li>AWS <a href="https://docs.aws.amazon.com/lambda/latest/dg/welcome.html">Lambda</a></li>
 </ul>
 <h2 id="agenda">Agenda</h2>
@@ -643,13 +643,13 @@
 <p>This workshop can be done as a team exercise or individually. If done as part of an AWS sponsored event then you will most likely be split into teams of around 2-3 people (you are of course free to work on your own.) If you are working in a team then try to divide up the tasks. </p>
 </div>
 <h3 id="presentation">Presentation</h3>
-<p>If you are doing this workshop as part of an AWS event then there will usually be a 30 minute presentation before the hands-on exercise. Here is the <a href="presentation.pdf">presentation deck</a>.</p>
+<p>If you are doing this workshop as part of an AWS event then there will usually be a presentation (lasting about 30 minutes) before the hands-on exercise. Here is the <a href="presentation.pdf">presentation deck</a>.</p>
 <h2 id="requirements">Requirements</h2>
 <details class="info"><summary>Click here for the account architecture</summary><p>Account architecture: <img alt="architecture" src="images/architecture.png" /></p>
 </details>
-<p>The goal of this workshop is to set up the web admins so they can create an IAM role and attach it to a Lambda function which will then read an S3 bucket. The webadmin need the necessary permissions to do this without also being able to escalate their permissions or impact the resources of other teams in the same AWS account. The web admins should only have access to the following resources:</p>
+<p>The goal of this workshop is to set up the web admins so they can create an IAM role and attach it to a Lambda function which will then read an S3 bucket. The web admins need the necessary permissions to do this without also being able to escalate their permissions or impact the resources of other teams in the same AWS account. The web admins should only have access to the following resources:</p>
 <ol>
-<li>IAM policies and roles created by the web admins </li>
+<li>IAM policies and roles they create </li>
 <li>S3 bucket: The roles the web admins create should only be allowed to list the log files in the webadmins folder of the bucket that starts with <code>"shared-logging-"</code> and ends with <code>"-data"</code></li>
 </ol>
 <h4 id="click-here-to-go-to-the-build-phase"><a href="build/">Click here to go to the BUILD phase</a></h4>
