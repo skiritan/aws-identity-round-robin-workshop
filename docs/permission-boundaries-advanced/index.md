@@ -6,8 +6,8 @@ Your company has deployed a production three tier web application on AWS. Variou
 **AWS Service/Feature Coverage**: 
 
 * AWS IAM [users & roles](https://docs.aws.amazon.com/IAM/latest/UserGuide/id.html)
-* AWS IAM [permission boundaries](https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_boundaries.html) 
-* AWS IAM [identifiers or resource restrictions](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_identifiers.html)
+* AWS IAM [permissions boundaries](https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_boundaries.html) 
+* AWS IAM [IAM friendly names and paths](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_identifiers.html)
 * AWS [Lambda](https://docs.aws.amazon.com/lambda/latest/dg/welcome.html)
  
 ## Agenda
@@ -26,7 +26,7 @@ Then each team will hand credentials for the webadmins IAM role in their account
 
 ### Presentation
 
-If you are doing this workshop as part of an AWS event then there will usually be a 30 minute presentation before the hands-on exercise. Here is the [presentation deck](./presentation.pdf).
+If you are doing this workshop as part of an AWS event then there will usually be a presentation (lasting about 30 minutes) before the hands-on exercise. Here is the [presentation deck](./presentation.pdf).
 
 ## Requirements
 
@@ -34,9 +34,9 @@ If you are doing this workshop as part of an AWS event then there will usually b
 
 	Account architecture: ![architecture](./images/architecture.png)
 
-The goal of this workshop is to set up the web admins so they can create an IAM role and attach it to a Lambda function which will then read an S3 bucket. The webadmin need the necessary permissions to do this without also being able to escalate their permissions or impact the resources of other teams in the same AWS account. The web admins should only have access to the following resources:
+The goal of this workshop is to set up the web admins so they can create an IAM role and attach it to a Lambda function which will then read an S3 bucket. The web admins need the necessary permissions to do this without also being able to escalate their permissions or impact the resources of other teams in the same AWS account. The web admins should only have access to the following resources:
 
-1. IAM policies and roles created by the web admins 
+1. IAM policies and roles they create 
 2. S3 bucket: The roles the web admins create should only be allowed to list the log files in the webadmins folder of the bucket that starts with `"shared-logging-"` and ends with `"-data"`
 
 #### [Click here to go to the BUILD phase](./build.md)

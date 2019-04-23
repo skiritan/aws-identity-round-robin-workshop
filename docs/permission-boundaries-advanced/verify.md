@@ -1,16 +1,23 @@
 # Permission boundaries workshop <small>- Advanced edition</small>
 # <small>VERIFY phase</small>
 
-You are now in the **VERIFY** phase. It is time to put on the hat of the webadmins and test out their permissions. Permissions boundaries are about delegation so verifying (acting as the delegated admins) the work of another team that did the build phase (acting as the admins) will simulate that experience.
+You are now in the **VERIFY** phase. It is time to put on the hat of the webadmins and test out their permissions. Permissions boundaries are about delegation so verifying (acting as the delegated admins) the work of another team that did the build phase (acting as the admins) will simulate that experience. As the webadmins you will do the following:
+* Create an IAM policy, create an IAM role (and attach that policy), create a Lambda function (and attach that role)
 
 If doing this as part of an AWS event you should have received from another team the following information:
 
-* Webadmins role ARN:	arn:aws:iam::`YOUR_ACCOUNT_ID`:role/**webadmins**
-* Resource restriction for both the roles and policies: /webadmins/`Resource restriction you used`
-* Permissions boundary name: **webadminspermissionsboundary**
-* Permission policy name: **webadminspermissionpolicy**
+	* Webadmins role ARN:	arn:aws:iam::`ACCOUNT_ID_of_Other_Team`:role/**webadmins**
+	* Resource restriction for both the roles and policies: /webadmins/`Resource restriction`
+	* Permissions boundary name: **webadminspermissionsboundary**
+	* Permission policy name: **webadminspermissionpolicy**
 
-As the webadmins you will be creating an IAM policy, an IAM role and a Lambda function. The Lambda function should be able to list files in a particular S3 bucket. The webadmins should not be able to escalate their permissions or impact the IAM policies and roles created by other teams.
+* To carry out these tasks as the webadmins, you will need to assume that role. In order to assume the webadmins role, add the following to the AWS CLI [config file](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-role.html) found in the `~/.aws/config` directory. Since you are assuming the role of another team, enter the Account ID of that team in the ARN. **Remember to use the --profile parameter for all of the commands in the following tasks.**
+
+```
+[profile webadmins]
+role_arn = arn:aws:iam::Account_ID_of_Other_Team:role/webadmins
+source_profile = Name_of_the_Credential_Profile
+```
 
 ??? info "Application architecture"
 	
@@ -18,25 +25,21 @@ As the webadmins you will be creating an IAM policy, an IAM role and a Lambda fu
 
 ## Task 1 <small>Create a policy</small>
 	
-#### Your goal is to create a Lambda function. You will need to create an IAM role, attach two policies (a trust policy and permission policy) to it and then pass the role to the Lambda function. First you create the permission policy which just needs to allow log file creation and s3:ListBucket. You are in a hurry though and give the role s3:*. The policy you create here will later be attached to the role you create in Task 2 which will then be passed to a Lambda function you will create in Task 3
-
-### Walk Through
+#### First you will create a permission policy which just needs to allow log file creation and s3:ListBucket. You are in a hurry though, like many developers, and give the role full S3 permissions. The policy you create here will later be attached to the role you create in Task 2 which will then be passed to a Lambda function you will create in Task 3.
 
 * Use the following JSON to create a file named verifypolicydoc (replace the Account ID): 
 	* `{"Version":"2012-10-17","Statement":[{"Effect":"Allow","Action":["logs:CreateLogGroup","logs:CreateLogStream","logs:PutLogEvents","s3:*"],"Resource":"*"}]}`
-* Create the policy (**there is a key parameter missing from the command below**)
+* Create the policy (**there is a key parameter missing from the command below. Check the [AWS CLI documentation](https://docs.aws.amazon.com/cli/latest/reference/)**)
 	* `aws iam create-policy --policy-name NAME_OF_POLICY --policy-document file://verifypolicydoc`
 <!-- `aws iam create-policy --policy-name NAME_OF_POLICY --path /NAME_OF_PATH/ --policy-document file://verifypolicydoc` -->
 
 ## Task 2 <small>Create a role</small>
 
-#### The role you create here will be passed to the Lambda function you create in task 3
-
-### Walk Through
+#### The role you create here will be passed to the Lambda function you create in the next task
 
 * Use the following JSON to create a file named verifytrustpolicy (replace the Account ID): 
 	* `{ "Version": "2012-10-17", "Statement": { "Effect": "Allow", "Principal": { "Service": "lambda.amazonaws.com"}, "Action": "sts:AssumeRole" } }`
-* Create the role (**there is a key parameter missing from the command below**)
+* Create the role (**there is a key parameter missing from the command below. Check the [AWS CLI documentation](https://docs.aws.amazon.com/cli/latest/reference/)**)
 	* `aws iam create-role --role-name NAME_OF_ROLE --path /NAME_OF_PATH/ --assume-role-policy-document file://verifytrustpolicy`
 <!-- `aws iam create-role --role-name NAME_OF_ROLE --path /NAME_OF_PATH/ --assume-role-policy-document file://verifytrustpolicy --permissions-boundary arn:aws:iam::Account_ID:policy/webadminspermissionsboundary` -->
 * Attach the policy you created in Task 1 to the role:
@@ -45,10 +48,8 @@ As the webadmins you will be creating an IAM policy, an IAM role and a Lambda fu
 ## Task 3 <small>Create and test a Lambda function</small>
 
 #### Finally you will create a **Node.js 8.10** Lambda function using the sample code below and pass the IAM role you just created
-
-### Walk Through
-
-* Create a file `index.js` using the code sample below and then zip the file. Replace `"SHARED_LOGGING_BUCKET_NAME"` with the name of bucket that begins with `"shared-logging-"` and ends in `"-data"`. In order to get the bucket name, just run `aws s3 ls` using the webadmins role.)
+ 
+* Create a file named **`index.js`** using the code sample below and then zip the file (`zip lambdafunction.zip index.js`). Replace `"SHARED_LOGGING_BUCKET_NAME"` with the name of bucket that begins with `"shared-logging-"` and ends in `"-data"`. In order to get the bucket name, just run `aws s3 ls` using the webadmins role.)
 
 ``` node
 const AWS = require('aws-sdk');
@@ -78,6 +79,8 @@ async function getKeys(params, keys){
 	* `aws lambda invoke --function-name NAME_OF_FUNCTION --region us-east-2 --invocation-type RequestResponse outputfile.txt`
 * Examine the output file. It should show a number of log files in the S3 bucket that the Lambda function read. 
 
-If you see files marked that **webadmins/you-should-SEE-this-file--webadmins...** then you have successfully verified that the webadmins can perform their role. Congratulations!
+If you see files marked that **webadmins/you-should-SEE-this-file--webadmins...** then you have successfully verified that the webadmins can do their job. Congratulations!
 
-Extra Credit: What else could you do here to verify that the webadmins are not able to escalate their permissions or impact other policies and roles in the account?
+## Task 3 <small>Cleanup</small>
+
+To cleanup you need to delete the CloudFormation stack named `Perm-Bound-Adv`. This will also remove the Cloud9 environment.
