@@ -45,8 +45,7 @@ These may be provided by an event sponsor.
 
 ## Architecture Overview
 
-The environment in this round consists of an AWS account in which Amazon GuardDuty, Amazon Inspector, Amazon Macie and Amazon CloudTrail will run.  The CloudTrail logs will be sent to an Amazon S3 bucket.  An Amazon EC2 instance will be launched which will in turn start the [Amazon Macie Activity Generator](https://github.com/aws-samples/amazon-macie-activity-generator) and also launch an Amazon Inspector assessment.
-
+The environment in this round consists of an AWS account in which Amazon GuardDuty, Amazon Inspector, Amazon Macie and Amazon CloudTrail will run.  The CloudTrail logs will be sent to an Amazon S3 bucket. 
 The template also creates two AWS IAM roles.  The first role is for a Security Administrator which has full access to the External Security Services.  The second role is for Security Operators.  The Security Operator role *initially* is very similar to the Security Administrator role but you will modify the permissions of the Security Operator role to provide "read only" access to the External Security Services.  The use of Security Administrator/Operator roles is very common in organizations that want to delegate the use of security services to different security teams.
 
 Here is a picture of what you will build.
