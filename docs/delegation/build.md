@@ -81,13 +81,13 @@ You can refresh the browser window to update the status.
 
     Go to the S3 console, check the box next to the bucket with the name assigned to *LoggingBucketName* which you note in Step 6, click on **Permissions**, and then Click on **Bucket Policy**.  Note that the policy allows the CloudTrail service to read the ACL of the *LoggingBucket* and also to create logs with prefixes containing the AWS account ID. you can read more about this policy at this [link](https://docs.aws.amazon.com/awscloudtrail/latest/userguide/create-s3-bucket-policy-for-cloudtrail.html).
 
-9. Go to the S3 console, check the box next to the bucket with the name *LoggingBucketName*.  Click on **Properties**. Now click the **Overview** tab and then click the **AWSLogs** folder prefix.
+9.  Now click the **Overview** tab and then click the **AWSLogs** folder prefix.
 You should then see the AWS account ID of your account as shown below.
 
     ![LoggingBucket](./images/IamEssBucket.png)
 
     This shows that AWS CloudTrail logs for your account have started to make their way to the S3 bucket.
-It may take up to five minutes for logs to start appearing.
+It may take up to five minutes for logs to start appearing.  You can go further into the directory by year, month, and day to see logs as they appear.   The logs are stored in ".gz" (gzip) format.  If you have an archive management tool and you see one of these log files, feel free to download it to your workstation and expand the archive.  Again, it may take several minutes for the logs to begin to appear.
 
 ## Understanding Roles
 
@@ -100,7 +100,7 @@ The policy definition will be similar to the image below.
 
     ![SecAdministratorRolePolicy](./images/IamEssSecAdminPolicy.png)
 
-    There are six managed policies attached to this role, four of them are provided by AWS for GuardDuty, Inspector, CloudTrail, IAM, and SNS.  SNS and IAM are included because it provides for a better console experience.  There is a sixth managed policy that was created for Amazon Macie to illustrate how custom managed poicies can be developed.   Click on each of the managed policies to see the underlying privileges of each.  Note that there are some services, such as Amazon EFS (Elastic File System), that are not granted by any of these policies.  You will confirm this lack of access later in this workshop.
+    You may need to click **Show more** to see all of the policies.  There are six managed policies attached to this role, four of them are provided by AWS for GuardDuty, Inspector, CloudTrail, IAM, and SNS.  SNS and IAM are included because it provides for a better console experience.  There is a sixth managed policy that was created for Amazon Macie to illustrate how custom managed poicies can be developed.   Click on each of the managed policies to see the underlying privileges of each.  Note that there are some services, such as Amazon EFS (Elastic File System), that are not granted by any of these policies.  You will confirm this lack of access later in this workshop.
 
 2. From the main page of the role, click the **Trust relationships** tab.  You will see a section on the page telling you that the trusted entity (the entity that can assume the role) is the 12-digit AWS account ID as shown below.  This means that any principal in the account can assume the role.
 
@@ -110,7 +110,7 @@ The policy definition will be similar to the image below.
 
     ![SecAdministratorTrustRel](./images/IamEssAdminTrustPol.png)
 
-    This policy says that every principal in the account is allowed to use the sts:AssumeRole action to take on the identity of the role.  STS stands for *Security Token Service*.  The AssumeRole API associated with the service creates temporary credentials when you call the API that are associated with the security policies of the role including an access key and a secret access key.  Your application then uses these security tokens to make calls to other AWS APIs with the policies defined in the role.
+    In the principal entry, you will see a value that ends in ":root."  This is a special *principal identifier* that refers to the account itself.  This policy says that every principal in the account is allowed to use the sts:AssumeRole action to take on the identity of the role.  You can read more about principal identifiers [here](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_identifiers.html).  STS stands for *Security Token Service*.  The AssumeRole API associated with the service creates temporary credentials when you call the API that are associated with the security policies of the role including an access key and a secret access key.  Your application then uses these security tokens to make calls to other AWS APIs with the policies defined in the role.
 
 ## Switching to the Security Administrator role
 
