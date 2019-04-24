@@ -65,7 +65,7 @@ This takes about five minutes.
 Wait until the Status value for the **esslab** stack shows **CREATE_COMPLETE**.
 You can refresh the browser window to update the status.
 
-7. Take a look at the outputs for the **esslab** CloudFormation stack.  They will look similar to the picture below.
+7. Take a look at the outputs for the **esslab** CloudFormation stack.  They will look similar to the picture below.  You may need to drag the horizontal dividing line upwards to see all the output values.
 
     ![Account output](./images/IamEssOutputStack.png)
 
