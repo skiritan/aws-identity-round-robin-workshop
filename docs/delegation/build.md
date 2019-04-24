@@ -65,18 +65,6 @@ This takes about five minutes.
 Wait until the Status value for the **esslab** stack shows **CREATE_COMPLETE**.
 You can refresh the browser window to update the status.
 
-    Click on the dropdown below to learn more.
-
-    <details>
-    <summary><strong>Click here to expand</strong></summary><p>
-    <br/>
-
-    * The CloudFormation template launches an Amazon EC2 instance that wil be used as a target for Amazon Inspector.
-
-    * The EC2 instance will then initiate an Amazon Inspector assessment run.  The assessment takes about 15-20 minutes to complete.  Note that there at times may be no findings.  This is typically the case when a new AMI is released.
-
-    </details>
-
 7. Take a look at the outputs for the **esslab** CloudFormation stack.  They will look similar to the picture below.
 
     ![Account output](./images/IamEssOutputStack.png)
