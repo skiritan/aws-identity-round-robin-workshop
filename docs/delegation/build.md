@@ -62,7 +62,7 @@ The acknowledgement is requested because of the creation of resources with custo
 The CloudFormation template does this when it creates certain resources with names that make it easier to identify them.
 
     CloudFormation will now begin to create the resources.
-**Refresh the browser window to view the progress.**
+**Refresh the entire browser window to view the progress.**
 This takes about five minutes.
 Wait until the Status value for the **esslab** stack shows **CREATE_COMPLETE**.
 You can refresh the browser window to update the status.
