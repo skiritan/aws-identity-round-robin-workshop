@@ -77,7 +77,7 @@ You can refresh the browser window to update the status.
 
 8. Let's take a look at CloudTrail logging.  The most important part of collecting AWS CloudTrail information into an Amazon S3 bucket is setting the correct permissions on the Amazon S3 bucket.
 
-    Go to the S3 console, check the box next to the bucket with the name assigned to *LoggingBucketName* which you note in Step 7, click on **Permissions**, and then Click on **Bucket Policy**.  Note that the policy allows the CloudTrail service to read the ACL of the *LoggingBucket* and also to create logs with prefixes containing the AWS account ID. you can read more about this policy at this [link](https://docs.aws.amazon.com/awscloudtrail/latest/userguide/create-s3-bucket-policy-for-cloudtrail.html).
+    Go to the S3 console, check the box next to the bucket with the name assigned to *LoggingBucketName* which you note in Step 6, click on **Permissions**, and then Click on **Bucket Policy**.  Note that the policy allows the CloudTrail service to read the ACL of the *LoggingBucket* and also to create logs with prefixes containing the AWS account ID. you can read more about this policy at this [link](https://docs.aws.amazon.com/awscloudtrail/latest/userguide/create-s3-bucket-policy-for-cloudtrail.html).
 
 9. Go to the S3 console, check the box next to the bucket with the name *LoggingBucketName*.  Click on **Properties**. Now click the **Overview** tab and then click the **AWSLogs** folder prefix.
 You should then see the AWS account ID of your account as shown below.
