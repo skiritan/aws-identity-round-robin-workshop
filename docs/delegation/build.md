@@ -30,22 +30,24 @@ Macie will open in a new browser tab.
 
 3. When the Macie console appears, if a **Getting Started** button appears, it means that Amazon Macie is disabled.
 In that case, click **Getting Started**, confirm that US West (Oregon) is selected as the region, and click **Enable Macie**.
+This may take from several seconds to complete.
+The Macie console will appear after Macie has been enabled.
 Close the browser tab containing the Macie console.
 
 ## Enable GuardDuty
 
 1. You will also need GuardDuty for this lab so you will now enable GuardDuty.
-Select **GuardDuty** from the main console.  If you see a **Get Started** button, click it.
 
-2. If the region is not set to Oregon, select Oregon for the region.
+2. Return to the AWS Console, sigining into the account again if necessary. Select **GuardDuty** from the main console.  
+3. If you see a **Get Started** button, click it.
 
-3. Click **Enable GuardDuty**.
+4. If the region is not set to Oregon, select Oregon for the region.
+
+5. Click **Enable GuardDuty**.
 
 ## Build out the environment
 
-1. Return to the AWS Console, sigining into the account again if necessary.
-
-2. Open the **Deploy to AWS** link that follows in a new browser tab to deploy the logging environment in the us-west-2 region:  [![Deploy IamEssInitAccount.yaml in us-west-2](./images/deploy-to-aws.png)](https://console.aws.amazon.com/cloudformation/home?region=us-west-2#/stacks/new?stackName=esslab&templateURL=https://s3.amazonaws.com/sa-security-specialist-workshops-us-west-2/identity-workshop/essround/EssInitAccount.yaml)
+1. Open the **Deploy to AWS** link that follows in a **new browser** tab to deploy the logging environment in the us-west-2 region:  [![Deploy IamEssInitAccount.yaml in us-west-2](./images/deploy-to-aws.png)](https://console.aws.amazon.com/cloudformation/home?region=us-west-2#/stacks/new?stackName=esslab&templateURL=https://s3.amazonaws.com/sa-security-specialist-workshops-us-west-2/identity-workshop/essround/EssInitAccount.yaml)
 
 3. In the new browser tab that you just opened, you will see the Select Template page.  Click **Next**.
 
