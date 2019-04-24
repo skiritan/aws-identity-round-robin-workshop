@@ -860,7 +860,7 @@ You can refresh the browser window to update the status.</p>
 </li>
 <li>
 <p>Let's take a look at CloudTrail logging.  The most important part of collecting AWS CloudTrail information into an Amazon S3 bucket is setting the correct permissions on the Amazon S3 bucket.</p>
-<p>Go to the S3 console, check the box next to the bucket with the name assigned to <em>LoggingBucketName</em> which you note in Step 7, click on <strong>Permissions</strong>, and then Click on <strong>Bucket Policy</strong>.  Note that the policy allows the CloudTrail service to read the ACL of the <em>LoggingBucket</em> and also to create logs with prefixes containing the AWS account ID. you can read more about this policy at this <a href="https://docs.aws.amazon.com/awscloudtrail/latest/userguide/create-s3-bucket-policy-for-cloudtrail.html">link</a>.</p>
+<p>Go to the S3 console, check the box next to the bucket with the name assigned to <em>LoggingBucketName</em> which you note in Step 6, click on <strong>Permissions</strong>, and then Click on <strong>Bucket Policy</strong>.  Note that the policy allows the CloudTrail service to read the ACL of the <em>LoggingBucket</em> and also to create logs with prefixes containing the AWS account ID. you can read more about this policy at this <a href="https://docs.aws.amazon.com/awscloudtrail/latest/userguide/create-s3-bucket-policy-for-cloudtrail.html">link</a>.</p>
 </li>
 <li>
 <p>Go to the S3 console, check the box next to the bucket with the name <em>LoggingBucketName</em>.  Click on <strong>Properties</strong>. Now click the <strong>Overview</strong> tab and then click the <strong>AWSLogs</strong> folder prefix.
