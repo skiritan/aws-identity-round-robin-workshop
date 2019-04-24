@@ -866,11 +866,11 @@ You can refresh the browser window to update the status.</p>
 <p>Go to the S3 console, check the box next to the bucket with the name assigned to <em>LoggingBucketName</em> which you note in Step 6, click on <strong>Permissions</strong>, and then Click on <strong>Bucket Policy</strong>.  Note that the policy allows the CloudTrail service to read the ACL of the <em>LoggingBucket</em> and also to create logs with prefixes containing the AWS account ID. you can read more about this policy at this <a href="https://docs.aws.amazon.com/awscloudtrail/latest/userguide/create-s3-bucket-policy-for-cloudtrail.html">link</a>.</p>
 </li>
 <li>
-<p>Go to the S3 console, check the box next to the bucket with the name <em>LoggingBucketName</em>.  Click on <strong>Properties</strong>. Now click the <strong>Overview</strong> tab and then click the <strong>AWSLogs</strong> folder prefix.
+<p>Now click the <strong>Overview</strong> tab and then click the <strong>AWSLogs</strong> folder prefix.
 You should then see the AWS account ID of your account as shown below.</p>
 <p><img alt="LoggingBucket" src="../images/IamEssBucket.png" /></p>
 <p>This shows that AWS CloudTrail logs for your account have started to make their way to the S3 bucket.
-It may take up to five minutes for logs to start appearing.</p>
+It may take up to five minutes for logs to start appearing.  You can go further into the directory by year, month, and day to see logs as they appear.   The logs are stored in ".gz" (gzip) format.  If you have an archive management tool and you see one of these log files, feel free to download it to your workstation and expand the archive.  Again, it may take several minutes for the logs to begin to appear.</p>
 </li>
 </ol>
 <h2 id="understanding-roles">Understanding Roles</h2>
@@ -881,7 +881,7 @@ It may take up to five minutes for logs to start appearing.</p>
 <p>Go to the IAM console, select <strong>Roles</strong> on the left and search for the string <em>SecAdministrator</em>.  You can search either by using your browser's search capability or you can type <em>SecAdministrator</em> into the search box.  Click on the role that you retrieve.
 The policy definition will be similar to the image below.</p>
 <p><img alt="SecAdministratorRolePolicy" src="../images/IamEssSecAdminPolicy.png" /></p>
-<p>There are six managed policies attached to this role, four of them are provided by AWS for GuardDuty, Inspector, CloudTrail, IAM, and SNS.  SNS and IAM are included because it provides for a better console experience.  There is a sixth managed policy that was created for Amazon Macie to illustrate how custom managed poicies can be developed.   Click on each of the managed policies to see the underlying privileges of each.  Note that there are some services, such as Amazon EFS (Elastic File System), that are not granted by any of these policies.  You will confirm this lack of access later in this workshop.</p>
+<p>You may need to click <strong>Show more</strong> to see all of the policies.  There are six managed policies attached to this role, four of them are provided by AWS for GuardDuty, Inspector, CloudTrail, IAM, and SNS.  SNS and IAM are included because it provides for a better console experience.  There is a sixth managed policy that was created for Amazon Macie to illustrate how custom managed poicies can be developed.   Click on each of the managed policies to see the underlying privileges of each.  Note that there are some services, such as Amazon EFS (Elastic File System), that are not granted by any of these policies.  You will confirm this lack of access later in this workshop.</p>
 </li>
 <li>
 <p>From the main page of the role, click the <strong>Trust relationships</strong> tab.  You will see a section on the page telling you that the trusted entity (the entity that can assume the role) is the 12-digit AWS account ID as shown below.  This means that any principal in the account can assume the role.</p>
@@ -890,7 +890,7 @@ The policy definition will be similar to the image below.</p>
 <li>
 <p>The internal representation of the trust relatioship is a JSON policy document.  Click <strong>Show policy document</strong>.  You will see a policy similar to that shown in the picture below.</p>
 <p><img alt="SecAdministratorTrustRel" src="../images/IamEssAdminTrustPol.png" /></p>
-<p>This policy says that every principal in the account is allowed to use the sts:AssumeRole action to take on the identity of the role.  STS stands for <em>Security Token Service</em>.  The AssumeRole API associated with the service creates temporary credentials when you call the API that are associated with the security policies of the role including an access key and a secret access key.  Your application then uses these security tokens to make calls to other AWS APIs with the policies defined in the role.</p>
+<p>In the principal entry, you will see a value that ends in ":root."  This is a special <em>principal identifier</em> that refers to the account itself.  This policy says that every principal in the account is allowed to use the sts:AssumeRole action to take on the identity of the role.  You can read more about principal identifiers <a href="https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_identifiers.html">here</a>.  STS stands for <em>Security Token Service</em>.  The AssumeRole API associated with the service creates temporary credentials when you call the API that are associated with the security policies of the role including an access key and a secret access key.  Your application then uses these security tokens to make calls to other AWS APIs with the policies defined in the role.</p>
 </li>
 </ol>
 <h2 id="switching-to-the-security-administrator-role">Switching to the Security Administrator role</h2>
