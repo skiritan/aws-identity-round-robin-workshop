@@ -36,7 +36,7 @@ This round is broken down into Build and Verify Phases.
 
 > This workshop can be done as a team exercise or individually. The instructions are written with the assumption that you are working as part of a team but you could just as easily do the steps below individually. If done as part of an AWS sponsored event then you'll be split into teams of around 4-6 people. Each team will do the Build Phase and then hand off their accounts to another team. Then another team will do the Verify Phase.
 
-> *NOTE FOR TEAMS*:  If you are doing this exercise as a team and sharing an AWS account , each team member should take turns "driving."  Some services such as GuardDuty and Macie apply to the whole account so only *one* team member should be controling that AWS service.
+> *NOTE FOR TEAMS*:  If you are doing this exercise as a team and sharing an AWS account , each team member should take turns "driving."  Some services such as GuardDuty and Macie apply to the whole account so only *one* team member should control that AWS service.
 
 ## Assumptions and Prerequisites
 
