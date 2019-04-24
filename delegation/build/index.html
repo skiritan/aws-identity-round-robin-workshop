@@ -804,14 +804,21 @@ Macie will open in a new browser tab.</p>
 <li>
 <p>When the Macie console appears, if a <strong>Getting Started</strong> button appears, it means that Amazon Macie is disabled.
 In that case, click <strong>Getting Started</strong>, confirm that US West (Oregon) is selected as the region, and click <strong>Enable Macie</strong>.
+This may take from several seconds to complete.
+The Macie console will appear after Macie has been enabled.
 Close the browser tab containing the Macie console.</p>
 </li>
 </ol>
 <h2 id="enable-guardduty">Enable GuardDuty</h2>
 <ol>
 <li>
-<p>You will also need GuardDuty for this lab so you will now enable GuardDuty.
-Select <strong>GuardDuty</strong> from the main console.  If you see a <strong>Get Started</strong> button, click it.</p>
+<p>You will also need GuardDuty for this lab so you will now enable GuardDuty.</p>
+</li>
+<li>
+<p>Return to the AWS Console, sigining into the account again if necessary. Select <strong>GuardDuty</strong> from the main console.  </p>
+</li>
+<li>
+<p>If you see a <strong>Get Started</strong> button, click it.</p>
 </li>
 <li>
 <p>If the region is not set to Oregon, select Oregon for the region.</p>
@@ -823,10 +830,7 @@ Select <strong>GuardDuty</strong> from the main console.  If you see a <strong>G
 <h2 id="build-out-the-environment">Build out the environment</h2>
 <ol>
 <li>
-<p>Return to the AWS Console, sigining into the account again if necessary.</p>
-</li>
-<li>
-<p>Open the <strong>Deploy to AWS</strong> link that follows in a new browser tab to deploy the logging environment in the us-west-2 region:  <a href="https://console.aws.amazon.com/cloudformation/home?region=us-west-2#/stacks/new?stackName=esslab&amp;templateURL=https://s3.amazonaws.com/sa-security-specialist-workshops-us-west-2/identity-workshop/essround/EssInitAccount.yaml"><img alt="Deploy IamEssInitAccount.yaml in us-west-2" src="../images/deploy-to-aws.png" /></a></p>
+<p>Open the <strong>Deploy to AWS</strong> link that follows in a <strong>new browser</strong> tab to deploy the logging environment in the us-west-2 region:  <a href="https://console.aws.amazon.com/cloudformation/home?region=us-west-2#/stacks/new?stackName=esslab&amp;templateURL=https://s3.amazonaws.com/sa-security-specialist-workshops-us-west-2/identity-workshop/essround/EssInitAccount.yaml"><img alt="Deploy IamEssInitAccount.yaml in us-west-2" src="../images/deploy-to-aws.png" /></a></p>
 </li>
 <li>
 <p>In the new browser tab that you just opened, you will see the Select Template page.  Click <strong>Next</strong>.</p>
