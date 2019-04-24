@@ -6,7 +6,7 @@ In this round, you are going to work through a scenario that could arise in an o
 You will play the role of an AWS "superuser" administrator.
 You have heard that Amazon GuardDuty, Inspector, and Macie are services that can help you monitor the data, host, and network traffic within your AWS environment and detect anomalous behaviors.
 In this round of the workshop, you will learn how to use Amazon IAM to delegate access to these services to AWS Security Administrators and AWS Security Operators.
-AWS Security Administrators require full access to AWS security services while AWS Security Operators only require "read only" access to the services.  You will use AWS IAM roles to do this and thereby promote the Principle of Least Privilege - giving users the minimum level of privilege they need to do their tasks.
+For the purposes of this round, AWS Security Administrators require full access to AWS security services while AWS Security Operators only require "read only" access to the services.  You will use AWS IAM roles to do this and thereby promote the Principle of Least Privilege - giving users the minimum level of privilege they need to do their tasks.
 
 
 **AWS Service/Feature Coverage**: 
@@ -35,6 +35,8 @@ This round is broken down into Build and Verify Phases.
 2. Document any variances.
 
 > This workshop can be done as a team exercise or individually. The instructions are written with the assumption that you are working as part of a team but you could just as easily do the steps below individually. If done as part of an AWS sponsored event then you'll be split into teams of around 4-6 people. Each team will do the Build Phase and then hand off their accounts to another team. Then another team will do the Verify Phase.
+
+> *NOTE FOR TEAMS*:  If you are doing this exercise as a team and sharing an AWS account , each team member should take turns "driving."  Some services such as GuardDuty and Macie apply to the whole account so only *one* team member should be controling that AWS service.
 
 ## Assumptions and Prerequisites
 
