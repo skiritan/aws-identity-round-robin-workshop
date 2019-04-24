@@ -47,7 +47,7 @@ Close the browser tab containing the Macie console.
 
 ## Build out the environment
 
-> **NOTE*:  The instructions that follow are based on the classic version of the CloudFormaion console.  CloudFormation also offers a redesigned console that offers a different overall look and feel.  You are welcome to use the redesigned CLoudFormation console.  If you choose to do so, you will notice some minor differences from the instructions below.
+> **NOTE*:  The instructions that follow are based on the classic version of the CloudFormation console.  CloudFormation also offers a redesigned console that offers a different overall look and feel.  You are welcome to use the redesigned CLoudFormation console.  If you choose to do so, you will notice some minor differences from the instructions below.
 
 1. Open the **Deploy to AWS** link that follows in a **new browser** tab to deploy the logging environment in the us-west-2 region:  [![Deploy IamEssInitAccount.yaml in us-west-2](./images/deploy-to-aws.png)](https://console.aws.amazon.com/cloudformation/home?region=us-west-2#/stacks/new?stackName=esslab&templateURL=https://s3.amazonaws.com/sa-security-specialist-workshops-us-west-2/identity-workshop/essround/EssInitAccount.yaml)
 
