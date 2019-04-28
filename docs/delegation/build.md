@@ -100,7 +100,7 @@ The policy definition will be similar to the image below.
 
     ![SecAdministratorRolePolicy](./images/IamEssSecAdminPolicy.png)
 
-    You may need to click **Show more** to see all of the policies.  There are six managed policies attached to this role, four of them are provided by AWS for GuardDuty, Inspector, CloudTrail, IAM, and SNS.  SNS and IAM are included because it provides for a better console experience.  There is a sixth managed policy that was created for Amazon Macie to illustrate how custom managed poicies can be developed.   Click on each of the managed policies to see the underlying privileges of each.  Note that there are some services, such as Amazon EFS (Elastic File System), that are not granted by any of these policies.  You will confirm this lack of access later in this workshop.
+    You may need to click **Show more** to see all of the policies.  There are six managed policies attached to this role, five of them are provided by AWS for GuardDuty, Inspector, CloudTrail, IAM, and SNS.  While you will not be working directly with SNS and IAM, the policies for SNS and IAM are included because including them provides for a better console experience.  There is a sixth managed policy that was created for Amazon Macie to illustrate how custom managed poicies can be developed.   Click on each of the managed policies to see the underlying privileges of each.  Note that there are some services, such as Amazon EFS (Elastic File System), that are not granted by any of these policies.  You will confirm this lack of access later in this workshop.
 
 2. From the main page of the role, click the **Trust relationships** tab.  You will see a section on the page telling you that the trusted entity (the entity that can assume the role) is the 12-digit AWS account ID as shown below.  This means that any principal in the account can assume the role.
 
@@ -182,9 +182,9 @@ The role will have permissions similar to those shown in the picture below.
 
     ![SecOperPolicy](./images/IamEssSecOperPolicy.png)
 
-2. Notice that there are once again five managed policies, four AWS-managed policies for Inspector, GuardDuty, CloudTrail, and SNS, and a custom managed policy for Macie.
-The managed policies for Inspector, GuardDuty, and CloudTrail still provide full access to the services.  The SNS policy has already been changed to provide read-only access to SNS.
-The Macie policy (whose name contains *SecOperatorMaciePolicy*), despite its name, still provides full access to Macie.
+2. Notice that there are once again managed policies, five AWS-managed policies for Inspector, GuardDuty, CloudTrail, IAM, and SNS, and a custom managed policy for Macie.
+The managed policies for Inspector, GuardDuty, and CloudTrail still provide full access to the services.
+The Macie policy (whose name contains *SecOperatorMaciePolicy*), despite its name, still provides full access to Macie. There are also SNS and IAM policies to provide for a better console experience.
 
 3.  Remove the AmazonCloudTrailFullAccess, AmazonGuardDutyFullAccess, and Amazon InspectorFullAccess policies by click on the removal crosses as shown by the arrows.
 Add read-only access policies for Inspector, CloudTrail, and GuardDuty.
@@ -227,14 +227,14 @@ You can also select a color that will be used to display the role you assume in 
 
     This means that your *effective* privileges have been *temporarily*  replaced with those of the SecOperator role.
 
-6. Now go to the Amazon Inspector Console.  Click **Assessment Templates** and check the box to the left of both of the template name that begins with *LampInspectorAssessmentTemplate* and click **Delete**.  You will be asked to confirm the deletion.  Click **Yes**.  After 30 or so seconds you will see an error message telling you that you are not authorized to call the inspector:DeleteAssessmentTemplate action.  This is because you have read-only access to Inspector.
+6. Now go to the Amazon Inspector Console.  Click **Assessment Templates** and check the box to the left of both of the template names that begin with *LampInspectorAssessmentTemplate* and click **Delete**.  You will be asked to confirm the deletion.  Click **Yes**.  After 30 or so seconds you will see an error message telling you that you are not authorized to call the inspector:DeleteAssessmentTemplate action.  This is because you have read-only access to Inspector.
 
 
 7. Now go to the GuardDuty console, click **Settings**, change the **Updated findings** field to a different value, and click **Save settings**.  You will see an error message telling you that you are not authorized to perform the UpdateDetector action (the message may appear beneath the first IAM error message).  This is because you have read-only access to GuardDuty.
 
 8.  Go to the Macie console, select the US West (Oregon) region, click on **Settings** and click on the Content Type icon.
 You will see a list of file types appear.
-Pick a file type such as *application/cap*, edit it and change the value of the *Enabled* flag and click **Save**.
+Pick a file type such as *application/java*, edit it and change the value of the *Enabled* flag and click **Save**.
 You will receive an error message because you have read-only access to Macie.
 Close the Macie window.
 
