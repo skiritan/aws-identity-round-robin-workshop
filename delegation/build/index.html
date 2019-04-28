@@ -881,7 +881,7 @@ It may take up to five minutes for logs to start appearing.  You can go further 
 <p>Go to the IAM console, select <strong>Roles</strong> on the left and search for the string <em>SecAdministrator</em>.  You can search either by using your browser's search capability or you can type <em>SecAdministrator</em> into the search box.  Click on the role that you retrieve.
 The policy definition will be similar to the image below.</p>
 <p><img alt="SecAdministratorRolePolicy" src="../images/IamEssSecAdminPolicy.png" /></p>
-<p>You may need to click <strong>Show more</strong> to see all of the policies.  There are six managed policies attached to this role, four of them are provided by AWS for GuardDuty, Inspector, CloudTrail, IAM, and SNS.  SNS and IAM are included because it provides for a better console experience.  There is a sixth managed policy that was created for Amazon Macie to illustrate how custom managed poicies can be developed.   Click on each of the managed policies to see the underlying privileges of each.  Note that there are some services, such as Amazon EFS (Elastic File System), that are not granted by any of these policies.  You will confirm this lack of access later in this workshop.</p>
+<p>You may need to click <strong>Show more</strong> to see all of the policies.  There are six managed policies attached to this role, five of them are provided by AWS for GuardDuty, Inspector, CloudTrail, IAM, and SNS.  While you will not be working directly with SNS and IAM, the policies for SNS and IAM are included because including them provides for a better console experience.  There is a sixth managed policy that was created for Amazon Macie to illustrate how custom managed poicies can be developed.   Click on each of the managed policies to see the underlying privileges of each.  Note that there are some services, such as Amazon EFS (Elastic File System), that are not granted by any of these policies.  You will confirm this lack of access later in this workshop.</p>
 </li>
 <li>
 <p>From the main page of the role, click the <strong>Trust relationships</strong> tab.  You will see a section on the page telling you that the trusted entity (the entity that can assume the role) is the 12-digit AWS account ID as shown below.  This means that any principal in the account can assume the role.</p>
@@ -962,9 +962,9 @@ The role will have permissions similar to those shown in the picture below.</p>
 <p><img alt="SecOperPolicy" src="../images/IamEssSecOperPolicy.png" /></p>
 </li>
 <li>
-<p>Notice that there are once again five managed policies, four AWS-managed policies for Inspector, GuardDuty, CloudTrail, and SNS, and a custom managed policy for Macie.
-The managed policies for Inspector, GuardDuty, and CloudTrail still provide full access to the services.  The SNS policy has already been changed to provide read-only access to SNS.
-The Macie policy (whose name contains <em>SecOperatorMaciePolicy</em>), despite its name, still provides full access to Macie.</p>
+<p>Notice that there are once again managed policies, five AWS-managed policies for Inspector, GuardDuty, CloudTrail, IAM, and SNS, and a custom managed policy for Macie.
+The managed policies for Inspector, GuardDuty, and CloudTrail still provide full access to the services.
+The Macie policy (whose name contains <em>SecOperatorMaciePolicy</em>), despite its name, still provides full access to Macie. There are also SNS and IAM policies to provide for a better console experience.</p>
 </li>
 <li>
 <p>Remove the AmazonCloudTrailFullAccess, AmazonGuardDutyFullAccess, and Amazon InspectorFullAccess policies by click on the removal crosses as shown by the arrows.
@@ -997,7 +997,7 @@ You can also select a color that will be used to display the role you assume in 
 <p>This means that your <em>effective</em> privileges have been <em>temporarily</em>  replaced with those of the SecOperator role.</p>
 </li>
 <li>
-<p>Now go to the Amazon Inspector Console.  Click <strong>Assessment Templates</strong> and check the box to the left of both of the template name that begins with <em>LampInspectorAssessmentTemplate</em> and click <strong>Delete</strong>.  You will be asked to confirm the deletion.  Click <strong>Yes</strong>.  After 30 or so seconds you will see an error message telling you that you are not authorized to call the inspector:DeleteAssessmentTemplate action.  This is because you have read-only access to Inspector.</p>
+<p>Now go to the Amazon Inspector Console.  Click <strong>Assessment Templates</strong> and check the box to the left of both of the template names that begin with <em>LampInspectorAssessmentTemplate</em> and click <strong>Delete</strong>.  You will be asked to confirm the deletion.  Click <strong>Yes</strong>.  After 30 or so seconds you will see an error message telling you that you are not authorized to call the inspector:DeleteAssessmentTemplate action.  This is because you have read-only access to Inspector.</p>
 </li>
 <li>
 <p>Now go to the GuardDuty console, click <strong>Settings</strong>, change the <strong>Updated findings</strong> field to a different value, and click <strong>Save settings</strong>.  You will see an error message telling you that you are not authorized to perform the UpdateDetector action (the message may appear beneath the first IAM error message).  This is because you have read-only access to GuardDuty.</p>
@@ -1005,7 +1005,7 @@ You can also select a color that will be used to display the role you assume in 
 <li>
 <p>Go to the Macie console, select the US West (Oregon) region, click on <strong>Settings</strong> and click on the Content Type icon.
 You will see a list of file types appear.
-Pick a file type such as <em>application/cap</em>, edit it and change the value of the <em>Enabled</em> flag and click <strong>Save</strong>.
+Pick a file type such as <em>application/java</em>, edit it and change the value of the <em>Enabled</em> flag and click <strong>Save</strong>.
 You will receive an error message because you have read-only access to Macie.
 Close the Macie window.</p>
 </li>
