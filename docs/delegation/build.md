@@ -110,7 +110,9 @@ The policy definition will be similar to the image below.
 
     ![SecAdministratorTrustRel](./images/IamEssAdminTrustPol.png)
 
-    In the principal entry, you will see a value that ends in ":root."  This is a special *principal identifier* that refers to the account itself.  This policy says that every principal in the account is allowed to use the sts:AssumeRole action to take on the identity of the role.  You can read more about principal identifiers [here](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_identifiers.html).  STS stands for *Security Token Service*.  The AssumeRole API associated with the service creates temporary credentials when you call the API that are associated with the security policies of the role including an access key and a secret access key.  Your application then uses these security tokens to make calls to other AWS APIs with the policies defined in the role.
+    In the principal entry, you will see a value that ends in ":root."  This is a special *principal identifier* that refers to the account itself.  This policy says that every principal in the account (users, roles, etc.) is allowed to use the sts:AssumeRole action to take on the identity of the role.  You can read more about principal identifiers [here](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_identifiers.html).
+
+    STS stands for *Security Token Service*.  The AssumeRole API associated with the service creates temporary credentials when you call the API that are associated with the security policies of the role including an access key and a secret access key.  Your application then uses these security tokens to make calls to other AWS APIs with the policies defined in the role.
 
 ## Switching to the Security Administrator role
 
