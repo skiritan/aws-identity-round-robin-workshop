@@ -901,6 +901,7 @@ In this lab, you will be switching to roles that are in your own AWS account.
 You can also switch to roles in other AWS accounts to gain access to resources in accounts other than your own.
 This is known as <em>cross-account access</em>.
 You will not be doing <em>cross-account access</em> in this lab.</p>
+<p>There are two ways you can switch roles.  You can use the Switch Role command that's available as a drop down from the console under your account name.  Alternatively, you can use a URL that does the switching for you.  You will use both methods below.</p>
 <ol>
 <li>
 <p>Go to the CloudFormation console and view the outputs tab of the CloudFormation stack named <em>esslab</em> you just built.</p>
@@ -921,7 +922,7 @@ You can also select a color that will be used to display the role you assume in 
 <p><img alt="EFSConsole" src="../images/IamEssEFSConsole.png" /></p>
 </li>
 <li>
-<p>Now go to the Amazon Inspector Console.  Click <strong>Assessment Templates</strong> and check the box to the left of the template name that begins with <em>LampInspectorAssessmentTemplate</em> and click <strong>Clone</strong>.  A section of the form will appear.  Scroll down towards the bottom and click the <strong>Create</strong> button.   Refresh the screen.  You should now see two templates that begin with <em>LampInspectorAssessment</em>.  You have just successfully cloned an assessment template which shows that you have administrative access privileges for Inspector.</p>
+<p>Now go to the Amazon Inspector Console.  To verify that you have administrative capabilities for Inspector, you are going to clone an existing template.  Click <strong>Assessment Templates</strong> and check the box to the left of the template name that begins with <em>LampInspectorAssessmentTemplate</em> and click <strong>Clone</strong>.  A section of the form will appear.  Scroll down towards the bottom and click the <strong>Create</strong> button.   Refresh the screen.  You should now see two templates that begin with <em>LampInspectorAssessment</em>.  If you widen the Name column you will see that the newly created template contains the string "Cloned."  You have just successfully cloned an assessment template which shows that you have administrative access privileges for Inspector.</p>
 </li>
 <li>
 <p>Now go to the GuardDuty console and select the Settings menu item.  You may see an error message at the top of the screen about <strong>iam:ListPolicyVersions</strong>.  The reason for this is that you do not have full IAM permissions.  Ignore this message.</p>
