@@ -51,7 +51,7 @@ This is because you have read-only access to Inspector.
 
 5.  Go to the Macie console, select the us-west-2 region, click on **Settings** and click on the Content Type icon.
 You will see a list of file types appear.
-Pick a file type such as *application/cap*, edit it and change the value of the *Enabled* flag and click **Save**.
+Pick a file type such as *application/pdf*, edit it and change the value of the *Enabled* flag and click **Save**.
 You will receive an error message because you have read-only access to Macie.
 Close the Macie window.
 
@@ -60,8 +60,6 @@ Close the Macie window.
 7.  Select the trail whose name begins with *esslab*.
 
 8. Toggle the Logging switch to OFF.  You will be asked to confirm.  Click **Continue**.  You will receive an error message because you have read-only access to CloudTrail.
-
-9. Now switch back to your default role.  After you to this the SecOperator role label will no longer appear on your console.
 
 ## Discuss your findings
 
@@ -92,4 +90,4 @@ In order to prevent charges to your account we recommend cleaning up the infrast
     6. [Delete the Amazon Inspector templates](https://docs.aws.amazon.com/inspector/latest/userguide/inspector_assessments.html#delete_assessment_via_console).
 
 
-Congratulations on completing the External Security Services round!
+Congratulations on completing the Access Delegation round!
