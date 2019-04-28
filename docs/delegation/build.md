@@ -123,6 +123,8 @@ You can also switch to roles in other AWS accounts to gain access to resources i
 This is known as *cross-account access*.
 You will not be doing *cross-account access* in this lab.
 
+There are two ways you can switch roles.  You can use the Switch Role command that's available as a drop down from the console under your account name.  Alternatively, you can use a URL that does the switching for you.  You will use both methods below.
+
 1. Go to the CloudFormation console and view the outputs tab of the CloudFormation stack named *esslab* you just built.
 
 2. Click on the URL next to *SecAdministratorRoleURL*.  You may need to scroll down to see it.
@@ -145,7 +147,7 @@ You can also select a color that will be used to display the role you assume in 
 
     ![EFSConsole](./images/IamEssEFSConsole.png)
 
-4. Now go to the Amazon Inspector Console.  Click **Assessment Templates** and check the box to the left of the template name that begins with *LampInspectorAssessmentTemplate* and click **Clone**.  A section of the form will appear.  Scroll down towards the bottom and click the **Create** button.   Refresh the screen.  You should now see two templates that begin with *LampInspectorAssessment*.  You have just successfully cloned an assessment template which shows that you have administrative access privileges for Inspector.
+4. Now go to the Amazon Inspector Console.  To verify that you have administrative capabilities for Inspector, you are going to clone an existing template.  Click **Assessment Templates** and check the box to the left of the template name that begins with *LampInspectorAssessmentTemplate* and click **Clone**.  A section of the form will appear.  Scroll down towards the bottom and click the **Create** button.   Refresh the screen.  You should now see two templates that begin with *LampInspectorAssessment*.  If you widen the Name column you will see that the newly created template contains the string "Cloned."  You have just successfully cloned an assessment template which shows that you have administrative access privileges for Inspector.
 
 5. Now go to the GuardDuty console and select the Settings menu item.  You may see an error message at the top of the screen about **iam:ListPolicyVersions**.  The reason for this is that you do not have full IAM permissions.  Ignore this message.
 
