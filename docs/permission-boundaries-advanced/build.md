@@ -1,9 +1,4 @@
-# Permissions boundaries workshop - <small> Advanced edition </small>
-# <small> Build phase </small>
-
-The three elements of a permissions boundary are represented below. When your team does the **BUILD** tasks you will act as the admins. When your team does the **VERIFY** tasks you will act as the delegated admins (webadmins).  
-
-![mechanism](./images/permission-boundaries.png)
+# Permissions boundaries workshop - Advanced - <small> Build phase </small>
 
 ## Setup Instructions
 
@@ -36,7 +31,7 @@ The three elements of a permissions boundary are represented below. When your te
 	3. Click the gear icon in the upper right hand corner to open the Cloud9 **Preferences**. Scroll down to **AWS SETTINGS** and click the button next to **AWS Managed Temporary Credentials** to disable this.
 	4. Now go back to the AWS SSO tab (this should be the first tab you opened for the workshop). Click the **command line or programmatic access**. Click the section under **Option 2** to copy the credentials.
 	4. Go back to the Cloud9 environment. Type `aws configure` hit enter. Hit enter until you get to the choice **Default region name** and type in `us-east-2`
-	5. Then create a file in the `~/.aws` directory named `credentials` and paste in the credentials you copied from the SSO login page. Rename the profile to `default` (it will by default be named something similar to **Account_ID_AdministratorAccess**)
+	5. Then create a file in the `~/.aws` directory named `credentials` and paste in the credentials you copied from the SSO login page. Rename the profile to `default` (it will be named something similar to **Account_ID_AdministratorAccess**)
 	4. Now when you run commands from within the Cloud9 IDE the temporary credentials from AWS SSO will be used. 
 	4. Move on to **Task 1**.
 
@@ -60,17 +55,29 @@ The three elements of a permissions boundary are represented below. When your te
 
 	Move on to **Task 1**.
 
+---
+
 !!! Attention
-	Throughout the workshop, keep in mind where you need to add the Account ID, correctly use pathing and change the region specified if needed (although if you are taking this as part of an AWS event, just use the already specified us-east-2.) Missing any of these items can result in problems and errors like **"An error occurred (MalformedPolicyDocument) when calling the CreatePolicy operation: The policy failed legacy parsing"**.
+	### Throughout the workshop, keep in mind where you need to add the Account ID, correctly use pathing and change the region specified if needed (although if you are taking this as part of an AWS event, just use the already specified us-east-2.) Missing any of these items can result in problems and errors like **"An error occurred (MalformedPolicyDocument) when calling the CreatePolicy operation: The policy failed legacy parsing"**.
+
+!!! Tip
+	#### Tasks 1, 2 and 3 can be done indepedently if you are working in a team and want to divide up the tasks.
+
+---
+	
+The three elements of a permissions boundary are represented below. When your team does the **BUILD** tasks in this section you will act as the admins. When your team does the **VERIFY** tasks in the next section you will act as the delegated admins (webadmins).  
+
+![mechanism](./images/permission-boundaries.png)
 
 ## Task 1 <small>Create the webadmins role</small>
 
-First you will create an IAM role for the webadmins (Initially this role will trust your own AWS account but in the **Verify** phase you will configure it to trust the other team's account.):
+First you will create an IAM role for the webadmins (Initially this role will trust your own AWS account but in the **Verify** phase you will configure it to trust the other team's account):
 
+* For many of the steps below you will need your account ID. To get that type in `aws sts get-caller-identity'. The account ID will be the first number listed after **Account**.
 * Use the following JSON to create a file name trustpolicy1 for the trust (assume role) policy (you can use Nano or your preferred text editor): 
 	`{ "Version": "2012-10-17", "Statement": { "Effect": "Allow", "Principal": { "AWS": "arn:aws:iam::Account_ID:root"}, "Action": "sts:AssumeRole" } }`
 * Create the webadmin role:
-`aws iam create-role --role-name webadmins --assume-role-policy-document file://trustpolicy1`
+	`aws iam create-role --role-name webadmins --assume-role-policy-document file://trustpolicy1`
 * Add the Lambda Read Only policy to the role
 	`aws iam attach-role-policy --policy-arn arn:aws:iam::aws:policy/AWSLambdaReadOnlyAccess  --role-name webadmins`
 
@@ -237,23 +244,27 @@ Next you will create the policy that will be attached to the webadmins role.
 	
 ## Task 4 <small>Test the webadmins permissions</small>
 	
-It's time to check your work and make sure the webadmins are set up properly. The instructions for doing so are in the **VERIFY** phase. Go to that phase to check your work before handing this off to another team. You are free to skip the check if you are confident in your work and just go on to Task 5.
+It's time to check your work and make sure the webadmins are set up properly. The instructions for doing so are in the **[VERIFY phase](./verify.md)** phase. Go to that phase to check your work before handing this off to another team. 
 
 ## Task 5 <small>Gather info needed for the **VERIFY** phase</small>
 
-Now that you have setup access for the webadmins, it's time to pass this information on to the next team who will work through the **VERIFY** tasks. If you are doing this workshop online on your own then you can just run through the **VERIFY** phase yourself (skip this task).
+It is time to pass the work on to another team who will work through the **VERIFY** tasks. If you are doing this workshop online on your own then you can just run through the **VERIFY** phase yourself (skip this task).
 
-* Get the Account ID from the other team so you can add that to the trust policy on the webadmin role
-* Use the following JSON to create a file name trustpolicy2 for the trust (assume role) policy (replace `ACCOUNT_ID` with your account ID so you can still test this and the `ACCOUNT_ID_OTHER_TEAM` with the other team's account ID:) 
-	* `{"Version":"2012-10-17","Statement":[{"Effect":"Allow","Principal":{"AWS":["arn:aws:iam::YOUR_ACCOUNT_ID:root","arn:aws:iam::OTHER_TEAM_ACCOUNT_ID_:root"]},"Action":"sts:AssumeRole"}]}`
-* Update the trust policy on the webadmins roles so both your team  and the verify team can assume the role
-	* `aws iam update-assume-role-policy --role-name webadmins --policy-document file://trustpolicy2`
-
-If you were given a form to fill out then enter the info into the form and hand it to another group (or send this to the other group using whatever method is easiest.) Information to pass (recommended names for certain objects provided below - only change if you didn't go with the recommended names):
+If you were given a form to fill out then enter the info and hand it to another team (or send this to the other team using whatever method is easiest.) If you followed the recommended naming conventions you only need to enter your **Account ID** and **Resource Restriction**.
  
 * Webadmins role ARN:	arn:aws:iam::`YOUR_ACCOUNT_ID`:role/**webadmins**
 * Resource restriction for both the roles and policies: /webadmins/`Resource restriction you used`
 * Permissions boundary name: **webadminspermissionsboundary**
 * Permission policy name: **webadminspermissionpolicy**
+
+
+Exchange forms with another team and then update the trust policy of the webadmins roles so the other team can assume the role:
+
+* Use the following JSON to create a file name trustpolicy2 for the trust (assume role) policy (replace `ACCOUNT_ID` with your account ID so you can still test this and the `ACCOUNT_ID_OTHER_TEAM` with the other team's account ID:) 
+	* `{"Version":"2012-10-17","Statement":[{"Effect":"Allow","Principal":{"AWS":["arn:aws:iam::YOUR_ACCOUNT_ID:root","arn:aws:iam::ACCOUNT_ID_FROM_OTHER_TEAM:root"]},"Action":"sts:AssumeRole"}]}`
+* Update the trust policy on the webadmins roles so both your team  and the verify team can assume the role
+	* `aws iam update-assume-role-policy --role-name webadmins --policy-document file://trustpolicy2`
+
+
 
 ### <small>[Click here to go to the VERIFY phase](./verify.md)</small>
