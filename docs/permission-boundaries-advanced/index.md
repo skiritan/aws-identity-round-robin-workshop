@@ -1,18 +1,18 @@
-# Permissions boundary workshop -<small> Advanced edition </small>
-# <small> Overview </small>
+# Permissions boundary workshop <small> Advanced edition </small>
+## Overview
 
 Your company has deployed a production three tier web application on AWS. Various teams work on different aspects of the architecture including the web admins who need to be able to create IAM roles for Lambda functions. In order to let them quickly iterate it was decided that permissions boundaries would be used to delegate permissions to the web admins so they can create the roles needed without being able to escalate their permissions or impact the resources of other teams. It is your assignment to set the permissions up and test them.
 
 **AWS Service/Feature Coverage**: 
 
-* AWS IAM [users & roles](https://docs.aws.amazon.com/IAM/latest/UserGuide/id.html)
-* AWS IAM [permissions boundaries](https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_boundaries.html) 
-* AWS IAM [IAM friendly names and paths](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_identifiers.html)
-* AWS [Lambda](https://docs.aws.amazon.com/lambda/latest/dg/welcome.html)
+* AWS IAM <a href="https://docs.aws.amazon.com/IAM/latest/UserGuide/id.html" target="_blank">users & roles</a>
+* AWS IAM <a href="https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_boundaries.html" target="_blank">permissions boundaries</a> 
+* AWS IAM <a href="https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_identifiers.html" target="_blank">friendly names and paths</a>
+* AWS <a href="https://docs.aws.amazon.com/lambda/latest/dg/welcome.html" target="_blank">Lambda</a>
  
 ## Agenda
 
-The round consists of a [**BUILD**](./build.md) phase followed by a [**VERIFY**](./verify.md) phase. 
+The round consists of a <a href="./build/" target="_blank">**BUILD**</a> phase followed by a <a href="./verify/" target="_blank">**VERIFY**</a> phase. 
 
 ### Phases 
 **BUILD** (60 min): First each team will act as the admins of the account and carry out the activities involved in the **BUILD** phase where they will set up access for the web admins. 
@@ -26,7 +26,7 @@ Then each team will hand credentials for the webadmins IAM role in their account
 
 ### Presentation
 
-If you are doing this workshop as part of an AWS event then there will usually be a presentation (lasting about 30 minutes) before the hands-on exercise. Here is the [presentation deck](./presentation.pdf).
+If you are doing this workshop as part of an AWS event then there will usually be a presentation (lasting about 30 minutes) before the hands-on exercise. Here is the <a href="./presentation.pdf" target="_blank">presentation deck</a>.
 
 ## Requirements
 
@@ -39,4 +39,4 @@ The goal of this workshop is to set up the web admins so they can create an IAM 
 1. IAM policies and roles they create 
 2. S3 bucket: The roles the web admins create should only be allowed to list the log files in the webadmins folder of the bucket that starts with `"shared-logging-"` and ends with `"-data"`
 
-#### [Click here to go to the BUILD phase](./build.md)
+<large>**[Click here to go to the BUILD phase](./build.md)**</large>
