@@ -42,7 +42,7 @@
     
     
       
-        <title>Permissions boundaries workshop - <small> Advanced edition </small> - Identity Round Robin</title>
+        <title>Permissions boundaries workshop - Advanced - <small> Build phase </small> - Identity Round Robin</title>
       
     
     
@@ -102,7 +102,7 @@
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
     <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
     
-      <a href="#permissions-boundaries-workshop-advanced-edition" tabindex="1" class="md-skip">
+      <a href="#permissions-boundaries-workshop-advanced-build-phase" tabindex="1" class="md-skip">
         Skip to content
       </a>
     
@@ -160,7 +160,7 @@
                   Identity Round Robin
                 </span>
                 <span class="md-header-nav__topic">
-                  Permissions boundaries workshop - <small> Advanced edition </small>
+                  Permissions boundaries workshop - Advanced - <small> Build phase </small>
                 </span>
               
             
@@ -609,6 +609,117 @@
     
   
   
+    <label class="md-nav__title" for="__toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#setup-instructions" title="Setup Instructions" class="md-nav__link">
+    Setup Instructions
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#to-setup-your-environment-expand-one-of-the-following-drop-downs" title="To setup your environment expand one of the following drop-downs:" class="md-nav__link">
+    To setup your environment expand one of the following drop-downs:
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-1-login-to-the-console-and-run-the-cloudformation-template" title="Step 1: Login to the console and run the CloudFormation template" class="md-nav__link">
+    Step 1: Login to the console and run the CloudFormation template
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-2-connect-to-the-aws-cloud9-ide" title="Step 2 : Connect to the AWS Cloud9 IDE" class="md-nav__link">
+    Step 2 : Connect to the AWS Cloud9 IDE
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#throughout-the-workshop-keep-in-mind-where-you-need-to-add-the-account-id-correctly-use-pathing-and-change-the-region-specified-if-needed-although-if-you-are-taking-this-as-part-of-an-aws-event-just-use-the-already-specified-us-east-2-missing-any-of-these-items-can-result-in-problems-and-errors-like-an-error-occurred-malformedpolicydocument-when-calling-the-createpolicy-operation-the-policy-failed-legacy-parsing" title="Throughout the workshop, keep in mind where you need to add the Account ID, correctly use pathing and change the region specified if needed (although if you are taking this as part of an AWS event, just use the already specified us-east-2.) Missing any of these items can result in problems and errors like "An error occurred (MalformedPolicyDocument) when calling the CreatePolicy operation: The policy failed legacy parsing"." class="md-nav__link">
+    Throughout the workshop, keep in mind where you need to add the Account ID, correctly use pathing and change the region specified if needed (although if you are taking this as part of an AWS event, just use the already specified us-east-2.) Missing any of these items can result in problems and errors like "An error occurred (MalformedPolicyDocument) when calling the CreatePolicy operation: The policy failed legacy parsing".
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#tasks-1-2-and-3-can-be-done-indepedently-if-you-are-working-in-a-team-and-want-to-divide-up-the-tasks" title="Tasks 1, 2 and 3 can be done indepedently if you are working in a team and want to divide up the tasks." class="md-nav__link">
+    Tasks 1, 2 and 3 can be done indepedently if you are working in a team and want to divide up the tasks.
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#task-1-create-the-webadmins-role" title="Task 1 Create the webadmins role" class="md-nav__link">
+    Task 1 Create the webadmins role
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#task-2-create-the-permissions-boundary-for-the-webadmins" title="Task 2 Create the permissions boundary for the webadmins" class="md-nav__link">
+    Task 2 Create the permissions boundary for the webadmins
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#task-3-create-the-permission-policy-for-the-webadmins" title="Task 3 Create the permission policy for the webadmins" class="md-nav__link">
+    Task 3 Create the permission policy for the webadmins
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#task-4-test-the-webadmins-permissions" title="Task 4 Test the webadmins permissions" class="md-nav__link">
+    Task 4 Test the webadmins permissions
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#task-5-gather-info-needed-for-the-verify-phase" title="Task 5 Gather info needed for the VERIFY phase" class="md-nav__link">
+    Task 5 Gather info needed for the VERIFY phase
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#click-here-to-go-to-the-verify-phase" title="Click here to go to the VERIFY phase" class="md-nav__link">
+    Click here to go to the VERIFY phase
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -622,10 +733,7 @@
                   <a href="https://github.com/aws-samples/aws-identity-round-robin-workshop/edit/master/docs/permission-boundaries-advanced/build.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
                 
                 
-                <h1 id="permissions-boundaries-workshop-advanced-edition">Permissions boundaries workshop - <small> Advanced edition </small></h1>
-<h1 id="build-phase"><small> Build phase </small></h1>
-<p>The three elements of a permissions boundary are represented below. When your team does the <strong>BUILD</strong> tasks you will act as the admins. When your team does the <strong>VERIFY</strong> tasks you will act as the delegated admins (webadmins).  </p>
-<p><img alt="mechanism" src="../images/permission-boundaries.png" /></p>
+                <h1 id="permissions-boundaries-workshop-advanced-build-phase">Permissions boundaries workshop - Advanced - <small> Build phase </small></h1>
 <h2 id="setup-instructions">Setup Instructions</h2>
 <h3 id="to-setup-your-environment-expand-one-of-the-following-drop-downs">To setup your environment <strong>expand one of the following drop-downs</strong>:</h3>
 <details class="info"><summary>Click here if <em>AWS provided an account to you</em> (usually at an AWS event)</summary><h3 id="step-1-login-to-the-console-and-run-the-cloudformation-template">Step 1: Login to the console and run the CloudFormation template</h3>
@@ -660,7 +768,7 @@
 <li>Click the gear icon in the upper right hand corner to open the Cloud9 <strong>Preferences</strong>. Scroll down to <strong>AWS SETTINGS</strong> and click the button next to <strong>AWS Managed Temporary Credentials</strong> to disable this.</li>
 <li>Now go back to the AWS SSO tab (this should be the first tab you opened for the workshop). Click the <strong>command line or programmatic access</strong>. Click the section under <strong>Option 2</strong> to copy the credentials.</li>
 <li>Go back to the Cloud9 environment. Type <code>aws configure</code> hit enter. Hit enter until you get to the choice <strong>Default region name</strong> and type in <code>us-east-2</code></li>
-<li>Then create a file in the <code>~/.aws</code> directory named <code>credentials</code> and paste in the credentials you copied from the SSO login page. Rename the profile to <code>default</code> (it will by default be named something similar to <strong>Account_ID_AdministratorAccess</strong>)</li>
+<li>Then create a file in the <code>~/.aws</code> directory named <code>credentials</code> and paste in the credentials you copied from the SSO login page. Rename the profile to <code>default</code> (it will be named something similar to <strong>Account_ID_AdministratorAccess</strong>)</li>
 <li>Now when you run commands from within the Cloud9 IDE the temporary credentials from AWS SSO will be used. </li>
 <li>Move on to <strong>Task 1</strong>.</li>
 </ol>
@@ -691,17 +799,26 @@
 <p>This will bring you back to the CloudFormation console. You can refresh the page to see the stack starting to create. Before moving on, make sure the stack is in a <strong>CREATE_COMPLETE</strong>.</p>
 <p>Move on to <strong>Task 1</strong>.</p>
 </details>
+<hr />
 <div class="admonition attention">
 <p class="admonition-title">Attention</p>
-<p>Throughout the workshop, keep in mind where you need to add the Account ID, correctly use pathing and change the region specified if needed (although if you are taking this as part of an AWS event, just use the already specified us-east-2.) Missing any of these items can result in problems and errors like <strong>"An error occurred (MalformedPolicyDocument) when calling the CreatePolicy operation: The policy failed legacy parsing"</strong>.</p>
+<h3 id="throughout-the-workshop-keep-in-mind-where-you-need-to-add-the-account-id-correctly-use-pathing-and-change-the-region-specified-if-needed-although-if-you-are-taking-this-as-part-of-an-aws-event-just-use-the-already-specified-us-east-2-missing-any-of-these-items-can-result-in-problems-and-errors-like-an-error-occurred-malformedpolicydocument-when-calling-the-createpolicy-operation-the-policy-failed-legacy-parsing">Throughout the workshop, keep in mind where you need to add the Account ID, correctly use pathing and change the region specified if needed (although if you are taking this as part of an AWS event, just use the already specified us-east-2.) Missing any of these items can result in problems and errors like <strong>"An error occurred (MalformedPolicyDocument) when calling the CreatePolicy operation: The policy failed legacy parsing"</strong>.</h3>
 </div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<h4 id="tasks-1-2-and-3-can-be-done-indepedently-if-you-are-working-in-a-team-and-want-to-divide-up-the-tasks">Tasks 1, 2 and 3 can be done indepedently if you are working in a team and want to divide up the tasks.</h4>
+</div>
+<hr />
+<p>The three elements of a permissions boundary are represented below. When your team does the <strong>BUILD</strong> tasks in this section you will act as the admins. When your team does the <strong>VERIFY</strong> tasks in the next section you will act as the delegated admins (webadmins).  </p>
+<p><img alt="mechanism" src="../images/permission-boundaries.png" /></p>
 <h2 id="task-1-create-the-webadmins-role">Task 1 <small>Create the webadmins role</small></h2>
-<p>First you will create an IAM role for the webadmins (Initially this role will trust your own AWS account but in the <strong>Verify</strong> phase you will configure it to trust the other team's account.):</p>
+<p>First you will create an IAM role for the webadmins (Initially this role will trust your own AWS account but in the <strong>Verify</strong> phase you will configure it to trust the other team's account):</p>
 <ul>
+<li>For many of the steps below you will need your account ID. To get that type in `aws sts get-caller-identity'. The account ID will be the first number listed after <strong>Account</strong>.</li>
 <li>Use the following JSON to create a file name trustpolicy1 for the trust (assume role) policy (you can use Nano or your preferred text editor): 
     <code>{ "Version": "2012-10-17", "Statement": { "Effect": "Allow", "Principal": { "AWS": "arn:aws:iam::Account_ID:root"}, "Action": "sts:AssumeRole" } }</code></li>
 <li>Create the webadmin role:
-<code>aws iam create-role --role-name webadmins --assume-role-policy-document file://trustpolicy1</code></li>
+    <code>aws iam create-role --role-name webadmins --assume-role-policy-document file://trustpolicy1</code></li>
 <li>Add the Lambda Read Only policy to the role
     <code>aws iam attach-role-policy --policy-arn arn:aws:iam::aws:policy/AWSLambdaReadOnlyAccess  --role-name webadmins</code></li>
 </ul>
@@ -879,26 +996,26 @@
 </ul>
 </div>
 <h2 id="task-4-test-the-webadmins-permissions">Task 4 <small>Test the webadmins permissions</small></h2>
-<p>It's time to check your work and make sure the webadmins are set up properly. The instructions for doing so are in the <strong>VERIFY</strong> phase. Go to that phase to check your work before handing this off to another team. You are free to skip the check if you are confident in your work and just go on to Task 5.</p>
+<p>It's time to check your work and make sure the webadmins are set up properly. The instructions for doing so are in the <strong><a href="../verify/">VERIFY phase</a></strong> phase. Go to that phase to check your work before handing this off to another team. </p>
 <h2 id="task-5-gather-info-needed-for-the-verify-phase">Task 5 <small>Gather info needed for the <strong>VERIFY</strong> phase</small></h2>
-<p>Now that you have setup access for the webadmins, it's time to pass this information on to the next team who will work through the <strong>VERIFY</strong> tasks. If you are doing this workshop online on your own then you can just run through the <strong>VERIFY</strong> phase yourself (skip this task).</p>
+<p>It is time to pass the work on to another team who will work through the <strong>VERIFY</strong> tasks. If you are doing this workshop online on your own then you can just run through the <strong>VERIFY</strong> phase yourself (skip this task).</p>
+<p>If you were given a form to fill out then enter the info and hand it to another team (or send this to the other team using whatever method is easiest.) If you followed the recommended naming conventions you only need to enter your <strong>Account ID</strong> and <strong>Resource Restriction</strong>.</p>
 <ul>
-<li>Get the Account ID from the other team so you can add that to the trust policy on the webadmin role</li>
+<li>Webadmins role ARN:   arn:aws:iam::<code>YOUR_ACCOUNT_ID</code>:role/<strong>webadmins</strong></li>
+<li>Resource restriction for both the roles and policies: /webadmins/<code>Resource restriction you used</code></li>
+<li>Permissions boundary name: <strong>webadminspermissionsboundary</strong></li>
+<li>Permission policy name: <strong>webadminspermissionpolicy</strong></li>
+</ul>
+<p>Exchange forms with another team and then update the trust policy of the webadmins roles so the other team can assume the role:</p>
+<ul>
 <li>Use the following JSON to create a file name trustpolicy2 for the trust (assume role) policy (replace <code>ACCOUNT_ID</code> with your account ID so you can still test this and the <code>ACCOUNT_ID_OTHER_TEAM</code> with the other team's account ID:) <ul>
-<li><code>{"Version":"2012-10-17","Statement":[{"Effect":"Allow","Principal":{"AWS":["arn:aws:iam::YOUR_ACCOUNT_ID:root","arn:aws:iam::OTHER_TEAM_ACCOUNT_ID_:root"]},"Action":"sts:AssumeRole"}]}</code></li>
+<li><code>{"Version":"2012-10-17","Statement":[{"Effect":"Allow","Principal":{"AWS":["arn:aws:iam::YOUR_ACCOUNT_ID:root","arn:aws:iam::ACCOUNT_ID_FROM_OTHER_TEAM:root"]},"Action":"sts:AssumeRole"}]}</code></li>
 </ul>
 </li>
 <li>Update the trust policy on the webadmins roles so both your team  and the verify team can assume the role<ul>
 <li><code>aws iam update-assume-role-policy --role-name webadmins --policy-document file://trustpolicy2</code></li>
 </ul>
 </li>
-</ul>
-<p>If you were given a form to fill out then enter the info into the form and hand it to another group (or send this to the other group using whatever method is easiest.) Information to pass (recommended names for certain objects provided below - only change if you didn't go with the recommended names):</p>
-<ul>
-<li>Webadmins role ARN:   arn:aws:iam::<code>YOUR_ACCOUNT_ID</code>:role/<strong>webadmins</strong></li>
-<li>Resource restriction for both the roles and policies: /webadmins/<code>Resource restriction you used</code></li>
-<li>Permissions boundary name: <strong>webadminspermissionsboundary</strong></li>
-<li>Permission policy name: <strong>webadminspermissionpolicy</strong></li>
 </ul>
 <h3 id="click-here-to-go-to-the-verify-phase"><small><a href="../verify/">Click here to go to the VERIFY phase</a></small></h3>
                 
