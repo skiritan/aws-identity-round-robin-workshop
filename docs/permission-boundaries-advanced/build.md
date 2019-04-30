@@ -1,7 +1,7 @@
 # Permissions boundaries workshop - <small> Advanced edition </small>
 # <small> Build phase </small>
 
-The three elements of a permissions boundary are represented below. When your team does the **BUILD** tasks you will act as the admins. When your team does the **VERIFY** tasks you will act as the delegated admins (webadmins). The delegated admins (webadmins) will create roles that can be considered **"bound"** since they will have a permissions boundary attached.  
+The three elements of a permissions boundary are represented below. When your team does the **BUILD** tasks you will act as the admins. When your team does the **VERIFY** tasks you will act as the delegated admins (webadmins).  
 
 ![mechanism](./images/permission-boundaries.png)
 
@@ -13,11 +13,11 @@ The three elements of a permissions boundary are represented below. When your te
 
 	### Step 1: Login to the console and run the CloudFormation template
 	
-	**Console Login:** Your team should have been given a URL and login credentials. This will allow you to login to the account using AWS SSO. Browse to that URL and login. 
+	**Console Login:** Your team should have been given a piece of paper with a URL and credentials. This will allow you to login using AWS SSO. 
 
-	After you login click **AWS Account** box, then click on the Account ID displayed below that (the red box in the image.) You should see a link below that for **Management console**. Click on that and you will be taken the AWS console. Make sure the region is set to US East 2 (Ohio)
+	After you login click **AWS Account** box, then click on the Account ID displayed below that (the red box in the image.) You should see a link below that for **Management console**. Click on that and you will be taken the AWS console. Make sure the region is set to US East 2 (Ohio).
 
-	** Launch the CloudFormation stack. Click the *Deploy to AWS* button below. **
+	** Click the *Deploy to AWS* button below to launch the CloudFormation stck. **
 	
 	Region| Deploy
 	------|-----
@@ -29,15 +29,20 @@ The three elements of a permissions boundary are represented below. When your te
 	4. Finally, acknowledge that the template will create IAM roles under **Capabilities** and click **Create**.
 	5. This will bring you back to the CloudFormation console. You can refresh the page to see the stack starting to create. Before moving on, make sure the stack shows **CREATE_COMPLETE**.
 	
-	### Step 2 : Connect to Cloud9 (this is where you will be doing all the hands on work)**
-
-	1. Navigate to Cloud9 in the AWS console
-	2. Open the Cloud9 IDE environment called `workshop-environment` 
-	3. This is where you will run the commands. Move on to Task 1.
+	### Step 2 : Connect to the AWS Cloud9 IDE
+	
+	1. Navigate to the <a href="https://us-east-2.console.aws.amazon.com/cloud9/home" target="_blank">AWS Cloud9</a> console.
+	2. Click on **Open IDE** in the `workshop-environment` under **Your environments**
+	3. Click the gear icon in the upper right hand corner to open the Cloud9 **Preferences**. Scroll down to **AWS SETTINGS** and click the button next to **AWS Managed Temporary Credentials** to disable this.
+	4. Now go back to the AWS SSO tab (this should be the first tab you opened for the workshop). Click the **command line or programmatic access**. Click the section under **Option 2** to copy the credentials.
+	4. Go back to the Cloud9 environment. Type `aws configure` hit enter. Hit enter until you get to the choice **Default region name** and type in `us-east-2`
+	5. Then create a file in the `~/.aws` directory named `credentials` and paste in the credentials you copied from the SSO login page. Rename the profile to `default` (it will by default be named something similar to **Account_ID_AdministratorAccess**)
+	4. Now when you run commands from within the Cloud9 IDE the temporary credentials from AWS SSO will be used. 
+	4. Move on to **Task 1**.
 
 ??? info "Click here if you are *using your own AWS account* (whether you are at an AWS event, a separate event or online on your own)"
 
-	Log in to your account however you would normally.
+	Log in to your account however you would normally. You should use an IAM user or role with admin rights. 
 
 	**CloudFormation:** Launch the CloudFormation stack below to setup the environment:
 
@@ -53,7 +58,7 @@ The three elements of a permissions boundary are represented below. When your te
 
 	This will bring you back to the CloudFormation console. You can refresh the page to see the stack starting to create. Before moving on, make sure the stack is in a **CREATE_COMPLETE**.
 
-	Move on to Task 1.
+	Move on to **Task 1**.
 
 !!! Attention
 	Throughout the workshop, keep in mind where you need to add the Account ID, correctly use pathing and change the region specified if needed (although if you are taking this as part of an AWS event, just use the already specified us-east-2.) Missing any of these items can result in problems and errors like **"An error occurred (MalformedPolicyDocument) when calling the CreatePolicy operation: The policy failed legacy parsing"**.
@@ -62,7 +67,7 @@ The three elements of a permissions boundary are represented below. When your te
 
 First you will create an IAM role for the webadmins (Initially this role will trust your own AWS account but in the **Verify** phase you will configure it to trust the other team's account.):
 
-* Use the following JSON to create a file name trustpolicy1 for the trust (assume role) policy: 
+* Use the following JSON to create a file name trustpolicy1 for the trust (assume role) policy (you can use Nano or your preferred text editor): 
 	`{ "Version": "2012-10-17", "Statement": { "Effect": "Allow", "Principal": { "AWS": "arn:aws:iam::Account_ID:root"}, "Action": "sts:AssumeRole" } }`
 * Create the webadmin role:
 `aws iam create-role --role-name webadmins --assume-role-policy-document file://trustpolicy1`
