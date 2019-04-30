@@ -42,7 +42,7 @@
     
     
       
-        <title>Permission boundaries workshop <small>- Advanced edition</small> - Identity Round Robin</title>
+        <title>Permission boundaries workshop - Advanced -  <small> VERIFY phase</small> - Identity Round Robin</title>
       
     
     
@@ -102,7 +102,7 @@
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
     <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
     
-      <a href="#permission-boundaries-workshop-advanced-edition" tabindex="1" class="md-skip">
+      <a href="#permission-boundaries-workshop-advanced-verify-phase" tabindex="1" class="md-skip">
         Skip to content
       </a>
     
@@ -160,7 +160,7 @@
                   Identity Round Robin
                 </span>
                 <span class="md-header-nav__topic">
-                  Permission boundaries workshop <small>- Advanced edition</small>
+                  Permission boundaries workshop - Advanced -  <small> VERIFY phase</small>
                 </span>
               
             
@@ -609,6 +609,89 @@
     
   
   
+    <label class="md-nav__title" for="__toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#as-in-the-build-phasekeep-in-mind-where-you-need-to-add-the-account-id-correctly-use-pathing-and-change-the-region-specified-if-needed-although-if-you-are-taking-this-as-part-of-an-aws-event-just-use-the-already-specified-us-east-2-also-you-will-need-to-use-the-profile-parameter-for-all-of-the-commands-in-the-following-tasks" title="As in the Build phase,keep in mind where you need to add the Account ID, correctly use pathing and change the region specified if needed (although if you are taking this as part of an AWS event, just use the already specified us-east-2.) Also you will need to use the --profile parameter for all of the commands in the following tasks." class="md-nav__link">
+    As in the Build phase,keep in mind where you need to add the Account ID, correctly use pathing and change the region specified if needed (although if you are taking this as part of an AWS event, just use the already specified us-east-2.) Also you will need to use the --profile parameter for all of the commands in the following tasks.
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#task-1-create-a-policy" title="Task 1 Create a policy" class="md-nav__link">
+    Task 1 Create a policy
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#first-you-will-create-a-permission-policy-which-just-needs-to-allow-log-file-creation-and-s3listbucket-you-are-in-a-hurry-though-like-many-developers-and-give-the-role-full-s3-permissions-the-policy-you-create-here-will-later-be-attached-to-the-role-you-create-in-task-2-which-will-then-be-passed-to-a-lambda-function-you-will-create-in-task-3" title="First you will create a permission policy which just needs to allow log file creation and s3:ListBucket. You are in a hurry though, like many developers, and give the role full S3 permissions. The policy you create here will later be attached to the role you create in Task 2 which will then be passed to a Lambda function you will create in Task 3." class="md-nav__link">
+    First you will create a permission policy which just needs to allow log file creation and s3:ListBucket. You are in a hurry though, like many developers, and give the role full S3 permissions. The policy you create here will later be attached to the role you create in Task 2 which will then be passed to a Lambda function you will create in Task 3.
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#task-2-create-a-role" title="Task 2 Create a role" class="md-nav__link">
+    Task 2 Create a role
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-role-you-create-here-will-be-passed-to-the-lambda-function-you-create-in-the-next-task" title="The role you create here will be passed to the Lambda function you create in the next task" class="md-nav__link">
+    The role you create here will be passed to the Lambda function you create in the next task
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#task-3-create-and-test-a-lambda-function" title="Task 3 Create and test a Lambda function" class="md-nav__link">
+    Task 3 Create and test a Lambda function
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#finally-you-will-create-a-nodejs-810-lambda-function-using-the-sample-code-below-and-pass-the-iam-role-you-just-created" title="Finally you will create a Node.js 8.10 Lambda function using the sample code below and pass the IAM role you just created" class="md-nav__link">
+    Finally you will create a Node.js 8.10 Lambda function using the sample code below and pass the IAM role you just created
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#task-3-cleanup" title="Task 3 Cleanup" class="md-nav__link">
+    Task 3 Cleanup
+  </a>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -622,12 +705,15 @@
                   <a href="https://github.com/aws-samples/aws-identity-round-robin-workshop/edit/master/docs/permission-boundaries-advanced/verify.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
                 
                 
-                <h1 id="permission-boundaries-workshop-advanced-edition">Permission boundaries workshop <small>- Advanced edition</small></h1>
-<h1 id="verify-phase"><small>VERIFY phase</small></h1>
-<p>You are now in the <strong>VERIFY</strong> phase. It is time to put on the hat of the webadmins and test out their permissions. Permissions boundaries are about delegation so verifying (acting as the delegated admins) the work of another team that did the build phase (acting as the admins) will simulate that experience. As the webadmins you will do the following:
-* Create an IAM policy, create an IAM role (and attach that policy), create a Lambda function (and attach that role)</p>
-<p>If doing this as part of an AWS event you should have received from another team the following information:</p>
-<div class="codehilite"><pre><span></span>* Webadmins role ARN:   arn:aws:iam::`ACCOUNT_ID_of_Other_Team`:role/**webadmins**
+                <h1 id="permission-boundaries-workshop-advanced-verify-phase">Permission boundaries workshop - Advanced -  <small> VERIFY phase</small></h1>
+<p>You are now in the <strong>VERIFY</strong> phase. It is time to put on the hat of the webadmins and test out their permissions. . As the webadmins you will do the following: </p>
+<ol>
+<li>Create an IAM policy</li>
+<li>Create an IAM role (and attach that policy) </li>
+<li>Create a Lambda function (and attach that role)</li>
+</ol>
+<p>If doing this as part of an AWS event you should have received the following information from another team:</p>
+<div class="codehilite"><pre><span></span>* Webadmins role ARN:   arn:aws:iam::`ACCOUNT_ID_FROM_OTHER_TEAM`:role/**webadmins**
 * Resource restriction for both the roles and policies: /webadmins/`Resource restriction`
 * Permissions boundary name: **webadminspermissionsboundary**
 * Permission policy name: **webadminspermissionpolicy**
@@ -635,16 +721,22 @@
 
 
 <ul>
-<li>To carry out these tasks as the webadmins, you will need to assume that role. In order to assume the webadmins role, add the following to the AWS CLI <a href="https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-role.html">config file</a> found in the <code>~/.aws/config</code> directory. Since you are assuming the role of another team, enter the Account ID of that team in the ARN. <strong>Remember to use the --profile parameter for all of the commands in the following tasks.</strong></li>
+<li>To carry out these tasks as the webadmins, you will need to assume that role. In order to assume the webadmins role, add the following to the <code>~/.aws/config</code> file. <strong>When you want to reference a profile other then the default one you need to add the --profile parameter to the CLI command.</strong></li>
 </ul>
 <div class="codehilite"><pre><span></span><span class="k">[profile webadmins]</span>
-<span class="na">role_arn</span> <span class="o">=</span> <span class="s">arn:aws:iam::Account_ID_of_Other_Team:role/webadmins</span>
-<span class="na">source_profile</span> <span class="o">=</span> <span class="s">Name_of_the_Credential_Profile</span>
+<span class="na">role_arn</span> <span class="o">=</span> <span class="s">arn:aws:iam::ACCOUNT_ID_FROM_OTHER_TEAM:role/webadmins</span>
+<span class="na">source_profile</span> <span class="o">=</span> <span class="s">default</span>
 </pre></div>
 
 
 <details class="info"><summary>Application architecture</summary><p><img alt="image1" src="../images/architecture.png" /></p>
+<hr />
 </details>
+<hr />
+<div class="admonition attention">
+<p class="admonition-title">Attention</p>
+<h3 id="as-in-the-build-phasekeep-in-mind-where-you-need-to-add-the-account-id-correctly-use-pathing-and-change-the-region-specified-if-needed-although-if-you-are-taking-this-as-part-of-an-aws-event-just-use-the-already-specified-us-east-2-also-you-will-need-to-use-the-profile-parameter-for-all-of-the-commands-in-the-following-tasks">As in the Build phase,keep in mind where you need to add the Account ID, correctly use pathing and change the region specified if needed (although if you are taking this as part of an AWS event, just use the already specified us-east-2.) Also you will need to use the --profile parameter for all of the commands in the following tasks.</h3>
+</div>
 <h2 id="task-1-create-a-policy">Task 1 <small>Create a policy</small></h2>
 <h4 id="first-you-will-create-a-permission-policy-which-just-needs-to-allow-log-file-creation-and-s3listbucket-you-are-in-a-hurry-though-like-many-developers-and-give-the-role-full-s3-permissions-the-policy-you-create-here-will-later-be-attached-to-the-role-you-create-in-task-2-which-will-then-be-passed-to-a-lambda-function-you-will-create-in-task-3">First you will create a permission policy which just needs to allow log file creation and s3:ListBucket. You are in a hurry though, like many developers, and give the role full S3 permissions. The policy you create here will later be attached to the role you create in Task 2 which will then be passed to a Lambda function you will create in Task 3.</h4>
 <ul>
