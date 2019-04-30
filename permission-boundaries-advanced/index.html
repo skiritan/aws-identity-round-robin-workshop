@@ -38,7 +38,7 @@
         <meta name="lang:search.tokenizer" content="[\s\-]+">
       
       <link rel="shortcut icon" href="../assets/images/aws-favicon.ico">
-      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.0.1">
+      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.0.2">
     
     
       
@@ -160,7 +160,7 @@
                   Identity Round Robin
                 </span>
                 <span class="md-header-nav__topic">
-                  Permissions boundary workshop -<small> Advanced edition </small>
+                  Permissions boundary workshop <small> Advanced edition </small>
                 </span>
               
             
@@ -609,6 +609,56 @@
     
   
   
+    <label class="md-nav__title" for="__toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#overview" title="Overview" class="md-nav__link">
+    Overview
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#agenda" title="Agenda" class="md-nav__link">
+    Agenda
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#phases" title="Phases" class="md-nav__link">
+    Phases
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#presentation" title="Presentation" class="md-nav__link">
+    Presentation
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#requirements" title="Requirements" class="md-nav__link">
+    Requirements
+  </a>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -622,18 +672,18 @@
                   <a href="https://github.com/aws-samples/aws-identity-round-robin-workshop/edit/master/docs/permission-boundaries-advanced/index.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
                 
                 
-                <h1 id="permissions-boundary-workshop-advanced-edition">Permissions boundary workshop -<small> Advanced edition </small></h1>
-<h1 id="overview"><small> Overview </small></h1>
+                <h1 id="permissions-boundary-workshop-advanced-edition">Permissions boundary workshop <small> Advanced edition </small></h1>
+<h2 id="overview">Overview</h2>
 <p>Your company has deployed a production three tier web application on AWS. Various teams work on different aspects of the architecture including the web admins who need to be able to create IAM roles for Lambda functions. In order to let them quickly iterate it was decided that permissions boundaries would be used to delegate permissions to the web admins so they can create the roles needed without being able to escalate their permissions or impact the resources of other teams. It is your assignment to set the permissions up and test them.</p>
 <p><strong>AWS Service/Feature Coverage</strong>: </p>
 <ul>
-<li>AWS IAM <a href="https://docs.aws.amazon.com/IAM/latest/UserGuide/id.html">users &amp; roles</a></li>
-<li>AWS IAM <a href="https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_boundaries.html">permissions boundaries</a> </li>
-<li>AWS IAM <a href="https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_identifiers.html">IAM friendly names and paths</a></li>
-<li>AWS <a href="https://docs.aws.amazon.com/lambda/latest/dg/welcome.html">Lambda</a></li>
+<li>AWS IAM <a href="https://docs.aws.amazon.com/IAM/latest/UserGuide/id.html" target="_blank">users &amp; roles</a></li>
+<li>AWS IAM <a href="https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_boundaries.html" target="_blank">permissions boundaries</a> </li>
+<li>AWS IAM <a href="https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_identifiers.html" target="_blank">friendly names and paths</a></li>
+<li>AWS <a href="https://docs.aws.amazon.com/lambda/latest/dg/welcome.html" target="_blank">Lambda</a></li>
 </ul>
 <h2 id="agenda">Agenda</h2>
-<p>The round consists of a <a href="build/"><strong>BUILD</strong></a> phase followed by a <a href="verify/"><strong>VERIFY</strong></a> phase. </p>
+<p>The round consists of a <a href="./build/" target="_blank"><strong>BUILD</strong></a> phase followed by a <a href="./verify/" target="_blank"><strong>VERIFY</strong></a> phase. </p>
 <h3 id="phases">Phases</h3>
 <p><strong>BUILD</strong> (60 min): First each team will act as the admins of the account and carry out the activities involved in the <strong>BUILD</strong> phase where they will set up access for the web admins. </p>
 <p>Then each team will hand credentials for the webadmins IAM role in their account to another team to carry out the <strong>VERIFY</strong> phase. </p>
@@ -643,7 +693,7 @@
 <p>This workshop can be done as a team exercise or individually. If done as part of an AWS sponsored event then you will most likely be split into teams of around 2-3 people (you are of course free to work on your own.) If you are working in a team then try to divide up the tasks. </p>
 </div>
 <h3 id="presentation">Presentation</h3>
-<p>If you are doing this workshop as part of an AWS event then there will usually be a presentation (lasting about 30 minutes) before the hands-on exercise. Here is the <a href="presentation.pdf">presentation deck</a>.</p>
+<p>If you are doing this workshop as part of an AWS event then there will usually be a presentation (lasting about 30 minutes) before the hands-on exercise. Here is the <a href="./presentation.pdf" target="_blank">presentation deck</a>.</p>
 <h2 id="requirements">Requirements</h2>
 <details class="info"><summary>Click here for the account architecture</summary><p>Account architecture: <img alt="architecture" src="images/architecture.png" /></p>
 </details>
@@ -652,7 +702,7 @@
 <li>IAM policies and roles they create </li>
 <li>S3 bucket: The roles the web admins create should only be allowed to list the log files in the webadmins folder of the bucket that starts with <code>"shared-logging-"</code> and ends with <code>"-data"</code></li>
 </ol>
-<h4 id="click-here-to-go-to-the-build-phase"><a href="build/">Click here to go to the BUILD phase</a></h4>
+<p><large><strong><a href="build/">Click here to go to the BUILD phase</a></strong></large></p>
                 
                   
                 
@@ -704,7 +754,7 @@
       
     </div>
     
-      <script src="../assets/javascripts/application.b806dc00.js"></script>
+      <script src="../assets/javascripts/application.d9aa80ab.js"></script>
       
       <script>app.initialize({version:"1.0.4",url:{base:".."}})</script>
       
