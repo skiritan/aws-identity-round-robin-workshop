@@ -75,11 +75,11 @@ First you will create an IAM role for the webadmins (Initially this role will tr
 
 * For many of the steps below you will need your account ID. To get that type in `aws sts get-caller-identity'. The account ID will be the first number listed after **Account**.
 * Use the following JSON to create a file name trustpolicy1 for the trust (assume role) policy (you can use Nano or your preferred text editor): 
-	`{ "Version": "2012-10-17", "Statement": { "Effect": "Allow", "Principal": { "AWS": "arn:aws:iam::Account_ID:root"}, "Action": "sts:AssumeRole" } }`
+	* `{ "Version": "2012-10-17", "Statement": { "Effect": "Allow", "Principal": { "AWS": "arn:aws:iam::Account_ID:root"}, "Action": "sts:AssumeRole" } }`
 * Create the webadmin role:
-	`aws iam create-role --role-name webadmins --assume-role-policy-document file://trustpolicy1`
+	* `aws iam create-role --role-name webadmins --assume-role-policy-document file://trustpolicy1`
 * Add the Lambda Read Only policy to the role
-	`aws iam attach-role-policy --policy-arn arn:aws:iam::aws:policy/AWSLambdaReadOnlyAccess  --role-name webadmins`
+	* `aws iam attach-role-policy --policy-arn arn:aws:iam::aws:policy/AWSLambdaReadOnlyAccess  --role-name webadmins`
 
 
 ## Task 2 <small>Create the permissions boundary for the webadmins</small>
@@ -264,7 +264,5 @@ Exchange forms with another team and then update the trust policy of the webadmi
 	* `{"Version":"2012-10-17","Statement":[{"Effect":"Allow","Principal":{"AWS":["arn:aws:iam::YOUR_ACCOUNT_ID:root","arn:aws:iam::ACCOUNT_ID_FROM_OTHER_TEAM:root"]},"Action":"sts:AssumeRole"}]}`
 * Update the trust policy on the webadmins roles so both your team  and the verify team can assume the role
 	* `aws iam update-assume-role-policy --role-name webadmins --policy-document file://trustpolicy2`
-
-
 
 ### <small>[Click here to go to the VERIFY phase](./verify.md)</small>

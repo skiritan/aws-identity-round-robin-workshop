@@ -1,27 +1,37 @@
-# Permission boundaries workshop <small>- Advanced edition</small>
-# <small>VERIFY phase</small>
+# Permission boundaries workshop - Advanced -  <small> VERIFY phase</small>
 
-You are now in the **VERIFY** phase. It is time to put on the hat of the webadmins and test out their permissions. Permissions boundaries are about delegation so verifying (acting as the delegated admins) the work of another team that did the build phase (acting as the admins) will simulate that experience. As the webadmins you will do the following:
-* Create an IAM policy, create an IAM role (and attach that policy), create a Lambda function (and attach that role)
+You are now in the **VERIFY** phase. It is time to put on the hat of the webadmins and test out their permissions. . As the webadmins you will do the following: 
 
-If doing this as part of an AWS event you should have received from another team the following information:
+1. Create an IAM policy
+2. Create an IAM role (and attach that policy) 
+3. Create a Lambda function (and attach that role)
 
-	* Webadmins role ARN:	arn:aws:iam::`ACCOUNT_ID_of_Other_Team`:role/**webadmins**
+If doing this as part of an AWS event you should have received the following information from another team:
+
+	* Webadmins role ARN:	arn:aws:iam::`ACCOUNT_ID_FROM_OTHER_TEAM`:role/**webadmins**
 	* Resource restriction for both the roles and policies: /webadmins/`Resource restriction`
 	* Permissions boundary name: **webadminspermissionsboundary**
 	* Permission policy name: **webadminspermissionpolicy**
 
-* To carry out these tasks as the webadmins, you will need to assume that role. In order to assume the webadmins role, add the following to the AWS CLI [config file](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-role.html) found in the `~/.aws/config` directory. Since you are assuming the role of another team, enter the Account ID of that team in the ARN. **Remember to use the --profile parameter for all of the commands in the following tasks.**
+* To carry out these tasks as the webadmins, you will need to assume that role. In order to assume the webadmins role, add the following to the `~/.aws/config` file. **When you want to reference a profile other then the default one you need to add the --profile parameter to the CLI command.**
 
 ```
 [profile webadmins]
-role_arn = arn:aws:iam::Account_ID_of_Other_Team:role/webadmins
-source_profile = Name_of_the_Credential_Profile
+role_arn = arn:aws:iam::ACCOUNT_ID_FROM_OTHER_TEAM:role/webadmins
+source_profile = default
 ```
 
 ??? info "Application architecture"
 	
 	![image1](./images/architecture.png)
+	
+	
+	****
+
+---
+
+!!! Attention
+	### As in the Build phase,keep in mind where you need to add the Account ID, correctly use pathing and change the region specified if needed (although if you are taking this as part of an AWS event, just use the already specified us-east-2.) Also you will need to use the --profile parameter for all of the commands in the following tasks.
 
 ## Task 1 <small>Create a policy</small>
 	
