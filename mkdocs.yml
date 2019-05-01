@@ -46,17 +46,22 @@ markdown_extensions:
 # Navigation
 nav:
   - Overview: 'index.md'
-  - 'Serverless Identity Round':
+  - 'Serverless Identity':
     - 'Scenario': 'serverless/index.md'
     - 'Task 1': 'serverless/task1.md'
     - 'Task 2': 'serverless/task2.md'
-  - 'Access Delegation Round':
+  - 'Access Delegation':
     - 'Scenario': 'delegation/index.md'
     - 'Build Phase': 'delegation/build.md'
     - 'Verify Phase': 'delegation/verify.md'
-  - 'Permission Boundary Round':
+  - 'Permissions Boundaries - Basic':
     - 'Scenario': 'permission-boundaries/index.md'
     - 'Build Phase': 'permission-boundaries/build.md'
     - 'Verify Phase': 'permission-boundaries/verify.md'
+  - 'Permissions Boundaries - Advanced':
+    - 'Scenario': 'permission-boundaries-advanced/index.md'
+    - 'Build Phase': 'permission-boundaries-advanced/build.md'
+    - 'Verify Phase': 'permission-boundaries-advanced/verify.md'
+
   - Contributing: 'contribute.md'
   - License: 'license.md'
