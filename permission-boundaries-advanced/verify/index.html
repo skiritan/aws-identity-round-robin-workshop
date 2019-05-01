@@ -942,11 +942,11 @@ Permission policy name: **webadminspermissionpolicy**
 </li>
 <li>Create the role (<strong>there is a key parameter missing from the command below. Check the <a href="https://docs.aws.amazon.com/cli/latest/reference/">AWS CLI documentation</a></strong>)<ul>
 <li><code>aws iam create-role --role-name NAME_OF_ROLE --path /webadmins/ --assume-role-policy-document file://verifytrustpolicy --profile webadmins</code>
-<!-- <code>aws iam create-role --role-name NAME_OF_ROLE --path /NAME_OF_PATH/ --assume-role-policy-document file://verifytrustpolicy --permissions-boundary arn:aws:iam::Account_ID:policy/webadminspermissionsboundary</code> --></li>
+<!-- <code>aws iam create-role --role-name NAME_OF_ROLE --path /NAME_OF_PATH/ --assume-role-policy-document file://verifytrustpolicy --permissions-boundary arn:aws:iam::ACCOUNT_ID_FROM_OTHER_TEAM:policy/webadminspermissionsboundary</code> --></li>
 </ul>
 </li>
 <li>Attach the policy you created in <strong>Task 1</strong> to the role:<ul>
-<li><code>aws iam attach-role-policy --policy-arn arn:aws:iam::&lt;Account_ID&gt;:policy/webadmins/NAME_OF_POLICY --role-name NAME_OF_ROLE --profile webadmins</code></li>
+<li><code>aws iam attach-role-policy --policy-arn arn:aws:iam::&lt;ACCOUNT_ID_FROM_OTHER_TEAM&gt;:policy/webadmins/NAME_OF_POLICY --role-name NAME_OF_ROLE --profile webadmins</code></li>
 </ul>
 </li>
 </ul>
@@ -980,7 +980,7 @@ Permission policy name: **webadminspermissionpolicy**
 
 <ul>
 <li>Create a Lambda function<ul>
-<li><code>aws lambda create-function --function-name verifyfunction --runtime nodejs8.10 --role arn:aws:iam::&lt;Account_ID&gt;:role/webadmins/NAME_OF_ROLE --handler index.handler --region us-east-2 --zip-file fileb://lambdafunction.zip --profile webadmins</code></li>
+<li><code>aws lambda create-function --function-name verifyfunction --runtime nodejs8.10 --role arn:aws:iam::&lt;ACCOUNT_ID_FROM_OTHER_TEAM&gt;:role/webadmins/NAME_OF_ROLE --handler index.handler --region us-east-2 --zip-file fileb://lambdafunction.zip --profile webadmins</code></li>
 </ul>
 </li>
 <li>Invoke the Lambda function and make sure it is generating logs in CloudWatch logs and that it is able to list the objects in the bucket.<ul>

@@ -686,8 +686,8 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#tasks-1-2-and-3-can-be-done-indepedently-if-you-are-working-in-a-team-and-want-to-divide-up-the-tasks" title="Tasks 1, 2 and 3 can be done indepedently if you are working in a team and want to divide up the tasks." class="md-nav__link">
-    Tasks 1, 2 and 3 can be done indepedently if you are working in a team and want to divide up the tasks.
+  <a href="#tasks-1-2-and-3-can-be-done-independently-if-you-are-working-in-a-team-and-want-to-divide-up-the-tasks" title="Tasks 1, 2 and 3 can be done independently if you are working in a team and want to divide up the tasks." class="md-nav__link">
+    Tasks 1, 2 and 3 can be done independently if you are working in a team and want to divide up the tasks.
   </a>
   
 </li>
@@ -860,8 +860,8 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#tasks-1-2-and-3-can-be-done-indepedently-if-you-are-working-in-a-team-and-want-to-divide-up-the-tasks" title="Tasks 1, 2 and 3 can be done indepedently if you are working in a team and want to divide up the tasks." class="md-nav__link">
-    Tasks 1, 2 and 3 can be done indepedently if you are working in a team and want to divide up the tasks.
+  <a href="#tasks-1-2-and-3-can-be-done-independently-if-you-are-working-in-a-team-and-want-to-divide-up-the-tasks" title="Tasks 1, 2 and 3 can be done independently if you are working in a team and want to divide up the tasks." class="md-nav__link">
+    Tasks 1, 2 and 3 can be done independently if you are working in a team and want to divide up the tasks.
   </a>
   
 </li>
@@ -949,7 +949,7 @@
 <details class="info"><summary>Click here if <em>AWS provided an account to you</em> (usually at an AWS event)</summary><h3 id="step-1-login-to-the-console-and-run-the-cloudformation-template">Step 1: Login to the console and run the CloudFormation template</h3>
 <p><strong>Console Login:</strong> Your team should have been given a piece of paper with a URL and credentials. This will allow you to login using AWS SSO. </p>
 <p>After you login click <strong>AWS Account</strong> box, then click on the Account ID displayed below that (the red box in the image.) You should see a link below that for <strong>Management console</strong>. Click on that and you will be taken the AWS console. Make sure the region is set to US East 2 (Ohio).</p>
-<p><strong> Click the <em>Deploy to AWS</em> button below to launch the CloudFormation stck. </strong></p>
+<p><strong> Click the <em>Deploy to AWS</em> button below to launch the CloudFormation stack. </strong></p>
 <table>
 <thead>
 <tr>
@@ -995,7 +995,7 @@
 <tbody>
 <tr>
 <td>US East 2 (Ohio)</td>
-<td><a href="https://console.aws.amazon.com/cloudformation/home?region=us-east-2#/stacks/new?stackName=Perm-Bound-Adv&templateURL=https://s3-us-west-2.amazonaws.com/sa-security-specialist-workshops-us-west-2/identity-workshop/permissionboundary/identity-workshop-web-admins-advanced.yaml" target="_blank"><img alt="Deploy in us-east-2" src="../images/deploy-to-aws.png" /></a></td>
+<td><a href="https://console.aws.amazon.com/cloudformation/home?region=us-east-2#/stacks/new?stackName=Perm-Bound-Adv&templateURL=https://s3-us-west-2.amazonaws.com/sa-security-specialist-workshops-us-west-2/identity-workshop/permissionboundary/identity-workshop-web-admins-advanced-solo.yaml" target="_blank"><img alt="Deploy in us-east-2" src="../images/deploy-to-aws.png" /></a></td>
 </tr>
 </tbody>
 </table>
@@ -1007,16 +1007,16 @@
 <li>Finally, acknowledge that the template will create IAM roles under <strong>Capabilities</strong> and click <strong>Create</strong>.</li>
 </ol>
 <p>This will bring you back to the CloudFormation console. You can refresh the page to see the stack starting to create. Before moving on, make sure the stack is in a <strong>CREATE_COMPLETE</strong>.</p>
-<p>Move on to <strong>Task 1</strong>.</p>
+<p>You will need to configure the <a href="https://aws.amazon.com/cli/" target="_blank"> AWS CLI </a> on your laptop or system of choice with credentials that allow at least IAM admin rights. Then move on to <strong>Task 1</strong>.</p>
 </details>
 <hr />
 <div class="admonition attention">
 <p class="admonition-title">Attention</p>
-<h3 id="throughout-the-workshop-keep-in-mind-where-you-need-to-add-the-account-id-replace-correctly-use-pathing-and-change-the-region-specified-if-needed-although-if-you-are-taking-this-as-part-of-an-aws-event-just-use-the-already-specified-us-east-2-missing-any-of-these-items-can-result-in-problems-and-errors-like-an-error-occurred-malformedpolicydocument-when-calling-the-createpolicy-operation-the-policy-failed-legacy-parsing">Throughout the workshop, keep in mind where you need to add the Account ID (replace <Account-Id>), correctly use pathing and change the region specified if needed (although if you are taking this as part of an AWS event, just use the already specified us-east-2.) Missing any of these items can result in problems and errors like <strong>"An error occurred (MalformedPolicyDocument) when calling the CreatePolicy operation: The policy failed legacy parsing"</strong>.</h3>
+<h3 id="throughout-the-workshop-keep-in-mind-where-you-need-to-add-the-account-id-replace-correctly-use-pathing-and-change-the-region-specified-if-needed-although-if-you-are-taking-this-as-part-of-an-aws-event-just-use-the-already-specified-us-east-2-missing-any-of-these-items-can-result-in-problems-and-errors-like-an-error-occurred-malformedpolicydocument-when-calling-the-createpolicy-operation-the-policy-failed-legacy-parsing">Throughout the workshop, keep in mind where you need to add the Account ID (replace <ACCOUNT_ID>), correctly use pathing and change the region specified if needed (although if you are taking this as part of an AWS event, just use the already specified us-east-2.) Missing any of these items can result in problems and errors like <strong>"An error occurred (MalformedPolicyDocument) when calling the CreatePolicy operation: The policy failed legacy parsing"</strong>.</h3>
 </div>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
-<h4 id="tasks-1-2-and-3-can-be-done-indepedently-if-you-are-working-in-a-team-and-want-to-divide-up-the-tasks">Tasks 1, 2 and 3 can be done indepedently if you are working in a team and want to divide up the tasks.</h4>
+<h4 id="tasks-1-2-and-3-can-be-done-independently-if-you-are-working-in-a-team-and-want-to-divide-up-the-tasks">Tasks 1, 2 and 3 can be done independently if you are working in a team and want to divide up the tasks.</h4>
 </div>
 <hr />
 <p>The three elements of a permissions boundary are represented below. When your team does the <strong>BUILD</strong> tasks in this section you will act as the admins. When your team does the <strong>VERIFY</strong> tasks in the next section you will act as the delegated admins (webadmins).  </p>
@@ -1025,8 +1025,8 @@
 <p>First you will create an IAM role for the webadmins (Initially this role will trust your own AWS account but in the <strong>Verify</strong> phase you will configure it to trust the other team's account):</p>
 <ul>
 <li>For many of the steps below you will need your account ID. To get that type in `aws sts get-caller-identity'. The account ID will be the first number listed after <strong>Account</strong>. You can do this from a second terminal window in Cloud9 so you can refer back to it later when needed.</li>
-<li>Use the following JSON to create a file named <code>trustpolicy1</code> for the trust (assume role) policy (you can use Nano or your preferred text editor): <ul>
-<li><code>{ "Version": "2012-10-17", "Statement": { "Effect": "Allow", "Principal": { "AWS": "arn:aws:iam::&lt;Account-Id&gt;:root"}, "Action": "sts:AssumeRole" } }</code></li>
+<li>Use the following JSON to create a file named <strong><code>trustpolicy1</code></strong> for the trust policy (you can use Nano or your preferred text editor): <ul>
+<li><code>{ "Version": "2012-10-17", "Statement": { "Effect": "Allow", "Principal": { "AWS": "arn:aws:iam::&lt;ACCOUNT_ID&gt;:root"}, "Action": "sts:AssumeRole" } }</code></li>
 </ul>
 </li>
 <li>Create the webadmin role:<ul>
@@ -1034,14 +1034,14 @@
 </ul>
 </li>
 <li>Add the Lambda Read Only policy to the role<ul>
-<li><code>aws iam attach-role-policy --policy-arn arn:aws:iam::aws:policy/AWSLambdaReadOnlyAccess  --role-name webadmins</code></li>
+<li><code>aws iam attach-role-policy --policy-arn arn:aws:iam::&lt;ACCOUNT_ID&gt;:policy/AWSLambdaReadOnlyAccess  --role-name webadmins</code></li>
 </ul>
 </li>
 </ul>
 <h2 id="task-2-create-the-permissions-boundary-for-the-webadmins">Task 2 <small>Create the permissions boundary for the webadmins</small></h2>
 <p>Next you will create the policy that will be used as the permissions boundary.  The permissions boundary should only allow the following actions: Create log groups, create log streams, put logs and list the files in the webadmins folder of the bucket that starts with <code>"shared-logging-"</code> and ends in <code>"-data"</code>:</p>
 <ul>
-<li>Use the following JSON to create a file named boundarydoc for the policy document:</li>
+<li>Use the following JSON to create a file named <strong><code>boundarydoc</code></strong> for the policy:</li>
 </ul>
 <div class="codehilite"><pre><span></span><span class="p">{</span>
     <span class="nt">&quot;Version&quot;</span><span class="p">:</span> <span class="s2">&quot;2012-10-17&quot;</span><span class="p">,</span>
@@ -1050,7 +1050,7 @@
             <span class="nt">&quot;Sid&quot;</span><span class="p">:</span> <span class="s2">&quot;CreateLogGroup&quot;</span><span class="p">,</span>
             <span class="nt">&quot;Effect&quot;</span><span class="p">:</span> <span class="s2">&quot;Allow&quot;</span><span class="p">,</span>
             <span class="nt">&quot;Action&quot;</span><span class="p">:</span> <span class="s2">&quot;logs:CreateLogGroup&quot;</span><span class="p">,</span>
-            <span class="nt">&quot;Resource&quot;</span><span class="p">:</span> <span class="s2">&quot;arn:aws:logs:us-east-2:&lt;Account-Id&gt;:*&quot;</span>
+            <span class="nt">&quot;Resource&quot;</span><span class="p">:</span> <span class="s2">&quot;arn:aws:logs:us-east-2:&lt;ACCOUNT_ID&gt;:*&quot;</span>
         <span class="p">},</span>
         <span class="p">{</span>
             <span class="nt">&quot;Sid&quot;</span><span class="p">:</span> <span class="s2">&quot;CreateLogStreamandEvents&quot;</span><span class="p">,</span>
@@ -1059,7 +1059,7 @@
                 <span class="s2">&quot;logs:CreateLogStream&quot;</span><span class="p">,</span>
                 <span class="s2">&quot;logs:PutLogEvents&quot;</span>
             <span class="p">],</span>
-            <span class="nt">&quot;Resource&quot;</span><span class="p">:</span> <span class="s2">&quot;arn:aws:logs:us-east-2:&lt;Account-Id&gt;:log-group:/aws/lambda/*:*&quot;</span>
+            <span class="nt">&quot;Resource&quot;</span><span class="p">:</span> <span class="s2">&quot;arn:aws:logs:us-east-2:&lt;ACCOUNT_ID&gt;:log-group:/aws/lambda/*:*&quot;</span>
         <span class="p">},</span>
         <span class="p">{</span>
             <span class="nt">&quot;Sid&quot;</span><span class="p">:</span> <span class="s2">&quot;AllowedS3GetObject&quot;</span><span class="p">,</span>
@@ -1067,7 +1067,7 @@
             <span class="nt">&quot;Action&quot;</span><span class="p">:</span> <span class="p">[</span>
                 <span class="s2">&quot;s3:List*&quot;</span>
             <span class="p">],</span>
-            <span class="nt">&quot;Resource&quot;</span><span class="p">:</span> <span class="s2">&quot;arn:aws:s3:::shared-logging-&lt;Account-Id&gt;-us-east-2-data&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;Resource&quot;</span><span class="p">:</span> <span class="s2">&quot;arn:aws:s3:::shared-logging-&lt;ACCOUNT_ID&gt;-us-east-2-data&quot;</span><span class="p">,</span>
              <span class="nt">&quot;Condition&quot;</span><span class="p">:</span> <span class="p">{</span>
                 <span class="nt">&quot;StringEquals&quot;</span><span class="p">:</span> <span class="p">{</span>
                     <span class="nt">&quot;s3:prefix&quot;</span><span class="p">:</span> <span class="s2">&quot;webadmins&quot;</span>
@@ -1096,11 +1096,11 @@
 <h2 id="task-3-create-the-permission-policy-for-the-webadmins">Task 3 <small>Create the permission policy for the webadmins</small></h2>
 <div class="admonition hint">
 <p class="admonition-title">Hint</p>
-<p><strong>IMPORTANT!!!!</strong> - The question marks <strong><code>????</code></strong> in the policy below should be replaced with something that could act as part of a resource restriction.  The end result is that you will have a pathing requirement for the roles and policies. Replacing the <strong><code>????</code></strong> is one of the key challenges in this workshop and probably the most confusing part. Talk to a faciliator if you have issues with this. </p>
+<p><strong>IMPORTANT!!!!</strong> - The question marks <strong><code>????</code></strong> in the policy below should be replaced with something that could act as part of a resource restriction.  The end result is that you will have a pathing requirement for the roles and policies. Replacing the <strong><code>????</code></strong> is one of the key challenges in this workshop and probably the most confusing part. Talk to a facilitator if you have issues with this. </p>
 </div>
 <p>Next you will create the policy that will be attached to the webadmins role.</p>
 <ul>
-<li>Use the following JSON to create a file named policydoc for the policy document:</li>
+<li>Use the following JSON to create a file named <strong><code>policydoc</code></strong> for the policy document:</li>
 </ul>
 <div class="codehilite"><pre><span></span><span class="p">{</span>
     <span class="nt">&quot;Version&quot;</span><span class="p">:</span> <span class="s2">&quot;2012-10-17&quot;</span><span class="p">,</span>
@@ -1115,7 +1115,7 @@
                 <span class="s2">&quot;iam:DeletePolicyVersion&quot;</span><span class="p">,</span>
                 <span class="s2">&quot;iam:SetDefaultPolicyVersion&quot;</span>
             <span class="p">],</span>
-            <span class="nt">&quot;Resource&quot;</span><span class="p">:</span> <span class="s2">&quot;arn:aws:iam::&lt;Account-Id&gt;:policy/webadmins/????&quot;</span>
+            <span class="nt">&quot;Resource&quot;</span><span class="p">:</span> <span class="s2">&quot;arn:aws:iam::&lt;ACCOUNT_ID&gt;:policy/webadmins/????&quot;</span>
         <span class="p">},</span>
         <span class="p">{</span>
               <span class="nt">&quot;Sid&quot;</span><span class="p">:</span> <span class="s2">&quot;RoleandPolicyActionswithnoPermissionBoundarySupport&quot;</span><span class="p">,</span>
@@ -1125,7 +1125,7 @@
                     <span class="s2">&quot;iam:DeleteRole&quot;</span>
             <span class="p">],</span>
             <span class="nt">&quot;Resource&quot;</span><span class="p">:</span> <span class="p">[</span>
-                <span class="s2">&quot;arn:aws:iam::&lt;Account-Id&gt;:role/webadmins/????&quot;</span>
+                <span class="s2">&quot;arn:aws:iam::&lt;ACCOUNT_ID&gt;:role/webadmins/????&quot;</span>
             <span class="p">]</span>
         <span class="p">},</span>
         <span class="p">{</span>
@@ -1137,23 +1137,23 @@
                 <span class="s2">&quot;iam:DetachRolePolicy&quot;</span>
             <span class="p">],</span>
             <span class="nt">&quot;Resource&quot;</span><span class="p">:</span> <span class="p">[</span>
-                <span class="s2">&quot;arn:aws:iam::&lt;Account-Id&gt;:role/webadmins/????&quot;</span>
+                <span class="s2">&quot;arn:aws:iam::&lt;ACCOUNT_ID&gt;:role/webadmins/????&quot;</span>
             <span class="p">],</span>
             <span class="nt">&quot;Condition&quot;</span><span class="p">:</span> <span class="p">{</span><span class="nt">&quot;StringEquals&quot;</span><span class="p">:</span> 
-                <span class="p">{</span><span class="nt">&quot;iam:PermissionsBoundary&quot;</span><span class="p">:</span> <span class="s2">&quot;arn:aws:iam::&lt;Account-Id&gt;:policy/webadminspermissionsboundary&quot;</span><span class="p">}</span>
+                <span class="p">{</span><span class="nt">&quot;iam:PermissionsBoundary&quot;</span><span class="p">:</span> <span class="s2">&quot;arn:aws:iam::&lt;ACCOUNT_ID&gt;:policy/webadminspermissionsboundary&quot;</span><span class="p">}</span>
             <span class="p">}</span>
         <span class="p">},</span>
         <span class="p">{</span>
             <span class="nt">&quot;Sid&quot;</span><span class="p">:</span> <span class="s2">&quot;LambdaFullAccess&quot;</span><span class="p">,</span>
             <span class="nt">&quot;Effect&quot;</span><span class="p">:</span> <span class="s2">&quot;Allow&quot;</span><span class="p">,</span>
             <span class="nt">&quot;Action&quot;</span><span class="p">:</span> <span class="s2">&quot;lambda:*&quot;</span><span class="p">,</span>
-            <span class="nt">&quot;Resource&quot;</span><span class="p">:</span> <span class="s2">&quot;arn:aws:lambda:us-east-2:&lt;Account-Id&gt;:function:*&quot;</span>
+            <span class="nt">&quot;Resource&quot;</span><span class="p">:</span> <span class="s2">&quot;arn:aws:lambda:us-east-2:&lt;ACCOUNT_ID&gt;:function:*&quot;</span>
         <span class="p">},</span>
         <span class="p">{</span>
             <span class="nt">&quot;Sid&quot;</span><span class="p">:</span> <span class="s2">&quot;PassRoletoLambda&quot;</span><span class="p">,</span>
             <span class="nt">&quot;Effect&quot;</span><span class="p">:</span> <span class="s2">&quot;Allow&quot;</span><span class="p">,</span>
             <span class="nt">&quot;Action&quot;</span><span class="p">:</span> <span class="s2">&quot;iam:PassRole&quot;</span><span class="p">,</span>
-            <span class="nt">&quot;Resource&quot;</span><span class="p">:</span> <span class="s2">&quot;arn:aws:iam::&lt;Account-Id&gt;:role/webadmins/????&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;Resource&quot;</span><span class="p">:</span> <span class="s2">&quot;arn:aws:iam::&lt;ACCOUNT_ID&gt;:role/webadmins/????&quot;</span><span class="p">,</span>
             <span class="nt">&quot;Condition&quot;</span><span class="p">:</span> <span class="p">{</span>
                 <span class="nt">&quot;StringLikeIfExists&quot;</span><span class="p">:</span> <span class="p">{</span>
                     <span class="nt">&quot;iam:PassedToService&quot;</span><span class="p">:</span> <span class="s2">&quot;lambda.amazonaws.com&quot;</span>
@@ -1176,8 +1176,8 @@
                 <span class="s2">&quot;iam:SetDefaultPolicyVersion&quot;</span>
             <span class="p">],</span>
             <span class="nt">&quot;Resource&quot;</span><span class="p">:</span> <span class="p">[</span>
-                <span class="s2">&quot;arn:aws:iam::&lt;Account-Id&gt;:policy/webadminspermissionsboundary&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;arn:aws:iam::&lt;Account-Id&gt;:policy/webadminspermissionpolicy&quot;</span>
+                <span class="s2">&quot;arn:aws:iam::&lt;ACCOUNT_ID&gt;:policy/webadminspermissionsboundary&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;arn:aws:iam::&lt;ACCOUNT_ID&gt;:policy/webadminspermissionpolicy&quot;</span>
             <span class="p">]</span>
         <span class="p">},</span>
         <span class="p">{</span>
@@ -1197,10 +1197,10 @@
 </ul>
 </li>
 <li>Attach the policy to the webadmins role<ul>
-<li><code>aws iam attach-role-policy --role-name webadmins --policy-arn arn:aws:iam::&lt;Account-Id&gt;:policy/webadminspermissionpolicy</code></li>
+<li><code>aws iam attach-role-policy --role-name webadmins --policy-arn arn:aws:iam::&lt;ACCOUNT_ID&gt;:policy/webadminspermissionpolicy</code></li>
 </ul>
 </li>
-<li>When you are done the <strong>webadmins</strong> role should have these two policies attached: webadminspermissionpolicy &amp; AWSLambdaReadOnlyAccess.</li>
+<li>When you are done the <strong>webadmins</strong> role should have these two policies attached: <strong>webadminspermissionpolicy</strong> &amp; <strong>AWSLambdaReadOnlyAccess</strong>.</li>
 </ul>
 <div class="admonition question">
 <p class="admonition-title">Question</p>
@@ -1224,7 +1224,7 @@
 </ul>
 <p>Exchange forms with another team and then update the trust policy of the webadmins roles so the other team can assume the role (they will do the same for your team):</p>
 <ul>
-<li>Use the following JSON to create a file name trustpolicy2 for the trust (assume role) policy (replace <code>&lt;YOUR_ACCOUNT_ID&gt;</code> with your Account ID so you can still test this and the <code>&lt;ACCOUNT_ID_OTHER_TEAM&gt;</code> with the other team's Account ID:) <ul>
+<li>Use the following JSON to create a file name trustpolicy2 for the trust (assume role) policy (replace <code>&lt;YOUR_ACCOUNT_ID&gt;</code> with your Account ID so you can still test this and the <code>&lt;ACCOUNT_ID_FROM_OTHER_TEAM&gt;</code> with the other team's Account ID:) <ul>
 <li><code>{"Version":"2012-10-17","Statement":[{"Effect":"Allow","Principal":{"AWS":["arn:aws:iam::&lt;YOUR_ACCOUNT_ID&gt;:root","arn:aws:iam::&lt;ACCOUNT_ID_FROM_OTHER_TEAM&gt;:root"]},"Action":"sts:AssumeRole"}]}</code></li>
 </ul>
 </li>
