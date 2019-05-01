@@ -137,10 +137,23 @@ If you see files marked that **webadmins/you-should-SEE-this-file--webadmins...*
 ## Task 3 <small>Cleanup</small>
 
 To cleanup you need to delete the CloudFormation stack named `Perm-Bound-Adv`. This will also remove the Cloud9 environment.  Run the following command to delete your stack:
+
+**Delete the webadmins role**:
+```
+aws iam delete-role --role-name webadmins
+```
+**Delete the permission policy**:
+```
+aws iam delete-policy --policy-arn arn:aws:iam::<ACCOUNT_ID>:policy/webadminspermissionpolicy
+```
+**Delete the permission boundary**:
+```
+aws iam delete-policy --policy-arn arn:aws:iam::<ACCOUNT_ID>:policy/webadminspermissionsboundary
+```
+**Delete the Cloudformation stack**:
 ```
 aws cloudformation delete-stack --stack-name Perm-Bound-Adv
 ```
-
 <!-- 
 * Navigate to the <a href="https://us-east-2.console.aws.amazon.com/cloudformation/home?region=us-east-2#/stacks?filter=active" target="_blank">AWS CloudFormation</a> console.
 * Click the box next to the `Perm-Bound-Adv` stack.
