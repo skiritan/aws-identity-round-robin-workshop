@@ -55,9 +55,9 @@ source_profile = default
 	* `{ "Version": "2012-10-17", "Statement": { "Effect": "Allow", "Principal": { "Service": "lambda.amazonaws.com"}, "Action": "sts:AssumeRole" } }`
 * Create the role (**there is a key parameter missing from the command below. Check the [AWS CLI documentation](https://docs.aws.amazon.com/cli/latest/reference/)**)
 	* `aws iam create-role --role-name NAME_OF_ROLE --path /webadmins/ --assume-role-policy-document file://verifytrustpolicy --profile webadmins`
-<!-- `aws iam create-role --role-name NAME_OF_ROLE --path /NAME_OF_PATH/ --assume-role-policy-document file://verifytrustpolicy --permissions-boundary arn:aws:iam::Account_ID:policy/webadminspermissionsboundary` -->
+<!-- `aws iam create-role --role-name NAME_OF_ROLE --path /NAME_OF_PATH/ --assume-role-policy-document file://verifytrustpolicy --permissions-boundary arn:aws:iam::ACCOUNT_ID_FROM_OTHER_TEAM:policy/webadminspermissionsboundary` -->
 * Attach the policy you created in **Task 1** to the role:
-	* `aws iam attach-role-policy --policy-arn arn:aws:iam::<Account_ID>:policy/webadmins/NAME_OF_POLICY --role-name NAME_OF_ROLE --profile webadmins`
+	* `aws iam attach-role-policy --policy-arn arn:aws:iam::<ACCOUNT_ID_FROM_OTHER_TEAM>:policy/webadmins/NAME_OF_POLICY --role-name NAME_OF_ROLE --profile webadmins`
 		
 ## Task 3 <small>Create and test a Lambda function</small>
 
@@ -88,7 +88,7 @@ async function getKeys(params, keys){
 }
 ```
 * Create a Lambda function
-	* `aws lambda create-function --function-name verifyfunction --runtime nodejs8.10 --role arn:aws:iam::<Account_ID>:role/webadmins/NAME_OF_ROLE --handler index.handler --region us-east-2 --zip-file fileb://lambdafunction.zip --profile webadmins`
+	* `aws lambda create-function --function-name verifyfunction --runtime nodejs8.10 --role arn:aws:iam::<ACCOUNT_ID_FROM_OTHER_TEAM>:role/webadmins/NAME_OF_ROLE --handler index.handler --region us-east-2 --zip-file fileb://lambdafunction.zip --profile webadmins`
 * Invoke the Lambda function and make sure it is generating logs in CloudWatch logs and that it is able to list the objects in the bucket.
 	* `aws lambda invoke --function-name verifyfunction --region us-east-2 --invocation-type RequestResponse outputfile.txt --profile webadmins`
 * Examine the output file. It should show a number of log files in the S3 bucket that the Lambda function read. 

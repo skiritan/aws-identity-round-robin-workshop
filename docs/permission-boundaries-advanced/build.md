@@ -12,7 +12,7 @@
 
 	After you login click **AWS Account** box, then click on the Account ID displayed below that (the red box in the image.) You should see a link below that for **Management console**. Click on that and you will be taken the AWS console. Make sure the region is set to US East 2 (Ohio).
 
-	** Click the *Deploy to AWS* button below to launch the CloudFormation stck. **
+	** Click the *Deploy to AWS* button below to launch the CloudFormation stack. **
 	
 	Region| Deploy
 	------|-----
@@ -43,7 +43,7 @@
 
 	Region| Deploy
 	------|-----
-	US East 2 (Ohio) | <a href="https://console.aws.amazon.com/cloudformation/home?region=us-east-2#/stacks/new?stackName=Perm-Bound-Adv&templateURL=https://s3-us-west-2.amazonaws.com/sa-security-specialist-workshops-us-west-2/identity-workshop/permissionboundary/identity-workshop-web-admins-advanced.yaml" target="_blank">![Deploy in us-east-2](./images/deploy-to-aws.png)</a>
+	US East 2 (Ohio) | <a href="https://console.aws.amazon.com/cloudformation/home?region=us-east-2#/stacks/new?stackName=Perm-Bound-Adv&templateURL=https://s3-us-west-2.amazonaws.com/sa-security-specialist-workshops-us-west-2/identity-workshop/permissionboundary/identity-workshop-web-admins-advanced-solo.yaml" target="_blank">![Deploy in us-east-2](./images/deploy-to-aws.png)</a>
 
 	1. Click the **Deploy to AWS** button above.  This will automatically take you to the console to run the template.  
 	2. Click **Next** on the **Select Template** section.
@@ -53,15 +53,15 @@
 
 	This will bring you back to the CloudFormation console. You can refresh the page to see the stack starting to create. Before moving on, make sure the stack is in a **CREATE_COMPLETE**.
 
-	Move on to **Task 1**.
+	You will need to configure the <a href="https://aws.amazon.com/cli/" target="_blank"> AWS CLI </a> on your laptop or system of choice with credentials that allow at least IAM admin rights. Then move on to **Task 1**.
 
 ---
 
 !!! Attention
-	### Throughout the workshop, keep in mind where you need to add the Account ID (replace <Account-Id>), correctly use pathing and change the region specified if needed (although if you are taking this as part of an AWS event, just use the already specified us-east-2.) Missing any of these items can result in problems and errors like **"An error occurred (MalformedPolicyDocument) when calling the CreatePolicy operation: The policy failed legacy parsing"**.
+	### Throughout the workshop, keep in mind where you need to add the Account ID (replace <ACCOUNT_ID>), correctly use pathing and change the region specified if needed (although if you are taking this as part of an AWS event, just use the already specified us-east-2.) Missing any of these items can result in problems and errors like **"An error occurred (MalformedPolicyDocument) when calling the CreatePolicy operation: The policy failed legacy parsing"**.
 
 !!! Tip
-	#### Tasks 1, 2 and 3 can be done indepedently if you are working in a team and want to divide up the tasks.
+	#### Tasks 1, 2 and 3 can be done independently if you are working in a team and want to divide up the tasks.
 
 ---
 	
@@ -74,19 +74,19 @@ The three elements of a permissions boundary are represented below. When your te
 First you will create an IAM role for the webadmins (Initially this role will trust your own AWS account but in the **Verify** phase you will configure it to trust the other team's account):
 
 * For many of the steps below you will need your account ID. To get that type in `aws sts get-caller-identity'. The account ID will be the first number listed after **Account**. You can do this from a second terminal window in Cloud9 so you can refer back to it later when needed.
-* Use the following JSON to create a file named `trustpolicy1` for the trust (assume role) policy (you can use Nano or your preferred text editor): 
-	* `{ "Version": "2012-10-17", "Statement": { "Effect": "Allow", "Principal": { "AWS": "arn:aws:iam::<Account-Id>:root"}, "Action": "sts:AssumeRole" } }`
+* Use the following JSON to create a file named **`trustpolicy1`** for the trust policy (you can use Nano or your preferred text editor): 
+	* `{ "Version": "2012-10-17", "Statement": { "Effect": "Allow", "Principal": { "AWS": "arn:aws:iam::<ACCOUNT_ID>:root"}, "Action": "sts:AssumeRole" } }`
 * Create the webadmin role:
 	* `aws iam create-role --role-name webadmins --assume-role-policy-document file://trustpolicy1`
 * Add the Lambda Read Only policy to the role
-	* `aws iam attach-role-policy --policy-arn arn:aws:iam::aws:policy/AWSLambdaReadOnlyAccess  --role-name webadmins`
+	* `aws iam attach-role-policy --policy-arn arn:aws:iam::<ACCOUNT_ID>:policy/AWSLambdaReadOnlyAccess  --role-name webadmins`
 
 
 ## Task 2 <small>Create the permissions boundary for the webadmins</small>
 
 Next you will create the policy that will be used as the permissions boundary.  The permissions boundary should only allow the following actions: Create log groups, create log streams, put logs and list the files in the webadmins folder of the bucket that starts with `"shared-logging-"` and ends in `"-data"`:
 
-* Use the following JSON to create a file named boundarydoc for the policy document:
+* Use the following JSON to create a file named **`boundarydoc`** for the policy:
 	
 ``` json
 {
@@ -96,7 +96,7 @@ Next you will create the policy that will be used as the permissions boundary.  
             "Sid": "CreateLogGroup",
             "Effect": "Allow",
             "Action": "logs:CreateLogGroup",
-            "Resource": "arn:aws:logs:us-east-2:<Account-Id>:*"
+            "Resource": "arn:aws:logs:us-east-2:<ACCOUNT_ID>:*"
         },
         {
             "Sid": "CreateLogStreamandEvents",
@@ -105,7 +105,7 @@ Next you will create the policy that will be used as the permissions boundary.  
                 "logs:CreateLogStream",
                 "logs:PutLogEvents"
             ],
-            "Resource": "arn:aws:logs:us-east-2:<Account-Id>:log-group:/aws/lambda/*:*"
+            "Resource": "arn:aws:logs:us-east-2:<ACCOUNT_ID>:log-group:/aws/lambda/*:*"
         },
         {
             "Sid": "AllowedS3GetObject",
@@ -113,7 +113,7 @@ Next you will create the policy that will be used as the permissions boundary.  
             "Action": [
                 "s3:List*"
             ],
-            "Resource": "arn:aws:s3:::shared-logging-<Account-Id>-us-east-2-data",
+            "Resource": "arn:aws:s3:::shared-logging-<ACCOUNT_ID>-us-east-2-data",
              "Condition": {
                 "StringEquals": {
                     "s3:prefix": "webadmins"
@@ -134,11 +134,11 @@ Next you will create the policy that will be used as the permissions boundary.  
 ## Task 3 <small>Create the permission policy for the webadmins</small>
 
 !!! hint 
-	**IMPORTANT!!!!** - The question marks **`????`** in the policy below should be replaced with something that could act as part of a resource restriction.  The end result is that you will have a pathing requirement for the roles and policies. Replacing the **`????`** is one of the key challenges in this workshop and probably the most confusing part. Talk to a faciliator if you have issues with this. 
+	**IMPORTANT!!!!** - The question marks **`????`** in the policy below should be replaced with something that could act as part of a resource restriction.  The end result is that you will have a pathing requirement for the roles and policies. Replacing the **`????`** is one of the key challenges in this workshop and probably the most confusing part. Talk to a facilitator if you have issues with this. 
 
 Next you will create the policy that will be attached to the webadmins role.
 
-* Use the following JSON to create a file named policydoc for the policy document:
+* Use the following JSON to create a file named **`policydoc`** for the policy document:
 
 ``` json
 {
@@ -154,7 +154,7 @@ Next you will create the policy that will be attached to the webadmins role.
                 "iam:DeletePolicyVersion",
                 "iam:SetDefaultPolicyVersion"
             ],
-            "Resource": "arn:aws:iam::<Account-Id>:policy/webadmins/????"
+            "Resource": "arn:aws:iam::<ACCOUNT_ID>:policy/webadmins/????"
         },
         {
         	  "Sid": "RoleandPolicyActionswithnoPermissionBoundarySupport",
@@ -164,7 +164,7 @@ Next you will create the policy that will be attached to the webadmins role.
                 	"iam:DeleteRole"
             ],
             "Resource": [
-                "arn:aws:iam::<Account-Id>:role/webadmins/????"
+                "arn:aws:iam::<ACCOUNT_ID>:role/webadmins/????"
             ]
         },
         {
@@ -176,23 +176,23 @@ Next you will create the policy that will be attached to the webadmins role.
                 "iam:DetachRolePolicy"
             ],
             "Resource": [
-                "arn:aws:iam::<Account-Id>:role/webadmins/????"
+                "arn:aws:iam::<ACCOUNT_ID>:role/webadmins/????"
             ],
             "Condition": {"StringEquals": 
-                {"iam:PermissionsBoundary": "arn:aws:iam::<Account-Id>:policy/webadminspermissionsboundary"}
+                {"iam:PermissionsBoundary": "arn:aws:iam::<ACCOUNT_ID>:policy/webadminspermissionsboundary"}
             }
         },
         {
             "Sid": "LambdaFullAccess",
             "Effect": "Allow",
             "Action": "lambda:*",
-            "Resource": "arn:aws:lambda:us-east-2:<Account-Id>:function:*"
+            "Resource": "arn:aws:lambda:us-east-2:<ACCOUNT_ID>:function:*"
         },
         {
             "Sid": "PassRoletoLambda",
             "Effect": "Allow",
             "Action": "iam:PassRole",
-            "Resource": "arn:aws:iam::<Account-Id>:role/webadmins/????",
+            "Resource": "arn:aws:iam::<ACCOUNT_ID>:role/webadmins/????",
             "Condition": {
                 "StringLikeIfExists": {
                     "iam:PassedToService": "lambda.amazonaws.com"
@@ -215,8 +215,8 @@ Next you will create the policy that will be attached to the webadmins role.
                 "iam:SetDefaultPolicyVersion"
             ],
             "Resource": [
-                "arn:aws:iam::<Account-Id>:policy/webadminspermissionsboundary",
-                "arn:aws:iam::<Account-Id>:policy/webadminspermissionpolicy"
+                "arn:aws:iam::<ACCOUNT_ID>:policy/webadminspermissionsboundary",
+                "arn:aws:iam::<ACCOUNT_ID>:policy/webadminspermissionpolicy"
             ]
         },
         {
@@ -232,8 +232,8 @@ Next you will create the policy that will be attached to the webadmins role.
 * Create the policy named `webadminspermissionpolicy`:
 	* `aws iam create-policy --policy-name webadminspermissionpolicy --policy-document file://policydoc`
 * Attach the policy to the webadmins role
-	* `aws iam attach-role-policy --role-name webadmins --policy-arn arn:aws:iam::<Account-Id>:policy/webadminspermissionpolicy`
-* When you are done the **webadmins** role should have these two policies attached: webadminspermissionpolicy & AWSLambdaReadOnlyAccess.
+	* `aws iam attach-role-policy --role-name webadmins --policy-arn arn:aws:iam::<ACCOUNT_ID>:policy/webadminspermissionpolicy`
+* When you are done the **webadmins** role should have these two policies attached: **webadminspermissionpolicy** & **AWSLambdaReadOnlyAccess**.
 
 !!! question
 
@@ -260,7 +260,7 @@ If you were given a form to fill out then enter the info and hand it to another 
 
 Exchange forms with another team and then update the trust policy of the webadmins roles so the other team can assume the role (they will do the same for your team):
 
-* Use the following JSON to create a file name trustpolicy2 for the trust (assume role) policy (replace `<YOUR_ACCOUNT_ID>` with your Account ID so you can still test this and the `<ACCOUNT_ID_OTHER_TEAM>` with the other team's Account ID:) 
+* Use the following JSON to create a file name trustpolicy2 for the trust (assume role) policy (replace `<YOUR_ACCOUNT_ID>` with your Account ID so you can still test this and the `<ACCOUNT_ID_FROM_OTHER_TEAM>` with the other team's Account ID:) 
 	* `{"Version":"2012-10-17","Statement":[{"Effect":"Allow","Principal":{"AWS":["arn:aws:iam::<YOUR_ACCOUNT_ID>:root","arn:aws:iam::<ACCOUNT_ID_FROM_OTHER_TEAM>:root"]},"Action":"sts:AssumeRole"}]}`
 * Update the trust policy on the webadmins roles so both your team  and the verify team can assume the role
 	* `aws iam update-assume-role-policy --role-name webadmins --policy-document file://trustpolicy2`
