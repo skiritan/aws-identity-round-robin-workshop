@@ -28,11 +28,11 @@
 	
 	1. Navigate to the <a href="https://us-east-2.console.aws.amazon.com/cloud9/home" target="_blank">AWS Cloud9</a> console.
 	2. Click on **Open IDE** in the `workshop-environment` under **Your environments**
-	3. Click the gear icon in the upper right hand corner to open the Cloud9 **Preferences**. Scroll down to **AWS SETTINGS** and click the button next to **AWS Managed Temporary Credentials** to disable this.
+	3. Click the gear icon in the upper right hand corner to open the Cloud9 **Preferences**. Click to open the **AWS SETTINGS** section and click the button next to **AWS Managed Temporary Credentials** to disable this.
 	4. Now go back to the AWS SSO tab (this should be the first tab you opened for the workshop). Click the **command line or programmatic access**. Click the section under **Option 2** to copy the credentials.
-	4. Go back to the Cloud9 environment. Type `aws configure` hit enter. Hit enter until you get to the choice **Default region name** and type in `us-east-2`
-	5. Then create a file in the `~/.aws` directory named `credentials` and paste in the credentials you copied from the SSO login page. Rename the profile to `default` (it will be named something similar to **Account_ID_AdministratorAccess**)
-	4. Now when you run commands from within the Cloud9 IDE the temporary credentials from AWS SSO will be used. 
+	4. Go back to the Cloud9 environment. Type `aws configure` hit enter. Hit enter until you get to the choice **Default region name** and type in `us-east-2`. Hit enter and then enter again to leave this menu.
+	5. Then create a file in the `~/.aws` directory named `credentials` and paste in the credentials you copied from the SSO login page. Rename the profile to `default` (it will be named something similar to **Account_ID_AdministratorAccess** when you first paste it in)
+	4. Now you can run commands from within the Cloud9 IDE using the temporary credentials from AWS SSO. 
 	4. Move on to **Task 1**.
 
 ??? info "Click here if you are *using your own AWS account* (whether you are at an AWS event, a separate event or online on your own)"
@@ -73,7 +73,7 @@ The three elements of a permissions boundary are represented below. When your te
 
 First you will create an IAM role for the webadmins (Initially this role will trust your own AWS account but in the **Verify** phase you will configure it to trust the other team's account):
 
-* For many of the steps below you will need your account ID. To get that type in `aws sts get-caller-identity'. The account ID will be the first number listed after **Account**.
+* For many of the steps below you will need your account ID. To get that type in `aws sts get-caller-identity'. The account ID will be the first number listed after **Account**. You can do this from a second terminal window in Cloud9 so you can refer back to it later when needed.
 * Use the following JSON to create a file name trustpolicy1 for the trust (assume role) policy (you can use Nano or your preferred text editor): 
 	* `{ "Version": "2012-10-17", "Statement": { "Effect": "Allow", "Principal": { "AWS": "arn:aws:iam::Account_ID:root"}, "Action": "sts:AssumeRole" } }`
 * Create the webadmin role:
@@ -244,7 +244,7 @@ Next you will create the policy that will be attached to the webadmins role.
 	
 ## Task 4 <small>Test the webadmins permissions</small>
 	
-It's time to check your work and make sure the webadmins are set up properly. The instructions for doing so are in the **[VERIFY phase](./verify.md)** phase. Go to that phase to check your work before handing this off to another team. 
+It's time to check your work and make sure the webadmins are set up properly. The instructions for doing so are in the **[VERIFY phase](./verify.md)**. 
 
 ## Task 5 <small>Gather info needed for the **VERIFY** phase</small>
 
@@ -258,7 +258,7 @@ If you were given a form to fill out then enter the info and hand it to another 
 * Permission policy name: **webadminspermissionpolicy**
 
 
-Exchange forms with another team and then update the trust policy of the webadmins roles so the other team can assume the role:
+Exchange forms with another team and then update the trust policy of the webadmins roles so the other team can assume the role (they will do the same for your team):
 
 * Use the following JSON to create a file name trustpolicy2 for the trust (assume role) policy (replace `ACCOUNT_ID` with your account ID so you can still test this and the `ACCOUNT_ID_OTHER_TEAM` with the other team's account ID:) 
 	* `{"Version":"2012-10-17","Statement":[{"Effect":"Allow","Principal":{"AWS":["arn:aws:iam::YOUR_ACCOUNT_ID:root","arn:aws:iam::ACCOUNT_ID_FROM_OTHER_TEAM:root"]},"Action":"sts:AssumeRole"}]}`
