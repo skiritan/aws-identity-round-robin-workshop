@@ -1,12 +1,14 @@
-# Permissions boundaries workshop - Advanced - <small> Build phase </small>
+# Permissions boundaries workshop <small> Build phase </small>
 
 ## Setup Instructions
 
-### To setup your environment **expand one of the following drop-downs**:
+To setup your environment expand **ONE** of the following drop-downs:
 
 ??? info "Click here if *AWS provided an account to you* (usually at an AWS event)"
 
-	### Step 1: Login to the console and run the CloudFormation template
+	<p style="font-size:20px;">
+      **Step 1**: Login to the console and run the CloudFormation template
+    </p>
 	
 	**Console Login:** Your team should have been given a piece of paper with a URL and credentials. This will allow you to login using AWS SSO. 
 
@@ -24,11 +26,13 @@
 	4. Finally, acknowledge that the template will create IAM roles under **Capabilities** and click **Create**.
 	5. This will bring you back to the CloudFormation console. You can refresh the page to see the stack starting to create. Before moving on, make sure the stack shows **CREATE_COMPLETE**.
 	
-	### Step 2 : Connect to the AWS Cloud9 IDE
+    <p style="font-size:20px;">
+      **Step 2** : Connect to the AWS Cloud9 IDE
+    </p>
 	
 	1. Navigate to the <a href="https://us-east-2.console.aws.amazon.com/cloud9/home" target="_blank">AWS Cloud9</a> console.
 	2. Click on **Open IDE** in the `workshop-environment` under **Your environments**
-	3. Click the gear icon in the upper right hand corner to open the Cloud9 **Preferences**. Click to open the **AWS SETTINGS** section and click the button next to **AWS Managed Temporary Credentials** to disable this.
+	3. Click the **gear** icon in the upper right hand corner to open the Cloud9 Preferences. Scroll down in the settings, click on the **AWS SETTINGS** section and click the button next to **AWS Managed Temporary Credentials** to disable this.
 	4. Now go back to the AWS SSO tab (this should be the first tab you opened for the workshop). Click the **command line or programmatic access**. Click the section under **Option 2** to copy the credentials.
 	4. Go back to the Cloud9 environment. Type `aws configure` hit enter. Hit enter until you get to the choice **Default region name** and type in `us-east-2`. Hit enter and then enter again to leave this menu.
 	5. Then create a file in the `~/.aws` directory named `credentials` and paste in the credentials you copied from the SSO login page. Rename the profile to `default` (it will be named something similar to **Account_ID_AdministratorAccess** when you first paste it in)
@@ -58,10 +62,14 @@
 ---
 
 !!! Attention
-	### Throughout the workshop, keep in mind where you need to add the Account ID (replace <ACCOUNT_ID>), correctly use pathing and change the region specified if needed (although if you are taking this as part of an AWS event, just use the already specified us-east-2.) Missing any of these items can result in problems and errors like **"An error occurred (MalformedPolicyDocument) when calling the CreatePolicy operation: The policy failed legacy parsing"**.
+    <p style="font-size:16px;">
+      Throughout the workshop, keep in mind where you need to add the Account ID (replace <ACCOUNT_ID>), correctly use pathing and change the region specified if needed (although if you are taking this as part of an AWS event, just use the already specified us-east-2.) Missing any of these items can result in problems and errors like **"An error occurred (MalformedPolicyDocument) when calling the CreatePolicy operation: The policy failed legacy parsing"**.
+    </p>
 
 !!! Tip
-	#### Tasks 1, 2 and 3 can be done independently if you are working in a team and want to divide up the tasks.
+    <p style="font-size:16px;">
+      Tasks 1, 2 and 3 can be done independently if you are working in a team and want to divide up the tasks.
+    </p>
 
 ---
 	
@@ -74,19 +82,34 @@ The three elements of a permissions boundary are represented below. When your te
 First you will create an IAM role for the webadmins (Initially this role will trust your own AWS account but in the **Verify** phase you will configure it to trust the other team's account):
 
 * For many of the steps below you will need your account ID. To get that type in `aws sts get-caller-identity'. The account ID will be the first number listed after **Account**. You can do this from a second terminal window in Cloud9 so you can refer back to it later when needed.
-* Use the following JSON to create a file named **`trustpolicy1`** for the trust policy (you can use Nano or your preferred text editor): 
-	* `{ "Version": "2012-10-17", "Statement": { "Effect": "Allow", "Principal": { "AWS": "arn:aws:iam::<ACCOUNT_ID>:root"}, "Action": "sts:AssumeRole" } }`
+* Use the following JSON to create a file named **`trustpolicy1.json`** for the trust policy (you can use Nano or your preferred text editor): 
+```json
+{
+  "Version": "2012-10-17",
+  "Statement": {
+    "Effect": "Allow",
+    "Principal": {
+      "AWS": "arn:aws:iam::<ACCOUNT_ID>:root"
+    },
+    "Action": "sts:AssumeRole"
+  }
+}
+```
 * Create the webadmin role:
-	* `aws iam create-role --role-name webadmins --assume-role-policy-document file://trustpolicy1`
+```
+aws iam create-role --role-name webadmins --assume-role-policy-document file://trustpolicy1.json
+```
 * Add the Lambda Read Only policy to the role
-	* `aws iam attach-role-policy --policy-arn arn:aws:iam::<ACCOUNT_ID>:policy/AWSLambdaReadOnlyAccess  --role-name webadmins`
+```
+aws iam attach-role-policy --policy-arn arn:aws:iam::<ACCOUNT_ID>:policy/AWSLambdaReadOnlyAccess  --role-name webadmins
+```
 
 
 ## Task 2 <small>Create the permissions boundary for the webadmins</small>
 
 Next you will create the policy that will be used as the permissions boundary.  The permissions boundary should only allow the following actions: Create log groups, create log streams, put logs and list the files in the webadmins folder of the bucket that starts with `"shared-logging-"` and ends in `"-data"`:
 
-* Use the following JSON to create a file named **`boundarydoc`** for the policy:
+* Use the following JSON to create a file named **`boundarydoc.json`** for the policy:
 	
 ``` json
 {
@@ -124,7 +147,9 @@ Next you will create the policy that will be used as the permissions boundary.  
 }
 ```
 * Create the policy:
-	* `aws iam create-policy --policy-name webadminspermissionsboundary --policy-document file://boundarydoc`
+```
+aws iam create-policy --policy-name webadminspermissionsboundary --policy-document file://boundarydoc.json
+```
 
 !!! question
 	* What will the webadmins attach the permissions boundary to?
@@ -138,7 +163,7 @@ Next you will create the policy that will be used as the permissions boundary.  
 
 Next you will create the policy that will be attached to the webadmins role.
 
-* Use the following JSON to create a file named **`policydoc`** for the policy document:
+* Use the following JSON to create a file named **`policydoc.json`** for the policy document:
 
 ``` json
 {
@@ -230,12 +255,16 @@ Next you will create the policy that will be attached to the webadmins role.
 ```
  
 * Create the policy named `webadminspermissionpolicy`:
-	* `aws iam create-policy --policy-name webadminspermissionpolicy --policy-document file://policydoc`
+```
+aws iam create-policy --policy-name webadminspermissionpolicy --policy-document file://policydoc.json
+```
 * Attach the policy to the webadmins role
-	* `aws iam attach-role-policy --role-name webadmins --policy-arn arn:aws:iam::<ACCOUNT_ID>:policy/webadminspermissionpolicy`
-* When you are done the **webadmins** role should have these two policies attached: **webadminspermissionpolicy** & **AWSLambdaReadOnlyAccess**.
+```
+aws iam attach-role-policy --role-name webadmins --policy-arn arn:aws:iam::<ACCOUNT_ID>:policy/webadminspermissionpolicy
+```
+When you are done the **webadmins** role should have these two policies attached: **webadminspermissionpolicy** & **AWSLambdaReadOnlyAccess**.
 
-!!! question
+!!! question "Questions"
 
 	* Why were there some blocks above in the policy that used the permissions boundary condition and some that did not?
 	* Why are we using pathing here?
@@ -260,9 +289,27 @@ If you were given a form to fill out then enter the info and hand it to another 
 
 Exchange forms with another team and then update the trust policy of the webadmins roles so the other team can assume the role (they will do the same for your team):
 
-* Use the following JSON to create a file name trustpolicy2 for the trust (assume role) policy (replace `<YOUR_ACCOUNT_ID>` with your Account ID so you can still test this and the `<ACCOUNT_ID_FROM_OTHER_TEAM>` with the other team's Account ID:) 
-	* `{"Version":"2012-10-17","Statement":[{"Effect":"Allow","Principal":{"AWS":["arn:aws:iam::<YOUR_ACCOUNT_ID>:root","arn:aws:iam::<ACCOUNT_ID_FROM_OTHER_TEAM>:root"]},"Action":"sts:AssumeRole"}]}`
+* Use the following JSON to create a file name `trustpolicy2.json` for the trust (assume role) policy (replace `<YOUR_ACCOUNT_ID>` with your Account ID so you can still test this and the `<ACCOUNT_ID_FROM_OTHER_TEAM>` with the other team's Account ID:) 
+```json
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Principal": {
+        "AWS": [
+          "arn:aws:iam::<YOUR_ACCOUNT_ID>:root",
+          "arn:aws:iam::<ACCOUNT_ID_FROM_OTHER_TEAM>:root"
+        ]
+      },
+      "Action": "sts:AssumeRole"
+    }
+  ]
+}
+```
 * Update the trust policy on the webadmins roles so both your team  and the verify team can assume the role
-	* `aws iam update-assume-role-policy --role-name webadmins --policy-document file://trustpolicy2`
+```
+aws iam update-assume-role-policy --role-name webadmins --policy-document file://trustpolicy2.json
+```
 
-### <small>[Click here to go to the VERIFY phase](./verify.md)</small>
+**[Click here to go to the VERIFY phase](./verify.md)**
