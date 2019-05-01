@@ -944,6 +944,22 @@ Permission policy name: **webadminspermissionpolicy**
 <p>If you see files marked that <strong>webadmins/you-should-SEE-this-file--webadmins...</strong> then you have successfully verified that the webadmins can do their job. Congratulations!</p>
 <h2 id="task-3-cleanup">Task 3 <small>Cleanup</small></h2>
 <p>To cleanup you need to delete the CloudFormation stack named <code>Perm-Bound-Adv</code>. This will also remove the Cloud9 environment.  Run the following command to delete your stack:</p>
+<p><strong>Delete the webadmins role</strong>:</p>
+<div class="codehilite"><pre><span></span>aws iam delete-role --role-name webadmins
+</pre></div>
+
+
+<p><strong>Delete the permission policy</strong>:</p>
+<div class="codehilite"><pre><span></span>aws iam delete-policy --policy-arn arn:aws:iam::&lt;ACCOUNT_ID&gt;:policy/webadminspermissionpolicy
+</pre></div>
+
+
+<p><strong>Delete the permission boundary</strong>:</p>
+<div class="codehilite"><pre><span></span>aws iam delete-policy --policy-arn arn:aws:iam::&lt;ACCOUNT_ID&gt;:policy/webadminspermissionsboundary
+</pre></div>
+
+
+<p><strong>Delete the Cloudformation stack</strong>:</p>
 <div class="codehilite"><pre><span></span>aws cloudformation delete-stack --stack-name Perm-Bound-Adv
 </pre></div>
 
