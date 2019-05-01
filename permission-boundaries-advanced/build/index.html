@@ -765,11 +765,11 @@
 <ol>
 <li>Navigate to the <a href="https://us-east-2.console.aws.amazon.com/cloud9/home" target="_blank">AWS Cloud9</a> console.</li>
 <li>Click on <strong>Open IDE</strong> in the <code>workshop-environment</code> under <strong>Your environments</strong></li>
-<li>Click the gear icon in the upper right hand corner to open the Cloud9 <strong>Preferences</strong>. Scroll down to <strong>AWS SETTINGS</strong> and click the button next to <strong>AWS Managed Temporary Credentials</strong> to disable this.</li>
+<li>Click the gear icon in the upper right hand corner to open the Cloud9 <strong>Preferences</strong>. Click to open the <strong>AWS SETTINGS</strong> section and click the button next to <strong>AWS Managed Temporary Credentials</strong> to disable this.</li>
 <li>Now go back to the AWS SSO tab (this should be the first tab you opened for the workshop). Click the <strong>command line or programmatic access</strong>. Click the section under <strong>Option 2</strong> to copy the credentials.</li>
-<li>Go back to the Cloud9 environment. Type <code>aws configure</code> hit enter. Hit enter until you get to the choice <strong>Default region name</strong> and type in <code>us-east-2</code></li>
-<li>Then create a file in the <code>~/.aws</code> directory named <code>credentials</code> and paste in the credentials you copied from the SSO login page. Rename the profile to <code>default</code> (it will be named something similar to <strong>Account_ID_AdministratorAccess</strong>)</li>
-<li>Now when you run commands from within the Cloud9 IDE the temporary credentials from AWS SSO will be used. </li>
+<li>Go back to the Cloud9 environment. Type <code>aws configure</code> hit enter. Hit enter until you get to the choice <strong>Default region name</strong> and type in <code>us-east-2</code>. Hit enter and then enter again to leave this menu.</li>
+<li>Then create a file in the <code>~/.aws</code> directory named <code>credentials</code> and paste in the credentials you copied from the SSO login page. Rename the profile to <code>default</code> (it will be named something similar to <strong>Account_ID_AdministratorAccess</strong> when you first paste it in)</li>
+<li>Now you can run commands from within the Cloud9 IDE using the temporary credentials from AWS SSO. </li>
 <li>Move on to <strong>Task 1</strong>.</li>
 </ol>
 </details>
@@ -814,7 +814,7 @@
 <h2 id="task-1-create-the-webadmins-role">Task 1 <small>Create the webadmins role</small></h2>
 <p>First you will create an IAM role for the webadmins (Initially this role will trust your own AWS account but in the <strong>Verify</strong> phase you will configure it to trust the other team's account):</p>
 <ul>
-<li>For many of the steps below you will need your account ID. To get that type in `aws sts get-caller-identity'. The account ID will be the first number listed after <strong>Account</strong>.</li>
+<li>For many of the steps below you will need your account ID. To get that type in `aws sts get-caller-identity'. The account ID will be the first number listed after <strong>Account</strong>. You can do this from a second terminal window in Cloud9 so you can refer back to it later when needed.</li>
 <li>Use the following JSON to create a file name trustpolicy1 for the trust (assume role) policy (you can use Nano or your preferred text editor): <ul>
 <li><code>{ "Version": "2012-10-17", "Statement": { "Effect": "Allow", "Principal": { "AWS": "arn:aws:iam::Account_ID:root"}, "Action": "sts:AssumeRole" } }</code></li>
 </ul>
@@ -1002,7 +1002,7 @@
 </ul>
 </div>
 <h2 id="task-4-test-the-webadmins-permissions">Task 4 <small>Test the webadmins permissions</small></h2>
-<p>It's time to check your work and make sure the webadmins are set up properly. The instructions for doing so are in the <strong><a href="../verify/">VERIFY phase</a></strong> phase. Go to that phase to check your work before handing this off to another team. </p>
+<p>It's time to check your work and make sure the webadmins are set up properly. The instructions for doing so are in the <strong><a href="../verify/">VERIFY phase</a></strong>. </p>
 <h2 id="task-5-gather-info-needed-for-the-verify-phase">Task 5 <small>Gather info needed for the <strong>VERIFY</strong> phase</small></h2>
 <p>It is time to pass the work on to another team who will work through the <strong>VERIFY</strong> tasks. If you are doing this workshop online on your own then you can just run through the <strong>VERIFY</strong> phase yourself (skip this task).</p>
 <p>If you were given a form to fill out then enter the info and hand it to another team (or send this to the other team using whatever method is easiest.) If you followed the recommended naming conventions you only need to enter your <strong>Account ID</strong> and <strong>Resource Restriction</strong>.</p>
@@ -1012,7 +1012,7 @@
 <li>Permissions boundary name: <strong>webadminspermissionsboundary</strong></li>
 <li>Permission policy name: <strong>webadminspermissionpolicy</strong></li>
 </ul>
-<p>Exchange forms with another team and then update the trust policy of the webadmins roles so the other team can assume the role:</p>
+<p>Exchange forms with another team and then update the trust policy of the webadmins roles so the other team can assume the role (they will do the same for your team):</p>
 <ul>
 <li>Use the following JSON to create a file name trustpolicy2 for the trust (assume role) policy (replace <code>ACCOUNT_ID</code> with your account ID so you can still test this and the <code>ACCOUNT_ID_OTHER_TEAM</code> with the other team's account ID:) <ul>
 <li><code>{"Version":"2012-10-17","Statement":[{"Effect":"Allow","Principal":{"AWS":["arn:aws:iam::YOUR_ACCOUNT_ID:root","arn:aws:iam::ACCOUNT_ID_FROM_OTHER_TEAM:root"]},"Action":"sts:AssumeRole"}]}</code></li>
