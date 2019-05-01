@@ -1,4 +1,4 @@
-# Permission boundaries workshop - Advanced -  <small> VERIFY phase</small>
+# Permission boundaries workshop <small> Verify phase</small>
 
 It's now time **VERIFY** the setup the admins did by putting on the webadmins hat. As the webadmins you will check that you can do the following: 
 
@@ -35,33 +35,68 @@ source_profile = default
 ---
 
 !!! Attention
-	### As in the Build phase, keep in mind where you need to add the Account ID, correctly use pathing and change the region specified if needed (although if you are taking this as part of an AWS event, just use the already specified us-east-2.) Also you will need to use the --profile parameter for all of the commands in the following tasks.
+    <p style="font-size:16px;">
+      As in the Build phase, keep in mind where you need to add the Account ID, correctly use pathing and change the region specified if needed (although if you are taking this as part of an AWS event, just use the already specified us-east-2.) Also you will need to use the --profile parameter for all of the commands in the following tasks.
+    </p>
 
 ## Task 1 <small>Create a policy</small>
 	
-#### First you will create a permission policy which just needs to allow log file creation and s3:ListBucket. You are in a hurry though, like many developers, and give the role full S3 permissions. The policy you create here will later be attached to the role you create in Task 2 which will then be passed to a Lambda function you will create in **Task 3**.
+First you will create a permission policy which just needs to allow log file creation and s3:ListBucket. You are in a hurry though, like many developers, and give the role full S3 permissions. The policy you create here will later be attached to the role you create in Task 2 which will then be passed to a Lambda function you will create in **Task 3**.
 
-* Use the following JSON to create a file named **`verifypolicydoc`**: 
-	* `{"Version":"2012-10-17","Statement":[{"Effect":"Allow","Action":["logs:CreateLogGroup","logs:CreateLogStream","logs:PutLogEvents","s3:*"],"Resource":"*"}]}`
+* Use the following JSON to create a file named **`verifypolicydoc.json`**: 
+```json
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": [
+        "logs:CreateLogGroup",
+        "logs:CreateLogStream",
+        "logs:PutLogEvents",
+        "s3:*"
+      ],
+      "Resource": "*"
+    }
+  ]
+}
+```
 * Create the policy (**there is a key parameter missing from the command below. Check the [AWS CLI documentation.](https://docs.aws.amazon.com/cli/latest/reference/)**)
-	* `aws iam create-policy --policy-name NAME_OF_POLICY --policy-document file://verifypolicydoc --profile webadmins`
-<!-- `aws iam create-policy --policy-name NAME_OF_POLICY --path /webadmins/ --policy-document file://verifypolicydoc` -->
+```
+aws iam create-policy --policy-name NAME_OF_POLICY --policy-document file://verifypolicydoc.json --profile webadmins
+```
+<!-- `aws iam create-policy --policy-name NAME_OF_POLICY --path /webadmins/ --policy-document file://verifypolicydoc.json` -->
 
 ## Task 2 <small>Create a role</small>
 
-#### The role you create here will be passed to the Lambda function you create in the next task.
+The role you create here will be passed to the Lambda function you create in the next task.
 
-* Use the following JSON to create a file named **`verifytrustpolicy`** (replace the Account ID): 
-	* `{ "Version": "2012-10-17", "Statement": { "Effect": "Allow", "Principal": { "Service": "lambda.amazonaws.com"}, "Action": "sts:AssumeRole" } }`
+* Use the following JSON to create a file named **`verifytrustpolicy.json`** (replace the Account ID): 
+```json
+{
+  "Version": "2012-10-17",
+  "Statement": {
+    "Effect": "Allow",
+    "Principal": {
+      "Service": "lambda.amazonaws.com"
+    },
+    "Action": "sts:AssumeRole"
+  }
+}
+```
 * Create the role (**there is a key parameter missing from the command below. Check the [AWS CLI documentation](https://docs.aws.amazon.com/cli/latest/reference/)**)
-	* `aws iam create-role --role-name NAME_OF_ROLE --path /webadmins/ --assume-role-policy-document file://verifytrustpolicy --profile webadmins`
-<!-- `aws iam create-role --role-name NAME_OF_ROLE --path /NAME_OF_PATH/ --assume-role-policy-document file://verifytrustpolicy --permissions-boundary arn:aws:iam::ACCOUNT_ID_FROM_OTHER_TEAM:policy/webadminspermissionsboundary` -->
+```
+aws iam create-role --role-name NAME_OF_ROLE --path /webadmins/ --assume-role-policy-document file://verifytrustpolicy.json --profile webadmins
+```
+<!-- `aws iam create-role --role-name NAME_OF_ROLE --path /NAME_OF_PATH/ --assume-role-policy-document file://verifytrustpolicy.json --permissions-boundary arn:aws:iam::ACCOUNT_ID_FROM_OTHER_TEAM:policy/webadminspermissionsboundary` -->
 * Attach the policy you created in **Task 1** to the role:
-	* `aws iam attach-role-policy --policy-arn arn:aws:iam::<ACCOUNT_ID_FROM_OTHER_TEAM>:policy/webadmins/NAME_OF_POLICY --role-name NAME_OF_ROLE --profile webadmins`
+```
+aws iam attach-role-policy --policy-arn arn:aws:iam::<ACCOUNT_ID_FROM_OTHER_TEAM>:policy/webadmins/NAME_OF_POLICY --role-name NAME_OF_ROLE --profile webadmins
+```
 		
 ## Task 3 <small>Create and test a Lambda function</small>
 
-#### Finally you will create a **Node.js 8.10** Lambda function using the sample code below and pass the IAM role you just created
+Finally, you will create a **Node.js 8.10** Lambda function using the sample code below and pass the IAM role you just created:
  
 * Create a file named **`index.js`** using the code below and then zip the file (`zip lambdafunction.zip index.js`). Replace `"SHARED_LOGGING_BUCKET_NAME"` with the name of bucket that begins with `"shared-logging-"` and ends in `"-data"`. In order to get the bucket name, just run `aws s3 ls` using the webadmins role.)
 
@@ -88,17 +123,26 @@ async function getKeys(params, keys){
 }
 ```
 * Create a Lambda function
-	* `aws lambda create-function --function-name verifyfunction --runtime nodejs8.10 --role arn:aws:iam::<ACCOUNT_ID_FROM_OTHER_TEAM>:role/webadmins/NAME_OF_ROLE --handler index.handler --region us-east-2 --zip-file fileb://lambdafunction.zip --profile webadmins`
+```
+aws lambda create-function --function-name verifyfunction --runtime nodejs8.10 --role arn:aws:iam::<ACCOUNT_ID_FROM_OTHER_TEAM>:role/webadmins/NAME_OF_ROLE --handler index.handler --region us-east-2 --zip-file fileb://lambdafunction.zip --profile webadmins
+```
 * Invoke the Lambda function and make sure it is generating logs in CloudWatch logs and that it is able to list the objects in the bucket.
-	* `aws lambda invoke --function-name verifyfunction --region us-east-2 --invocation-type RequestResponse outputfile.txt --profile webadmins`
+```
+aws lambda invoke --function-name verifyfunction --region us-east-2 --invocation-type RequestResponse outputfile.txt --profile webadmins
+```
 * Examine the output file. It should show a number of log files in the S3 bucket that the Lambda function read. 
 
 If you see files marked that **webadmins/you-should-SEE-this-file--webadmins...** then you have successfully verified that the webadmins can do their job. Congratulations!
 
 ## Task 3 <small>Cleanup</small>
 
-To cleanup you need to delete the CloudFormation stack named `Perm-Bound-Adv`. This will also remove the Cloud9 environment:
+To cleanup you need to delete the CloudFormation stack named `Perm-Bound-Adv`. This will also remove the Cloud9 environment.  Run the following command to delete your stack:
+```
+aws cloudformation delete-stack --stack-name Perm-Bound-Adv
+```
 
+<!-- 
 * Navigate to the <a href="https://us-east-2.console.aws.amazon.com/cloudformation/home?region=us-east-2#/stacks?filter=active" target="_blank">AWS CloudFormation</a> console.
 * Click the box next to the `Perm-Bound-Adv` stack.
 * Click the **Actions** pull down menu and then click **Delete Stack**.
+-->
