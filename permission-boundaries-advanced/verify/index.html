@@ -923,12 +923,12 @@ Permission policy name: **webadminspermissionpolicy**
 <h2 id="task-1-create-a-policy">Task 1 <small>Create a policy</small></h2>
 <h4 id="first-you-will-create-a-permission-policy-which-just-needs-to-allow-log-file-creation-and-s3listbucket-you-are-in-a-hurry-though-like-many-developers-and-give-the-role-full-s3-permissions-the-policy-you-create-here-will-later-be-attached-to-the-role-you-create-in-task-2-which-will-then-be-passed-to-a-lambda-function-you-will-create-in-task-3">First you will create a permission policy which just needs to allow log file creation and s3:ListBucket. You are in a hurry though, like many developers, and give the role full S3 permissions. The policy you create here will later be attached to the role you create in Task 2 which will then be passed to a Lambda function you will create in <strong>Task 3</strong>.</h4>
 <ul>
-<li>Use the following JSON to create a file named verifypolicydoc: <ul>
+<li>Use the following JSON to create a file named <strong><code>verifypolicydoc</code></strong>: <ul>
 <li><code>{"Version":"2012-10-17","Statement":[{"Effect":"Allow","Action":["logs:CreateLogGroup","logs:CreateLogStream","logs:PutLogEvents","s3:*"],"Resource":"*"}]}</code></li>
 </ul>
 </li>
 <li>Create the policy (<strong>there is a key parameter missing from the command below. Check the <a href="https://docs.aws.amazon.com/cli/latest/reference/">AWS CLI documentation.</a></strong>)<ul>
-<li><code>aws iam create-policy --policy-name NAME_OF_POLICY --policy-document file://verifypolicydoc</code>
+<li><code>aws iam create-policy --policy-name NAME_OF_POLICY --policy-document file://verifypolicydoc --profile webadmins</code>
 <!-- <code>aws iam create-policy --policy-name NAME_OF_POLICY --path /webadmins/ --policy-document file://verifypolicydoc</code> --></li>
 </ul>
 </li>
@@ -936,17 +936,17 @@ Permission policy name: **webadminspermissionpolicy**
 <h2 id="task-2-create-a-role">Task 2 <small>Create a role</small></h2>
 <h4 id="the-role-you-create-here-will-be-passed-to-the-lambda-function-you-create-in-the-next-task">The role you create here will be passed to the Lambda function you create in the next task.</h4>
 <ul>
-<li>Use the following JSON to create a file named verifytrustpolicy (replace the Account ID): <ul>
+<li>Use the following JSON to create a file named <strong><code>verifytrustpolicy</code></strong> (replace the Account ID): <ul>
 <li><code>{ "Version": "2012-10-17", "Statement": { "Effect": "Allow", "Principal": { "Service": "lambda.amazonaws.com"}, "Action": "sts:AssumeRole" } }</code></li>
 </ul>
 </li>
 <li>Create the role (<strong>there is a key parameter missing from the command below. Check the <a href="https://docs.aws.amazon.com/cli/latest/reference/">AWS CLI documentation</a></strong>)<ul>
-<li><code>aws iam create-role --role-name NAME_OF_ROLE --path /webadmins/ --assume-role-policy-document file://verifytrustpolicy</code>
+<li><code>aws iam create-role --role-name NAME_OF_ROLE --path /webadmins/ --assume-role-policy-document file://verifytrustpolicy --profile webadmins</code>
 <!-- <code>aws iam create-role --role-name NAME_OF_ROLE --path /NAME_OF_PATH/ --assume-role-policy-document file://verifytrustpolicy --permissions-boundary arn:aws:iam::Account_ID:policy/webadminspermissionsboundary</code> --></li>
 </ul>
 </li>
 <li>Attach the policy you created in <strong>Task 1</strong> to the role:<ul>
-<li><code>aws iam attach-role-policy --policy-arn arn:aws:iam::Account_ID:policy/NAME_OF_PATH/NAME_OF_POLICY --role-name NAME_OF_ROLE</code></li>
+<li><code>aws iam attach-role-policy --policy-arn arn:aws:iam::&lt;Account_ID&gt;:policy/webadmins/NAME_OF_POLICY --role-name NAME_OF_ROLE --profile webadmins</code></li>
 </ul>
 </li>
 </ul>
@@ -980,11 +980,11 @@ Permission policy name: **webadminspermissionpolicy**
 
 <ul>
 <li>Create a Lambda function<ul>
-<li><code>aws lambda create-function --function-name verifyfunction --runtime nodejs8.10 --role arn:aws:iam::Account_ID:role/webadmins/NAME_OF_ROLE --handler index.handler --region us-east-2 --zip-file fileb://lambdafunction.zip</code></li>
+<li><code>aws lambda create-function --function-name verifyfunction --runtime nodejs8.10 --role arn:aws:iam::&lt;Account_ID&gt;:role/webadmins/NAME_OF_ROLE --handler index.handler --region us-east-2 --zip-file fileb://lambdafunction.zip --profile webadmins</code></li>
 </ul>
 </li>
 <li>Invoke the Lambda function and make sure it is generating logs in CloudWatch logs and that it is able to list the objects in the bucket.<ul>
-<li><code>aws lambda invoke --function-name verifyfunction --region us-east-2 --invocation-type RequestResponse outputfile.txt</code></li>
+<li><code>aws lambda invoke --function-name verifyfunction --region us-east-2 --invocation-type RequestResponse outputfile.txt --profile webadmins</code></li>
 </ul>
 </li>
 <li>Examine the output file. It should show a number of log files in the S3 bucket that the Lambda function read. </li>
