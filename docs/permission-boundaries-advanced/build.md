@@ -4,7 +4,8 @@
 
 To setup your environment expand **ONE** of the following drop-downs:
 
-??? info "Click here if *AWS provided an account to you* (usually at an AWS event)"
+
+??? info  "Click here if *AWS provided an account to you* (usually at an AWS event)" 
 
 	<p style="font-size:20px;">
       **Step 1**: Login to the console and run the CloudFormation template
@@ -101,7 +102,7 @@ aws iam create-role --role-name webadmins --assume-role-policy-document file://t
 ```
 * Add the Lambda Read Only policy to the role
 ```
-aws iam attach-role-policy --policy-arn arn:aws:iam::<ACCOUNT_ID>:policy/AWSLambdaReadOnlyAccess  --role-name webadmins
+aws iam attach-role-policy --policy arn:aws:iam::aws:policy/AWSLambdaReadOnlyAccess --role-name webadmins
 ```
 
 
@@ -109,7 +110,7 @@ aws iam attach-role-policy --policy-arn arn:aws:iam::<ACCOUNT_ID>:policy/AWSLamb
 
 Next you will create the policy that will be used as the permissions boundary.  The permissions boundary should only allow the following actions: Create log groups, create log streams, put logs and list the files in the webadmins folder of the bucket that starts with `"shared-logging-"` and ends in `"-data"`:
 
-* Use the following JSON to create a file named **`boundarydoc.json`** for the policy:
+* Use the following JSON to create a file named **`boundarydoc.json`** for the permissions boundary policy:
 	
 ``` json
 {
@@ -163,7 +164,7 @@ aws iam create-policy --policy-name webadminspermissionsboundary --policy-docume
 
 Next you will create the policy that will be attached to the webadmins role.
 
-* Use the following JSON to create a file named **`policydoc.json`** for the policy document:
+* Use the following JSON to create a file named **`policydoc.json`** for the permission policy:
 
 ``` json
 {
