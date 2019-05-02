@@ -938,14 +938,14 @@
 <ul>
 <li>Add the Lambda Read Only policy to the role</li>
 </ul>
-<div class="codehilite"><pre><span></span>aws iam attach-role-policy --policy-arn arn:aws:iam::&lt;ACCOUNT_ID&gt;:policy/AWSLambdaReadOnlyAccess  --role-name webadmins
+<div class="codehilite"><pre><span></span>aws iam attach-role-policy --policy arn:aws:iam::aws:policy/AWSLambdaReadOnlyAccess --role-name webadmins
 </pre></div>
 
 
 <h2 id="task-2-create-the-permissions-boundary-for-the-webadmins">Task 2 <small>Create the permissions boundary for the webadmins</small></h2>
 <p>Next you will create the policy that will be used as the permissions boundary.  The permissions boundary should only allow the following actions: Create log groups, create log streams, put logs and list the files in the webadmins folder of the bucket that starts with <code>"shared-logging-"</code> and ends in <code>"-data"</code>:</p>
 <ul>
-<li>Use the following JSON to create a file named <strong><code>boundarydoc.json</code></strong> for the policy:</li>
+<li>Use the following JSON to create a file named <strong><code>boundarydoc.json</code></strong> for the permissions boundary policy:</li>
 </ul>
 <div class="codehilite"><pre><span></span><span class="p">{</span>
     <span class="nt">&quot;Version&quot;</span><span class="p">:</span> <span class="s2">&quot;2012-10-17&quot;</span><span class="p">,</span>
@@ -1005,7 +1005,7 @@
 </div>
 <p>Next you will create the policy that will be attached to the webadmins role.</p>
 <ul>
-<li>Use the following JSON to create a file named <strong><code>policydoc.json</code></strong> for the policy document:</li>
+<li>Use the following JSON to create a file named <strong><code>policydoc.json</code></strong> for the permission policy:</li>
 </ul>
 <div class="codehilite"><pre><span></span><span class="p">{</span>
     <span class="nt">&quot;Version&quot;</span><span class="p">:</span> <span class="s2">&quot;2012-10-17&quot;</span><span class="p">,</span>
