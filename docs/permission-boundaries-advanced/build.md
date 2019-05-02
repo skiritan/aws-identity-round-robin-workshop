@@ -274,7 +274,13 @@ When you are done the **webadmins** role should have these two policies attached
 	
 ## Task 4 <small>Test the webadmins permissions</small>
 	
-It's time to check your work and make sure the webadmins are set up properly. The instructions for doing so are in the **[VERIFY phase](./verify.md)**. 
+It's time to check your work and make sure the webadmins are set up properly. You need to test the following actions as the webadmins:
+
+1. Create an IAM policy
+2. Create an IAM role (and attach that policy) 
+3. Create a Lambda function (and attach that role)
+
+If you are unsure what the commands are to test this, you can check in the **[VERIFY phase](./verify.md)** for all the details. When you have verified your work is correct, move on to the next task (**Task 5**) which will involve actually exchanging information so another team can verify your work. 
 
 ## Task 5 <small>Gather info needed for the **VERIFY** phase</small>
 
@@ -287,10 +293,10 @@ If you were given a form to fill out then enter the info and hand it to another 
 * Permissions boundary name: **webadminspermissionsboundary**
 * Permission policy name: **webadminspermissionpolicy**
 
-
 Exchange forms with another team and then update the trust policy of the webadmins roles so the other team can assume the role (they will do the same for your team):
 
-* Use the following JSON to create a file name `trustpolicy2.json` for the trust (assume role) policy (replace `<YOUR_ACCOUNT_ID>` with your Account ID so you can still test this and the `<ACCOUNT_ID_FROM_OTHER_TEAM>` with the other team's Account ID:) 
+* Use the following JSON to create a file name `trustpolicy2.json` for the trust policy. Replace `<YOUR_ACCOUNT_ID>` with your Account ID so you can still retest this if needed and the `<ACCOUNT_ID_FROM_OTHER_TEAM>` with the other team's Account ID:
+
 ```json
 {
   "Version": "2012-10-17",
@@ -308,7 +314,7 @@ Exchange forms with another team and then update the trust policy of the webadmi
   ]
 }
 ```
-* Update the trust policy on the webadmins roles so both your team  and the verify team can assume the role
+* Update the trust policy on the webadmins roles so both your team and the verify team can assume the role
 ```
 aws iam update-assume-role-policy --role-name webadmins --policy-document file://trustpolicy2.json
 ```

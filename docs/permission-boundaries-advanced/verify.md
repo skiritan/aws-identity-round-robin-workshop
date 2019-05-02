@@ -23,14 +23,11 @@ role_arn = arn:aws:iam::ACCOUNT_ID_FROM_OTHER_TEAM:role/webadmins
 source_profile = default
 ```
 
-**When you want to reference a profile other then the default one you need to add the `--profile` parameter to the CLI command. Since we are naming this profile webadmins, you will need to specify `--profile webadmins` for the commands in this phase.**
+**When you want to reference a profile other then the default one you need to add the `--profile` parameter to the CLI command. Since we are naming this profile webadmins, you will see that `--profile webadmins` has been added to all the commands in this phase.**
 
 ??? info "Application architecture"
 	
 	![image1](./images/architecture.png)
-	
-	
-	****
 
 ---
 
@@ -61,7 +58,7 @@ First you will create a permission policy which just needs to allow log file cre
   ]
 }
 ```
-* Create the policy (**there is a key parameter missing from the command below. Check the [AWS CLI documentation.](https://docs.aws.amazon.com/cli/latest/reference/)**)
+* Create the policy (**there is a key parameter missing from the command below. Check the <a href="https://docs.aws.amazon.com/cli/latest/reference/" target="_blank"> AWS CLI documentation to determine the missing parameter. </a> **)
 ```
 aws iam create-policy --policy-name NAME_OF_POLICY --policy-document file://verifypolicydoc.json --profile webadmins
 ```
@@ -84,7 +81,7 @@ The role you create here will be passed to the Lambda function you create in the
   }
 }
 ```
-* Create the role (**there is a key parameter missing from the command below. Check the [AWS CLI documentation](https://docs.aws.amazon.com/cli/latest/reference/)**)
+* Create the role (**there is a key parameter missing from the command below. Check the <a href="https://docs.aws.amazon.com/cli/latest/reference/" target="_blank"> AWS CLI documentation to determine the missing parameter. </a> **)
 ```
 aws iam create-role --role-name NAME_OF_ROLE --path /webadmins/ --assume-role-policy-document file://verifytrustpolicy.json --profile webadmins
 ```
@@ -134,9 +131,9 @@ aws lambda invoke --function-name verifyfunction --region us-east-2 --invocation
 
 If you see files marked that **webadmins/you-should-SEE-this-file--webadmins...** then you have successfully verified that the webadmins can do their job. Congratulations!
 
-## Task 3 <small>Cleanup</small>
+## Task 4 <small>Cleanup</small>
 
-To cleanup you need to delete the CloudFormation stack named `Perm-Bound-Adv`. This will also remove the Cloud9 environment.  Run the following command to delete your stack:
+To cleanup you need to delete the CloudFormation stack named `Perm-Bound-Adv` (this will also remove the Cloud9 stack) and the IAM resources you created. Run the following commands:
 
 **Delete the webadmins role**:
 ```
@@ -146,16 +143,11 @@ aws iam delete-role --role-name webadmins
 ```
 aws iam delete-policy --policy-arn arn:aws:iam::<ACCOUNT_ID>:policy/webadminspermissionpolicy
 ```
-**Delete the permission boundary**:
+**Delete the permissions boundary**:
 ```
 aws iam delete-policy --policy-arn arn:aws:iam::<ACCOUNT_ID>:policy/webadminspermissionsboundary
 ```
-**Delete the Cloudformation stack**:
+**Delete the CloudFormation stack**:
 ```
 aws cloudformation delete-stack --stack-name Perm-Bound-Adv
 ```
-<!-- 
-* Navigate to the <a href="https://us-east-2.console.aws.amazon.com/cloudformation/home?region=us-east-2#/stacks?filter=active" target="_blank">AWS CloudFormation</a> console.
-* Click the box next to the `Perm-Bound-Adv` stack.
-* Click the **Actions** pull down menu and then click **Delete Stack**.
--->
