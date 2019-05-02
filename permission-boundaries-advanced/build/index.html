@@ -1121,7 +1121,13 @@
 </ul>
 </div>
 <h2 id="task-4-test-the-webadmins-permissions">Task 4 <small>Test the webadmins permissions</small></h2>
-<p>It's time to check your work and make sure the webadmins are set up properly. The instructions for doing so are in the <strong><a href="../verify/">VERIFY phase</a></strong>. </p>
+<p>It's time to check your work and make sure the webadmins are set up properly. You need to test the following actions as the webadmins:</p>
+<ol>
+<li>Create an IAM policy</li>
+<li>Create an IAM role (and attach that policy) </li>
+<li>Create a Lambda function (and attach that role)</li>
+</ol>
+<p>If you are unsure what the commands are to test this, you can check in the <strong><a href="../verify/">VERIFY phase</a></strong> for all the details. When you have verified your work is correct, move on to the next task (<strong>Task 5</strong>) which will involve actually exchanging information so another team can verify your work. </p>
 <h2 id="task-5-gather-info-needed-for-the-verify-phase">Task 5 <small>Gather info needed for the <strong>VERIFY</strong> phase</small></h2>
 <p>It is time to pass the work on to another team who will work through the <strong>VERIFY</strong> tasks. If you are doing this workshop online on your own then you can just run through the <strong>VERIFY</strong> phase yourself (skip this task).</p>
 <p>If you were given a form to fill out then enter the info and hand it to another team (or send this to the other team using whatever method is easiest.) If you followed the recommended naming conventions you only need to enter your <strong>Account ID</strong> and <strong>Resource Restriction</strong>.</p>
@@ -1133,7 +1139,7 @@
 </ul>
 <p>Exchange forms with another team and then update the trust policy of the webadmins roles so the other team can assume the role (they will do the same for your team):</p>
 <ul>
-<li>Use the following JSON to create a file name <code>trustpolicy2.json</code> for the trust (assume role) policy (replace <code>&lt;YOUR_ACCOUNT_ID&gt;</code> with your Account ID so you can still test this and the <code>&lt;ACCOUNT_ID_FROM_OTHER_TEAM&gt;</code> with the other team's Account ID:) </li>
+<li>Use the following JSON to create a file name <code>trustpolicy2.json</code> for the trust policy. Replace <code>&lt;YOUR_ACCOUNT_ID&gt;</code> with your Account ID so you can still retest this if needed and the <code>&lt;ACCOUNT_ID_FROM_OTHER_TEAM&gt;</code> with the other team's Account ID:</li>
 </ul>
 <div class="codehilite"><pre><span></span><span class="p">{</span>
   <span class="nt">&quot;Version&quot;</span><span class="p">:</span> <span class="s2">&quot;2012-10-17&quot;</span><span class="p">,</span>
@@ -1154,7 +1160,7 @@
 
 
 <ul>
-<li>Update the trust policy on the webadmins roles so both your team  and the verify team can assume the role</li>
+<li>Update the trust policy on the webadmins roles so both your team and the verify team can assume the role</li>
 </ul>
 <div class="codehilite"><pre><span></span>aws iam update-assume-role-policy --role-name webadmins --policy-document file://trustpolicy2.json
 </pre></div>

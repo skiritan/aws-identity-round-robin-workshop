@@ -682,8 +682,8 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#task-3-cleanup" title="Task 3 Cleanup" class="md-nav__link">
-    Task 3 Cleanup
+  <a href="#task-4-cleanup" title="Task 4 Cleanup" class="md-nav__link">
+    Task 4 Cleanup
   </a>
   
 </li>
@@ -770,8 +770,8 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#task-3-cleanup" title="Task 3 Cleanup" class="md-nav__link">
-    Task 3 Cleanup
+  <a href="#task-4-cleanup" title="Task 4 Cleanup" class="md-nav__link">
+    Task 4 Cleanup
   </a>
   
 </li>
@@ -819,9 +819,8 @@ Permission policy name: **webadminspermissionpolicy**
 </pre></div>
 
 
-<p><strong>When you want to reference a profile other then the default one you need to add the <code>--profile</code> parameter to the CLI command. Since we are naming this profile webadmins, you will need to specify <code>--profile webadmins</code> for the commands in this phase.</strong></p>
+<p><strong>When you want to reference a profile other then the default one you need to add the <code>--profile</code> parameter to the CLI command. Since we are naming this profile webadmins, you will see that <code>--profile webadmins</code> has been added to all the commands in this phase.</strong></p>
 <details class="info"><summary>Application architecture</summary><p><img alt="image1" src="../images/architecture.png" /></p>
-<hr />
 </details>
 <hr />
 <div class="admonition attention">
@@ -854,7 +853,7 @@ Permission policy name: **webadminspermissionpolicy**
 
 
 <ul>
-<li>Create the policy (<strong>there is a key parameter missing from the command below. Check the <a href="https://docs.aws.amazon.com/cli/latest/reference/">AWS CLI documentation.</a></strong>)</li>
+<li>Create the policy (<strong>there is a key parameter missing from the command below. Check the <a href="https://docs.aws.amazon.com/cli/latest/reference/" target="_blank"> AWS CLI documentation to determine the missing parameter. </a> </strong>)</li>
 </ul>
 <div class="codehilite"><pre><span></span>aws iam create-policy --policy-name NAME_OF_POLICY --policy-document file://verifypolicydoc.json --profile webadmins
 </pre></div>
@@ -881,7 +880,7 @@ Permission policy name: **webadminspermissionpolicy**
 
 
 <ul>
-<li>Create the role (<strong>there is a key parameter missing from the command below. Check the <a href="https://docs.aws.amazon.com/cli/latest/reference/">AWS CLI documentation</a></strong>)</li>
+<li>Create the role (<strong>there is a key parameter missing from the command below. Check the <a href="https://docs.aws.amazon.com/cli/latest/reference/" target="_blank"> AWS CLI documentation to determine the missing parameter. </a> </strong>)</li>
 </ul>
 <div class="codehilite"><pre><span></span>aws iam create-role --role-name NAME_OF_ROLE --path /webadmins/ --assume-role-policy-document file://verifytrustpolicy.json --profile webadmins
 </pre></div>
@@ -942,8 +941,8 @@ Permission policy name: **webadminspermissionpolicy**
 <li>Examine the output file. It should show a number of log files in the S3 bucket that the Lambda function read. </li>
 </ul>
 <p>If you see files marked that <strong>webadmins/you-should-SEE-this-file--webadmins...</strong> then you have successfully verified that the webadmins can do their job. Congratulations!</p>
-<h2 id="task-3-cleanup">Task 3 <small>Cleanup</small></h2>
-<p>To cleanup you need to delete the CloudFormation stack named <code>Perm-Bound-Adv</code>. This will also remove the Cloud9 environment.  Run the following command to delete your stack:</p>
+<h2 id="task-4-cleanup">Task 4 <small>Cleanup</small></h2>
+<p>To cleanup you need to delete the CloudFormation stack named <code>Perm-Bound-Adv</code> (this will also remove the Cloud9 stack) and the IAM resources you created. Run the following commands:</p>
 <p><strong>Delete the webadmins role</strong>:</p>
 <div class="codehilite"><pre><span></span>aws iam delete-role --role-name webadmins
 </pre></div>
@@ -954,21 +953,14 @@ Permission policy name: **webadminspermissionpolicy**
 </pre></div>
 
 
-<p><strong>Delete the permission boundary</strong>:</p>
+<p><strong>Delete the permissions boundary</strong>:</p>
 <div class="codehilite"><pre><span></span>aws iam delete-policy --policy-arn arn:aws:iam::&lt;ACCOUNT_ID&gt;:policy/webadminspermissionsboundary
 </pre></div>
 
 
-<p><strong>Delete the Cloudformation stack</strong>:</p>
+<p><strong>Delete the CloudFormation stack</strong>:</p>
 <div class="codehilite"><pre><span></span>aws cloudformation delete-stack --stack-name Perm-Bound-Adv
 </pre></div>
-
-
-<!-- 
-* Navigate to the <a href="https://us-east-2.console.aws.amazon.com/cloudformation/home?region=us-east-2#/stacks?filter=active" target="_blank">AWS CloudFormation</a> console.
-* Click the box next to the `Perm-Bound-Adv` stack.
-* Click the **Actions** pull down menu and then click **Delete Stack**.
--->
                 
                   
                 
