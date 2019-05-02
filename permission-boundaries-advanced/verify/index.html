@@ -898,7 +898,7 @@ Permission policy name: **webadminspermissionpolicy**
 <h2 id="task-3-create-and-test-a-lambda-function">Task 3 <small>Create and test a Lambda function</small></h2>
 <p>Finally, you will create a <strong>Node.js 8.10</strong> Lambda function using the sample code below and pass the IAM role you just created:</p>
 <ul>
-<li>Create a file named <strong><code>index.js</code></strong> using the code below and then zip the file (<code>zip lambdafunction.zip index.js</code>). Replace <code>"SHARED_LOGGING_BUCKET_NAME"</code> with the name of bucket that begins with <code>"shared-logging-"</code> and ends in <code>"-data"</code>. In order to get the bucket name, just run <code>aws s3 ls</code> using the webadmins role.)</li>
+<li>Create a file named <strong><code>index.js</code></strong> using the code below. Replace <code>"SHARED_LOGGING_BUCKET_NAME"</code> with the name of bucket that begins with <code>"shared-logging-"</code> and ends in <code>"-data"</code>. In order to get the bucket name, just run <code>aws s3 ls --profile webadmins</code>.)</li>
 </ul>
 <div class="codehilite"><pre><span></span><span class="nt">const</span> <span class="nt">AWS</span> <span class="o">=</span> <span class="nt">require</span><span class="o">(</span><span class="s1">&#39;aws-sdk&#39;</span><span class="o">);</span>
 <span class="nt">const</span> <span class="nt">s3</span> <span class="o">=</span> <span class="nt">new</span> <span class="nt">AWS</span><span class="p">.</span><span class="nc">S3</span><span class="o">();</span>
@@ -920,6 +920,13 @@ Permission policy name: **webadminspermissionpolicy**
     <span class="nt">await</span> <span class="nt">getKeys</span><span class="o">(</span><span class="nt">newParams</span><span class="o">,</span> <span class="nt">keys</span><span class="o">);</span> 
   <span class="err">}</span>
 <span class="err">}</span>
+</pre></div>
+
+
+<ul>
+<li>Zip the index.js file for upload to Lambda</li>
+</ul>
+<div class="codehilite"><pre><span></span>zip lambdafunction.zip index.js
 </pre></div>
 
 
