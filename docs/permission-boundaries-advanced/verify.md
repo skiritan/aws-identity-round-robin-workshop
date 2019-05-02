@@ -95,7 +95,7 @@ aws iam attach-role-policy --policy-arn arn:aws:iam::<ACCOUNT_ID_FROM_OTHER_TEAM
 
 Finally, you will create a **Node.js 8.10** Lambda function using the sample code below and pass the IAM role you just created:
  
-* Create a file named **`index.js`** using the code below and then zip the file (`zip lambdafunction.zip index.js`). Replace `"SHARED_LOGGING_BUCKET_NAME"` with the name of bucket that begins with `"shared-logging-"` and ends in `"-data"`. In order to get the bucket name, just run `aws s3 ls` using the webadmins role.)
+* Create a file named **`index.js`** using the code below. Replace `"SHARED_LOGGING_BUCKET_NAME"` with the name of bucket that begins with `"shared-logging-"` and ends in `"-data"`. In order to get the bucket name, just run `aws s3 ls --profile webadmins`.)
 
 ``` node
 const AWS = require('aws-sdk');
@@ -118,6 +118,10 @@ async function getKeys(params, keys){
     await getKeys(newParams, keys); 
   }
 }
+```
+* Zip the index.js file for upload to Lambda
+```
+zip lambdafunction.zip index.js
 ```
 * Create a Lambda function
 ```
