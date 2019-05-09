@@ -1,9 +1,7 @@
 # Permissions boundary workshop <small> Advanced edition </small>
 ## Overview
 
-Your company has deployed a production three tier web application on AWS. Various teams work on different aspects of the architecture including the web admins who need to be able to create IAM roles for Lambda functions. In order to let them quickly iterate it was decided that permissions boundaries would be used to delegate permissions to the web admins so they can create the roles needed without being able to escalate their permissions or impact the resources of other teams. 
-
-It is your assignment to set their permissions up and test them.
+In this workshop you will learn how to use permissions boundaries to truly delegate administration in AWS. This new feature can be challenging but this workshop provides an in-depth hands-on exercise to help you master it.
 
 **AWS Service/Feature Coverage**: 
 
@@ -11,6 +9,10 @@ It is your assignment to set their permissions up and test them.
 * AWS IAM <a href="https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_boundaries.html" target="_blank">permissions boundaries</a> 
 * AWS IAM <a href="https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_identifiers.html" target="_blank">friendly names and paths</a>
 * AWS <a href="https://docs.aws.amazon.com/lambda/latest/dg/welcome.html" target="_blank">Lambda</a>
+
+### Scenario
+
+Your company has deployed a production three tier web application on AWS. Various teams work on different aspects of the architecture including the web admins who need to be able to create IAM roles for Lambda functions. In order to let them quickly iterate it was decided that permissions boundaries would be used to delegate permissions to the web admins so they can create the roles needed without being able to escalate their permissions or impact the resources of other teams. It is your assignment to set their permissions up and test them.
  
 ## Agenda
 
