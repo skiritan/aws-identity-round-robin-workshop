@@ -199,6 +199,8 @@ Resources:
         AutomaticStopTimeMinutes: 120
         #InstanceType: !Ref InstanceType
         InstanceType: t2.micro
+        #OwnerArn: !Sub "arn:aws:sts::${AWS::AccountId}:assumed-role/ee-teamrole/gregorymc"
+        OwnerArn: !Sub "arn:aws:sts::${AWS::AccountId}:assumed-role/TeamRole/MasterKey"
         Name: "workshop-environment"
         SubnetId: !Ref Subnet
 

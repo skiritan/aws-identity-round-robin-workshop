@@ -824,9 +824,44 @@
                 
                 
                 <h1 id="permissions-boundaries-workshop-build-phase">Permissions boundaries workshop <small> Build phase </small></h1>
+<div class="admonition attention">
+<p class="admonition-title">Attention</p>
+<p><p style="font-size:16px;">
+  Throughout the workshop, keep in mind where you need to add the Account ID (replace <ACCOUNT_ID>), correctly use pathing and change the region specified if needed (although if you are taking this as part of an AWS event, just use the already specified us-east-2.) Missing any of these items can result in problems and errors like <strong>"An error occurred (MalformedPolicyDocument) when calling the CreatePolicy operation: The policy failed legacy parsing"</strong>.
+</p></p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p><p style="font-size:16px;">
+  Tasks 1, 2 and 3 can be done independently if you are working in a team and want to divide up the tasks.
+</p></p>
+</div>
 <h2 id="setup-instructions">Setup Instructions</h2>
-<p>To setup your environment expand <strong>ONE</strong> of the following drop-downs:</p>
-<details class="info"><summary>Click here if <em>AWS provided an account to you</em> (usually at an AWS event)</summary><p><p style="font-size:20px;">
+<p>To setup your environment expand the appropriate choice of the following drop-downs, perform the tasks, and then move on to <strong>Task 1</strong></p>
+<details class="info"><summary>Click here if you're at an <em>AWS event</em> where the <em>Event Engine</em> is being used</summary><p><p style="font-size:20px;">
+  <strong>Step 1</strong> : Retrieve temporary credentials from Event Engine
+</p></p>
+<ol>
+<li>Navigate to the <a href="https://dashboard.eventengine.run" target="_blank">Event Engine dashboard</a></li>
+<li>Enter your <strong>team hash</strong> code. </li>
+<li>You can set your team name by clicking <strong>Set Team Name</strong></li>
+<li>Click <strong>AWS Console</strong></li>
+<li>Copy the <strong>export</strong> commmands for the temporary credentials (you will need these in the next step.)</li>
+</ol>
+<p><p style="font-size:20px;">
+  <strong>Step 2</strong> : Connect to the AWS Console via Event Engine and browse to the AWS Cloud9 IDE
+</p>    </p>
+<ol>
+<li>Click <strong>Open Console</strong> from the Event Engine window</li>
+<li>Navigate to the <a href="https://us-east-1.console.aws.amazon.com/cloud9/home" target="_blank">AWS Cloud9</a> console.</li>
+<li>Click on <strong>Open IDE</strong> in the <code>workshop-environment</code> under <strong>Your environments</strong></li>
+<li>Click the <strong>gear</strong> icon in the upper right hand corner to open the Cloud9 Preferences. Scroll down in the settings, click on the <strong>AWS SETTINGS</strong> section and click the button next to <strong>AWS Managed Temporary Credentials</strong> to disable this.</li>
+<li>Now go to a Cloud9 terminal tab (tab title will start with the words <strong>bash</strong>). Paste in the <strong>export</strong> commands you copied from Event Engine.</li>
+<li>Now you can run commands from within the Cloud9 IDE using the temporary credentials from Event Engine. </li>
+<li>Move on to <strong>Task 1</strong>.</li>
+</ol>
+</details>
+<details class="info"><summary>Click here if you're at an <em>AWS event</em> and <em>AWS provided an account to you</em></summary><p><p style="font-size:20px;">
   <strong>Step 1</strong>: Login to the console and run the CloudFormation template
 </p></p>
 <p><strong>Console Login:</strong> Your team should have been given a piece of paper with a URL and credentials. This will allow you to login using AWS SSO. </p>
@@ -867,7 +902,7 @@
 <li>Move on to <strong>Task 1</strong>.</li>
 </ol>
 </details>
-<details class="info"><summary>Click here if you are <em>using your own AWS account</em> (whether you are at an AWS event, a separate event or online on your own)</summary><p>Log in to your account however you would normally. You should use an IAM user or role with admin rights. </p>
+<details class="info"><summary>Click here if you are <em>using your own AWS account</em> (whether you are at an AWS event, a separate event or online)</summary><p>Log in to your account however you would normally. You should use an IAM user or role with admin rights. </p>
 <p><strong>CloudFormation:</strong> Launch the CloudFormation stack below to setup the environment:</p>
 <table>
 <thead>
@@ -894,21 +929,7 @@
 <p>You will need to configure the <a href="https://aws.amazon.com/cli/" target="_blank"> AWS CLI </a> on your laptop or system of choice with credentials that allow at least IAM admin rights. Then move on to <strong>Task 1</strong>.</p>
 </details>
 <hr />
-<div class="admonition attention">
-<p class="admonition-title">Attention</p>
-<p><p style="font-size:16px;">
-  Throughout the workshop, keep in mind where you need to add the Account ID (replace <ACCOUNT_ID>), correctly use pathing and change the region specified if needed (although if you are taking this as part of an AWS event, just use the already specified us-east-2.) Missing any of these items can result in problems and errors like <strong>"An error occurred (MalformedPolicyDocument) when calling the CreatePolicy operation: The policy failed legacy parsing"</strong>.
-</p></p>
-</div>
-<div class="admonition tip">
-<p class="admonition-title">Tip</p>
-<p><p style="font-size:16px;">
-  Tasks 1, 2 and 3 can be done independently if you are working in a team and want to divide up the tasks.
-</p></p>
-</div>
-<hr />
-<p>The three elements of a permissions boundary are represented below. When your team does the <strong>BUILD</strong> tasks in this section you will act as the admins. When your team does the <strong>VERIFY</strong> tasks in the next section you will act as the delegated admins (webadmins).  </p>
-<p><img alt="mechanism" src="../images/permission-boundaries.png" /></p>
+<h3 id="_1"></h3>
 <h2 id="task-1-create-the-webadmins-role">Task 1 <small>Create the webadmins role</small></h2>
 <p>First you will create an IAM role for the webadmins (Initially this role will trust your own AWS account but in the <strong>Verify</strong> phase you will configure it to trust the other team's account):</p>
 <ul>
@@ -929,14 +950,14 @@
 
 
 <ul>
-<li>Create the webadmin role:</li>
+<li>Create the IAM role that will be used by the webadmins:</li>
 </ul>
 <div class="codehilite"><pre><span></span>aws iam create-role --role-name webadmins --assume-role-policy-document file://trustpolicy1.json
 </pre></div>
 
 
 <ul>
-<li>Add the Lambda Read Only policy to the role</li>
+<li>Attach the AWSLambdaReadOnlyAccess AWS Managed Policy to the role:</li>
 </ul>
 <div class="codehilite"><pre><span></span>aws iam attach-role-policy --policy arn:aws:iam::aws:policy/AWSLambdaReadOnlyAccess --role-name webadmins
 </pre></div>
