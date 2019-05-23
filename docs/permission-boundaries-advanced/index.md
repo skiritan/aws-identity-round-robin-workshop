@@ -10,6 +10,10 @@ In this workshop you will learn how to use permissions boundaries to truly deleg
 * AWS IAM <a href="https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_identifiers.html" target="_blank">friendly names and paths</a>
 * AWS <a href="https://docs.aws.amazon.com/lambda/latest/dg/welcome.html" target="_blank">Lambda</a>
 
+The three elements of a permissions boundary are represented below. When your team does the **BUILD** tasks in this section you will act as the admins. When your team does the **VERIFY** tasks in the next section you will act as the delegated admins (webadmins).  
+
+![mechanism](./images/permission-boundaries.png)
+
 ### Scenario
 
 Your company has deployed a production three tier web application on AWS. Various teams work on different aspects of the architecture including the web admins who need to be able to create IAM roles for Lambda functions. In order to let them quickly iterate it was decided that permissions boundaries would be used to delegate permissions to the web admins so they can create the roles needed without being able to escalate their permissions or impact the resources of other teams. It is your assignment to set their permissions up and test them.

@@ -1,11 +1,46 @@
 # Permissions boundaries workshop <small> Build phase </small>
 
+
+!!! Attention
+    <p style="font-size:16px;">
+      Throughout the workshop, keep in mind where you need to add the Account ID (replace <ACCOUNT_ID>), correctly use pathing and change the region specified if needed (although if you are taking this as part of an AWS event, just use the already specified us-east-2.) Missing any of these items can result in problems and errors like **"An error occurred (MalformedPolicyDocument) when calling the CreatePolicy operation: The policy failed legacy parsing"**.
+    </p>
+
+!!! Tip
+    <p style="font-size:16px;">
+      Tasks 1, 2 and 3 can be done independently if you are working in a team and want to divide up the tasks.
+    </p>
+
+
 ## Setup Instructions
 
-To setup your environment expand **ONE** of the following drop-downs:
+To setup your environment expand the appropriate choice of the following drop-downs, perform the tasks, and then move on to **Task 1**
 
+??? info  "Click here if you're at an *AWS event* where the *Event Engine* is being used" 
 
-??? info  "Click here if *AWS provided an account to you* (usually at an AWS event)" 
+    <p style="font-size:20px;">
+      **Step 1** : Retrieve temporary credentials from Event Engine
+    </p>
+	
+	1. Navigate to the <a href="https://dashboard.eventengine.run" target="_blank">Event Engine dashboard</a>
+	2. Enter your **team hash** code. 
+	3. You can set your team name by clicking **Set Team Name**
+	3. Click **AWS Console**
+	4. Copy the **export** commmands for the temporary credentials (you will need these in the next step.)
+
+    <p style="font-size:20px;">
+      **Step 2** : Connect to the AWS Console via Event Engine and browse to the AWS Cloud9 IDE
+    </p>	
+	
+	1. Click **Open Console** from the Event Engine window
+	2. Navigate to the <a href="https://us-east-1.console.aws.amazon.com/cloud9/home" target="_blank">AWS Cloud9</a> console.
+	2. Click on **Open IDE** in the `workshop-environment` under **Your environments**
+	3. Click the **gear** icon in the upper right hand corner to open the Cloud9 Preferences. Scroll down in the settings, click on the **AWS SETTINGS** section and click the button next to **AWS Managed Temporary Credentials** to disable this.
+	5. Now go to a Cloud9 terminal tab (tab title will start with the words **bash**). Paste in the **export** commands you copied from Event Engine.
+	7. Now you can run commands from within the Cloud9 IDE using the temporary credentials from Event Engine. 
+	8. Move on to **Task 1**.
+
+??? info  "Click here if you're at an *AWS event* and *AWS provided an account to you*" 
 
 	<p style="font-size:20px;">
       **Step 1**: Login to the console and run the CloudFormation template
@@ -40,7 +75,7 @@ To setup your environment expand **ONE** of the following drop-downs:
 	4. Now you can run commands from within the Cloud9 IDE using the temporary credentials from AWS SSO. 
 	4. Move on to **Task 1**.
 
-??? info "Click here if you are *using your own AWS account* (whether you are at an AWS event, a separate event or online on your own)"
+??? info "Click here if you are *using your own AWS account* (whether you are at an AWS event, a separate event or online)"
 
 	Log in to your account however you would normally. You should use an IAM user or role with admin rights. 
 
@@ -62,21 +97,8 @@ To setup your environment expand **ONE** of the following drop-downs:
 
 ---
 
-!!! Attention
-    <p style="font-size:16px;">
-      Throughout the workshop, keep in mind where you need to add the Account ID (replace <ACCOUNT_ID>), correctly use pathing and change the region specified if needed (although if you are taking this as part of an AWS event, just use the already specified us-east-2.) Missing any of these items can result in problems and errors like **"An error occurred (MalformedPolicyDocument) when calling the CreatePolicy operation: The policy failed legacy parsing"**.
-    </p>
+###
 
-!!! Tip
-    <p style="font-size:16px;">
-      Tasks 1, 2 and 3 can be done independently if you are working in a team and want to divide up the tasks.
-    </p>
-
----
-	
-The three elements of a permissions boundary are represented below. When your team does the **BUILD** tasks in this section you will act as the admins. When your team does the **VERIFY** tasks in the next section you will act as the delegated admins (webadmins).  
-
-![mechanism](./images/permission-boundaries.png)
 
 ## Task 1 <small>Create the webadmins role</small>
 
@@ -96,11 +118,11 @@ First you will create an IAM role for the webadmins (Initially this role will tr
   }
 }
 ```
-* Create the webadmin role:
+* Create the IAM role that will be used by the webadmins:
 ```
 aws iam create-role --role-name webadmins --assume-role-policy-document file://trustpolicy1.json
 ```
-* Add the Lambda Read Only policy to the role
+* Attach the AWSLambdaReadOnlyAccess AWS Managed Policy to the role:
 ```
 aws iam attach-role-policy --policy arn:aws:iam::aws:policy/AWSLambdaReadOnlyAccess --role-name webadmins
 ```
