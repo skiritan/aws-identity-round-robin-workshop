@@ -3,7 +3,7 @@
 
 !!! Attention
     <p style="font-size:16px;">
-      Throughout the workshop, keep in mind where you need to add the Account ID (replace <ACCOUNT_ID>), correctly use pathing and change the region specified if needed (although if you are taking this as part of an AWS event, just use the already specified us-east-2.) Missing any of these items can result in problems and errors like **"An error occurred (MalformedPolicyDocument) when calling the CreatePolicy operation: The policy failed legacy parsing"**.
+      Throughout the workshop, keep in mind where you need to add the Account ID (replace <ACCOUNT_ID>), correctly use pathing and change the region specified if needed (although if you are taking this as part of an AWS event, just use the already specified us-east-1.) Missing any of these items can result in problems and errors like **"An error occurred (MalformedPolicyDocument) when calling the CreatePolicy operation: The policy failed legacy parsing"**.
     </p>
 
 !!! Tip
@@ -14,7 +14,7 @@
 
 ## Setup Instructions
 
-To setup your environment expand the appropriate choice of the following drop-downs, perform the tasks, and then move on to **Task 1**
+To setup your environment expand the appropriate choice from the following drop-downs, perform the tasks, and then move on to **Task 1**
 
 ??? info  "Click here if you're at an *AWS event* where the *Event Engine* is being used" 
 
@@ -26,7 +26,7 @@ To setup your environment expand the appropriate choice of the following drop-do
 	2. Enter your **team hash** code. 
 	3. You can set your team name by clicking **Set Team Name**
 	3. Click **AWS Console**
-	4. Copy the **export** commmands for the temporary credentials (you will need these in the next step.)
+	4. Copy the **export** commmands under the **Credentials** section for the temporary credentials (you will need these in the next step.)
 
     <p style="font-size:20px;">
       **Step 2** : Connect to the AWS Console via Event Engine and browse to the AWS Cloud9 IDE
@@ -35,9 +35,9 @@ To setup your environment expand the appropriate choice of the following drop-do
 	1. Click **Open Console** from the Event Engine window
 	2. Navigate to the <a href="https://us-east-1.console.aws.amazon.com/cloud9/home" target="_blank">AWS Cloud9</a> console.
 	2. Click on **Open IDE** in the `workshop-environment` under **Your environments**
-	3. Click the **gear** icon in the upper right hand corner to open the Cloud9 Preferences. Scroll down in the settings, click on the **AWS SETTINGS** section and click the button next to **AWS Managed Temporary Credentials** to disable this.
+	3. Click the **gear image** icon in the upper right hand corner to open the Cloud9 Preferences. Scroll down in the settings, click on the **AWS SETTINGS** section and click the button next to **AWS managed temporary credentials** to disable this.
 	5. Now go to a Cloud9 terminal tab (tab title will start with the words **bash**). Paste in the **export** commands you copied from Event Engine.
-	7. Now you can run commands from within the Cloud9 IDE using the temporary credentials from Event Engine. 
+	7. Now you can run commands from within the Cloud9 IDE using the temporary credentials from Event Engine. If you open a new tab you will need to paste in the credentials again.
 	8. Move on to **Task 1**.
 
 ??? info  "Click here if you're at an *AWS event* and *AWS provided an account to you*" 
@@ -142,7 +142,7 @@ Next you will create the policy that will be used as the permissions boundary.  
             "Sid": "CreateLogGroup",
             "Effect": "Allow",
             "Action": "logs:CreateLogGroup",
-            "Resource": "arn:aws:logs:us-east-2:<ACCOUNT_ID>:*"
+            "Resource": "arn:aws:logs:us-east-1:<ACCOUNT_ID>:*"
         },
         {
             "Sid": "CreateLogStreamandEvents",
@@ -151,7 +151,7 @@ Next you will create the policy that will be used as the permissions boundary.  
                 "logs:CreateLogStream",
                 "logs:PutLogEvents"
             ],
-            "Resource": "arn:aws:logs:us-east-2:<ACCOUNT_ID>:log-group:/aws/lambda/*:*"
+            "Resource": "arn:aws:logs:us-east-1:<ACCOUNT_ID>:log-group:/aws/lambda/*:*"
         },
         {
             "Sid": "AllowedS3GetObject",
@@ -159,7 +159,7 @@ Next you will create the policy that will be used as the permissions boundary.  
             "Action": [
                 "s3:List*"
             ],
-            "Resource": "arn:aws:s3:::shared-logging-<ACCOUNT_ID>-us-east-2-data",
+            "Resource": "arn:aws:s3:::shared-logging-<ACCOUNT_ID>-us-east-1-data",
              "Condition": {
                 "StringEquals": {
                     "s3:prefix": "webadmins"
@@ -234,7 +234,7 @@ Next you will create the policy that will be attached to the webadmins role.
             "Sid": "LambdaFullAccess",
             "Effect": "Allow",
             "Action": "lambda:*",
-            "Resource": "arn:aws:lambda:us-east-2:<ACCOUNT_ID>:function:*"
+            "Resource": "arn:aws:lambda:us-east-1:<ACCOUNT_ID>:function:*"
         },
         {
             "Sid": "PassRoletoLambda",
