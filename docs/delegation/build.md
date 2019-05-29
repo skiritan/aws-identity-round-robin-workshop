@@ -14,7 +14,7 @@ Depending on how you're doing this workshop, expand one of the following dropdow
       **Step 1** : Retrieve temporary credentials from Event Engine
     </p>
 
-        1. Navigate to the <a href="https://dashboard.eventengine.run" target="_blank">Event Engine dashboard</a>
+	1. Navigate to the <a href="https://dashboard.eventengine.run" target="_blank">Event Engine dashboard</a>
         2. Enter your **team hash** code.
         3. You can set your team name by clicking **Set Team Name**
         4. Click **AWS Console**
