@@ -42,7 +42,6 @@ To setup your environment please expand one of the following dropdown sections (
 	
 	1. Navigate to the <a href="https://dashboard.eventengine.run" target="_blank">Event Engine dashboard</a>
 	2. Enter your **team hash** code. 
-	3. You can set your team name by clicking **Set Team Name**
 	3. Click **AWS Console**.  The CloudFormation template for this round has already been prerun.
 
 ??? info "Click here if you're running this individually in your own AWS Account"
