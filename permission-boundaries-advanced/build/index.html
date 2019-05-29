@@ -38,7 +38,7 @@
         <meta name="lang:search.tokenizer" content="[\s\-]+">
       
       <link rel="shortcut icon" href="../../assets/images/aws-favicon.ico">
-      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.0.1">
+      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.0.2">
     
     
       
@@ -827,7 +827,7 @@
 <div class="admonition attention">
 <p class="admonition-title">Attention</p>
 <p><p style="font-size:16px;">
-  Throughout the workshop, keep in mind where you need to add the Account ID (replace <ACCOUNT_ID>), correctly use pathing and change the region specified if needed (although if you are taking this as part of an AWS event, just use the already specified us-east-2.) Missing any of these items can result in problems and errors like <strong>"An error occurred (MalformedPolicyDocument) when calling the CreatePolicy operation: The policy failed legacy parsing"</strong>.
+  Throughout the workshop, keep in mind where you need to add the Account ID (replace <ACCOUNT_ID>), correctly use pathing and change the region specified if needed (although if you are taking this as part of an AWS event, just use the already specified us-east-1.) Missing any of these items can result in problems and errors like <strong>"An error occurred (MalformedPolicyDocument) when calling the CreatePolicy operation: The policy failed legacy parsing"</strong>.
 </p></p>
 </div>
 <div class="admonition tip">
@@ -837,7 +837,7 @@
 </p></p>
 </div>
 <h2 id="setup-instructions">Setup Instructions</h2>
-<p>To setup your environment expand the appropriate choice of the following drop-downs, perform the tasks, and then move on to <strong>Task 1</strong></p>
+<p>To setup your environment expand the appropriate choice from the following drop-downs, perform the tasks, and then move on to <strong>Task 1</strong></p>
 <details class="info"><summary>Click here if you're at an <em>AWS event</em> where the <em>Event Engine</em> is being used</summary><p><p style="font-size:20px;">
   <strong>Step 1</strong> : Retrieve temporary credentials from Event Engine
 </p></p>
@@ -846,7 +846,7 @@
 <li>Enter your <strong>team hash</strong> code. </li>
 <li>You can set your team name by clicking <strong>Set Team Name</strong></li>
 <li>Click <strong>AWS Console</strong></li>
-<li>Copy the <strong>export</strong> commmands for the temporary credentials (you will need these in the next step.)</li>
+<li>Copy the <strong>export</strong> commmands under the <strong>Credentials</strong> section for the temporary credentials (you will need these in the next step.)</li>
 </ol>
 <p><p style="font-size:20px;">
   <strong>Step 2</strong> : Connect to the AWS Console via Event Engine and browse to the AWS Cloud9 IDE
@@ -855,9 +855,9 @@
 <li>Click <strong>Open Console</strong> from the Event Engine window</li>
 <li>Navigate to the <a href="https://us-east-1.console.aws.amazon.com/cloud9/home" target="_blank">AWS Cloud9</a> console.</li>
 <li>Click on <strong>Open IDE</strong> in the <code>workshop-environment</code> under <strong>Your environments</strong></li>
-<li>Click the <strong>gear</strong> icon in the upper right hand corner to open the Cloud9 Preferences. Scroll down in the settings, click on the <strong>AWS SETTINGS</strong> section and click the button next to <strong>AWS Managed Temporary Credentials</strong> to disable this.</li>
+<li>Click the <strong>gear image</strong> icon in the upper right hand corner to open the Cloud9 Preferences. Scroll down in the settings, click on the <strong>AWS SETTINGS</strong> section and click the button next to <strong>AWS managed temporary credentials</strong> to disable this.</li>
 <li>Now go to a Cloud9 terminal tab (tab title will start with the words <strong>bash</strong>). Paste in the <strong>export</strong> commands you copied from Event Engine.</li>
-<li>Now you can run commands from within the Cloud9 IDE using the temporary credentials from Event Engine. </li>
+<li>Now you can run commands from within the Cloud9 IDE using the temporary credentials from Event Engine. If you open a new tab you will need to paste in the credentials again.</li>
 <li>Move on to <strong>Task 1</strong>.</li>
 </ol>
 </details>
@@ -975,7 +975,7 @@
             <span class="nt">&quot;Sid&quot;</span><span class="p">:</span> <span class="s2">&quot;CreateLogGroup&quot;</span><span class="p">,</span>
             <span class="nt">&quot;Effect&quot;</span><span class="p">:</span> <span class="s2">&quot;Allow&quot;</span><span class="p">,</span>
             <span class="nt">&quot;Action&quot;</span><span class="p">:</span> <span class="s2">&quot;logs:CreateLogGroup&quot;</span><span class="p">,</span>
-            <span class="nt">&quot;Resource&quot;</span><span class="p">:</span> <span class="s2">&quot;arn:aws:logs:us-east-2:&lt;ACCOUNT_ID&gt;:*&quot;</span>
+            <span class="nt">&quot;Resource&quot;</span><span class="p">:</span> <span class="s2">&quot;arn:aws:logs:us-east-1:&lt;ACCOUNT_ID&gt;:*&quot;</span>
         <span class="p">},</span>
         <span class="p">{</span>
             <span class="nt">&quot;Sid&quot;</span><span class="p">:</span> <span class="s2">&quot;CreateLogStreamandEvents&quot;</span><span class="p">,</span>
@@ -984,7 +984,7 @@
                 <span class="s2">&quot;logs:CreateLogStream&quot;</span><span class="p">,</span>
                 <span class="s2">&quot;logs:PutLogEvents&quot;</span>
             <span class="p">],</span>
-            <span class="nt">&quot;Resource&quot;</span><span class="p">:</span> <span class="s2">&quot;arn:aws:logs:us-east-2:&lt;ACCOUNT_ID&gt;:log-group:/aws/lambda/*:*&quot;</span>
+            <span class="nt">&quot;Resource&quot;</span><span class="p">:</span> <span class="s2">&quot;arn:aws:logs:us-east-1:&lt;ACCOUNT_ID&gt;:log-group:/aws/lambda/*:*&quot;</span>
         <span class="p">},</span>
         <span class="p">{</span>
             <span class="nt">&quot;Sid&quot;</span><span class="p">:</span> <span class="s2">&quot;AllowedS3GetObject&quot;</span><span class="p">,</span>
@@ -992,7 +992,7 @@
             <span class="nt">&quot;Action&quot;</span><span class="p">:</span> <span class="p">[</span>
                 <span class="s2">&quot;s3:List*&quot;</span>
             <span class="p">],</span>
-            <span class="nt">&quot;Resource&quot;</span><span class="p">:</span> <span class="s2">&quot;arn:aws:s3:::shared-logging-&lt;ACCOUNT_ID&gt;-us-east-2-data&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;Resource&quot;</span><span class="p">:</span> <span class="s2">&quot;arn:aws:s3:::shared-logging-&lt;ACCOUNT_ID&gt;-us-east-1-data&quot;</span><span class="p">,</span>
              <span class="nt">&quot;Condition&quot;</span><span class="p">:</span> <span class="p">{</span>
                 <span class="nt">&quot;StringEquals&quot;</span><span class="p">:</span> <span class="p">{</span>
                     <span class="nt">&quot;s3:prefix&quot;</span><span class="p">:</span> <span class="s2">&quot;webadmins&quot;</span>
@@ -1073,7 +1073,7 @@
             <span class="nt">&quot;Sid&quot;</span><span class="p">:</span> <span class="s2">&quot;LambdaFullAccess&quot;</span><span class="p">,</span>
             <span class="nt">&quot;Effect&quot;</span><span class="p">:</span> <span class="s2">&quot;Allow&quot;</span><span class="p">,</span>
             <span class="nt">&quot;Action&quot;</span><span class="p">:</span> <span class="s2">&quot;lambda:*&quot;</span><span class="p">,</span>
-            <span class="nt">&quot;Resource&quot;</span><span class="p">:</span> <span class="s2">&quot;arn:aws:lambda:us-east-2:&lt;ACCOUNT_ID&gt;:function:*&quot;</span>
+            <span class="nt">&quot;Resource&quot;</span><span class="p">:</span> <span class="s2">&quot;arn:aws:lambda:us-east-1:&lt;ACCOUNT_ID&gt;:function:*&quot;</span>
         <span class="p">},</span>
         <span class="p">{</span>
             <span class="nt">&quot;Sid&quot;</span><span class="p">:</span> <span class="s2">&quot;PassRoletoLambda&quot;</span><span class="p">,</span>
@@ -1274,7 +1274,7 @@
       
     </div>
     
-      <script src="../../assets/javascripts/application.b806dc00.js"></script>
+      <script src="../../assets/javascripts/application.d9aa80ab.js"></script>
       
       <script>app.initialize({version:"1.0.4",url:{base:"../.."}})</script>
       

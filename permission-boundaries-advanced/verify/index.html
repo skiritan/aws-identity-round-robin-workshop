@@ -38,7 +38,7 @@
         <meta name="lang:search.tokenizer" content="[\s\-]+">
       
       <link rel="shortcut icon" href="../../assets/images/aws-favicon.ico">
-      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.0.1">
+      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.0.2">
     
     
       
@@ -826,7 +826,7 @@ Permission policy name: **webadminspermissionpolicy**
 <div class="admonition attention">
 <p class="admonition-title">Attention</p>
 <p><p style="font-size:16px;">
-  As in the Build phase, keep in mind where you need to add the Account ID, correctly use pathing and change the region specified if needed (although if you are taking this as part of an AWS event, just use the already specified us-east-2.) Also you will need to use the --profile parameter for all of the commands in the following tasks.
+  As in the Build phase, keep in mind where you need to add the Account ID, correctly use pathing and change the region specified if needed (although if you are taking this as part of an AWS event, just use the already specified us-east-1.) Also you will need to use the --profile parameter for all of the commands in the following tasks.
 </p></p>
 </div>
 <h2 id="task-1-create-a-policy">Task 1 <small>Create a policy</small></h2>
@@ -933,14 +933,14 @@ Permission policy name: **webadminspermissionpolicy**
 <ul>
 <li>Create a Lambda function</li>
 </ul>
-<div class="codehilite"><pre><span></span>aws lambda create-function --function-name verifyfunction --runtime nodejs8.10 --role arn:aws:iam::&lt;ACCOUNT_ID_FROM_OTHER_TEAM&gt;:role/webadmins/NAME_OF_ROLE --handler index.handler --region us-east-2 --zip-file fileb://lambdafunction.zip --profile webadmins
+<div class="codehilite"><pre><span></span>aws lambda create-function --function-name verifyfunction --runtime nodejs8.10 --role arn:aws:iam::&lt;ACCOUNT_ID_FROM_OTHER_TEAM&gt;:role/webadmins/NAME_OF_ROLE --handler index.handler --region us-east-1 --zip-file fileb://lambdafunction.zip --profile webadmins
 </pre></div>
 
 
 <ul>
 <li>Invoke the Lambda function and make sure it is generating logs in CloudWatch logs and that it is able to list the objects in the bucket.</li>
 </ul>
-<div class="codehilite"><pre><span></span>aws lambda invoke --function-name verifyfunction --region us-east-2 --invocation-type RequestResponse outputfile.txt --profile webadmins
+<div class="codehilite"><pre><span></span>aws lambda invoke --function-name verifyfunction --region us-east-1 --invocation-type RequestResponse outputfile.txt --profile webadmins
 </pre></div>
 
 
@@ -1054,7 +1054,7 @@ Permission policy name: **webadminspermissionpolicy**
       
     </div>
     
-      <script src="../../assets/javascripts/application.b806dc00.js"></script>
+      <script src="../../assets/javascripts/application.d9aa80ab.js"></script>
       
       <script>app.initialize({version:"1.0.4",url:{base:"../.."}})</script>
       
