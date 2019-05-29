@@ -1,8 +1,10 @@
 # Serverless Identity Round
 
+<!--
 Welcome to the world of serverless!  Now you may be asking yourself, *What is serverless*? Well, it is an architecture paradigm that allows you to create your applications without provisioning or managing any servers.  Sounds great, right?  Organizations look at building serverless applications as a way of improving their scalability and reducing their operational overhead.  The responsibility of the underlying infrastructure is shifted off your plate so you can spend more time focusing on building your applications.
 
 So with less infrastructure to manage you are no longer responsible for patching  your operating systems and the attack surface you need to worry about has been significantly reduced.  But with the use of serverless technologies comes *other* responsibility.  When you hear the word serverless you may think specifically of <a href="https://aws.amazon.com/lambda/" target="_blank">AWS Lambda</a> but it is important to remember that there are other services used within a serverless application and securing an application involves more than just securing your Lambda functions.  
+-->
 
 In this round you will be focused on improving the identity controls of the WildRydes serverless application (which is borrowed from <a href="https://github.com/aws-samples/aws-serverless-workshops/tree/master/WebApplication" target="_blank">aws-serverless-workshops</a> and retrofitted for the purposes of this round).  You will get exposed to different identity concepts through the use of a variety of services such as <a href="https://aws.amazon.com/iam/" target="_blank">AWS IAM</a>, <a href="https://aws.amazon.com/s3/" target="_blank">Amazon S3</a>, <a href="https://aws.amazon.com/cloudfront/" target="_blank">Amazon CloudFront</a>, and <a href="https://aws.amazon.com/cognito/" target="_blank">Amazon Cognito</a>.  Upon completion you should have a better idea of how to use native AWS identity controls to improve the security posture of a serverless application.
 
@@ -32,29 +34,33 @@ This round is broken down into two tasks, both with a Build and Verify phase. Th
 
 To setup your environment please expand one of the following dropdown sections (depending on how you're doing this workshop) and follow the instructions: 
 
-!!! info "AWS Sponsored Event"
-    * Browse to the URL provided to you and login. 
+??? info  "Click here if you're at an *AWS event* where the *Event Engine* is being used" 
 
-    * After you login click the **AWS Account** box, then click on the Account ID displayed below that (the red box in the image.) You should see a link below that for the **Management console**. Click on that and you will be taken to the AWS console. 
+    <p style="font-size:20px;">
+      **Step 1** : Open the AWS Console
+    </p>
+	
+	1. Navigate to the <a href="https://dashboard.eventengine.run" target="_blank">Event Engine dashboard</a>
+	2. Enter your **team hash** code. 
+	3. Click **AWS Console**.  The CloudFormation template for this round has already been prerun.
 
-    ![login-page](./images/login.png)
+??? info "Click here if you're running this individually in your own AWS Account"
+    Launch the CloudFormation stack below to setup the WildRydes application:
 
-Launch the CloudFormation stack below to setup the WildRydes application:
+    Region| Deploy
+    ------|-----
+    US East 1 (N. Virginia) | <a href="https://console.aws.amazon.com/cloudformation/home?region=us-east-1#/stacks/new?stackName=Identity-RR-Wksp-Serverless-Round&templateURL=https://s3-us-west-2.amazonaws.com/sa-security-specialist-workshops-us-west-2/identity-workshop/serverless/environment.yml" target="_blank">![Deploy in us-east-1](./images/deploy-to-aws.png)</a>
 
-Region| Deploy
-------|-----
-US East 1 (N. Virginia) | <a href="https://console.aws.amazon.com/cloudformation/home?region=us-east-1#/stacks/new?stackName=Identity-RR-Wksp-Serverless-Round&templateURL=https://s3-us-west-2.amazonaws.com/sa-security-specialist-workshops-us-west-2/identity-workshop/serverless/environment.yml" target="_blank">![Deploy in us-east-1](./images/deploy-to-aws.png)</a>
+    1. Click the **Deploy to AWS** button above (right click and open in a new tab).  This will automatically take you to the console to run the template.  
 
-1. Click the **Deploy to AWS** button above (right click and open in a new tab).  This will automatically take you to the console to run the template.  
+    2. Click **Next** on the **Specify Template** section.
 
-2. Click **Next** on the **Specify Template** section.
+    3. On the **Specify Details** step click **Next**. 
 
-3. On the **Specify Details** step click **Next**. 
+    4. Click **Next** on the **Options** section.
+    5. Finally, acknowledge that the template will create IAM roles under **Capabilities** and click **Create**.
 
-4. Click **Next** on the **Options** section.
-5. Finally, acknowledge that the template will create IAM roles under **Capabilities** and click **Create**.
-
-This will bring you back to the CloudFormation console. You can refresh the page to see the stack starting to create. Before moving on, make sure the stack is in a **CREATE_COMPLETE**.
+    This will bring you back to the CloudFormation console. You can refresh the page to see the stack starting to create. Before moving on, make sure the stack is in a **CREATE_COMPLETE**.
 
 ## WildRydes identity overhaul
 
@@ -62,7 +68,7 @@ You just joined a new DevOps team who manages a suite of animal-based ride shari
 
 ## View your application
 1. Open the <a href="https://console.aws.amazon.com/cloudformation/home?region=us-east-1#/stacks?filter=active" target="_blank">Amazon CloudFormation</a> console (us-east-1)
-2. Click on the **Identity-RR-Wksp-Serverless-Round** stack.
+2. Click on the **Identity-RR-Wksp-Serverless-Round** stack or the **module-a7932bd25ca64049a57fd5bb055782db** stack (this is the stack name when created using Event Engine).
 3. Click on **Outputs** and click on **WebsiteCloudFrontURL**.
 
 As part of the hand off to your team, the product team shared their vision for the application and stated that future iterations will include more dynamic features.  After doing an evaluation of the architecture you determined that the WildRydes application is a static website hosted in an S3 bucket.  There is a CloudFront Distribution setup to be used as a content delivery network and a Cognito User Pool for user management.

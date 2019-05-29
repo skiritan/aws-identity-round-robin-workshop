@@ -63,7 +63,7 @@ Now that the principal is restricted to the identity associated with the CloudFr
 Now that the bucket policy has been updated, go validate that you can not access the website using an S3 URL.
 
 1. Open the <a href="https://console.aws.amazon.com/cloudformation/home?region=us-east-1#/stacks?filter=active" target="_blank">Amazon CloudFormation</a> console (us-east-1)
-2. Click on the **Identity-RR-Wksp-Serverless-Round** stack.
+2. Click on the **Identity-RR-Wksp-Serverless-Round** stack or the **module-a7932bd25ca64049a57fd5bb055782db** stack (this is the stack name when created using Event Engine).
 3. Click on **Outputs** and click on **WebsiteS3URL**.
 
 !!! question "Are you still able to access the site using the S3 URL?"
