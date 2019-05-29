@@ -38,7 +38,7 @@
         <meta name="lang:search.tokenizer" content="[\s\-]+">
       
       <link rel="shortcut icon" href="../../assets/images/aws-favicon.ico">
-      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.0.2">
+      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.0.1">
     
     
       
@@ -852,7 +852,27 @@
 </table>
 <h2 id="sign-in-to-aws">Sign in to AWS</h2>
 <p>Depending on how you're doing this workshop, expand one of the following dropdowns to sign into AWS.</p>
-<details class="info"><summary>AWS-sponsored event</summary><ol>
+<details class="info"><summary>Click here if you're at an <em>AWS event</em> where the <em>Event Engine</em> is being used</summary><p><p style="font-size:20px;">
+  <strong>Step 1</strong> : Retrieve temporary credentials from Event Engine
+</p></p>
+<div class="codehilite"><pre><span></span><span class="nt">1</span><span class="o">.</span> <span class="nt">Navigate</span> <span class="nt">to</span> <span class="nt">the</span> <span class="o">&amp;</span><span class="nt">lt</span><span class="o">;</span><span class="nt">a</span> <span class="nt">href</span><span class="o">=</span><span class="s2">&quot;https://dashboard.eventengine.run&quot;</span> <span class="nt">target</span><span class="o">=</span><span class="s2">&quot;_blank&quot;</span><span class="o">&amp;</span><span class="nt">gt</span><span class="o">;</span><span class="nt">Event</span> <span class="nt">Engine</span> <span class="nt">dashboard</span><span class="o">&amp;</span><span class="nt">lt</span><span class="o">;/</span><span class="nt">a</span><span class="o">&amp;</span><span class="nt">gt</span><span class="o">;</span>
+<span class="nt">2</span><span class="o">.</span> <span class="nt">Enter</span> <span class="nt">your</span> <span class="o">**</span><span class="nt">team</span> <span class="nt">hash</span><span class="o">**</span> <span class="nt">code</span><span class="o">.</span>
+<span class="nt">3</span><span class="o">.</span> <span class="nt">You</span> <span class="nt">can</span> <span class="nt">set</span> <span class="nt">your</span> <span class="nt">team</span> <span class="nt">name</span> <span class="nt">by</span> <span class="nt">clicking</span> <span class="o">**</span><span class="nt">Set</span> <span class="nt">Team</span> <span class="nt">Name</span><span class="o">**</span>
+<span class="nt">3</span><span class="o">.</span> <span class="nt">Click</span> <span class="o">**</span><span class="nt">AWS</span> <span class="nt">Console</span><span class="o">**</span>
+<span class="nt">4</span><span class="o">.</span> <span class="nt">Copy</span> <span class="nt">the</span> <span class="o">**</span><span class="nt">export</span><span class="o">**</span> <span class="nt">commmands</span> <span class="nt">for</span> <span class="nt">the</span> <span class="nt">temporary</span> <span class="nt">credentials</span> <span class="o">(</span><span class="nt">you</span> <span class="nt">will</span> <span class="nt">need</span> <span class="nt">these</span> <span class="nt">in</span> <span class="nt">the</span> <span class="nt">next</span> <span class="nt">step</span><span class="o">.)</span>
+</pre></div>
+
+
+<p><p style="font-size:20px;">
+  <strong>Step 2</strong> : Connect to the AWS Console via Event Engine and browse to the AWS Cloud9 IDE
+</p></p>
+<div class="codehilite"><pre><span></span><span class="nt">1</span><span class="o">.</span> <span class="nt">Click</span> <span class="o">**</span><span class="nt">Open</span> <span class="nt">Console</span><span class="o">**</span> <span class="nt">from</span> <span class="nt">the</span> <span class="nt">Event</span> <span class="nt">Engine</span> <span class="nt">window</span>
+<span class="nt">2</span><span class="o">.</span> <span class="nt">Navigate</span> <span class="nt">to</span> <span class="nt">the</span> <span class="o">&amp;</span><span class="nt">lt</span><span class="o">;</span><span class="nt">a</span> <span class="nt">href</span><span class="o">=</span><span class="s2">&quot;https://us-east-1.console.aws.amazon.com/cloud9/home&quot;</span> <span class="nt">target</span><span class="o">=</span><span class="s2">&quot;_blank&quot;</span><span class="o">&amp;</span><span class="nt">gt</span><span class="o">;</span><span class="nt">AWS</span> <span class="nt">Cloud9</span><span class="o">&amp;</span><span class="nt">lt</span><span class="o">;/</span><span class="nt">a</span><span class="o">&amp;</span><span class="nt">gt</span><span class="o">;</span> <span class="nt">console</span><span class="o">.</span>
+</pre></div>
+
+
+</details>
+<details class="info"><summary>Click here if you're at an AWS-sponsored event and AWS provided an account to you</summary><ol>
 <li>
 <p>In a separate tab in your web browser, go to the URL provided to you and login. </p>
 </li>
@@ -862,7 +882,7 @@
 </ol>
 <p><img alt="login-page" src="../images/login.png" /></p>
 </details>
-<details class="info"><summary>Individual or an event not sponsored by AWS</summary><p>In a separate tab in your web browser, go to https://aws.amazon.com/console and log into your account.</p>
+<details class="info"><summary>Click here if you are using your own AWS account (whether you are at an AWS event, a separate event or online)</summary><p>In a separate tab in your web browser, go to https://aws.amazon.com/console and log into your account.</p>
 </details>
 <h2 id="enable-macie">Enable Macie</h2>
 <ol>
@@ -1185,7 +1205,7 @@ After you to this the SecOperator role label will no longer appear on your conso
       
     </div>
     
-      <script src="../../assets/javascripts/application.d9aa80ab.js"></script>
+      <script src="../../assets/javascripts/application.b806dc00.js"></script>
       
       <script>app.initialize({version:"1.0.4",url:{base:"../.."}})</script>
       
