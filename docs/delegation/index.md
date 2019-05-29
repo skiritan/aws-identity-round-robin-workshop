@@ -23,7 +23,7 @@ This round is broken down into Build and Verify Phases.
 
 * **BUILD** (45 min): At a high level, in the Build Phase you will do the following:
 
-1. Build the environment using AWS CloudFormation in the us-west-2 (Oregon) region.
+1. Build the environment using AWS CloudFormation in the us-east-1 (Northern Virginia) region.
 2. Perform further customization on the environments to restrict the capabilities of the Security Operator Role.
 3. Test your customizations.
 4. Pass your credentials to another team to verify the configuration of your environment.

@@ -17,15 +17,9 @@ Depending on how you're doing this workshop, expand one of the following dropdow
         1. Navigate to the <a href="https://dashboard.eventengine.run" target="_blank">Event Engine dashboard</a>
         2. Enter your **team hash** code.
         3. You can set your team name by clicking **Set Team Name**
-        3. Click **AWS Console**
-        4. Copy the **export** commmands for the temporary credentials (you will need these in the next step.)
-
-    <p style="font-size:20px;">
-      **Step 2** : Connect to the AWS Console via Event Engine and browse to the AWS Cloud9 IDE
-    </p>
-
-        1. Click **Open Console** from the Event Engine window
-        2. Navigate to the <a href="https://us-east-1.console.aws.amazon.com/cloud9/home" target="_blank">AWS Cloud9</a> console.
+        4. Click **AWS Console**
+        5. Copy the **export** commmands under the **Credentials** section for the temporary credentials (you will need these in the next step.)
+        6. Click **Open Console** from the Event Engine window
 
 ??? info "Click here if you're at an AWS-sponsored event and AWS provided an account to you"
 
@@ -45,7 +39,7 @@ Depending on how you're doing this workshop, expand one of the following dropdow
 Select **Macie** from the main console.
 Macie will open in a new browser tab.
 
-2. Select the us-west (Oregon) region in the Macie console.
+2. Select the us-east-1 (Northern Virginia) region in the Macie console.
 
 3. When the Macie console appears, if a **Getting Started** button appears, it means that Amazon Macie is disabled.
 In that case, click **Getting Started**, confirm that US West (Oregon) is selected as the region, and click **Enable Macie**.
@@ -68,7 +62,7 @@ Close the browser tab containing the Macie console.
 
 > **NOTE*:  The instructions that follow are based on the classic version of the CloudFormation console.  CloudFormation also offers a redesigned console that offers a different overall look and feel.  You are welcome to use the redesigned CloudFormation console.  If you choose to do so, you will notice some minor differences from the instructions below.
 
-1. Open the **Deploy to AWS** link that follows in a **new browser** tab to deploy the logging environment in the us-west-2 region:  [![Deploy IamEssInitAccount.yaml in us-west-2](./images/deploy-to-aws.png)](https://console.aws.amazon.com/cloudformation/home?region=us-west-2#/stacks/new?stackName=esslab&templateURL=https://s3.amazonaws.com/sa-security-specialist-workshops-us-west-2/identity-workshop/essround/EssInitAccount.yaml)
+1. Open the **Deploy to AWS** link that follows in a **new browser** tab to deploy the logging environment in the us-east-1 region:  [![Deploy IamEssInitAccount.yaml in us-east-1](./images/deploy-to-aws.png)](https://console.aws.amazon.com/cloudformation/home?region=us-east-1#/stacks/new?stackName=esslab&templateURL=https://s3.amazonaws.com/sa-security-specialist-workshops-us-east-1/identity-workshop/essround/EssInitAccount.yaml)
 
 3. In the new browser tab that you just opened, you will see the Select Template page.  Click **Next**.
 
