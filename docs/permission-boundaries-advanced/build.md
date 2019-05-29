@@ -24,7 +24,6 @@ To setup your environment expand the appropriate choice from the following drop-
 	
 	1. Navigate to the <a href="https://dashboard.eventengine.run" target="_blank">Event Engine dashboard</a>
 	2. Enter your **team hash** code. 
-	3. You can set your team name by clicking **Set Team Name**
 	3. Click **AWS Console**
 	4. Copy the **export** commmands under the **Credentials** section for the temporary credentials (you will need these in the next step.)
 
@@ -36,9 +35,15 @@ To setup your environment expand the appropriate choice from the following drop-
 	2. Navigate to the <a href="https://us-east-1.console.aws.amazon.com/cloud9/home" target="_blank">AWS Cloud9</a> console.
 	2. Click on **Open IDE** in the `workshop-environment` under **Your environments**
 	3. Click the **gear image** icon in the upper right hand corner to open the Cloud9 Preferences. Scroll down in the settings, click on the **AWS SETTINGS** section and click the button next to **AWS managed temporary credentials** to disable this.
-	5. Now go to a Cloud9 terminal tab (tab title will start with the words **bash**). Paste in the **export** commands you copied from Event Engine.
-	7. Now you can run commands from within the Cloud9 IDE using the temporary credentials from Event Engine. If you open a new tab you will need to paste in the credentials again.
-	8. Move on to **Task 1**.
+	5. Now go to a Cloud9 terminal tab (tab title will start with the words **bash**). 
+	6. Type `aws configure --profile detault` hit enter. Hit enter until you get to the choice **Default region name** and type in `us-east-1`. Hit enter and then enter again to leave this menu.
+	7. Then create a file in the `~/.aws` directory named `credentials` and paste in the credentials you copied from the Event Engine. You will need to remove the word **export** from the start of each line. Add `[default]` before all these rows. You should end up with something that looks like this:<br>
+	[default]</br>
+	AWS_ACCESS_KEY_ID=ASIA________</br>
+	AWS_SECRET_ACCESS_KEY=iZoD_______________________</br>
+	AWS_SESSION_TOKEN=FQoG_____________________________________________</br>
+	8. Now you can run commands from within the Cloud9 IDE using the temporary credentials from Event Engine. If you open a new tab you will need to paste in the credentials again.
+	9. Move on to **Task 1**.
 
 ??? info  "Click here if you're at an *AWS event* and *AWS provided an account to you*" 
 
@@ -277,7 +282,7 @@ Next you will create the policy that will be attached to the webadmins role.
 }
 ```
  
-* Create the policy named `webadminspermissionpolicy`:
+* Create a policy named `webadminspermissionpolicy`:
 ```
 aws iam create-policy --policy-name webadminspermissionpolicy --policy-document file://policydoc.json
 ```
