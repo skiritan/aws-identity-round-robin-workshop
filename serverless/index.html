@@ -38,7 +38,7 @@
         <meta name="lang:search.tokenizer" content="[\s\-]+">
       
       <link rel="shortcut icon" href="../assets/images/aws-favicon.ico">
-      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.0.1">
+      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.0.2">
     
     
       
@@ -824,8 +824,12 @@
                 
                 
                 <h1 id="serverless-identity-round">Serverless Identity Round</h1>
-<p>Welcome to the world of serverless!  Now you may be asking yourself, <em>What is serverless</em>? Well, it is an architecture paradigm that allows you to create your applications without provisioning or managing any servers.  Sounds great, right?  Organizations look at building serverless applications as a way of improving their scalability and reducing their operational overhead.  The responsibility of the underlying infrastructure is shifted off your plate so you can spend more time focusing on building your applications.</p>
-<p>So with less infrastructure to manage you are no longer responsible for patching  your operating systems and the attack surface you need to worry about has been significantly reduced.  But with the use of serverless technologies comes <em>other</em> responsibility.  When you hear the word serverless you may think specifically of <a href="https://aws.amazon.com/lambda/" target="_blank">AWS Lambda</a> but it is important to remember that there are other services used within a serverless application and securing an application involves more than just securing your Lambda functions.  </p>
+<!--
+Welcome to the world of serverless!  Now you may be asking yourself, *What is serverless*? Well, it is an architecture paradigm that allows you to create your applications without provisioning or managing any servers.  Sounds great, right?  Organizations look at building serverless applications as a way of improving their scalability and reducing their operational overhead.  The responsibility of the underlying infrastructure is shifted off your plate so you can spend more time focusing on building your applications.
+
+So with less infrastructure to manage you are no longer responsible for patching  your operating systems and the attack surface you need to worry about has been significantly reduced.  But with the use of serverless technologies comes *other* responsibility.  When you hear the word serverless you may think specifically of <a href="https://aws.amazon.com/lambda/" target="_blank">AWS Lambda</a> but it is important to remember that there are other services used within a serverless application and securing an application involves more than just securing your Lambda functions.  
+-->
+
 <p>In this round you will be focused on improving the identity controls of the WildRydes serverless application (which is borrowed from <a href="https://github.com/aws-samples/aws-serverless-workshops/tree/master/WebApplication" target="_blank">aws-serverless-workshops</a> and retrofitted for the purposes of this round).  You will get exposed to different identity concepts through the use of a variety of services such as <a href="https://aws.amazon.com/iam/" target="_blank">AWS IAM</a>, <a href="https://aws.amazon.com/s3/" target="_blank">Amazon S3</a>, <a href="https://aws.amazon.com/cloudfront/" target="_blank">Amazon CloudFront</a>, and <a href="https://aws.amazon.com/cognito/" target="_blank">Amazon Cognito</a>.  Upon completion you should have a better idea of how to use native AWS identity controls to improve the security posture of a serverless application.</p>
 <p><strong>AWS Service/Feature Coverage</strong>: </p>
 <ul>
@@ -849,19 +853,17 @@
 <p><a href="./Identity-RR-Serverless-Round.pdf" target="_blank">Workshop Presentation Powerpoint</a></p>
 <h2 id="environment-setup">Environment setup</h2>
 <p>To setup your environment please expand one of the following dropdown sections (depending on how you're doing this workshop) and follow the instructions: </p>
-<div class="admonition info">
-<p class="admonition-title">AWS Sponsored Event</p>
-<ul>
-<li>
-<p>Browse to the URL provided to you and login. </p>
-</li>
-<li>
-<p>After you login click the <strong>AWS Account</strong> box, then click on the Account ID displayed below that (the red box in the image.) You should see a link below that for the <strong>Management console</strong>. Click on that and you will be taken to the AWS console. </p>
-</li>
-</ul>
-<p><img alt="login-page" src="images/login.png" /></p>
-</div>
-<p>Launch the CloudFormation stack below to setup the WildRydes application:</p>
+<details class="info"><summary>Click here if you're at an <em>AWS event</em> where the <em>Event Engine</em> is being used</summary><p><p style="font-size:20px;">
+  <strong>Step 1</strong> : Open the AWS Console
+</p></p>
+<ol>
+<li>Navigate to the <a href="https://dashboard.eventengine.run" target="_blank">Event Engine dashboard</a></li>
+<li>Enter your <strong>team hash</strong> code. </li>
+<li>You can set your team name by clicking <strong>Set Team Name</strong></li>
+<li>Click <strong>AWS Console</strong>.  The CloudFormation template for this round has already been prerun.</li>
+</ol>
+</details>
+<details class="info"><summary>Click here if you're running this individually in your own AWS Account</summary><p>Launch the CloudFormation stack below to setup the WildRydes application:</p>
 <table>
 <thead>
 <tr>
@@ -892,12 +894,13 @@
 <li>Finally, acknowledge that the template will create IAM roles under <strong>Capabilities</strong> and click <strong>Create</strong>.</li>
 </ol>
 <p>This will bring you back to the CloudFormation console. You can refresh the page to see the stack starting to create. Before moving on, make sure the stack is in a <strong>CREATE_COMPLETE</strong>.</p>
+</details>
 <h2 id="wildrydes-identity-overhaul">WildRydes identity overhaul</h2>
 <p>You just joined a new DevOps team who manages a suite of animal-based ride sharing applications.  Given your security background you've been embedded on the team to take the lead on security related tasks, evangelize security best practices, and represent your team when interacting with your security organization.  Recently, your team inherited a new application; WildRydes.</p>
 <h2 id="view-your-application">View your application</h2>
 <ol>
 <li>Open the <a href="https://console.aws.amazon.com/cloudformation/home?region=us-east-1#/stacks?filter=active" target="_blank">Amazon CloudFormation</a> console (us-east-1)</li>
-<li>Click on the <strong>Identity-RR-Wksp-Serverless-Round</strong> stack.</li>
+<li>Click on the <strong>Identity-RR-Wksp-Serverless-Round</strong> stack or the <strong>module-a7932bd25ca64049a57fd5bb055782db</strong> stack (this is the stack name when created using Event Engine).</li>
 <li>Click on <strong>Outputs</strong> and click on <strong>WebsiteCloudFrontURL</strong>.</li>
 </ol>
 <p>As part of the hand off to your team, the product team shared their vision for the application and stated that future iterations will include more dynamic features.  After doing an evaluation of the architecture you determined that the WildRydes application is a static website hosted in an S3 bucket.  There is a CloudFront Distribution setup to be used as a content delivery network and a Cognito User Pool for user management.</p>
@@ -992,7 +995,7 @@
       
     </div>
     
-      <script src="../assets/javascripts/application.b806dc00.js"></script>
+      <script src="../assets/javascripts/application.d9aa80ab.js"></script>
       
       <script>app.initialize({version:"1.0.4",url:{base:".."}})</script>
       
