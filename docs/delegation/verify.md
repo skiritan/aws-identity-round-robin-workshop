@@ -69,11 +69,17 @@ Discuss any variances you find and share them with the team that built the envir
 
 In order to prevent charges to your account we recommend cleaning up the infrastructure that was created, especially if you are doing other Identity rounds. Expand one of the following dropdowns and follow the instructions:
 
-??? info "AWS Sponsored Event"
+??? info  "Click here if you're at an *AWS event* where the *Event Engine* is being used"
+
+    Follow the steps below to remove the core componenets.
+
+    1. [Disable Amazon Macie](https://docs.aws.amazon.com/macie/latest/userguide/macie-disable.html).
+
+??? info "Click here if you're at an AWS-sponsored event and AWS provided an account to you"
 
     No cleanup required! The responsibility falls to AWS.
 
-??? info "Individual or an event not sponsored by AWS"
+??? info "Click here if you are using your own AWS account (whether you are at an AWS event, a separate event or online)"
 
     Follow the steps below to remove the core componenets.
 
