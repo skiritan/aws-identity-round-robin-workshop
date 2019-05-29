@@ -8,18 +8,18 @@
 
 Depending on how you're doing this workshop, expand one of the following dropdowns to sign into AWS.
 
-??? info  "Click here if you're at an *AWS event* where the *Event Engine* is being used"
+??? info  "Click here if you're at an *AWS event* where the *Event Engine* is being used" 
 
     <p style="font-size:20px;">
       **Step 1** : Retrieve temporary credentials from Event Engine
     </p>
-
+	
 	1. Navigate to the <a href="https://dashboard.eventengine.run" target="_blank">Event Engine dashboard</a>
-        2. Enter your **team hash** code.
-        3. You can set your team name by clicking **Set Team Name**
-        4. Click **AWS Console**
-        5. Copy the **export** commmands under the **Credentials** section for the temporary credentials (you will need these in the next step.)
-        6. Click **Open Console** from the Event Engine window
+	2. Enter your **team hash** code. 
+	3. Click **AWS Console**
+	4. Copy the **export** commmands under the **Credentials** section for the temporary credentials (you will need these in the next step.)
+	5. Click **Open Console** from the Event Engine window
+	6. Navigate to the <a href="https://us-east-1.console.aws.amazon.com/cloud9/home" target="_blank">AWS Cloud9</a> console.
 
 ??? info "Click here if you're at an AWS-sponsored event and AWS provided an account to you"
 
