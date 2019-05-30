@@ -68,7 +68,7 @@ aws iam create-policy --policy-name NAME_OF_POLICY --policy-document file://veri
 
 The role you create here will be passed to the Lambda function you create in the next task.
 
-* Use the following JSON to create a file named **`verifytrustpolicy.json`** (replace the Account ID): 
+* Use the following JSON to create a file named **`verifytrustpolicy.json`**: 
 ```json
 {
   "Version": "2012-10-17",
