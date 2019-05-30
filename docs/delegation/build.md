@@ -41,7 +41,7 @@ Macie will open in a new browser tab.
 2. Select the us-east-1 (Northern Virginia) region in the Macie console.
 
 3. When the Macie console appears, if a **Getting Started** button appears, it means that Amazon Macie is disabled.
-In that case, click **Getting Started**, confirm that US West (Oregon) is selected as the region, and click **Enable Macie**.
+In that case, click **Getting Started**, confirm that US East (N. Virginia) is selected as the region, and click **Enable Macie**.
 This may take from several seconds to complete.
 The Macie console will appear after Macie has been enabled.
 Close the browser tab containing the Macie console.
