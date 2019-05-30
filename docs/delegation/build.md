@@ -57,7 +57,7 @@ Close the browser tab containing the Macie console.
 2. Return to the AWS Console, sigining into the account again if necessary. Select **GuardDuty** from the main console.  
 3. If you see a **Get Started** button, click it.
 
-4. If the region is not set to Oregon, select Oregon for the region.
+4. If the region is not set to Northern Virginia, select Northern Virginia (or N. Virginia) for the region.
 
 5. Click **Enable GuardDuty**.
 
