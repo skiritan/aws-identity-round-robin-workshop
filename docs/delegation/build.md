@@ -20,6 +20,10 @@ Depending on how you're doing this workshop, expand one of the following dropdow
 	4. Copy the **export** commmands under the **Credentials** section for the temporary credentials (you will need these in the next step.)
 	5. Click **Open Console** from the Event Engine window
 
+| IMPORTANT NOTE!  |
+|---|
+| The AWS Console sometimes displays news and information about AWS features.  Feel free to close such windows to give you the maximum amount of free space on your screen.. |
+
 ??? info "Click here if you're at an AWS-sponsored event and AWS provided an account to you"
 
     1.  In a separate tab in your web browser, go to the URL provided to you and login. 
@@ -242,7 +246,7 @@ You can also select a color that will be used to display the role you assume in 
 6. Now go to the Amazon Inspector Console.  Click **Assessment Templates** and check the box to the left of both of the template names that begin with *LampInspectorAssessmentTemplate* and click **Delete**.  You will be asked to confirm the deletion.  Click **Yes**.  After 30 or so seconds you will see an error message telling you that you are not authorized to call the inspector:DeleteAssessmentTemplate action.  This is because you have read-only access to Inspector.
 
 
-7. Now go to the GuardDuty console, click **Settings**, change the **Updated findings** field to a different value, and click **Save settings**.  You will see an error message telling you that you are not authorized to perform the UpdateDetector action (the message may appear beneath the first IAM error message).  This is because you have read-only access to GuardDuty.
+7. Now go to the GuardDuty console, click **Settings**, change the **Updated findings** field to a different value, and click **Save settings**.  You will see an error message telling you that you are not authorized to perform the UpdateDetector action.  You may need to scroll up to see it.  This is because you have read-only access to GuardDuty.
 
 8.  Go to the Macie console, select the US West (Oregon) region, click on **Settings** and click on the Content Type icon.
 You will see a list of file types appear.

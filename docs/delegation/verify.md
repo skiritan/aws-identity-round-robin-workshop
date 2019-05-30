@@ -73,7 +73,7 @@ In order to prevent charges to your account we recommend cleaning up the infrast
 
     Follow the steps below to remove the core componenets.
 
-    1. [Disable Amazon Macie](https://docs.aws.amazon.com/macie/latest/userguide/macie-disable.html).
+    1. [Disable Amazon Macie](https://docs.aws.amazon.com/macie/latest/userguide/macie-disable.html).  You may need to "switch back" to the SecAdministrator role or sign into the console again to disable Macie.
 
 ??? info "Click here if you're at an AWS-sponsored event and AWS provided an account to you"
 
