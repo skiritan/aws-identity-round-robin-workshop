@@ -264,4 +264,6 @@ Close the Macie window.
 11. Now switch back to your default role.
 After you to this the SecOperator role label will no longer appear on your console.
 
-12. If you doing this workshop as part of a team, you will pass your account credentials to another team that will verify the configuration of your roles. After you do this click [here](./verify.md) to proceed to the Verify Phase and begin at the top.  If you are not doing this as part of a team click [here](./verify.md) and go to the Clean Up section towards the bottom.
+12. If you doing this workshop as part of a team **and** you have some time, exchange your account credentials with those of another team and click [here](./verify.md) to proceed to the Verify Phase and begin **at the top.**
+
+    Otherwise, proceed to the [Verify Phase](./verify.md) and go to the **Clean Up section towards the bottom**.
