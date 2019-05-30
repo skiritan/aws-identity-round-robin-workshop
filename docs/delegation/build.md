@@ -3,6 +3,10 @@
 | IMPORTANT NOTE!  |
 |---|
 | Please make sure you have read the **[scenario section](./index.md)** before continuing below. |
+|---|
+| The AWS Console sometimes displays news and information about AWS features.  Feel free to close such windows to give you the maximum amount of free space on your screen.. |
+| Additionally, if you are sharing accounts as part of a team, each of you should take turns using the console because some of the services can only be used by one person at a time.|
+
 
 ## Sign in to AWS
 
@@ -19,11 +23,6 @@ Depending on how you're doing this workshop, expand one of the following dropdow
 	3. Click **AWS Console**
 	4. Copy the **export** commmands under the **Credentials** section for the temporary credentials (you will need these in the next step.)
 	5. Click **Open Console** from the Event Engine window
-
-| IMPORTANT NOTES!  |
-|---|
-| The AWS Console sometimes displays news and information about AWS features.  Feel free to close such windows to give you the maximum amount of free space on your screen.. |
-| Additionally, if you are sharing accounts as part of a team, each of you should take turns using the console because some of the services can only be used by one person at a time.|
 
 ??? info "Click here if you're at an AWS-sponsored event and AWS provided an account to you"
 

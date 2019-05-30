@@ -11,15 +11,27 @@ Your goal in this section is to evaluate the security of the environments that w
 
 Depending on how you're doing this workshop, expand one of the following dropdowns to sign in to AWS.
 
-??? info "AWS-sponsored event"
+??? info  "Click here if you're at an *AWS event* where the *Event Engine* is being used" 
 
-    1. In a separate tab in your web browser, go to the URL provided to you and login. 
+    <p style="font-size:20px;">
+      **Step 1** : Retrieve temporary credentials from Event Engine
+    </p>
+	
+	1. Navigate to the <a href="https://dashboard.eventengine.run" target="_blank">Event Engine dashboard</a>
+	2. Enter your **team hash** code. 
+	3. Click **AWS Console**
+	4. Copy the **export** commmands under the **Credentials** section for the temporary credentials (you will need these in the next step.)
+	5. Click **Open Console** from the Event Engine window
 
-    2. After you login click the **AWS Account** box, then click on the Account ID displayed below that (the red box in the image.) You should see a link below that for the **Management console**. Click on that and you will be taken to the AWS console. 
+??? info "Click here if you're at an AWS-sponsored event and AWS provided an account to you"
+
+    1.  In a separate tab in your web browser, go to the URL provided to you and login. 
+
+    2.  After you login click the **AWS Account** box, then click on the Account ID displayed below that (the red box in the image.) You should see a link below that for the **Management console**. Click on that and you will be taken to the AWS console. 
 
     ![login-page](./images/login.png)
 
-??? info "Individual or an event not sponsored by AWS"
+??? info "Click here if you are using your own AWS account (whether you are at an AWS event, a separate event or online)"
 
     In a separate tab in your web browser, go to https://aws.amazon.com/console and log into your account.
 
