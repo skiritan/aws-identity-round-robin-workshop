@@ -812,7 +812,18 @@
 <p>In the previous phase, you tested the environment that <em>you</em> built.
 Your goal in this section is to evaluate the security of the environments that were built <em>by another team</em>.</p>
 <p>Depending on how you're doing this workshop, expand one of the following dropdowns to sign in to AWS.</p>
-<details class="info"><summary>AWS-sponsored event</summary><ol>
+<details class="info"><summary>Click here if you're at an <em>AWS event</em> where the <em>Event Engine</em> is being used</summary><p><p style="font-size:20px;">
+  <strong>Step 1</strong> : Retrieve temporary credentials from Event Engine
+</p></p>
+<ol>
+<li>Navigate to the <a href="https://dashboard.eventengine.run" target="_blank">Event Engine dashboard</a></li>
+<li>Enter your <strong>team hash</strong> code. </li>
+<li>Click <strong>AWS Console</strong></li>
+<li>Copy the <strong>export</strong> commmands under the <strong>Credentials</strong> section for the temporary credentials (you will need these in the next step.)</li>
+<li>Click <strong>Open Console</strong> from the Event Engine window</li>
+</ol>
+</details>
+<details class="info"><summary>Click here if you're at an AWS-sponsored event and AWS provided an account to you</summary><ol>
 <li>
 <p>In a separate tab in your web browser, go to the URL provided to you and login. </p>
 </li>
@@ -822,7 +833,7 @@ Your goal in this section is to evaluate the security of the environments that w
 </ol>
 <p><img alt="login-page" src="../images/login.png" /></p>
 </details>
-<details class="info"><summary>Individual or an event not sponsored by AWS</summary><p>In a separate tab in your web browser, go to https://aws.amazon.com/console and log into your account.</p>
+<details class="info"><summary>Click here if you are using your own AWS account (whether you are at an AWS event, a separate event or online)</summary><p>In a separate tab in your web browser, go to https://aws.amazon.com/console and log into your account.</p>
 </details>
 <h2 id="verify-the-security-operator-role">Verify the Security Operator role</h2>
 <ol>
