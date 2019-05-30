@@ -9,6 +9,10 @@
 In the previous phase, you tested the environment that *you* built.
 Your goal in this section is to evaluate the security of the environments that were built *by another team*.
 
+| IMPORTANT NOTE!  |
+|---|
+| Please make sure you use the **other team's credentials (login information)** for the verification below. |
+
 Depending on how you're doing this workshop, expand one of the following dropdowns to sign in to AWS.
 
 ??? info  "Click here if you're at an *AWS event* where the *Event Engine* is being used" 
