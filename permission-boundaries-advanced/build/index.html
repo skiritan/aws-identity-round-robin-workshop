@@ -856,7 +856,7 @@
 <li>Click on <strong>Open IDE</strong> in the <code>workshop-environment</code> under <strong>Your environments</strong></li>
 <li>Click the <strong>gear image</strong> icon in the upper right hand corner to open the Cloud9 Preferences. Scroll down in the settings, click on the <strong>AWS SETTINGS</strong> section and click the button next to <strong>AWS managed temporary credentials</strong> to disable this.</li>
 <li>Now go to a Cloud9 terminal tab (tab title will start with the words <strong>bash</strong>). </li>
-<li>Type <code>aws configure --profile detault</code> hit enter. Hit enter until you get to the choice <strong>Default region name</strong> and type in <code>us-east-1</code>. Hit enter and then enter again to leave this menu.</li>
+<li>Type <code>aws configure --profile default</code> hit enter. Hit enter until you get to the choice <strong>Default region name</strong> and type in <code>us-east-1</code>. Hit enter and then enter again to leave this menu.</li>
 <li>Then create a file in the <code>~/.aws</code> directory named <code>credentials</code> and paste in the credentials you copied from the Event Engine. You will need to remove the word <strong>export</strong> from the start of each line. Add <code>[default]</code> before all these rows. You should end up with something that looks like this:<br>
 [default]</br>
 AWS_ACCESS_KEY_ID=ASIA<strong><em>_</em></strong>_</br>
