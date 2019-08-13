@@ -38,7 +38,7 @@
         <meta name="lang:search.tokenizer" content="[\s\-]+">
       
       <link rel="shortcut icon" href="../../assets/images/aws-favicon.ico">
-      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.0.1">
+      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.0.2">
     
     
       
@@ -827,7 +827,7 @@
 <div class="admonition attention">
 <p class="admonition-title">Attention</p>
 <p><p style="font-size:16px;">
-  Throughout the workshop, keep in mind where you need to add the Account ID (replace <ACCOUNT_ID>), correctly use pathing and change the region specified if needed (although if you are taking this as part of an AWS event, just use the already specified us-east-1.) Missing any of these items can result in problems and errors like <strong>"An error occurred (MalformedPolicyDocument) when calling the CreatePolicy operation: The policy failed legacy parsing"</strong>.
+  Throughout the workshop, keep in mind where you need to replace <ACCOUNT_ID> with the correct Account ID, where you need to use pathing and also where you need to change the region (although if you are taking this as part of an AWS event, just use the already specified us-east-1.) Missing any of these items can result in problems and errors like <strong>"An error occurred (MalformedPolicyDocument) when calling the CreatePolicy operation: The policy failed legacy parsing"</strong>.
 </p></p>
 </div>
 <div class="admonition tip">
@@ -925,21 +925,21 @@ AWS_SESSION_TOKEN=FQoG<strong><em>_</em></strong><strong><em>_</em></strong><str
 </table>
 <ol>
 <li>Click the <strong>Deploy to AWS</strong> button above.  This will automatically take you to the console to run the template.  </li>
-<li>Click <strong>Next</strong> on the <strong>Select Template</strong> section.</li>
-<li>Click <strong>Next</strong> on the <strong>Specify Details</strong> section (the stack name will already be filled - you can change it or leave it as is)</li>
-<li>Click <strong>Next</strong> on the <strong>Options</strong> section.</li>
-<li>Finally, acknowledge that the template will create IAM roles under <strong>Capabilities</strong> and click <strong>Create</strong>.</li>
+<li>Click <strong>Next</strong> under the <strong>Create stack</strong> section.</li>
+<li>Click <strong>Next</strong> under the <strong>Specify stack details</strong> section (the stack name will already be filled - you can leave the other options in Parameters at their default settings too)</li>
+<li>Click <strong>Next</strong> under the <strong>Advanced options</strong> section.</li>
+<li>Finally, acknowledge that the template will create IAM resources with custom names under <strong>Capabilities</strong> and click <strong>Create stack</strong>.</li>
 </ol>
-<p>This will bring you back to the CloudFormation console. You can refresh the page to see the stack starting to create. Before moving on, make sure the stack is in a <strong>CREATE_COMPLETE</strong>.</p>
-<p>You will need to configure the <a href="https://aws.amazon.com/cli/" target="_blank"> AWS CLI </a> on your laptop or system of choice with credentials that allow at least IAM admin rights. Then move on to <strong>Task 1</strong>.</p>
+<p>This will bring you back to the CloudFormation console. You can refresh the stack set to see the latest status. Before moving on, make sure the stack finally shows <strong>CREATE_COMPLETE</strong>.</p>
+<p>You will need to configure the <a href="https://aws.amazon.com/cli/" target="_blank"> AWS CLI </a> on your laptop or system of choice with credentials that allow at least IAM admin permissions for the <strong>Build</strong> phase. Then move on to <strong>Task 1</strong>.</p>
 </details>
 <hr />
 <h3 id="_1"></h3>
 <h2 id="task-1-create-the-webadmins-role">Task 1 <small>Create the webadmins role</small></h2>
-<p>First you will create an IAM role for the webadmins (Initially this role will trust your own AWS account but in the <strong>Verify</strong> phase you will configure it to trust the other team's account):</p>
+<p>First you will create an IAM role for the webadmins (initially this role will trust your own AWS account but when you switch accounts with an another team in the <strong>Verify</strong> phase you will configure it to trust the other team's account):</p>
 <ul>
-<li>For many of the steps below you will need your account ID. To get that type in `aws sts get-caller-identity'. The account ID will be the first number listed after <strong>Account</strong>. You can do this from a second terminal window in Cloud9 so you can refer back to it later when needed.</li>
-<li>Use the following JSON to create a file named <strong><code>trustpolicy1.json</code></strong> for the trust policy (you can use Nano or your preferred text editor): </li>
+<li>For many of the steps below you will need your account ID. To get that type in `aws sts get-caller-identity'. The account ID will be the first number listed after <strong>Account</strong>. (If you are using Cloud9, you can do this from a second terminal window so you can refer back to it later when needed.)</li>
+<li>Use the following JSON to create a file named <strong><code>trustpolicy1.json</code></strong> for the trust policy (usingyour preferred text editor): </li>
 </ul>
 <div class="codehilite"><pre><span></span><span class="p">{</span>
   <span class="nt">&quot;Version&quot;</span><span class="p">:</span> <span class="s2">&quot;2012-10-17&quot;</span><span class="p">,</span>
@@ -1153,10 +1153,11 @@ AWS_SESSION_TOKEN=FQoG<strong><em>_</em></strong><strong><em>_</em></strong><str
 <li>Create an IAM role (and attach that policy) </li>
 <li>Create a Lambda function (and attach that role)</li>
 </ol>
-<p>If you are unsure what the commands are to test this, you can check in the <strong><a href="../verify/">VERIFY phase</a></strong> for all the details. When you have verified your work is correct, move on to the next task (<strong>Task 5</strong>) which will involve actually exchanging information so another team can verify your work. </p>
+<p>The instructions for how to test the setup can be found in the <strong><a href="../verify/">VERIFY phase</a></strong>. The <strong>VERIFY</strong> phase assumes you are checking another team's setup bot for your own testing this will be done solely in your own account. </p>
+<p>When you have verified your work is correct, move on to the next task (<strong>Task 5</strong>) which will involve actually exchanging information so another team can verify your work. </p>
 <h2 id="task-5-gather-info-needed-for-the-verify-phase">Task 5 <small>Gather info needed for the <strong>VERIFY</strong> phase</small></h2>
-<p>It is time to pass the work on to another team who will work through the <strong>VERIFY</strong> tasks. If you are doing this workshop online on your own then you can just run through the <strong>VERIFY</strong> phase yourself (skip this task).</p>
-<p>If you were given a form to fill out then enter the info and hand it to another team (or send this to the other team using whatever method is easiest.) If you followed the recommended naming conventions you only need to enter your <strong>Account ID</strong> and <strong>Resource Restriction</strong>.</p>
+<p>It is time to pass the work on to another team who will work through the <strong>VERIFY</strong> tasks. If you are doing this workshop online on your own then you already verified your work in <strong>Task 4</strong> so you can skip this task. </p>
+<p>If you were given a form to fill out then enter the info and hand it to another team (or send this to the other team using whatever method is easiest.) If you followed the recommended naming conventions you only need to enter your <strong>Account ID</strong> and <strong>Resource restriction</strong>.</p>
 <ul>
 <li>Webadmins role ARN:   arn:aws:iam::<code>&lt;YOUR_ACCOUNT_ID&gt;</code>:role/<strong>webadmins</strong></li>
 <li>Resource restriction for both the roles and policies: /webadmins/<code>Resource restriction you used</code></li>
@@ -1279,7 +1280,7 @@ AWS_SESSION_TOKEN=FQoG<strong><em>_</em></strong><strong><em>_</em></strong><str
       
     </div>
     
-      <script src="../../assets/javascripts/application.b806dc00.js"></script>
+      <script src="../../assets/javascripts/application.d9aa80ab.js"></script>
       
       <script>app.initialize({version:"1.0.4",url:{base:"../.."}})</script>
       
