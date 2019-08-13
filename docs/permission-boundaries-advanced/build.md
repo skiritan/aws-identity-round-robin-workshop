@@ -3,7 +3,7 @@
 
 !!! Attention
     <p style="font-size:16px;">
-      Throughout the workshop, keep in mind where you need to add the Account ID (replace <ACCOUNT_ID>), correctly use pathing and change the region specified if needed (although if you are taking this as part of an AWS event, just use the already specified us-east-1.) Missing any of these items can result in problems and errors like **"An error occurred (MalformedPolicyDocument) when calling the CreatePolicy operation: The policy failed legacy parsing"**.
+      Throughout the workshop, keep in mind where you need to replace <ACCOUNT_ID> with the correct Account ID, where you need to use pathing and also where you need to change the region (although if you are taking this as part of an AWS event, just use the already specified us-east-1.) Missing any of these items can result in problems and errors like **"An error occurred (MalformedPolicyDocument) when calling the CreatePolicy operation: The policy failed legacy parsing"**.
     </p>
 
 !!! Tip
@@ -91,14 +91,14 @@ To setup your environment expand the appropriate choice from the following drop-
 	US East 2 (Ohio) | <a href="https://console.aws.amazon.com/cloudformation/home?region=us-east-2#/stacks/new?stackName=Perm-Bound-Adv&templateURL=https://s3-us-west-2.amazonaws.com/sa-security-specialist-workshops-us-west-2/identity-workshop/permissionboundary/identity-workshop-web-admins-advanced-solo.yaml" target="_blank">![Deploy in us-east-2](./images/deploy-to-aws.png)</a>
 
 	1. Click the **Deploy to AWS** button above.  This will automatically take you to the console to run the template.  
-	2. Click **Next** on the **Select Template** section.
-	3. Click **Next** on the **Specify Details** section (the stack name will already be filled - you can change it or leave it as is)
-	4. Click **Next** on the **Options** section.
-	5. Finally, acknowledge that the template will create IAM roles under **Capabilities** and click **Create**.
+	2. Click **Next** under the **Create stack** section.
+	3. Click **Next** under the **Specify stack details** section (the stack name will already be filled - you can leave the other options in Parameters at their default settings too)
+	4. Click **Next** under the **Advanced options** section.
+	5. Finally, acknowledge that the template will create IAM resources with custom names under **Capabilities** and click **Create stack**.
 
-	This will bring you back to the CloudFormation console. You can refresh the page to see the stack starting to create. Before moving on, make sure the stack is in a **CREATE_COMPLETE**.
+	This will bring you back to the CloudFormation console. You can refresh the stack set to see the latest status. Before moving on, make sure the stack finally shows **CREATE_COMPLETE**.
 
-	You will need to configure the <a href="https://aws.amazon.com/cli/" target="_blank"> AWS CLI </a> on your laptop or system of choice with credentials that allow at least IAM admin rights. Then move on to **Task 1**.
+	You will need to configure the <a href="https://aws.amazon.com/cli/" target="_blank"> AWS CLI </a> on your laptop or system of choice with credentials that allow at least IAM admin permissions for the **Build** phase. Then move on to **Task 1**.
 
 ---
 
@@ -107,10 +107,10 @@ To setup your environment expand the appropriate choice from the following drop-
 
 ## Task 1 <small>Create the webadmins role</small>
 
-First you will create an IAM role for the webadmins (Initially this role will trust your own AWS account but in the **Verify** phase you will configure it to trust the other team's account):
+First you will create an IAM role for the webadmins (initially this role will trust your own AWS account but when you switch accounts with an another team in the **Verify** phase you will configure it to trust the other team's account):
 
-* For many of the steps below you will need your account ID. To get that type in `aws sts get-caller-identity'. The account ID will be the first number listed after **Account**. You can do this from a second terminal window in Cloud9 so you can refer back to it later when needed.
-* Use the following JSON to create a file named **`trustpolicy1.json`** for the trust policy (you can use Nano or your preferred text editor): 
+* For many of the steps below you will need your account ID. To get that type in `aws sts get-caller-identity'. The account ID will be the first number listed after **Account**. (If you are using Cloud9, you can do this from a second terminal window so you can refer back to it later when needed.)
+* Use the following JSON to create a file named **`trustpolicy1.json`** for the trust policy (usingyour preferred text editor): 
 ```json
 {
   "Version": "2012-10-17",
@@ -307,13 +307,15 @@ It's time to check your work and make sure the webadmins are set up properly. Yo
 2. Create an IAM role (and attach that policy) 
 3. Create a Lambda function (and attach that role)
 
-If you are unsure what the commands are to test this, you can check in the **[VERIFY phase](./verify.md)** for all the details. When you have verified your work is correct, move on to the next task (**Task 5**) which will involve actually exchanging information so another team can verify your work. 
+The instructions for how to test the setup can be found in the **[VERIFY phase](./verify.md)**. The **VERIFY** phase assumes you are checking another team's setup bot for your own testing this will be done solely in your own account. 
+
+When you have verified your work is correct, move on to the next task (**Task 5**) which will involve actually exchanging information so another team can verify your work. 
 
 ## Task 5 <small>Gather info needed for the **VERIFY** phase</small>
 
-It is time to pass the work on to another team who will work through the **VERIFY** tasks. If you are doing this workshop online on your own then you can just run through the **VERIFY** phase yourself (skip this task).
+It is time to pass the work on to another team who will work through the **VERIFY** tasks. If you are doing this workshop online on your own then you already verified your work in **Task 4** so you can skip this task. 
 
-If you were given a form to fill out then enter the info and hand it to another team (or send this to the other team using whatever method is easiest.) If you followed the recommended naming conventions you only need to enter your **Account ID** and **Resource Restriction**.
+If you were given a form to fill out then enter the info and hand it to another team (or send this to the other team using whatever method is easiest.) If you followed the recommended naming conventions you only need to enter your **Account ID** and **Resource restriction**.
  
 * Webadmins role ARN:	arn:aws:iam::`<YOUR_ACCOUNT_ID>`:role/**webadmins**
 * Resource restriction for both the roles and policies: /webadmins/`Resource restriction you used`

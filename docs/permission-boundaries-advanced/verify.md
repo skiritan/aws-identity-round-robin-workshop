@@ -1,6 +1,6 @@
 # Permission boundaries workshop <small> Verify phase</small>
 
-It's now time **VERIFY** the setup the admins did by putting on the webadmins hat. As the webadmins you will check that you can do the following: 
+It's now time **VERIFY** the setup from the **Build** phase. You can will acting as the webadmins in this phase to check that you can do the following: 
 
 1. Create an IAM policy
 2. Create an IAM role (and attach that policy) 
@@ -23,7 +23,7 @@ role_arn = arn:aws:iam::ACCOUNT_ID_FROM_OTHER_TEAM:role/webadmins
 source_profile = default
 ```
 
-**When you want to reference a profile other then the default one you need to add the `--profile` parameter to the CLI command. Since we are naming this profile webadmins, you will see that `--profile webadmins` has been added to all the commands in this phase.**
+**When using the AWS CLI and you want to reference a profile other then the default one you need to add the `--profile` parameter to the CLI command. Since we are naming this profile webadmins, you will see that `--profile webadmins` has been added to all the commands in this phase.**
 
 ??? info "Application architecture"
 	
