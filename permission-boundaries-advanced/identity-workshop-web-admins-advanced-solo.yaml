@@ -13,13 +13,13 @@ Parameters:
       - identity-wksp-permissionsboundary
     Description: Prefix of resources created for this workshop.  
 
-  InstanceType: 
-    Type: String
-    Default: t2.micro
-    AllowedValues: 
-      - t2.micro
-      - t2.medium
-    Description: Pick a instance type for the Cloud9 environment 
+#  InstanceType: 
+#    Type: String
+#    Default: t2.micro
+#    AllowedValues: 
+#      - t2.micro
+#      - t2.medium
+#    Description: Pick a instance type for the Cloud9 environment 
 
 Metadata:
   AWS::CloudFormation::Interface:
