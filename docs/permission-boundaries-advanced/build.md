@@ -59,7 +59,7 @@ To setup your environment expand the appropriate choice from the following drop-
 	
 	Region| Deploy
 	------|-----
-	US East 2 (Ohio) | <a href="https://console.aws.amazon.com/cloudformation/home?region=us-east-2#/stacks/new?stackName=Perm-Bound-Adv&templateURL=https://s3-us-west-2.amazonaws.com/sa-security-specialist-workshops-us-west-2/identity-workshop/permissionboundary/identity-workshop-web-admins-advanced.yaml" target="_blank">![Deploy in us-east-2](./images/deploy-to-aws.png)</a>
+	US East 1 (Virginia) | <a href="https://console.aws.amazon.com/cloudformation/home?region=us-east-1#/stacks/new?stackName=Perm-Bound-Adv&templateURL=https://s3-us-west-2.amazonaws.com/sa-security-specialist-workshops-us-west-2/identity-workshop/permissionboundary/identity-workshop-web-admins-advanced.yaml" target="_blank">![Deploy in us-east-2](./images/deploy-to-aws.png)</a>
 	
 	1. Click **Next** on the **Select Template** section.
 	2. Click **Next** on the **Specify Details** section (the stack name will be already filled - you can change it or leave it as is)
@@ -88,7 +88,7 @@ To setup your environment expand the appropriate choice from the following drop-
 
 	Region| Deploy
 	------|-----
-	US East 2 (Ohio) | <a href="https://console.aws.amazon.com/cloudformation/home?region=us-east-2#/stacks/new?stackName=Perm-Bound-Adv&templateURL=https://s3-us-west-2.amazonaws.com/sa-security-specialist-workshops-us-west-2/identity-workshop/permissionboundary/identity-workshop-web-admins-advanced-solo.yaml" target="_blank">![Deploy in us-east-2](./images/deploy-to-aws.png)</a>
+	US East 1 (Virginia) | <a href="https://console.aws.amazon.com/cloudformation/home?region=us-east-1#/stacks/new?stackName=Perm-Bound-Adv&templateURL=https://s3-us-west-2.amazonaws.com/sa-security-specialist-workshops-us-west-2/identity-workshop/permissionboundary/identity-workshop-web-admins-advanced-solo.yaml" target="_blank">![Deploy in us-east-2](./images/deploy-to-aws.png)</a>
 
 	1. Click the **Deploy to AWS** button above.  This will automatically take you to the console to run the template.  
 	2. Click **Next** under the **Create stack** section.
@@ -307,7 +307,7 @@ It's time to check your work and make sure the webadmins are set up properly. Yo
 2. Create an IAM role (and attach that policy) 
 3. Create a Lambda function (and attach that role)
 
-The instructions for how to test the setup can be found in the **[VERIFY phase](./verify.md)**. The **VERIFY** phase assumes you are checking another team's setup bot for your own testing this will be done solely in your own account. 
+The instructions for how to test the setup can be found in the **[VERIFY phase](./verify.md)**. The **VERIFY** phase assumes you are checking another team's setup but for your own testing this will be just done in your own account. You'll need to keep that in mind because some of the ** VERIFY** phase instructions assume you are doing this cross accountl
 
 When you have verified your work is correct, move on to the next task (**Task 5**) which will involve actually exchanging information so another team can verify your work. 
 
