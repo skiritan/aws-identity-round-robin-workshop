@@ -16,6 +16,10 @@
 
 To setup your environment expand the appropriate choice from the following drop-downs, perform the tasks, and then move on to **Task 1**
 
+!!! Attention
+	The CloudFormation stack will fail if you have either of the following S3 **Block public access** account options set to **On**: **"Block public access to buckets and objects granted through new access control lists (ACLs)"** or **"Block public and cross-account access to buckets and objects through any public bucket policies"**. You need to set both to **Off** before running the stack. The other options can be set to **On**.
+	![s3blockpublicaccess](./images/s3blockpublicaccess.png)
+
 ??? info  "Click here if you're at an *AWS event* where the *Event Engine* is being used" 
 
     <p style="font-size:20px;">
@@ -110,7 +114,7 @@ To setup your environment expand the appropriate choice from the following drop-
 First you will create an IAM role for the webadmins (initially this role will trust your own AWS account but when you switch accounts with an another team in the **Verify** phase you will configure it to trust the other team's account):
 
 * For many of the steps below you will need your account ID. To get that type in `aws sts get-caller-identity'. The account ID will be the first number listed after **Account**. (If you are using Cloud9, you can do this from a second terminal window so you can refer back to it later when needed.)
-* Use the following JSON to create a file named **`trustpolicy1.json`** for the trust policy (usingyour preferred text editor): 
+* Use the following JSON to create a file named **`trustpolicy1.json`** for the trust policy (using your preferred text editor): 
 ```json
 {
   "Version": "2012-10-17",
@@ -307,7 +311,7 @@ It's time to check your work and make sure the webadmins are set up properly. Yo
 2. Create an IAM role (and attach that policy) 
 3. Create a Lambda function (and attach that role)
 
-The instructions for how to test the setup can be found in the **[VERIFY phase](./verify.md)**. The **VERIFY** phase assumes you are checking another team's setup but for your own testing this will be just done in your own account. You'll need to keep that in mind because some of the ** VERIFY** phase instructions assume you are doing this cross accountl
+The instructions for how to test the setup can be found in the **[VERIFY phase](./verify.md)**. The **VERIFY** phase assumes you are checking another team's setup but for your own testing this will be just done in your own account. You'll need to keep that in mind because some of the **VERIFY** phase instructions assume you are doing this cross account so you'll need to adjust some of the commands. 
 
 When you have verified your work is correct, move on to the next task (**Task 5**) which will involve actually exchanging information so another team can verify your work. 
 
