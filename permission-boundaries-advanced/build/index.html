@@ -838,6 +838,11 @@
 </div>
 <h2 id="setup-instructions">Setup Instructions</h2>
 <p>To setup your environment expand the appropriate choice from the following drop-downs, perform the tasks, and then move on to <strong>Task 1</strong></p>
+<div class="admonition attention">
+<p class="admonition-title">Attention</p>
+<p>The CloudFormation stack will fail if you have either of the following S3 <strong>Block public access</strong> account options set to <strong>On</strong>: <strong>"Block public access to buckets and objects granted through new access control lists (ACLs)"</strong> or <strong>"Block public and cross-account access to buckets and objects through any public bucket policies"</strong>. You need to set both to <strong>Off</strong> before running the stack. The other options can be set to <strong>On</strong>.
+<img alt="s3blockpublicaccess" src="../images/s3blockpublicaccess.png" /></p>
+</div>
 <details class="info"><summary>Click here if you're at an <em>AWS event</em> where the <em>Event Engine</em> is being used</summary><p><p style="font-size:20px;">
   <strong>Step 1</strong> : Retrieve temporary credentials from Event Engine
 </p></p>
@@ -939,7 +944,7 @@ AWS_SESSION_TOKEN=FQoG<strong><em>_</em></strong><strong><em>_</em></strong><str
 <p>First you will create an IAM role for the webadmins (initially this role will trust your own AWS account but when you switch accounts with an another team in the <strong>Verify</strong> phase you will configure it to trust the other team's account):</p>
 <ul>
 <li>For many of the steps below you will need your account ID. To get that type in `aws sts get-caller-identity'. The account ID will be the first number listed after <strong>Account</strong>. (If you are using Cloud9, you can do this from a second terminal window so you can refer back to it later when needed.)</li>
-<li>Use the following JSON to create a file named <strong><code>trustpolicy1.json</code></strong> for the trust policy (usingyour preferred text editor): </li>
+<li>Use the following JSON to create a file named <strong><code>trustpolicy1.json</code></strong> for the trust policy (using your preferred text editor): </li>
 </ul>
 <div class="codehilite"><pre><span></span><span class="p">{</span>
   <span class="nt">&quot;Version&quot;</span><span class="p">:</span> <span class="s2">&quot;2012-10-17&quot;</span><span class="p">,</span>
@@ -1153,7 +1158,7 @@ AWS_SESSION_TOKEN=FQoG<strong><em>_</em></strong><strong><em>_</em></strong><str
 <li>Create an IAM role (and attach that policy) </li>
 <li>Create a Lambda function (and attach that role)</li>
 </ol>
-<p>The instructions for how to test the setup can be found in the <strong><a href="../verify/">VERIFY phase</a></strong>. The <strong>VERIFY</strong> phase assumes you are checking another team's setup but for your own testing this will be just done in your own account. You'll need to keep that in mind because some of the <strong> VERIFY</strong> phase instructions assume you are doing this cross accountl</p>
+<p>The instructions for how to test the setup can be found in the <strong><a href="../verify/">VERIFY phase</a></strong>. The <strong>VERIFY</strong> phase assumes you are checking another team's setup but for your own testing this will be just done in your own account. You'll need to keep that in mind because some of the <strong>VERIFY</strong> phase instructions assume you are doing this cross account so you'll need to adjust some of the commands. </p>
 <p>When you have verified your work is correct, move on to the next task (<strong>Task 5</strong>) which will involve actually exchanging information so another team can verify your work. </p>
 <h2 id="task-5-gather-info-needed-for-the-verify-phase">Task 5 <small>Gather info needed for the <strong>VERIFY</strong> phase</small></h2>
 <p>It is time to pass the work on to another team who will work through the <strong>VERIFY</strong> tasks. If you are doing this workshop online on your own then you already verified your work in <strong>Task 4</strong> so you can skip this task. </p>
