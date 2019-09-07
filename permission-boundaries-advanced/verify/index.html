@@ -826,7 +826,7 @@ Permission policy name: **webadminspermissionpolicy**
 <div class="admonition attention">
 <p class="admonition-title">Attention</p>
 <p><p style="font-size:16px;">
-  As in the Build phase, keep in mind where you need to add the Account ID, correctly use pathing and change the region specified if needed (although if you are taking this as part of an AWS event, just use the already specified us-east-1.) Also you will need to use the --profile parameter for all of the commands in the following tasks.
+  Please keep in mind where to add the AWS Account ID, correctly use pathing and change the region specified if needed (although if you are taking this as part of an AWS event, just use the already specified us-east-1.)
 </p></p>
 </div>
 <h2 id="task-1-create-a-policy">Task 1 <small>Create a policy</small></h2>
@@ -864,7 +864,7 @@ Permission policy name: **webadminspermissionpolicy**
 <h2 id="task-2-create-a-role">Task 2 <small>Create a role</small></h2>
 <p>The role you create here will be passed to the Lambda function you create in the next task.</p>
 <ul>
-<li>Use the following JSON to create a file named <strong><code>verifytrustpolicy.json</code></strong>: </li>
+<li>Use the following JSON to create a file named <strong><code>verifytrustpolicydoc.json</code></strong>: </li>
 </ul>
 <div class="codehilite"><pre><span></span><span class="p">{</span>
   <span class="nt">&quot;Version&quot;</span><span class="p">:</span> <span class="s2">&quot;2012-10-17&quot;</span><span class="p">,</span>
@@ -882,11 +882,11 @@ Permission policy name: **webadminspermissionpolicy**
 <ul>
 <li>Create the role (<strong>there is a key parameter missing from the command below. Check the <a href="https://docs.aws.amazon.com/cli/latest/reference/" target="_blank"> AWS CLI documentation to determine the missing parameter. </a> </strong>)</li>
 </ul>
-<div class="codehilite"><pre><span></span>aws iam create-role --role-name NAME_OF_ROLE --path /webadmins/ --assume-role-policy-document file://verifytrustpolicy.json --profile webadmins
+<div class="codehilite"><pre><span></span>aws iam create-role --role-name NAME_OF_ROLE --path /webadmins/ --assume-role-policy-document file://verifytrustpolicydoc.json --profile webadmins
 </pre></div>
 
 
-<!-- `aws iam create-role --role-name NAME_OF_ROLE --path /NAME_OF_PATH/ --assume-role-policy-document file://verifytrustpolicy.json --permissions-boundary arn:aws:iam::ACCOUNT_ID_FROM_OTHER_TEAM:policy/webadminspermissionsboundary` -->
+<!-- `aws iam create-role --role-name NAME_OF_ROLE --path /NAME_OF_PATH/ --assume-role-policy-document file://verifytrustpolicydoc.json --permissions-boundary arn:aws:iam::ACCOUNT_ID_FROM_OTHER_TEAM:policy/webadminspermissionsboundary` -->
 
 <ul>
 <li>Attach the policy you created in <strong>Task 1</strong> to the role:</li>
