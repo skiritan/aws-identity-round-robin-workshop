@@ -36,21 +36,6 @@
      <changefreq>daily</changefreq>
     </url>
     <url>
-     <loc>https://identity-round-robin.awssecworkshops.com/permission-boundaries/</loc>
-     <lastmod>2019-09-06</lastmod>
-     <changefreq>daily</changefreq>
-    </url>
-    <url>
-     <loc>https://identity-round-robin.awssecworkshops.com/permission-boundaries/build/</loc>
-     <lastmod>2019-09-06</lastmod>
-     <changefreq>daily</changefreq>
-    </url>
-    <url>
-     <loc>https://identity-round-robin.awssecworkshops.com/permission-boundaries/verify/</loc>
-     <lastmod>2019-09-06</lastmod>
-     <changefreq>daily</changefreq>
-    </url>
-    <url>
      <loc>https://identity-round-robin.awssecworkshops.com/permission-boundaries-advanced/</loc>
      <lastmod>2019-09-06</lastmod>
      <changefreq>daily</changefreq>
