@@ -33,7 +33,7 @@ source_profile = default
 
 !!! Attention
     <p style="font-size:16px;">
-      As in the Build phase, keep in mind where you need to add the Account ID, correctly use pathing and change the region specified if needed (although if you are taking this as part of an AWS event, just use the already specified us-east-1.) Also you will need to use the --profile parameter for all of the commands in the following tasks.
+      Please keep in mind where to add the AWS Account ID, correctly use pathing and change the region specified if needed (although if you are taking this as part of an AWS event, just use the already specified us-east-1.)
     </p>
 
 ## Task 1 <small>Create a policy</small>
@@ -68,7 +68,7 @@ aws iam create-policy --policy-name NAME_OF_POLICY --policy-document file://veri
 
 The role you create here will be passed to the Lambda function you create in the next task.
 
-* Use the following JSON to create a file named **`verifytrustpolicy.json`**: 
+* Use the following JSON to create a file named **`verifytrustpolicydoc.json`**: 
 ```json
 {
   "Version": "2012-10-17",
@@ -83,9 +83,9 @@ The role you create here will be passed to the Lambda function you create in the
 ```
 * Create the role (**there is a key parameter missing from the command below. Check the <a href="https://docs.aws.amazon.com/cli/latest/reference/" target="_blank"> AWS CLI documentation to determine the missing parameter. </a> **)
 ```
-aws iam create-role --role-name NAME_OF_ROLE --path /webadmins/ --assume-role-policy-document file://verifytrustpolicy.json --profile webadmins
+aws iam create-role --role-name NAME_OF_ROLE --path /webadmins/ --assume-role-policy-document file://verifytrustpolicydoc.json --profile webadmins
 ```
-<!-- `aws iam create-role --role-name NAME_OF_ROLE --path /NAME_OF_PATH/ --assume-role-policy-document file://verifytrustpolicy.json --permissions-boundary arn:aws:iam::ACCOUNT_ID_FROM_OTHER_TEAM:policy/webadminspermissionsboundary` -->
+<!-- `aws iam create-role --role-name NAME_OF_ROLE --path /NAME_OF_PATH/ --assume-role-policy-document file://verifytrustpolicydoc.json --permissions-boundary arn:aws:iam::ACCOUNT_ID_FROM_OTHER_TEAM:policy/webadminspermissionsboundary` -->
 * Attach the policy you created in **Task 1** to the role:
 ```
 aws iam attach-role-policy --policy-arn arn:aws:iam::<ACCOUNT_ID_FROM_OTHER_TEAM>:policy/webadmins/NAME_OF_POLICY --role-name NAME_OF_ROLE --profile webadmins
