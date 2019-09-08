@@ -34,7 +34,7 @@ To setup your environment expand the appropriate choice from the following drop-
 
 	This will bring you back to the CloudFormation console. You can refresh the stack set to see the latest status. Before moving on, make sure the stack finally shows **CREATE_COMPLETE**.
 
-	You will need to configure the <a href="https://aws.amazon.com/cli/" target="_blank"> AWS CLI </a> on your computer with an access key from a principal (IAM user, role, etc) that has at least IAM admin permissions and sts:AssumeRole. Then move on to **Task 1**.
+	You will need to configure the <a href="https://aws.amazon.com/cli/" target="_blank"> AWS CLI </a> on your computer with an access key from a principal (IAM user, role, etc) that has at least IAM Full Access and sts:AssumeRole (in order to complete the cleanup at the end, you will also need Lambda Full Access and CloudFormation Full Access.) Then move on to **Task 1**.
 	
 
 ??? info  "Click here if you're at an *AWS event* where the *Event Engine* is being used. You will be using Cloud9 to run the commands." 
@@ -101,15 +101,15 @@ To setup your environment expand the appropriate choice from the following drop-
 	1. Navigate to the <a href="https://us-east-2.console.aws.amazon.com/cloud9/home" target="_blank">AWS Cloud9</a> console.
 	2. Click on **Open IDE** in the `workshop-environment` under **Your environments**
 	3. Click the **gear** icon in the upper right hand corner to open the Cloud9 Preferences. Scroll down in the settings, click on the **AWS SETTINGS** section and click the button next to **AWS Managed Temporary Credentials** to disable this.
-	4. Now go back to the AWS SSO tab (this should be the first tab you opened for the workshop). Click the **command line or programmatic access**. Click the section under **Option 2** to copy the credentials.
+	4. --- Need steps here ---
 	4. Go back to the Cloud9 environment. Type `aws configure` hit enter. Hit enter until you get to the choice **Default region name** and type in `us-east-2`. Hit enter and then enter again to leave this menu.
 	5. Then create a file in the `~/.aws` directory named `credentials` and paste in the credentials you copied from the SSO login page. Rename the profile to `default` (it will be named something similar to **Account_ID_AdministratorAccess** when you first paste it in)
 	4. Now you can run commands from within the Cloud9 IDE using the temporary credentials from AWS SSO. 
 	4. Move on to **Task 1**.
 --->
 
-
 ---
+
 
 ###
 
@@ -142,11 +142,11 @@ aws iam attach-role-policy --policy arn:aws:iam::aws:policy/AWSLambdaReadOnlyAcc
 ```
 
 
-## Task 2 <small>Create the permissions boundary for the webadmins</small>
+## Task 2 <small>Create the permissions boundary the webadmins will use when creating roles</small>
 
 Next you will create the policy that will be used as the permissions boundary.  The permissions boundary should only allow the following actions: Create log groups, create log streams, put logs and list the files in the webadmins folder of the bucket that starts with `"shared-logging-"` and ends in `"-data"`:
 
-* Use the following JSON to create a file named **`boundarydoc.json`** for the permissions boundary policy:
+* Use the following JSON to create a file named **`permissionsboundary.json`** for the permissions boundary policy:
 	
 ``` json
 {
@@ -168,7 +168,7 @@ Next you will create the policy that will be used as the permissions boundary.  
             "Resource": "arn:aws:logs:us-east-1:<ACCOUNT_ID>:log-group:/aws/lambda/*:*"
         },
         {
-            "Sid": "AllowedS3GetObject",
+            "Sid": "AllowS3GetObject",
             "Effect": "Allow",
             "Action": [
                 "s3:List*"
@@ -179,27 +179,42 @@ Next you will create the policy that will be used as the permissions boundary.  
                     "s3:prefix": "webadmins"
              		}
         		}
-        }		
+        },
+        {
+    		  "Sid": "OtherPermissionsNeeded",
+    		  "Effect": "Allow",
+    		  "Action": [
+                "dynamodb:PutItem",
+                "dynamodb:UpdateItem",
+                "dynamodb:DeleteItem"
+   			  ],
+    		  "Resource": "*",
+    		  "Condition": {
+        			"StringEquals": {
+            		"aws:RequestedRegion": "us-east-1"
+        			}
+        		}
+        }
     ]
 }
 ```
 * Create the policy:
 ```
-aws iam create-policy --policy-name webadminspermissionsboundary --policy-document file://boundarydoc.json
+aws iam create-policy --policy-name webadminspermissionsboundary --policy-document file://permissionsboundary.json
 ```
 
 !!! question
 	* To what object will the webadmins attach the permissions boundary?
 	* How does a permissions boundary differ from an identity-based policy?
 
-## Task 3 <small>Create the permission policy for the webadmins</small>
+## Task 3 <small>Create the identity-based policy for the webadmins</small>
 
 !!! hint 
 	**IMPORTANT!!!!** - The question marks **`????`** in the policy below should be replaced with something that could act as part of a resource restriction.  The end result is that you will have a pathing requirement for the roles and policies. Replacing the **`????`** is one of the key challenges in this workshop and probably the most confusing part. Talk to a facilitator if you have issues with this. 
 
 Next you will create the policy that will be attached to the webadmins role.
 
-* Use the following JSON to create a file named **`policydoc.json`** for the permission policy:
+* Use the following JSON to create a file named **`identitybasedpolicy.json`** for the permission policy:
 
 ``` json
 {
@@ -292,7 +307,7 @@ Next you will create the policy that will be attached to the webadmins role.
  
 * Create a policy named `webadminspermissionpolicy`:
 ```
-aws iam create-policy --policy-name webadminspermissionpolicy --policy-document file://policydoc.json
+aws iam create-policy --policy-name webadminspermissionpolicy --policy-document file://identitybasedpolicy.json
 ```
 * Attach the policy to the webadmins role
 ```
