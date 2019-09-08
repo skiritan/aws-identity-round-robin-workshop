@@ -590,15 +590,15 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#task-2-create-the-permissions-boundary-for-the-webadmins" title="Task 2 Create the permissions boundary for the webadmins" class="md-nav__link">
-    Task 2 Create the permissions boundary for the webadmins
+  <a href="#task-2-create-the-permissions-boundary-the-webadmins-will-use-when-creating-roles" title="Task 2 Create the permissions boundary the webadmins will use when creating roles" class="md-nav__link">
+    Task 2 Create the permissions boundary the webadmins will use when creating roles
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#task-3-create-the-permission-policy-for-the-webadmins" title="Task 3 Create the permission policy for the webadmins" class="md-nav__link">
-    Task 3 Create the permission policy for the webadmins
+  <a href="#task-3-create-the-identity-based-policy-for-the-webadmins" title="Task 3 Create the identity-based policy for the webadmins" class="md-nav__link">
+    Task 3 Create the identity-based policy for the webadmins
   </a>
   
 </li>
@@ -704,15 +704,15 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#task-2-create-the-permissions-boundary-for-the-webadmins" title="Task 2 Create the permissions boundary for the webadmins" class="md-nav__link">
-    Task 2 Create the permissions boundary for the webadmins
+  <a href="#task-2-create-the-permissions-boundary-the-webadmins-will-use-when-creating-roles" title="Task 2 Create the permissions boundary the webadmins will use when creating roles" class="md-nav__link">
+    Task 2 Create the permissions boundary the webadmins will use when creating roles
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#task-3-create-the-permission-policy-for-the-webadmins" title="Task 3 Create the permission policy for the webadmins" class="md-nav__link">
-    Task 3 Create the permission policy for the webadmins
+  <a href="#task-3-create-the-identity-based-policy-for-the-webadmins" title="Task 3 Create the identity-based policy for the webadmins" class="md-nav__link">
+    Task 3 Create the identity-based policy for the webadmins
   </a>
   
 </li>
@@ -789,7 +789,7 @@
 <li>Finally, acknowledge that the template will create IAM resources with custom names under <strong>Capabilities</strong> and click <strong>Create stack</strong>.</li>
 </ol>
 <p>This will bring you back to the CloudFormation console. You can refresh the stack set to see the latest status. Before moving on, make sure the stack finally shows <strong>CREATE_COMPLETE</strong>.</p>
-<p>You will need to configure the <a href="https://aws.amazon.com/cli/" target="_blank"> AWS CLI </a> on your computer with an access key from a principal (IAM user, role, etc) that has at least IAM admin permissions and sts:AssumeRole. Then move on to <strong>Task 1</strong>.</p>
+<p>You will need to configure the <a href="https://aws.amazon.com/cli/" target="_blank"> AWS CLI </a> on your computer with an access key from a principal (IAM user, role, etc) that has at least IAM Full Access and sts:AssumeRole (in order to complete the cleanup at the end, you will also need Lambda Full Access and CloudFormation Full Access.) Then move on to <strong>Task 1</strong>.</p>
 </details>
 <details class="info"><summary>Click here if you're at an <em>AWS event</em> where the <em>Event Engine</em> is being used. You will be using Cloud9 to run the commands.</summary><p><p style="font-size:20px;">
   <strong>Step 1</strong> : Retrieve temporary credentials from Event Engine
@@ -853,7 +853,7 @@ AWS_SESSION_TOKEN=FQoG<strong><em>_</em></strong><strong><em>_</em></strong><str
     1. Navigate to the <a href="https://us-east-2.console.aws.amazon.com/cloud9/home" target="_blank">AWS Cloud9</a> console.
     2. Click on **Open IDE** in the `workshop-environment` under **Your environments**
     3. Click the **gear** icon in the upper right hand corner to open the Cloud9 Preferences. Scroll down in the settings, click on the **AWS SETTINGS** section and click the button next to **AWS Managed Temporary Credentials** to disable this.
-    4. Now go back to the AWS SSO tab (this should be the first tab you opened for the workshop). Click the **command line or programmatic access**. Click the section under **Option 2** to copy the credentials.
+    4. --- Need steps here ---
     4. Go back to the Cloud9 environment. Type `aws configure` hit enter. Hit enter until you get to the choice **Default region name** and type in `us-east-2`. Hit enter and then enter again to leave this menu.
     5. Then create a file in the `~/.aws` directory named `credentials` and paste in the credentials you copied from the SSO login page. Rename the profile to `default` (it will be named something similar to **Account_ID_AdministratorAccess** when you first paste it in)
     4. Now you can run commands from within the Cloud9 IDE using the temporary credentials from AWS SSO. 
@@ -895,10 +895,10 @@ AWS_SESSION_TOKEN=FQoG<strong><em>_</em></strong><strong><em>_</em></strong><str
 </pre></div>
 
 
-<h2 id="task-2-create-the-permissions-boundary-for-the-webadmins">Task 2 <small>Create the permissions boundary for the webadmins</small></h2>
+<h2 id="task-2-create-the-permissions-boundary-the-webadmins-will-use-when-creating-roles">Task 2 <small>Create the permissions boundary the webadmins will use when creating roles</small></h2>
 <p>Next you will create the policy that will be used as the permissions boundary.  The permissions boundary should only allow the following actions: Create log groups, create log streams, put logs and list the files in the webadmins folder of the bucket that starts with <code>"shared-logging-"</code> and ends in <code>"-data"</code>:</p>
 <ul>
-<li>Use the following JSON to create a file named <strong><code>boundarydoc.json</code></strong> for the permissions boundary policy:</li>
+<li>Use the following JSON to create a file named <strong><code>permissionsboundary.json</code></strong> for the permissions boundary policy:</li>
 </ul>
 <div class="codehilite"><pre><span></span><span class="p">{</span>
     <span class="nt">&quot;Version&quot;</span><span class="p">:</span> <span class="s2">&quot;2012-10-17&quot;</span><span class="p">,</span>
@@ -919,7 +919,7 @@ AWS_SESSION_TOKEN=FQoG<strong><em>_</em></strong><strong><em>_</em></strong><str
             <span class="nt">&quot;Resource&quot;</span><span class="p">:</span> <span class="s2">&quot;arn:aws:logs:us-east-1:&lt;ACCOUNT_ID&gt;:log-group:/aws/lambda/*:*&quot;</span>
         <span class="p">},</span>
         <span class="p">{</span>
-            <span class="nt">&quot;Sid&quot;</span><span class="p">:</span> <span class="s2">&quot;AllowedS3GetObject&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;Sid&quot;</span><span class="p">:</span> <span class="s2">&quot;AllowS3GetObject&quot;</span><span class="p">,</span>
             <span class="nt">&quot;Effect&quot;</span><span class="p">:</span> <span class="s2">&quot;Allow&quot;</span><span class="p">,</span>
             <span class="nt">&quot;Action&quot;</span><span class="p">:</span> <span class="p">[</span>
                 <span class="s2">&quot;s3:List*&quot;</span>
@@ -930,7 +930,22 @@ AWS_SESSION_TOKEN=FQoG<strong><em>_</em></strong><strong><em>_</em></strong><str
                     <span class="nt">&quot;s3:prefix&quot;</span><span class="p">:</span> <span class="s2">&quot;webadmins&quot;</span>
                     <span class="p">}</span>
                 <span class="p">}</span>
-        <span class="p">}</span>       
+        <span class="p">},</span>
+        <span class="p">{</span>
+              <span class="nt">&quot;Sid&quot;</span><span class="p">:</span> <span class="s2">&quot;OtherPermissionsNeeded&quot;</span><span class="p">,</span>
+              <span class="nt">&quot;Effect&quot;</span><span class="p">:</span> <span class="s2">&quot;Allow&quot;</span><span class="p">,</span>
+              <span class="nt">&quot;Action&quot;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="s2">&quot;dynamodb:PutItem&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;dynamodb:UpdateItem&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;dynamodb:DeleteItem&quot;</span>
+              <span class="p">],</span>
+              <span class="nt">&quot;Resource&quot;</span><span class="p">:</span> <span class="s2">&quot;*&quot;</span><span class="p">,</span>
+              <span class="nt">&quot;Condition&quot;</span><span class="p">:</span> <span class="p">{</span>
+                    <span class="nt">&quot;StringEquals&quot;</span><span class="p">:</span> <span class="p">{</span>
+                    <span class="nt">&quot;aws:RequestedRegion&quot;</span><span class="p">:</span> <span class="s2">&quot;us-east-1&quot;</span>
+                    <span class="p">}</span>
+                <span class="p">}</span>
+        <span class="p">}</span>
     <span class="p">]</span>
 <span class="p">}</span>
 </pre></div>
@@ -939,7 +954,7 @@ AWS_SESSION_TOKEN=FQoG<strong><em>_</em></strong><strong><em>_</em></strong><str
 <ul>
 <li>Create the policy:</li>
 </ul>
-<div class="codehilite"><pre><span></span>aws iam create-policy --policy-name webadminspermissionsboundary --policy-document file://boundarydoc.json
+<div class="codehilite"><pre><span></span>aws iam create-policy --policy-name webadminspermissionsboundary --policy-document file://permissionsboundary.json
 </pre></div>
 
 
@@ -950,14 +965,14 @@ AWS_SESSION_TOKEN=FQoG<strong><em>_</em></strong><strong><em>_</em></strong><str
 <li>How does a permissions boundary differ from an identity-based policy?</li>
 </ul>
 </div>
-<h2 id="task-3-create-the-permission-policy-for-the-webadmins">Task 3 <small>Create the permission policy for the webadmins</small></h2>
+<h2 id="task-3-create-the-identity-based-policy-for-the-webadmins">Task 3 <small>Create the identity-based policy for the webadmins</small></h2>
 <div class="admonition hint">
 <p class="admonition-title">Hint</p>
 <p><strong>IMPORTANT!!!!</strong> - The question marks <strong><code>????</code></strong> in the policy below should be replaced with something that could act as part of a resource restriction.  The end result is that you will have a pathing requirement for the roles and policies. Replacing the <strong><code>????</code></strong> is one of the key challenges in this workshop and probably the most confusing part. Talk to a facilitator if you have issues with this. </p>
 </div>
 <p>Next you will create the policy that will be attached to the webadmins role.</p>
 <ul>
-<li>Use the following JSON to create a file named <strong><code>policydoc.json</code></strong> for the permission policy:</li>
+<li>Use the following JSON to create a file named <strong><code>identitybasedpolicy.json</code></strong> for the permission policy:</li>
 </ul>
 <div class="codehilite"><pre><span></span><span class="p">{</span>
     <span class="nt">&quot;Version&quot;</span><span class="p">:</span> <span class="s2">&quot;2012-10-17&quot;</span><span class="p">,</span>
@@ -1051,7 +1066,7 @@ AWS_SESSION_TOKEN=FQoG<strong><em>_</em></strong><strong><em>_</em></strong><str
 <ul>
 <li>Create a policy named <code>webadminspermissionpolicy</code>:</li>
 </ul>
-<div class="codehilite"><pre><span></span>aws iam create-policy --policy-name webadminspermissionpolicy --policy-document file://policydoc.json
+<div class="codehilite"><pre><span></span>aws iam create-policy --policy-name webadminspermissionpolicy --policy-document file://identitybasedpolicy.json
 </pre></div>
 
 

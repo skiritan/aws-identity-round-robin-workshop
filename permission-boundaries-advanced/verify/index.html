@@ -759,7 +759,7 @@ Permission policy name: **webadminspermissionpolicy**
 <h2 id="task-1-create-a-policy">Task 1 <small>Create a policy</small></h2>
 <p>First you will create a permission policy which just needs to allow log file creation and s3:ListBucket. You are in a hurry though, like many developers, and give the role full S3 permissions. The policy you create here will later be attached to the role you create in Task 2 which will then be passed to a Lambda function you will create in <strong>Task 3</strong>.</p>
 <ul>
-<li>Use the following JSON to create a file named <strong><code>verifypolicydoc.json</code></strong>: </li>
+<li>Use the following JSON to create a file named <strong><code>verifypolicy.json</code></strong>: </li>
 </ul>
 <div class="codehilite"><pre><span></span><span class="p">{</span>
   <span class="nt">&quot;Version&quot;</span><span class="p">:</span> <span class="s2">&quot;2012-10-17&quot;</span><span class="p">,</span>
@@ -782,16 +782,16 @@ Permission policy name: **webadminspermissionpolicy**
 <ul>
 <li>Create the policy (<strong>there is a key parameter missing from the command below. Check the <a href="https://docs.aws.amazon.com/cli/latest/reference/" target="_blank"> AWS CLI documentation to determine the missing parameter. </a> </strong>)</li>
 </ul>
-<div class="codehilite"><pre><span></span>aws iam create-policy --policy-name NAME_OF_POLICY --policy-document file://verifypolicydoc.json --profile webadmins
+<div class="codehilite"><pre><span></span>aws iam create-policy --policy-name NAME_OF_POLICY --policy-document file://verifypolicy.json --profile webadmins
 </pre></div>
 
 
-<!-- `aws iam create-policy --policy-name NAME_OF_POLICY --path /webadmins/ --policy-document file://verifypolicydoc.json` -->
+<!-- `aws iam create-policy --policy-name NAME_OF_POLICY --path /webadmins/ --policy-document file://verifypolicy.json` -->
 
 <h2 id="task-2-create-a-role">Task 2 <small>Create a role</small></h2>
 <p>The role you create here will be passed to the Lambda function you create in the next task.</p>
 <ul>
-<li>Use the following JSON to create a file named <strong><code>verifytrustpolicydoc.json</code></strong>: </li>
+<li>Use the following JSON to create a file named <strong><code>verifytrustpolicy.json</code></strong>: </li>
 </ul>
 <div class="codehilite"><pre><span></span><span class="p">{</span>
   <span class="nt">&quot;Version&quot;</span><span class="p">:</span> <span class="s2">&quot;2012-10-17&quot;</span><span class="p">,</span>
@@ -809,11 +809,11 @@ Permission policy name: **webadminspermissionpolicy**
 <ul>
 <li>Create the role (<strong>there is a key parameter missing from the command below. Check the <a href="https://docs.aws.amazon.com/cli/latest/reference/" target="_blank"> AWS CLI documentation to determine the missing parameter. </a> </strong>)</li>
 </ul>
-<div class="codehilite"><pre><span></span>aws iam create-role --role-name NAME_OF_ROLE --path /webadmins/ --assume-role-policy-document file://verifytrustpolicydoc.json --profile webadmins
+<div class="codehilite"><pre><span></span>aws iam create-role --role-name NAME_OF_ROLE --path /webadmins/ --assume-role-policy-document file://verifytrustpolicy.json --profile webadmins
 </pre></div>
 
 
-<!-- `aws iam create-role --role-name NAME_OF_ROLE --path /NAME_OF_PATH/ --assume-role-policy-document file://verifytrustpolicydoc.json --permissions-boundary arn:aws:iam::ACCOUNT_ID_FROM_OTHER_TEAM:policy/webadminspermissionsboundary` -->
+<!-- `aws iam create-role --role-name NAME_OF_ROLE --path /NAME_OF_PATH/ --assume-role-policy-document file://verifytrustpolicy.json --permissions-boundary arn:aws:iam::ACCOUNT_ID_FROM_OTHER_TEAM:policy/webadminspermissionsboundary` -->
 
 <ul>
 <li>Attach the policy you created in <strong>Task 1</strong> to the role:</li>
@@ -825,7 +825,7 @@ Permission policy name: **webadminspermissionpolicy**
 <h2 id="task-3-create-and-test-a-lambda-function">Task 3 <small>Create and test a Lambda function</small></h2>
 <p>Finally, you will create a <strong>Node.js 8.10</strong> Lambda function using the sample code below and pass the IAM role you just created:</p>
 <ul>
-<li>Create a file named <strong><code>index.js</code></strong> using the code below. Replace <code>"SHARED_LOGGING_BUCKET_NAME"</code> with the name of bucket that begins with <code>"shared-logging-"</code> and ends in <code>"-data"</code>. In order to get the bucket name, just run <code>aws s3 ls --profile webadmins</code>.)</li>
+<li>Create a file named <strong><code>index.js</code></strong> using the code below. Replace <code>"SHARED_LOGGING_BUCKET_NAME"</code> with the name of bucket that begins with <code>"shared-logging-"</code> and ends in <code>"-data"</code>. Also replace <code>"PREFIX_FROM_PERMISSIONS_BOUNDARY"</code> with the prefix the permissions boundary requires for that bucket.  In order to find the bucket name, just run <code>aws s3 ls --profile webadmins</code>. In order to find the prefix, examine the permissions boundary policy from the <strong>BUILD</strong> phase. </li>
 </ul>
 <div class="codehilite"><pre><span></span><span class="nt">const</span> <span class="nt">AWS</span> <span class="o">=</span> <span class="nt">require</span><span class="o">(</span><span class="s1">&#39;aws-sdk&#39;</span><span class="o">);</span>
 <span class="nt">const</span> <span class="nt">s3</span> <span class="o">=</span> <span class="nt">new</span> <span class="nt">AWS</span><span class="p">.</span><span class="nc">S3</span><span class="o">();</span>
@@ -833,7 +833,7 @@ Permission policy name: **webadminspermissionpolicy**
 <span class="nt">exports</span><span class="p">.</span><span class="nc">handler</span> <span class="o">=</span> <span class="nt">async</span> <span class="o">(</span><span class="nt">event</span><span class="o">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
   <span class="err">console.log(&#39;Loading</span> <span class="err">function&#39;)</span><span class="p">;</span>
   <span class="err">const</span> <span class="err">allKeys</span> <span class="err">=</span> <span class="cp">[]</span><span class="p">;</span>
-  <span class="err">await</span> <span class="err">getKeys({</span> <span class="n">Bucket</span><span class="p">:</span> <span class="s1">&#39;SHARED_LOGGING_BUCKET_NAME&#39;</span> <span class="p">,</span> <span class="n">Prefix</span><span class="o">:</span> <span class="s1">&#39;webadmins&#39;</span><span class="p">}</span><span class="o">,</span> <span class="nt">allKeys</span><span class="o">);</span>
+  <span class="err">await</span> <span class="err">getKeys({</span> <span class="n">Bucket</span><span class="p">:</span> <span class="s1">&#39;SHARED_LOGGING_BUCKET_NAME&#39;</span> <span class="p">,</span> <span class="n">Prefix</span><span class="o">:</span> <span class="s1">&#39;PREFIX_FROM_PERMISSIONS_BOUNDARY&#39;</span><span class="p">}</span><span class="o">,</span> <span class="nt">allKeys</span><span class="o">);</span>
   <span class="nt">return</span> <span class="nt">allKeys</span><span class="o">;</span>
 <span class="err">}</span><span class="o">;</span>
 
@@ -877,24 +877,70 @@ Permission policy name: **webadminspermissionpolicy**
 <p>If you see files marked that <strong>webadmins/you-should-SEE-this-file--webadmins...</strong> then you have successfully verified that the webadmins can do their job. Also make sure the function is generating logs in CloudWatch logs.</p>
 <p>Congratulations!</p>
 <h2 id="task-4-cleanup">Task 4 <small>Cleanup</small></h2>
-<p>To cleanup you need to delete the CloudFormation stack named <code>Perm-Bound-Adv</code> (this will also remove the Cloud9 stack) and the IAM resources you created. Run the following commands:</p>
-<p><strong>Delete the webadmins role</strong>:</p>
+<p>To cleanup you need to delete the CloudFormation stack named <code>Perm-Bound-Adv</code> (this will also remove the Cloud9 stack if that was used in the workshop) and the IAM resources you created. Run these commands using the IAM user or role you used to do the <strong>BUILD</strong> phase.</p>
+<p>Resources created in the <strong>VERIFY</strong> phase</p>
+<ul>
+<li>Detach policy from the role created in the <strong>VERIFY</strong> phase:</li>
+</ul>
+<div class="codehilite"><pre><span></span>aws iam detach-role-policy --role-name NAME_OF_VERIFY_ROLE --policy-arn arn:aws:iam::&lt;ACCOUNT_ID&gt;:policy/webadmins/NAME_OF_VERIFY_POLICY
+</pre></div>
+
+
+<ul>
+<li>Delete policy created in the <strong>VERIFY</strong> phase:</li>
+</ul>
+<div class="codehilite"><pre><span></span>aws iam delete-policy --policy-arn arn:aws:iam::&lt;ACCOUNT_ID&gt;:policy/webadmins/NAME_OF_VERIFY_POLICY
+</pre></div>
+
+
+<ul>
+<li>Delete role created in <strong>VERIFY</strong> phase:</li>
+</ul>
+<div class="codehilite"><pre><span></span>aws iam delete-role --role-name verifyrole
+</pre></div>
+
+
+<ul>
+<li>Delete the Lambda function created in <strong>VERIFY</strong> phase:</li>
+</ul>
+<div class="codehilite"><pre><span></span>aws lambda delete-function --function-name verifyfunction --region us-east-1
+</pre></div>
+
+
+<p>Resources created in the <strong>BUILD</strong> phase</p>
+<ul>
+<li>Detach the two policies from the webadmins role created in the <strong>BUILD</strong> phase:</li>
+</ul>
+<div class="codehilite"><pre><span></span>aws iam detach-role-policy --role-name webadmins --policy-arn arn:aws:iam::&lt;ACCOUNT_ID&gt;:policy/webadminspermissionpolicy
+aws iam detach-role-policy --role-name webadmins --policy-arn arn:aws:iam::aws:policy/AWSLambdaReadOnlyAccess 
+</pre></div>
+
+
+<ul>
+<li>Delete the webadmins role created in the <strong>BUILD</strong> phase:</li>
+</ul>
 <div class="codehilite"><pre><span></span>aws iam delete-role --role-name webadmins
 </pre></div>
 
 
-<p><strong>Delete the permission policy</strong>:</p>
+<ul>
+<li>Delete the permission policy created in the <strong>BUILD</strong> phase:</li>
+</ul>
 <div class="codehilite"><pre><span></span>aws iam delete-policy --policy-arn arn:aws:iam::&lt;ACCOUNT_ID&gt;:policy/webadminspermissionpolicy
 </pre></div>
 
 
-<p><strong>Delete the permissions boundary</strong>:</p>
+<ul>
+<li>Delete the permissions boundary created in the <strong>BUILD</strong> phase:</li>
+</ul>
 <div class="codehilite"><pre><span></span>aws iam delete-policy --policy-arn arn:aws:iam::&lt;ACCOUNT_ID&gt;:policy/webadminspermissionsboundary
 </pre></div>
 
 
-<p><strong>Delete the CloudFormation stack</strong>:</p>
-<div class="codehilite"><pre><span></span>aws cloudformation delete-stack --stack-name Perm-Bound-Adv
+<ul>
+<li>Delete the CloudFormation stack created in the <strong>BUILD</strong> phase:</li>
+</ul>
+<div class="codehilite"><pre><span></span>aws cloudformation delete-stack --stack-name Perm-Bound-Adv --region us-east-1
 </pre></div>
                 
                   
