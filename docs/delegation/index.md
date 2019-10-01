@@ -2,10 +2,10 @@
 
 Welcome to the world of Access Delegation!
 
-In this round, you are going to work through a scenario that could arise in an organization that uses Amazon Web Services for production workloads.
-You will play the role of an AWS "superuser" administrator.
-You have heard that Amazon GuardDuty, Inspector, and Macie are services that can help you monitor the data, host, and network traffic within your AWS environment and detect anomalous behaviors.
-In this round of the workshop, you will learn how to use Amazon IAM to delegate access to these services to AWS Security Administrators and AWS Security Operators.
+Imagine that you are an AWS "Super User" who is in charge of your organization's AWS account.
+You have heard about services such as Amazon GuardDuty, Inspector, and Macie that can help you monitor the data, host, and network traffic within your AWS environment and detect anomalous behaviors.
+You want to give your team members enough access to these services to perform their job responsibilities but you are concerned about giving them too much access.
+You will learn how to use Amazon IAM to delegate access to these services to AWS Security Administrators and AWS Security Operators.
 For the purposes of this round, AWS Security Administrators require full access to AWS security services while AWS Security Operators only require "read only" access to the services.  You will use AWS IAM roles to do this and thereby promote the Principle of Least Privilege - giving users the minimum level of privilege they need to do their tasks.
 
 
