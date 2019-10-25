@@ -28,7 +28,7 @@ This round is broken down into Build and Verify Phases.
 3. Test your customizations.
 4. Pass your credentials to another team to verify the configuration of your environment.
 
-* **VERIFY** (30 min):  The Verify Phase involves testing the work that *another team* did in building the environmentensure the requirements were met. You will do the following:
+* **VERIFY** (30 min):  The Verify Phase involves testing the work that *another team* did in building the environment to ensure the requirements were met. You will do the following:
 
 1. Obtain the login credentials from another team that has performed the steps in the Build Phase.
 2. Test the environment to determine if the Security Operator role has been properly configured.

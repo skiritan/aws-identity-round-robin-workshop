@@ -21,7 +21,7 @@ Depending on how you're doing this workshop, expand one of the following dropdow
 	1. Navigate to the <a href="https://dashboard.eventengine.run" target="_blank">Event Engine dashboard</a>
 	2. Enter your **team hash** code. 
 	3. Click **AWS Console**
-	4. Copy the **export** commmands under the **Credentials** section for the temporary credentials (you will need these in the next step.)
+	4. Copy the **export** commands under the **Credentials** section for the temporary credentials (you will need these in the next step.)
 	5. Click **Open Console** from the Event Engine window
 
 ??? info "Click here if you're at an AWS-sponsored event and AWS provided an account to you"
@@ -54,7 +54,7 @@ Close the browser tab containing the Macie console.
 
 1. You will also need GuardDuty for this lab so you will now enable GuardDuty.
 
-2. Return to the AWS Console, sigining into the account again if necessary. Select **GuardDuty** from the main console.  
+2. Return to the AWS Console, signing into the account again if necessary. Select **GuardDuty** from the main console.  
 3. If you see a **Get Started** button, click it.
 
 4. If the region is not set to Northern Virginia, select Northern Virginia (or N. Virginia) for the region.
@@ -89,9 +89,9 @@ You can refresh the browser window to update the status.
 
     The output value assigned to *LoggingBucketName*  is the name of the bucket into which AWS CloudTrail will deliver its logs.  Copy the value of *LoggingBucketName* to a scratch file on your workstation so you have it available later.
 
-    The value assigned to *SecAdministratorRoleURL* is a URL that you will use later in the lab to temporarily "switch to" (meaning take on the access privileges of) a Securty Administrator role.   This role has full administrative privileges for AWS CloudTrail, Amazon GuardDuty, Amazon Inspector, and Amazon Macie.
+    The value assigned to *SecAdministratorRoleURL* is a URL that you will use later in the lab to temporarily "switch to" (meaning take on the access privileges of) a Security Administrator role.   This role has full administrative privileges for AWS CloudTrail, Amazon GuardDuty, Amazon Inspector, and Amazon Macie.
 
-    The value assigned to *SecOperatorRoleURL* is a URL that you will use later in the lab to temporarily "switch to" a Securty Operator role.   You will later modify the policy associated with this role so it only has "read only" privileges for AWS CloudTrail, Amazon GuardDuty, Amazon Inspector, and Amazon Macie.
+    The value assigned to *SecOperatorRoleURL* is a URL that you will use later in the lab to temporarily "switch to" a Security Operator role.   You will later modify the policy associated with this role so it only has "read only" privileges for AWS CloudTrail, Amazon GuardDuty, Amazon Inspector, and Amazon Macie.
 
 8. Let's take a look at CloudTrail logging.  The most important part of collecting AWS CloudTrail information into an Amazon S3 bucket is setting the correct permissions on the Amazon S3 bucket.
 
@@ -107,7 +107,7 @@ It may take up to five minutes for logs to start appearing.  You can go further 
 
 ## Understanding Roles
 
-A role is a security principal, an actor, that has a set of policies and a trust relationship.  A user, an application, or an AWS service can *assume* the role in order to subsititute its own access privileges for those associated with the role.  The *policies* define what AWS actions the role can perform.  The *trust relationshop* defines who is allowed to assume the role.
+A role is a security principal, an actor, that has a set of policies and a trust relationship.  A user, an application, or an AWS service can *assume* the role in order to substitute its own access privileges for those associated with the role.  The *policies* define what AWS actions the role can perform.  The *trust relationship* defines who is allowed to assume the role.
 
 The CloudFormation stack you just built created two roles. One role is for a Security Administrator who has full access to CloudTrail, GuardDuty, Inspector, and Macie.  The other role is for a Security Operator who, after changes you make later on, will have read-only access to these services.  You are going to switch to the Security Administrator role but before doing so, let's look at the privileges associated with that role so you can see what it does.
 
@@ -116,13 +116,13 @@ The policy definition will be similar to the image below.
 
     ![SecAdministratorRolePolicy](./images/IamEssSecAdminPolicy.png)
 
-    You may need to click **Show more** to see all of the policies.  There are six managed policies attached to this role, five of them are provided by AWS for GuardDuty, Inspector, CloudTrail, IAM, and SNS.  While you will not be working directly with SNS and IAM, the policies for SNS and IAM are included because including them provides for a better console experience.  There is a sixth managed policy that was created for Amazon Macie to illustrate how custom managed poicies can be developed.   Click on each of the managed policies to see the underlying privileges of each.  Note that there are some services, such as Amazon EFS (Elastic File System), that are not granted by any of these policies.  You will confirm this lack of access later in this workshop.
+    You may need to click **Show more** to see all of the policies.  There are six managed policies attached to this role, five of them are provided by AWS for GuardDuty, Inspector, CloudTrail, IAM, and SNS.  While you will not be working directly with SNS and IAM, the policies for SNS and IAM are included because including them provides for a better console experience.  There is a sixth managed policy that was created for Amazon Macie to illustrate how custom managed policies can be developed.   Click on each of the managed policies to see the underlying privileges of each.  Note that there are some services, such as Amazon EFS (Elastic File System), that are not granted by any of these policies.  You will confirm this lack of access later in this workshop.
 
 2. From the main page of the role, click the **Trust relationships** tab.  You will see a section on the page telling you that the trusted entity (the entity that can assume the role) is the 12-digit AWS account ID as shown below.  This means that any principal in the account can assume the role.
 
     ![SecAdministratorTrustRel](./images/IamEssAdminTrustRel.png)
 
-3. The internal representation of the trust relatioship is a JSON policy document.  Click **Show policy document**.  You will see a policy similar to that shown in the picture below.
+3. The internal representation of the trust relationship is a JSON policy document.  Click **Show policy document**.  You will see a policy similar to that shown in the picture below.
 
     ![SecAdministratorTrustRel](./images/IamEssAdminTrustPol.png)
 

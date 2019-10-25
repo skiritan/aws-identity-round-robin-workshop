@@ -46,7 +46,7 @@ To setup your environment expand the appropriate choice from the following drop-
 	1. Navigate to the <a href="https://dashboard.eventengine.run" target="_blank">Event Engine dashboard</a>
 	2. Enter your **team hash** code. 
 	3. Click **AWS Console**
-	4. Copy the **export** commmands under the **Credentials** section for the temporary credentials (you will need these in the next step.)
+	4. Copy the **export** commands under the **Credentials** section for the temporary credentials (you will need these in the next step.)
 
     <p style="font-size:20px;">
       **Step 2** : Connect to the AWS Console via Event Engine and browse to the AWS Cloud9 IDE
