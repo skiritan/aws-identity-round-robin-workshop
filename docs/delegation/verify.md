@@ -24,7 +24,7 @@ Depending on how you're doing this workshop, expand one of the following dropdow
 	1. Navigate to the <a href="https://dashboard.eventengine.run" target="_blank">Event Engine dashboard</a>
 	2. Enter your **team hash** code. 
 	3. Click **AWS Console**
-	4. Copy the **export** commmands under the **Credentials** section for the temporary credentials (you will need these in the next step.)
+	4. Copy the **export** commands under the **Credentials** section for the temporary credentials (you will need these in the next step.)
 	5. Click **Open Console** from the Event Engine window
 
 ??? info "Click here if you're at an AWS-sponsored event and AWS provided an account to you"
@@ -87,7 +87,7 @@ In order to prevent charges to your account we recommend cleaning up the infrast
 
 ??? info  "Click here if you're at an *AWS event* where the *Event Engine* is being used"
 
-    Follow the steps below to remove the core componenets.
+    Follow the steps below to remove the core components.
 
     1. [Disable Amazon Macie](https://docs.aws.amazon.com/macie/latest/userguide/macie-disable.html).  You may need to "switch back" to the SecAdministrator role or sign into the console again to disable Macie.
 
@@ -97,7 +97,7 @@ In order to prevent charges to your account we recommend cleaning up the infrast
 
 ??? info "Click here if you are using your own AWS account (whether you are at an AWS event, a separate event or online)"
 
-    Follow the steps below to remove the core componenets.
+    Follow the steps below to remove the core components.
 
     1. [Delete the SecOperator role](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_manage_delete.html).
 

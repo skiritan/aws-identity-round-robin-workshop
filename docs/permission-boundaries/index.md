@@ -39,7 +39,7 @@ Points earned during **VERIFY** Phase:
 
 	Account architecture: ![architecture](./images/architecture.png)
 
-There are many teams working in this AWS account, including the web admins and the application admins.  The ulimate goal of this workshop is to set up the web admins so they can create a Lambda function to read an S3 bucket while making sure they are not able to impact the resources of other teams. The web admins should only have access to the following resources:
+There are many teams working in this AWS account, including the web admins and the application admins.  The ultimate goal of this workshop is to set up the web admins so they can create a Lambda function to read an S3 bucket while making sure they are not able to impact the resources of other teams. The web admins should only have access to the following resources:
 
 1. IAM policies and roles created by the web admins 
 2. Lambda functions created by the web admins

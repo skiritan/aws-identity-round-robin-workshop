@@ -2,7 +2,7 @@
 
 You are now in the **VERIFY** phase. It is time to put on the hat of the web admins and test out their access. 
 
-You should have receieved from another team the following information:
+You should have received from another team the following information:
 
 * IAM users sign-in link:	**https://Account_ID.signin.aws.amazon.com/console**
 * IAM user name:	**webadmin**
