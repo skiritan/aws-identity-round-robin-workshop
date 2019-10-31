@@ -38,7 +38,7 @@
         <meta name="lang:search.tokenizer" content="[\s\-]+">
       
       <link rel="shortcut icon" href="../../assets/images/aws-favicon.ico">
-      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.0.1">
+      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.2.0">
     
     
       
@@ -46,12 +46,12 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/application.982221ab.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/application.750b69bd.css">
       
       
     
     
-      <script src="../../assets/javascripts/modernizr.1f0bcf2b.js"></script>
+      <script src="../../assets/javascripts/modernizr.74668098.js"></script>
     
     
       
@@ -798,7 +798,7 @@
 <li>Navigate to the <a href="https://dashboard.eventengine.run" target="_blank">Event Engine dashboard</a></li>
 <li>Enter your <strong>team hash</strong> code. </li>
 <li>Click <strong>AWS Console</strong></li>
-<li>Copy the <strong>export</strong> commmands under the <strong>Credentials</strong> section for the temporary credentials (you will need these in the next step.)</li>
+<li>Copy the <strong>export</strong> commands under the <strong>Credentials</strong> section for the temporary credentials (you will need these in the next step.)</li>
 </ol>
 <p><p style="font-size:20px;">
   <strong>Step 2</strong> : Connect to the AWS Console via Event Engine and browse to the AWS Cloud9 IDE
@@ -968,7 +968,7 @@ AWS_SESSION_TOKEN=FQoG<strong><em>_</em></strong><strong><em>_</em></strong><str
 <h2 id="task-3-create-the-identity-based-policy-for-the-webadmins">Task 3 <small>Create the identity-based policy for the webadmins</small></h2>
 <div class="admonition hint">
 <p class="admonition-title">Hint</p>
-<p><strong>IMPORTANT!!!!</strong> - The question marks <strong><code>????</code></strong> in the policy below should be replaced with something that could act as part of a resource restriction.  The end result is that you will have a pathing requirement for the roles and policies. Replacing the <strong><code>????</code></strong> is one of the key challenges in this workshop and probably the most confusing part. Talk to a facilitator if you have issues with this. </p>
+<p><strong>IMPORTANT!!!!</strong> - The question marks <strong><code>???</code></strong> in the policy below should be replaced with something that could act as part of a resource restriction.  The end result is that you will have a pathing requirement for the roles and policies. Replacing the <strong><code>???</code></strong> is one of the key challenges in this workshop and probably the most confusing part. The trailing use of the wildcard * in the ARN allows for any combination of zero or more characters following what you put in place of the question marks. Talk to a facilitator if you have issues with this.</p>
 </div>
 <p>Next you will create the policy that will be attached to the webadmins role.</p>
 <ul>
@@ -987,7 +987,7 @@ AWS_SESSION_TOKEN=FQoG<strong><em>_</em></strong><strong><em>_</em></strong><str
                 <span class="s2">&quot;iam:DeletePolicyVersion&quot;</span><span class="p">,</span>
                 <span class="s2">&quot;iam:SetDefaultPolicyVersion&quot;</span>
             <span class="p">],</span>
-            <span class="nt">&quot;Resource&quot;</span><span class="p">:</span> <span class="s2">&quot;arn:aws:iam::&lt;ACCOUNT_ID&gt;:policy/webadmins/????&quot;</span>
+            <span class="nt">&quot;Resource&quot;</span><span class="p">:</span> <span class="s2">&quot;arn:aws:iam::&lt;ACCOUNT_ID&gt;:policy/webadmins/???*&quot;</span>
         <span class="p">},</span>
         <span class="p">{</span>
               <span class="nt">&quot;Sid&quot;</span><span class="p">:</span> <span class="s2">&quot;RoleandPolicyActionswithnoPermissionBoundarySupport&quot;</span><span class="p">,</span>
@@ -997,7 +997,7 @@ AWS_SESSION_TOKEN=FQoG<strong><em>_</em></strong><strong><em>_</em></strong><str
                     <span class="s2">&quot;iam:DeleteRole&quot;</span>
             <span class="p">],</span>
             <span class="nt">&quot;Resource&quot;</span><span class="p">:</span> <span class="p">[</span>
-                <span class="s2">&quot;arn:aws:iam::&lt;ACCOUNT_ID&gt;:role/webadmins/????&quot;</span>
+                <span class="s2">&quot;arn:aws:iam::&lt;ACCOUNT_ID&gt;:role/webadmins/???*&quot;</span>
             <span class="p">]</span>
         <span class="p">},</span>
         <span class="p">{</span>
@@ -1009,7 +1009,7 @@ AWS_SESSION_TOKEN=FQoG<strong><em>_</em></strong><strong><em>_</em></strong><str
                 <span class="s2">&quot;iam:DetachRolePolicy&quot;</span>
             <span class="p">],</span>
             <span class="nt">&quot;Resource&quot;</span><span class="p">:</span> <span class="p">[</span>
-                <span class="s2">&quot;arn:aws:iam::&lt;ACCOUNT_ID&gt;:role/webadmins/????&quot;</span>
+                <span class="s2">&quot;arn:aws:iam::&lt;ACCOUNT_ID&gt;:role/webadmins/???*&quot;</span>
             <span class="p">],</span>
             <span class="nt">&quot;Condition&quot;</span><span class="p">:</span> <span class="p">{</span><span class="nt">&quot;StringEquals&quot;</span><span class="p">:</span> 
                 <span class="p">{</span><span class="nt">&quot;iam:PermissionsBoundary&quot;</span><span class="p">:</span> <span class="s2">&quot;arn:aws:iam::&lt;ACCOUNT_ID&gt;:policy/webadminspermissionsboundary&quot;</span><span class="p">}</span>
@@ -1025,7 +1025,7 @@ AWS_SESSION_TOKEN=FQoG<strong><em>_</em></strong><strong><em>_</em></strong><str
             <span class="nt">&quot;Sid&quot;</span><span class="p">:</span> <span class="s2">&quot;PassRoletoLambda&quot;</span><span class="p">,</span>
             <span class="nt">&quot;Effect&quot;</span><span class="p">:</span> <span class="s2">&quot;Allow&quot;</span><span class="p">,</span>
             <span class="nt">&quot;Action&quot;</span><span class="p">:</span> <span class="s2">&quot;iam:PassRole&quot;</span><span class="p">,</span>
-            <span class="nt">&quot;Resource&quot;</span><span class="p">:</span> <span class="s2">&quot;arn:aws:iam::&lt;ACCOUNT_ID&gt;:role/webadmins/????&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;Resource&quot;</span><span class="p">:</span> <span class="s2">&quot;arn:aws:iam::&lt;ACCOUNT_ID&gt;:role/webadmins/???*&quot;</span><span class="p">,</span>
             <span class="nt">&quot;Condition&quot;</span><span class="p">:</span> <span class="p">{</span>
                 <span class="nt">&quot;StringLikeIfExists&quot;</span><span class="p">:</span> <span class="p">{</span>
                     <span class="nt">&quot;iam:PassedToService&quot;</span><span class="p">:</span> <span class="s2">&quot;lambda.amazonaws.com&quot;</span>
@@ -1216,7 +1216,7 @@ AWS_SESSION_TOKEN=FQoG<strong><em>_</em></strong><strong><em>_</em></strong><str
       
     </div>
     
-      <script src="../../assets/javascripts/application.b806dc00.js"></script>
+      <script src="../../assets/javascripts/application.39abc4af.js"></script>
       
       <script>app.initialize({version:"1.0.4",url:{base:"../.."}})</script>
       
