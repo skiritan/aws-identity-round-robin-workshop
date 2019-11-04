@@ -210,7 +210,7 @@ aws iam create-policy --policy-name webadminspermissionsboundary --policy-docume
 ## Task 3 <small>Create the identity-based policy for the webadmins</small>
 
 !!! hint 
-	**IMPORTANT!!!!** - The question marks **`???`** in the policy below should be replaced with something that could act as part of a resource restriction.  The end result is that you will have a pathing requirement for the roles and policies. Replacing the **`???`** is one of the key challenges in this workshop and probably the most confusing part. The trailing use of the wildcard * in the ARN allows for any combination of zero or more characters following what you put in place of the question marks. Talk to a facilitator if you have issues with this.
+	**IMPORTANT!!!!** - The question marks **`???*`** in the policy below should be replaced with something that could act as part of a resource restriction.  The end result is that you will have a pathing requirement for the roles and policies. Replacing the **`???*`** is one of the key challenges in this workshop and probably the most confusing part. The trailing use of the wildcard * in the ARN allows for any combination of zero or more characters following what you put in place of the question marks. Talk to a facilitator if you have issues with this.
 
 Next you will create the policy that will be attached to the webadmins role.
 
