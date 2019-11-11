@@ -143,7 +143,7 @@ Congratulations!
 
 ## Task 4 <small>Cleanup</small>
 
-To cleanup you need to delete the CloudFormation stack named `Perm-Bound-Adv` (this will also remove the Cloud9 stack if that was used in the workshop) and the IAM resources you created. Run these commands using the IAM user or role you used to do the **BUILD** phase.
+**You do not need to perform cleanup if Event Engine is being used.** If Event Engine is not being used, to cleanup you need to delete the CloudFormation stack named `Perm-Bound-Adv` (this will also remove the Cloud9 stack if that was used in the workshop) and the IAM resources you created. Run these commands using the IAM user or role you used to do the **BUILD** phase.
 
 Resources created in the **VERIFY** phase
 
