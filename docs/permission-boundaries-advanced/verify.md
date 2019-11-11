@@ -22,6 +22,10 @@ Permission policy name: **webadminspermissionpolicy**
 role_arn = arn:aws:iam::ACCOUNT_ID_FROM_OTHER_TEAM:role/webadmins
 source_profile = default
 ```
+!!! Attention
+    <p style="font-size:16px;">
+      You may wish to validate your setup before swapping credentials with another team. To do this, enter the account Id for your team instead of the other team in the `~/.aws/config` file referenced above for the *role_arn* and procede with the steps below. Once you have confirmed the delegated access is functioning within your team account, update `~/.aws/config` and test against the other team's account.
+    </p>
 
 **When using the AWS CLI and you want to reference a profile other then the default one you need to add the `--profile` parameter to the CLI command. Since we are naming this profile webadmins, you will see that `--profile webadmins` has been added to all the commands in this phase.**
 
