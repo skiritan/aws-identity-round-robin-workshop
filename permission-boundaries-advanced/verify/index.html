@@ -883,7 +883,7 @@ Permission policy name: **webadminspermissionpolicy**
 <p>If you see files marked that <strong>webadmins/you-should-SEE-this-file--webadmins...</strong> then you have successfully verified that the webadmins can do their job. Also make sure the function is generating logs in CloudWatch logs.</p>
 <p>Congratulations!</p>
 <h2 id="task-4-cleanup">Task 4 <small>Cleanup</small></h2>
-<p>To cleanup you need to delete the CloudFormation stack named <code>Perm-Bound-Adv</code> (this will also remove the Cloud9 stack if that was used in the workshop) and the IAM resources you created. Run these commands using the IAM user or role you used to do the <strong>BUILD</strong> phase.</p>
+<p><strong>You do not need to perform cleanup if Event Engine is being used.</strong> If Event Engine is not being used, to cleanup you need to delete the CloudFormation stack named <code>Perm-Bound-Adv</code> (this will also remove the Cloud9 stack if that was used in the workshop) and the IAM resources you created. Run these commands using the IAM user or role you used to do the <strong>BUILD</strong> phase.</p>
 <p>Resources created in the <strong>VERIFY</strong> phase</p>
 <ul>
 <li>Detach policy from the role created in the <strong>VERIFY</strong> phase:</li>
