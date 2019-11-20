@@ -32,8 +32,8 @@ source_profile = default
 ```
 
 !!! Pre-Verification
-    <p style="font-size:16px;">
-      In order validate your setup before swapping credentials with another team, enter the ***account Id for your team*** instead of the other team in the `~/.aws/config` file referenced above for the *role_arn* and procede with the steps below. Once you have confirmed the delegated access is functioning within your team account, update `~/.aws/config` and test against the other team's account.
+    <p style="font-size:14px;">
+      In order validate your setup ***before*** swapping credentials with another team, enter the ***account Id for your team*** instead of the other team in the `~/.aws/config` file referenced above for the *role_arn* and procede with the steps below. The VERIFY phase assumes you are checking another team's setup but for your own testing this will be just done in your own account. You'll need to keep that in mind because some of the VERIFY phase instructions assume you are doing this cross account so you'll need to adjust some of the commands. Once you have confirmed the delegated access is functioning within your team account, update `~/.aws/config` and test against the other team's account.
     </p>
 
 **When using the AWS CLI and you want to reference a profile other then the default one you need to add the `--profile` parameter to the CLI command. Since we are naming this profile webadmins, you will see that `--profile webadmins` has been added to all the commands in this phase.**
