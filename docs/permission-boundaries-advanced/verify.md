@@ -17,6 +17,14 @@ Permission policy name: **webadminspermissionpolicy**
 
 * To carry out these tasks as the webadmins, you will need to assume that role. To make that process easier, add the following to the `~/.aws/config` file:
 
+1\. Verify in **your** team's account:
+```
+[profile webadmins]
+role_arn = arn:aws:iam:YOUR_TEAMS_ACCOUNT_ID:role/webadmins
+source_profile = default
+```
+
+2\. Verify in **other** team's account:
 ```
 [profile webadmins]
 role_arn = arn:aws:iam::ACCOUNT_ID_FROM_OTHER_TEAM:role/webadmins
@@ -101,6 +109,12 @@ aws iam attach-role-policy --policy-arn arn:aws:iam::<ACCOUNT_ID_FROM_OTHER_TEAM
 Finally, you will create a **Node.js 8.10** Lambda function using the sample code below and pass the IAM role you just created:
  
 * Create a file named **`index.js`** using the code below. Replace `"SHARED_LOGGING_BUCKET_NAME"` with the name of bucket that begins with `"shared-logging-"` and ends in `"-data"`. Also replace `"PREFIX_FROM_PERMISSIONS_BOUNDARY"` with the prefix the permissions boundary requires for that bucket.  In order to find the bucket name, just run `aws s3 ls --profile webadmins`. In order to find the prefix, examine the permissions boundary policy from the **BUILD** phase. 
+
+??? info  "What is an S3 prefix?" 
+
+    <p style="font-size:16px;">
+      In Amazon S3, buckets and objects are the primary resources, and objects are stored in buckets. Amazon S3 has a flat structure instead of a hierarchy like you would see in a file system. However, for the sake of organizational simplicity, the Amazon S3 console supports the folder concept as a means of grouping objects. Amazon S3 does this by using a **shared name prefix** for objects (that is, objects that have names that begin with a common string). Object names are also referred to as key names. For example, you can create a folder on the console named photos and store an object named myphoto.jpg in it. The object is then stored with the key name photos/myphoto.jpg, where photos/ is the prefix.
+    </p>
 
 ``` node
 const AWS = require('aws-sdk');
