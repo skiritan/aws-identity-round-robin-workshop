@@ -740,6 +740,14 @@ Permission policy name: **webadminspermissionpolicy**
 <ul>
 <li>To carry out these tasks as the webadmins, you will need to assume that role. To make that process easier, add the following to the <code>~/.aws/config</code> file:</li>
 </ul>
+<p>1. Verify in <strong>your</strong> team's account:</p>
+<div class="codehilite"><pre><span></span><span class="k">[profile webadmins]</span>
+<span class="na">role_arn</span> <span class="o">=</span> <span class="s">arn:aws:iam:YOUR_TEAMS_ACCOUNT_ID:role/webadmins</span>
+<span class="na">source_profile</span> <span class="o">=</span> <span class="s">default</span>
+</pre></div>
+
+
+<p>2. Verify in <strong>other</strong> team's account:</p>
 <div class="codehilite"><pre><span></span><span class="k">[profile webadmins]</span>
 <span class="na">role_arn</span> <span class="o">=</span> <span class="s">arn:aws:iam::ACCOUNT_ID_FROM_OTHER_TEAM:role/webadmins</span>
 <span class="na">source_profile</span> <span class="o">=</span> <span class="s">default</span>
@@ -833,6 +841,10 @@ Permission policy name: **webadminspermissionpolicy**
 <ul>
 <li>Create a file named <strong><code>index.js</code></strong> using the code below. Replace <code>"SHARED_LOGGING_BUCKET_NAME"</code> with the name of bucket that begins with <code>"shared-logging-"</code> and ends in <code>"-data"</code>. Also replace <code>"PREFIX_FROM_PERMISSIONS_BOUNDARY"</code> with the prefix the permissions boundary requires for that bucket.  In order to find the bucket name, just run <code>aws s3 ls --profile webadmins</code>. In order to find the prefix, examine the permissions boundary policy from the <strong>BUILD</strong> phase. </li>
 </ul>
+<details class="info"><summary>What is an S3 prefix?</summary><p><p style="font-size:16px;">
+  In Amazon S3, buckets and objects are the primary resources, and objects are stored in buckets. Amazon S3 has a flat structure instead of a hierarchy like you would see in a file system. However, for the sake of organizational simplicity, the Amazon S3 console supports the folder concept as a means of grouping objects. Amazon S3 does this by using a <strong>shared name prefix</strong> for objects (that is, objects that have names that begin with a common string). Object names are also referred to as key names. For example, you can create a folder on the console named photos and store an object named myphoto.jpg in it. The object is then stored with the key name photos/myphoto.jpg, where photos/ is the prefix.
+</p></p>
+</details>
 <div class="codehilite"><pre><span></span><span class="nt">const</span> <span class="nt">AWS</span> <span class="o">=</span> <span class="nt">require</span><span class="o">(</span><span class="s1">&#39;aws-sdk&#39;</span><span class="o">);</span>
 <span class="nt">const</span> <span class="nt">s3</span> <span class="o">=</span> <span class="nt">new</span> <span class="nt">AWS</span><span class="p">.</span><span class="nc">S3</span><span class="o">();</span>
 
