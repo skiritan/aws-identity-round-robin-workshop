@@ -756,8 +756,8 @@ Permission policy name: **webadminspermissionpolicy**
 
 <div class="admonition pre-verification">
 <p class="admonition-title">Pre-verification</p>
-<p><p style="font-size:16px;">
-  In order validate your setup before swapping credentials with another team, enter the <strong><em>account Id for your team</em></strong> instead of the other team in the <code>~/.aws/config</code> file referenced above for the <em>role_arn</em> and procede with the steps below. Once you have confirmed the delegated access is functioning within your team account, update <code>~/.aws/config</code> and test against the other team's account.
+<p><p style="font-size:14px;">
+  In order validate your setup <strong><em>before</em></strong> swapping credentials with another team, enter the <strong><em>account Id for your team</em></strong> instead of the other team in the <code>~/.aws/config</code> file referenced above for the <em>role_arn</em> and procede with the steps below. The VERIFY phase assumes you are checking another team's setup but for your own testing this will be just done in your own account. You'll need to keep that in mind because some of the VERIFY phase instructions assume you are doing this cross account so you'll need to adjust some of the commands. Once you have confirmed the delegated access is functioning within your team account, update <code>~/.aws/config</code> and test against the other team's account.
 </p></p>
 </div>
 <p><strong>When using the AWS CLI and you want to reference a profile other then the default one you need to add the <code>--profile</code> parameter to the CLI command. Since we are naming this profile webadmins, you will see that <code>--profile webadmins</code> has been added to all the commands in this phase.</strong></p>
