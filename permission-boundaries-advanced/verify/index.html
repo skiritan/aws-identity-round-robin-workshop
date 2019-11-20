@@ -881,6 +881,10 @@ Permission policy name: **webadminspermissionpolicy**
 <li>Examine the output file. </li>
 </ul>
 <p>If you see files marked that <strong>webadmins/you-should-SEE-this-file--webadmins...</strong> then you have successfully verified that the webadmins can do their job. Also make sure the function is generating logs in CloudWatch logs.</p>
+<ul>
+<li><em>(Optional)</em> Test Lambda for alternate bucket prefix</li>
+</ul>
+<p>If time permits, repeat the previous steps in this task except create a new Lambda function such as <code>verifyfunction1</code> and set bucket prefix in the new Lambda function code to <code>appadmins</code>. What are the contents of the output file when the new Lambda function is invoked? Why is the result different than with the <code>webadmins</code> bucket prefix?</p>
 <p>Congratulations!</p>
 <h2 id="task-4-cleanup">Task 4 <small>Cleanup</small></h2>
 <p><strong>You do not need to perform cleanup if Event Engine is being used.</strong> If Event Engine is not being used, to cleanup you need to delete the CloudFormation stack named <code>Perm-Bound-Adv</code> (this will also remove the Cloud9 stack if that was used in the workshop) and the IAM resources you created. Run these commands using the IAM user or role you used to do the <strong>BUILD</strong> phase.</p>
