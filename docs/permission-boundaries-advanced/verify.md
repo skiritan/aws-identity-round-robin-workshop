@@ -139,6 +139,10 @@ aws lambda invoke --function-name verifyfunction --region us-east-1 --invocation
 
 If you see files marked that **webadmins/you-should-SEE-this-file--webadmins...** then you have successfully verified that the webadmins can do their job. Also make sure the function is generating logs in CloudWatch logs.
 
+* *(Optional)* Test Lambda for alternate bucket prefix
+
+If time permits, repeat the previous steps in this task except create a new Lambda function such as `verifyfunction1` and set bucket prefix in the new Lambda function code to `appadmins`. What are the contents of the output file when the new Lambda function is invoked? Why is the result different than with the `webadmins` bucket prefix?
+
 Congratulations!
 
 ## Task 4 <small>Cleanup</small>
