@@ -77,6 +77,10 @@ aws iam create-policy --policy-name NAME_OF_POLICY --policy-document file://veri
 ```
 <!-- `aws iam create-policy --policy-name NAME_OF_POLICY --path /webadmins/ --policy-document file://verifypolicy.json` -->
 
+??? info "Stuck?"
+
+    This section can be challenging so you are having continued trouble you **may** wish to review the  <a href="../artifacts/pbw-solution-notes.pdf" target="_blank">sample solution commands in the helper doc.</a>
+
 ## Task 2 <small>Create a role</small>
 
 The role you create here will be passed to the Lambda function you create in the next task.
