@@ -17,7 +17,7 @@ It's now time **VERIFY** the setup from the **Build** phase. You will be acting 
 
 ```
 [profile webadmins]
-role_arn = arn:aws:iam:YOUR_TEAMS_ACCOUNT_ID:role/webadmins
+role_arn = arn:aws:iam::YOUR_TEAMS_ACCOUNT_ID:role/webadmins
 source_profile = default
 ```
 
