@@ -13,7 +13,7 @@ It's now time **VERIFY** the setup from the **Build** phase. You will be acting 
 
 1\. Verify in **your** team's account:
 
-* To carry out the tasks below as the webadmins in your teams account, you will need to assume that role. To make that process easier, add the following to the `~/.aws/config` file:
+* To carry out the tasks below as the webadmins in **your team's** account, you will need to assume that role. To make that process easier, add the following to the `~/.aws/config` file:
 
 ```
 [profile webadmins]
@@ -23,7 +23,7 @@ source_profile = default
 
 2\. Verify in **other** team's account:
 
-* To carry out the tasks below as the webadmins in the other teams account, you will need to assume that role. To make that process easier, add the following to the `~/.aws/config` file:
+* To carry out the tasks below as the webadmins in the **other team's** account, you will need to assume that role. To make that process easier, add the following to the `~/.aws/config` file:
 
 ```
 [profile webadmins]
