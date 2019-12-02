@@ -723,12 +723,38 @@
                 
                 
                 <h1 id="permission-boundaries-workshop-verify-phase">Permission boundaries workshop <small> Verify phase</small></h1>
-<p>It's now time <strong>VERIFY</strong> the setup from the <strong>Build</strong> phase. You can will acting as the webadmins in this phase to check that you can do the following: </p>
+<p>It's now time <strong>VERIFY</strong> the setup from the <strong>Build</strong> phase. You will be acting as the webadmins in this phase to check that you can do the following: </p>
 <ol>
 <li>Create an IAM policy</li>
 <li>Create an IAM role (and attach that policy) </li>
 <li>Create a Lambda function (and attach that role)</li>
 </ol>
+<div class="admonition pre-verification">
+<p class="admonition-title">Pre-verification</p>
+<p><p style="font-size:14px;">
+  In order validate your setup <strong><em>before</em></strong> swapping credentials with another team, enter the <strong><em>account Id for your team</em></strong> instead of the other team in the <code>~/.aws/config</code> file referenced above for the <em>role_arn</em> and procede with the steps below. The VERIFY phase assumes you are checking another team's setup but for your own testing this will be just done in your own account. You'll need to keep that in mind because some of the VERIFY phase instructions assume you are doing this cross account so you'll need to adjust some of the commands. Once you have confirmed the delegated access is functioning within your team account, update <code>~/.aws/config</code> and test against the other team's account.
+</p></p>
+</div>
+<p>1. Verify in <strong>your</strong> team's account:</p>
+<ul>
+<li>To carry out the tasks below as the webadmins in your teams account, you will need to assume that role. To make that process easier, add the following to the <code>~/.aws/config</code> file:</li>
+</ul>
+<div class="codehilite"><pre><span></span><span class="k">[profile webadmins]</span>
+<span class="na">role_arn</span> <span class="o">=</span> <span class="s">arn:aws:iam:YOUR_TEAMS_ACCOUNT_ID:role/webadmins</span>
+<span class="na">source_profile</span> <span class="o">=</span> <span class="s">default</span>
+</pre></div>
+
+
+<p>2. Verify in <strong>other</strong> team's account:</p>
+<ul>
+<li>To carry out the tasks below as the webadmins in the other teams account, you will need to assume that role. To make that process easier, add the following to the <code>~/.aws/config</code> file:</li>
+</ul>
+<div class="codehilite"><pre><span></span><span class="k">[profile webadmins]</span>
+<span class="na">role_arn</span> <span class="o">=</span> <span class="s">arn:aws:iam::ACCOUNT_ID_FROM_OTHER_TEAM:role/webadmins</span>
+<span class="na">source_profile</span> <span class="o">=</span> <span class="s">default</span>
+</pre></div>
+
+
 <p>If doing this as part of an AWS event you should have received the following information from another team. You will need the <strong>Account ID</strong> and the <strong>Resource restriction</strong> information to complete the tasks in this phase.</p>
 <div class="codehilite"><pre><span></span>Webadmins role ARN: arn:aws:iam::`ACCOUNT_ID_FROM_OTHER_TEAM`:role/**webadmins**
 Resource restriction for both the roles and policies: /webadmins/`Resource restriction`
@@ -737,29 +763,6 @@ Permission policy name: **webadminspermissionpolicy**
 </pre></div>
 
 
-<ul>
-<li>To carry out these tasks as the webadmins, you will need to assume that role. To make that process easier, add the following to the <code>~/.aws/config</code> file:</li>
-</ul>
-<p>1. Verify in <strong>your</strong> team's account:</p>
-<div class="codehilite"><pre><span></span><span class="k">[profile webadmins]</span>
-<span class="na">role_arn</span> <span class="o">=</span> <span class="s">arn:aws:iam:YOUR_TEAMS_ACCOUNT_ID:role/webadmins</span>
-<span class="na">source_profile</span> <span class="o">=</span> <span class="s">default</span>
-</pre></div>
-
-
-<p>2. Verify in <strong>other</strong> team's account:</p>
-<div class="codehilite"><pre><span></span><span class="k">[profile webadmins]</span>
-<span class="na">role_arn</span> <span class="o">=</span> <span class="s">arn:aws:iam::ACCOUNT_ID_FROM_OTHER_TEAM:role/webadmins</span>
-<span class="na">source_profile</span> <span class="o">=</span> <span class="s">default</span>
-</pre></div>
-
-
-<div class="admonition pre-verification">
-<p class="admonition-title">Pre-verification</p>
-<p><p style="font-size:14px;">
-  In order validate your setup <strong><em>before</em></strong> swapping credentials with another team, enter the <strong><em>account Id for your team</em></strong> instead of the other team in the <code>~/.aws/config</code> file referenced above for the <em>role_arn</em> and procede with the steps below. The VERIFY phase assumes you are checking another team's setup but for your own testing this will be just done in your own account. You'll need to keep that in mind because some of the VERIFY phase instructions assume you are doing this cross account so you'll need to adjust some of the commands. Once you have confirmed the delegated access is functioning within your team account, update <code>~/.aws/config</code> and test against the other team's account.
-</p></p>
-</div>
 <p><strong>When using the AWS CLI and you want to reference a profile other then the default one you need to add the <code>--profile</code> parameter to the CLI command. Since we are naming this profile webadmins, you will see that <code>--profile webadmins</code> has been added to all the commands in this phase.</strong></p>
 <details class="info"><summary>Application architecture</summary><p><img alt="image1" src="../images/architecture.png" /></p>
 </details>
