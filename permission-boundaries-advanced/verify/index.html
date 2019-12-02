@@ -737,7 +737,7 @@
 </div>
 <p>1. Verify in <strong>your</strong> team's account:</p>
 <ul>
-<li>To carry out the tasks below as the webadmins in your teams account, you will need to assume that role. To make that process easier, add the following to the <code>~/.aws/config</code> file:</li>
+<li>To carry out the tasks below as the webadmins in <strong>your team's</strong> account, you will need to assume that role. To make that process easier, add the following to the <code>~/.aws/config</code> file:</li>
 </ul>
 <div class="codehilite"><pre><span></span><span class="k">[profile webadmins]</span>
 <span class="na">role_arn</span> <span class="o">=</span> <span class="s">arn:aws:iam:YOUR_TEAMS_ACCOUNT_ID:role/webadmins</span>
@@ -747,7 +747,7 @@
 
 <p>2. Verify in <strong>other</strong> team's account:</p>
 <ul>
-<li>To carry out the tasks below as the webadmins in the other teams account, you will need to assume that role. To make that process easier, add the following to the <code>~/.aws/config</code> file:</li>
+<li>To carry out the tasks below as the webadmins in the <strong>other team's</strong> account, you will need to assume that role. To make that process easier, add the following to the <code>~/.aws/config</code> file:</li>
 </ul>
 <div class="codehilite"><pre><span></span><span class="k">[profile webadmins]</span>
 <span class="na">role_arn</span> <span class="o">=</span> <span class="s">arn:aws:iam::ACCOUNT_ID_FROM_OTHER_TEAM:role/webadmins</span>
