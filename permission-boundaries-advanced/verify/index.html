@@ -38,7 +38,7 @@
         <meta name="lang:search.tokenizer" content="[\s\-]+">
       
       <link rel="shortcut icon" href="../../assets/images/aws-favicon.ico">
-      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.2.0">
+      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.0.2">
     
     
       
@@ -46,12 +46,12 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/application.750b69bd.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/application.982221ab.css">
       
       
     
     
-      <script src="../../assets/javascripts/modernizr.74668098.js"></script>
+      <script src="../../assets/javascripts/modernizr.1f0bcf2b.js"></script>
     
     
       
@@ -883,7 +883,7 @@ Permission policy name: **webadminspermissionpolicy**
 <ul>
 <li>Create a Lambda function</li>
 </ul>
-<div class="codehilite"><pre><span></span>aws lambda create-function --function-name verifyfunction --runtime nodejs8.10 --role arn:aws:iam::&lt;ACCOUNT_ID_FROM_OTHER_TEAM&gt;:role/webadmins/NAME_OF_ROLE --handler index.handler --region us-east-1 --zip-file fileb://lambdafunction.zip --profile webadmins
+<div class="codehilite"><pre><span></span>aws lambda create-function --function-name verifyfunction --runtime nodejs10.x --role arn:aws:iam::&lt;ACCOUNT_ID_FROM_OTHER_TEAM&gt;:role/webadmins/NAME_OF_ROLE --handler index.handler --region us-east-1 --zip-file fileb://lambdafunction.zip --profile webadmins
 </pre></div>
 
 
@@ -1055,7 +1055,7 @@ aws iam detach-role-policy --role-name webadmins --policy-arn arn:aws:iam::aws:p
       
     </div>
     
-      <script src="../../assets/javascripts/application.39abc4af.js"></script>
+      <script src="../../assets/javascripts/application.d9aa80ab.js"></script>
       
       <script>app.initialize({version:"1.0.4",url:{base:"../.."}})</script>
       
