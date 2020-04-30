@@ -102,7 +102,7 @@
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
     <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
     
-      <a href="#serverless-identity-round" tabindex="1" class="md-skip">
+      <a href="#_1" tabindex="1" class="md-skip">
         Skip to content
       </a>
     
@@ -444,43 +444,43 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#agenda" title="Agenda" class="md-nav__link">
-    Agenda
+  <a href="#_2" title="アジェンダ" class="md-nav__link">
+    アジェンダ
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#presentation" title="Presentation" class="md-nav__link">
-    Presentation
+  <a href="#_3" title="プレゼンテーション" class="md-nav__link">
+    プレゼンテーション
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#environment-setup" title="Environment setup" class="md-nav__link">
-    Environment setup
+  <a href="#_4" title="環境設定" class="md-nav__link">
+    環境設定
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#wildrydes-identity-overhaul" title="WildRydes identity overhaul" class="md-nav__link">
-    WildRydes identity overhaul
+  <a href="#wildrydes" title="WildRydes のアイデンティティの改善" class="md-nav__link">
+    WildRydes のアイデンティティの改善
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#view-your-application" title="View your application" class="md-nav__link">
-    View your application
+  <a href="#_5" title="アプリケーションの表示" class="md-nav__link">
+    アプリケーションの表示
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#current-application-architecture" title="Current application architecture" class="md-nav__link">
-    Current application architecture
+  <a href="#_6" title="現在のアプリケーションアーキテクチャ" class="md-nav__link">
+    現在のアプリケーションアーキテクチャ
   </a>
   
 </li>
@@ -690,43 +690,43 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#agenda" title="Agenda" class="md-nav__link">
-    Agenda
+  <a href="#_2" title="アジェンダ" class="md-nav__link">
+    アジェンダ
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#presentation" title="Presentation" class="md-nav__link">
-    Presentation
+  <a href="#_3" title="プレゼンテーション" class="md-nav__link">
+    プレゼンテーション
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#environment-setup" title="Environment setup" class="md-nav__link">
-    Environment setup
+  <a href="#_4" title="環境設定" class="md-nav__link">
+    環境設定
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#wildrydes-identity-overhaul" title="WildRydes identity overhaul" class="md-nav__link">
-    WildRydes identity overhaul
+  <a href="#wildrydes" title="WildRydes のアイデンティティの改善" class="md-nav__link">
+    WildRydes のアイデンティティの改善
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#view-your-application" title="View your application" class="md-nav__link">
-    View your application
+  <a href="#_5" title="アプリケーションの表示" class="md-nav__link">
+    アプリケーションの表示
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#current-application-architecture" title="Current application architecture" class="md-nav__link">
-    Current application architecture
+  <a href="#_6" title="現在のアプリケーションアーキテクチャ" class="md-nav__link">
+    現在のアプリケーションアーキテクチャ
   </a>
   
 </li>
@@ -750,91 +750,77 @@
                   <a href="https://github.com/aws-samples/aws-identity-round-robin-workshop/edit/master/docs/serverless/index.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
                 
                 
-                <h1 id="serverless-identity-round">Serverless Identity Round</h1>
+                <h1 id="_1">サーバーレス アイデンティティ ラウンド</h1>
 <!--
 Welcome to the world of serverless!  Now you may be asking yourself, *What is serverless*? Well, it is an architecture paradigm that allows you to create your applications without provisioning or managing any servers.  Sounds great, right?  Organizations look at building serverless applications as a way of improving their scalability and reducing their operational overhead.  The responsibility of the underlying infrastructure is shifted off your plate so you can spend more time focusing on building your applications.
 
 So with less infrastructure to manage you are no longer responsible for patching  your operating systems and the attack surface you need to worry about has been significantly reduced.  But with the use of serverless technologies comes *other* responsibility.  When you hear the word serverless you may think specifically of <a href="https://aws.amazon.com/lambda/" target="_blank">AWS Lambda</a> but it is important to remember that there are other services used within a serverless application and securing an application involves more than just securing your Lambda functions.  
 -->
 
-<p>In this round you will be focused on improving the identity controls of the WildRydes serverless application (which is borrowed from <a href="https://github.com/aws-samples/aws-serverless-workshops/tree/master/WebApplication" target="_blank">aws-serverless-workshops</a> and retrofitted for the purposes of this round).  You will get exposed to different identity concepts through the use of a variety of services such as <a href="https://aws.amazon.com/iam/" target="_blank">AWS IAM</a>, <a href="https://aws.amazon.com/s3/" target="_blank">Amazon S3</a>, <a href="https://aws.amazon.com/cloudfront/" target="_blank">Amazon CloudFront</a>, and <a href="https://aws.amazon.com/cognito/" target="_blank">Amazon Cognito</a>.  Upon completion you should have a better idea of how to use native AWS identity controls to improve the security posture of a serverless application.</p>
-<p><strong>AWS Service/Feature Coverage</strong>: </p>
+<p>このラウンドでは、WildRydes というサーバーレスアプリケーション ( <a href="https://github.com/aws-samples/aws-serverless-workshops/tree/master/WebApplication">aws-serverless-workshops</a> をこのラウンドの目的に合わせて変更したもの) のアイデンティティコントロールを改善することに重点を置いています。<a href="https://aws.amazon.com/iam/">AWS IAM</a>、<a href="https://aws.amazon.com/s3/">Amazon S3</a>、<a href="https://aws.amazon.com/cloudfront/">Amazon CloudFront</a>、および <a href="https://aws.amazon.com/cognito/">Amazon Cognito</a> などのさまざまなサービスを使用することで、異なるアイデンティティの概念に触れることができます。このラウンドを完了すると、標準の AWS アイデンティティコントロール機能を使用して、サーバーレスアプリケーションのセキュリティをよりコントロールする方法が理解できます</p>
+<p><strong>AWS のサービス/機能の範囲</strong> : </p>
 <ul>
-<li>S3 Bucket Policies</li>
-<li>S3 ACLs</li>
-<li>CloudFront Origin Access Identities</li>
-<li>Cognito User Pools</li>
+<li>S3 バケットポリシー</li>
+<li>S3 ACL</li>
+<li>CloudFront オリジンアクセスアイデンティティ</li>
+<li>Cognito ユーザープール</li>
 <li>Cognito Hosted UI</li>
 </ul>
-<h2 id="agenda">Agenda</h2>
-<p>This round is broken down into two tasks, both with a Build and Verify phase. The Build phase involves evaluating, implementing, and enhancing the identity controls of the WildRydes application based on a set of business level functional and non-functional requirements.  The Verify phase involves putting on the hat of an end user and testing the controls you put in place to ensure the requirements were met. In addition you will also ensure that a systems administrator is still able to manage the resources.</p>
+<h2 id="_2"><strong>アジェンダ</strong></h2>
+<p>このラウンドは２つのタスクに分けられ、どちらも構築フェーズと検証フェーズがあります。構築フェーズでは、一連のビジネスレベルの機能要と非機能要件に基づいて、WildRydes アプリケーションのアイデンティティコントロールを評価、実装、および強化します。検証フェーズでは、エンドユーザーに代わって、要件が満たされていることを確認するために、設定内容をテストします。また、システム管理者が引き続きリソースを管理できることも確認します。</p>
 <ul>
-<li><strong>Task 1</strong> (40 min): Reduce the attack surface of the S3 origin</li>
-<li><strong>Task 2</strong> (35 min): Set up application user management</li>
+<li><strong>タスク１</strong> (40分): S3オリジンの攻撃対象となりうる箇所を減らす</li>
+<li><strong>タスク２</strong> (35分): アプリケーションのユーザ管理を設定する</li>
 </ul>
-<div class="admonition info">
-<p class="admonition-title">Team or Individual Exercise</p>
-<p>This workshop can be done as a team exercise or individually. The instructions are written with the assumption that you are working as part of a team but you could just as easily do the steps below individually. If done as part of an AWS sponsored event then you'll be split into teams of around 4-6 people. Each team will do the BUILD phase and then hand off their accounts to another team. Then each team will do the VERIFY phase.</p>
-</div>
-<h2 id="presentation">Presentation</h2>
-<p><a href="./Identity-RR-Serverless-Round.pdf" target="_blank">Workshop Presentation Powerpoint</a></p>
-<h2 id="environment-setup">Environment setup</h2>
-<p>To setup your environment please expand one of the following dropdown sections (depending on how you're doing this workshop) and follow the instructions: </p>
-<details class="info"><summary>Click here if you're at an <em>AWS event</em> where the <em>Event Engine</em> is being used</summary><p><p style="font-size:20px;">
-  <strong>Step 1</strong> : Open the AWS Console
-</p></p>
+<p><strong>チーム演習または個人演習</strong></p>
+<p>このワークショップは、チームで行うことも、個人で行うこともできます。手順は、チームの一員として作業することを前提に記述されていますが、以下の手順を個人で実行することも可能です。AWS 主催のイベントとして行われる場合は、4～6 人程度のチームに分かれて実施します。各チームが構築フェーズを実施し、アカウントを別のチームに引き継ぎます。その後、各チームは検証フェーズを実行します。</p>
+<h2 id="_3">プレゼンテーション</h2>
+<p><a href="./Identity-RR-Serverless-Round.pdf" target="_blank">ワークショップのプレゼンテーション (Powerpoint)</a></p>
+<h2 id="_4">環境設定</h2>
+<p>環境を設定するには、次のドロップダウンセクションのいずれか (このワークショップの実施方法に応じて) を展開し、指示に従ってください。 </p>
+<p><strong>AWS 主催の Event Engine を利用したイベント</strong> </p>
+<div class="codehilite"><pre><span></span><span class="o">&amp;</span><span class="nt">lt</span><span class="o">;</span><span class="nt">p</span> <span class="nt">style</span><span class="o">=</span><span class="s2">&quot;font-size:20px;&quot;</span><span class="o">&amp;</span><span class="nt">gt</span><span class="o">;</span>
+  <span class="o">**</span><span class="nt">Step</span> <span class="nt">1</span><span class="o">**</span> <span class="o">:</span> <span class="nt">Open</span> <span class="nt">the</span> <span class="nt">AWS</span> <span class="nt">Console</span>
+<span class="o">&amp;</span><span class="nt">lt</span><span class="o">;/</span><span class="nt">p</span><span class="o">&amp;</span><span class="nt">gt</span><span class="o">;</span>
+
+<span class="nt">1</span><span class="o">.</span> <span class="o">&amp;</span><span class="nt">lt</span><span class="o">;</span><span class="nt">a</span> <span class="nt">href</span><span class="o">=</span><span class="s2">&quot;https://dashboard.eventengine.run&quot;</span> <span class="nt">target</span><span class="o">=</span><span class="s2">&quot;_blank&quot;</span><span class="o">&amp;</span><span class="nt">gt</span><span class="o">;</span><span class="nt">Event</span> <span class="nt">Engine</span> <span class="nt">ダッシューボード</span><span class="o">&amp;</span><span class="nt">lt</span><span class="o">;/</span><span class="nt">a</span><span class="o">&amp;</span><span class="nt">gt</span><span class="o">;</span><span class="nt">にアクセスします</span><span class="err">。</span>
+<span class="nt">2</span><span class="o">.</span> <span class="o">**</span><span class="nt">チームハッシュコード</span><span class="o">**</span> <span class="nt">を入力します</span><span class="o">.</span> 
+<span class="nt">3</span><span class="o">.</span> <span class="o">**</span><span class="nt">AWS</span> <span class="nt">Console</span><span class="o">**</span> <span class="nt">をクリックします</span><span class="err">。（</span><span class="nt">このラウンドのCloudFormationテンプレートは次善実行されています</span><span class="err">）</span>
+</pre></div>
+
+
+<p><strong>個人の AWSアカウントを利用</strong> </p>
+<div class="codehilite"><pre><span></span><span class="nt">リージョン</span><span class="o">|</span> <span class="nt">デプロイ</span>
+<span class="nt">------</span><span class="o">|</span><span class="nt">-----</span>
+<span class="nt">US</span> <span class="nt">East</span> <span class="nt">1</span> <span class="o">(</span><span class="nt">N</span><span class="o">.</span> <span class="nt">Virginia</span><span class="o">)</span> <span class="o">|</span> <span class="o">&amp;</span><span class="nt">lt</span><span class="o">;</span><span class="nt">a</span> <span class="nt">href</span><span class="o">=</span><span class="s2">&quot;https://console.aws.amazon.com/cloudformation/home?region=us-east-1#/stacks/new?stackName=Identity-RR-Wksp-Serverless-Round&amp;amp;templateURL=https://s3-us-west-2.amazonaws.com/sa-security-specialist-workshops-us-west-2/identity-workshop/serverless/environment.yml&quot;</span> <span class="nt">target</span><span class="o">=</span><span class="s2">&quot;_blank&quot;</span><span class="o">&amp;</span><span class="nt">gt</span><span class="o">;!</span><span class="cp">[</span><span class="n">Deploy</span> <span class="k">in</span> <span class="nx">us</span><span class="na">-east</span><span class="o">-</span><span class="mi">1</span><span class="cp">]</span><span class="o">(./</span><span class="nt">images</span><span class="o">/</span><span class="nt">deploy-to-aws</span><span class="p">.</span><span class="nc">png</span><span class="o">)&amp;</span><span class="nt">lt</span><span class="o">;/</span><span class="nt">a</span><span class="o">&amp;</span><span class="nt">gt</span><span class="o">;</span>
+
+<span class="nt">1</span><span class="o">.</span> <span class="nt">上の</span> <span class="o">**</span><span class="nt">Deploy</span> <span class="nt">to</span> <span class="nt">AWS</span><span class="o">**</span> <span class="nt">ボタンをクリックします</span> <span class="o">(</span><span class="nt">右クリックして新しいタブで開きます</span><span class="o">)</span><span class="err">。</span><span class="nt">これにより</span><span class="err">、</span><span class="nt">テンプレートを実行するコンソールに自動的に移動します</span><span class="err">。</span>
+
+<span class="nt">2</span><span class="o">.</span> <span class="nt">テンプレートの指定</span> <span class="nt">セクションで</span> <span class="o">**</span><span class="nt">次へ</span><span class="o">**</span> <span class="nt">をクリックします</span><span class="err">。</span>
+
+<span class="nt">3</span><span class="o">.</span> <span class="o">**</span><span class="nt">スタックの詳細を指定</span><span class="o">**</span> <span class="nt">ステップで</span><span class="err">、</span><span class="o">**</span><span class="nt">次へ</span><span class="o">**</span> <span class="nt">をクリックします</span><span class="err">。</span>
+
+<span class="nt">4</span><span class="o">.</span> <span class="o">**</span><span class="nt">スタックオプションの設定</span><span class="o">**</span> <span class="nt">セクションで</span> <span class="o">**</span><span class="nt">次へ</span><span class="o">**</span> <span class="nt">をクリックします</span><span class="err">。</span>
+<span class="nt">5</span><span class="o">.</span> <span class="nt">最後に</span><span class="err">、</span><span class="nt">画面下部の</span> <span class="o">**</span><span class="nt">機能</span><span class="o">**</span> <span class="nt">の</span><span class="err">「</span><span class="nt">テンプレートによって</span> <span class="nt">IAM</span> <span class="nt">ロールが作成されることを承認の</span> <span class="o">**</span><span class="nt">チェックボックスを有効</span><span class="o">**</span> <span class="nt">にし</span><span class="err">、</span><span class="o">**</span><span class="nt">スタックの作成</span><span class="o">**</span> <span class="nt">をクリックします</span><span class="err">。</span>
+
+<span class="nt">上記を実行すると</span> <span class="nt">CloudFormation</span> <span class="nt">コンソールに戻ります</span><span class="err">。</span><span class="nt">ページを更新すると</span><span class="err">、</span><span class="nt">スタックの作成が開始されることが確認できます</span><span class="err">。</span><span class="nt">次に進む前に</span><span class="err">、</span><span class="nt">スタックが</span> <span class="o">**</span><span class="nt">CREATE_COMPLETE</span><span class="o">**</span> <span class="nt">になったことを確認してください</span><span class="err">。</span>
+</pre></div>
+
+
+<h2 id="wildrydes">WildRydes のアイデンティティの改善</h2>
+<p>あなたは、動物のライドシェアアプリケーションを管理する新しい DevOps チームに参加しました。あなたはセキュリティに関する経験が買われて、セキュリティ関連のタスクを主導し、セキュリティのベストプラクティスを広め、セキュリティチームとの橋渡しを行う役割としてチームに加わっています。最近、チームは、WildRydes という新しいアプリケーションを引き継ぎました。</p>
+<h2 id="_5">アプリケーションの表示</h2>
 <ol>
-<li>Navigate to the <a href="https://dashboard.eventengine.run" target="_blank">Event Engine dashboard</a></li>
-<li>Enter your <strong>team hash</strong> code. </li>
-<li>Click <strong>AWS Console</strong>.  The CloudFormation template for this round has already been prerun.</li>
+<li><a href="https://console.aws.amazon.com/cloudformation/home?region=us-east-1#/stacks?filter=active" target="_blank">Amazon CloudFormation</a> コンソール (us-east-1) を開きます。</li>
+<li><strong>Identity-RR-Wksp-Serverless-Round</strong> スタック (Event Engine利用時は   <strong>module-a7932bd25ca64049a57fd5bb055782db</strong> スタック) をクリックします。</li>
+<li><strong>出力</strong> をクリックし、<strong>WebsiteCloudFrontURL</strong> をクリックします。</li>
 </ol>
-</details>
-<details class="info"><summary>Click here if you're running this individually in your own AWS Account</summary><p>Launch the CloudFormation stack below to setup the WildRydes application:</p>
-<table>
-<thead>
-<tr>
-<th>Region</th>
-<th>Deploy</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>US East 1 (N. Virginia)</td>
-<td><a href="https://console.aws.amazon.com/cloudformation/home?region=us-east-1#/stacks/new?stackName=Identity-RR-Wksp-Serverless-Round&templateURL=https://s3-us-west-2.amazonaws.com/sa-security-specialist-workshops-us-west-2/identity-workshop/serverless/environment.yml" target="_blank"><img alt="Deploy in us-east-1" src="images/deploy-to-aws.png" /></a></td>
-</tr>
-</tbody>
-</table>
-<ol>
-<li>
-<p>Click the <strong>Deploy to AWS</strong> button above (right click and open in a new tab).  This will automatically take you to the console to run the template.  </p>
-</li>
-<li>
-<p>Click <strong>Next</strong> on the <strong>Specify Template</strong> section.</p>
-</li>
-<li>
-<p>On the <strong>Specify Details</strong> step click <strong>Next</strong>. </p>
-</li>
-<li>
-<p>Click <strong>Next</strong> on the <strong>Options</strong> section.</p>
-</li>
-<li>Finally, acknowledge that the template will create IAM roles under <strong>Capabilities</strong> and click <strong>Create</strong>.</li>
-</ol>
-<p>This will bring you back to the CloudFormation console. You can refresh the page to see the stack starting to create. Before moving on, make sure the stack is in a <strong>CREATE_COMPLETE</strong>.</p>
-</details>
-<h2 id="wildrydes-identity-overhaul">WildRydes identity overhaul</h2>
-<p>You just joined a new DevOps team who manages a suite of animal-based ride sharing applications.  Given your security background you've been embedded on the team to take the lead on security related tasks, evangelize security best practices, and represent your team when interacting with your security organization.  Recently, your team inherited a new application; WildRydes.</p>
-<h2 id="view-your-application">View your application</h2>
-<ol>
-<li>Open the <a href="https://console.aws.amazon.com/cloudformation/home?region=us-east-1#/stacks?filter=active" target="_blank">Amazon CloudFormation</a> console (us-east-1)</li>
-<li>Click on the <strong>Identity-RR-Wksp-Serverless-Round</strong> stack or the <strong>module-a7932bd25ca64049a57fd5bb055782db</strong> stack (this is the stack name when created using Event Engine).</li>
-<li>Click on <strong>Outputs</strong> and click on <strong>WebsiteCloudFrontURL</strong>.</li>
-</ol>
-<p>As part of the hand off to your team, the product team shared their vision for the application and stated that future iterations will include more dynamic features.  After doing an evaluation of the architecture you determined that the WildRydes application is a static website hosted in an S3 bucket.  There is a CloudFront Distribution setup to be used as a content delivery network and a Cognito User Pool for user management.</p>
-<h2 id="current-application-architecture">Current application architecture</h2>
+<p>チームへの引き継ぎの一環として、製品チームはアプリケーションのビジョンを共有し、将来のバージョンにはより動的な機能が含まれることになるだろうと述べました。アーキテクチャを確認したところ、WildRydes アプリケーションは S3 バケットでホストされる静的なウェブサイトであることがわかりました。コンテンツ配信ネットワークとして使用される CloudFront ディストリビューションが設定され、ユーザー管理には Cognito ユーザープールが使用されています。</p>
+<h2 id="_6">現在のアプリケーションアーキテクチャ</h2>
 <p><img alt="Architecture" src="images/architecture-start.png" /></p>
-<p>After thoroughly evaluating the architecture and doing a threat modeling exercise your team has identified a number of broken features and misconfigurations.  It looks as though someone started putting in place certain security controls but were not able to fully implement them. These reviews resulted in the creation of a couple tasks that were added to the backlog for your team and given a high priority.</p>
+<p>チームでアーキテクチャの評価や、脅威モデリングを実施した結果、動作しない機能や設定ミスを多数特定しました。どうやら、セキュリティ制御は完全には実装できていなかったようです。このレビューの結果、複数のタスクがチームのバックログに追加され、優先度の高いタスクがいくつか作成されました。</p>
 <hr />
-<p>Click Next to move on to  <strong>Task 1</strong>!</p>
+<p>Next (次へ) をクリックし、<strong>タスク１</strong>に進みます。</p>
                 
                   
                 
