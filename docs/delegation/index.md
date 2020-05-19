@@ -1,63 +1,57 @@
-# Access Delegation Round
+# アクセス委任ラウンド  
 
-Welcome to the world of Access Delegation!
+アクセス委任のラウンドへようこそ！  
 
-Imagine that you are an AWS "Super User" who is in charge of your organization's AWS account.
-You have heard about services such as Amazon GuardDuty, Inspector, and Macie that can help you monitor the data, host, and network traffic within your AWS environment and detect anomalous behaviors.
-You want to give your team members enough access to these services to perform their job responsibilities but you are concerned about giving them too much access.
-You will learn how to use Amazon IAM to delegate access to these services to AWS Security Administrators and AWS Security Operators.
-For the purposes of this round, AWS Security Administrators require full access to AWS security services while AWS Security Operators only require "read only" access to the services.  You will use AWS IAM roles to do this and thereby promote the Principle of Least Privilege - giving users the minimum level of privilege they need to do their tasks.
+あなたは、組織の AWS アカウントを管理する「スーパーユーザー」の役割を担います。あなたは Amazon GuardDuty、Inspector、Macie が AWS 環境内のデータ、ホスト、ネットワークトラフィックを監視し、異常な動作を検出するのに役立つサービスだと知っていて、チームのメンバーにこれらのサービスへのアクセス権を与えて業務を遂行してもらいたいですが、あまりにも多くのアクセス権を与えることも心配しています。このワークショップでは IAM を使用して、これらのサービスへのアクセスをAWSセキュリティ管理者とAWSセキュリティオペレーターに権限委任する方法を学習します。
+このラウンドでは、AWS セキュリティ管理者は AWS セキュリティサービスへのフルアクセスが必要ですが、AWS セキュリティオペレータはサービスへの「読み取り専用」アクセスのみを必要とするような設定をしていきます。  
 
-
-**AWS Service/Feature Coverage**: 
+**AWS のサービス/機能の範囲** : 
 
 * AWS Identity and Access Management (IAM)
-* Console role-switching
+* AWS コンソールでのロールの切り替え (スイッチロール)
 * Amazon GuardDuty
 * Amazon Inspector
 * Amazon Macie
 
-## Agenda
+## アジェンダ
 
-This round is broken down into Build and Verify Phases.
+このラウンドは、構築フェーズと検証フェーズに分けられます。
 
-* **BUILD** (45 min): At a high level, in the Build Phase you will do the following:
+* **構築** (45 分): 構築フェーズでは、以下のことを行います。
 
-1. Build the environment using AWS CloudFormation in the us-east-1 (Northern Virginia) region.
-2. Perform further customization on the environments to restrict the capabilities of the Security Operator Role.
-3. Test your customizations.
-4. Pass your credentials to another team to verify the configuration of your environment.
+1. us-west-1 (バージニア北部) リージョンで、AWS CloudFormation を使用して環境を構築します。
+2. 環境をさらにカスタマイズして、セキュリティオペレーターロールの機能を制限します。
+3. 動作確認します
 
-* **VERIFY** (30 min):  The Verify Phase involves testing the work that *another team* did in building the environment to ensure the requirements were met. You will do the following:
+* 検証** (30 分): 検証フェーズでは、*他のチーム*が構築した環境をテストし、要件が満たされていることを確認します。以下の操作を行います。
 
-1. Obtain the login credentials from another team that has performed the steps in the Build Phase.
-2. Test the environment to determine if the Security Operator role has been properly configured.
-2. Document any variances.
+1. 構築フェーズを実行した他のチームから、ログイン認証情報を入手します。
+2. セキュリティオペレーターのロールが正しく設定されているかどうかを動作確認します。
+3. 調査結果を共有します。
 
-> This workshop can be done as a team exercise or individually. The instructions are written with the assumption that you are working as part of a team but you could just as easily do the steps below individually. If done as part of an AWS sponsored event then you'll be split into teams of around 4-6 people. Each team will do the Build Phase and then hand off their accounts to another team. Then another team will do the Verify Phase.
+> このワークショップは、チームで行うことも、個人で行うこともできます。手順は、チームの一員として作業することを前提に記述されていますが、個人で実行することも可能です。AWS 主催のイベントの一環として行われる場合は、4～6 人程度のチームに分かれて実施します。各チームが構築フェーズを実施し、アカウントを他のチームに引き継ぎます。その後、他のチームが検証フェーズを実行します。
 
-> *NOTE FOR TEAMS*:  If you are doing this exercise as a team and sharing an AWS account , each team member should take turns "driving."  Some services such as GuardDuty and Macie apply to the whole account so only *one* team member should control that AWS service.
 
-## Assumptions and Prerequisites
 
-1. You will need an AWS account for this lab and administrative credentials.
-These may be provided by an event sponsor.
-2. You should be familiar with AWS core services such as AWS CloudFormation and Amazon S3.  You should also be comfortable using the AWS console.
-3. The instructions are written with the understanding that the account is new or clean.  We strongly recommend that you do not do these labs in work or "production" accounts.
+## 前提条件  
 
-## Architecture Overview
+1. このラボで利用するための AWS アカウントと管理者の認証情報が必要です。（この情報は、イベントによって提供される場合もあります）
+2. AWS CloudFormation や Amazon S3 などの AWS コアサービスの知識があり、AWS コンソールを使い慣れている必要があります。
+3. ラボの手順は、利用するアカウントが検証用で、新規またはクリーンであることを前提として書かれています。業務や本番用のアカウントで実行しないことを強くお勧めします。
 
-The environment in this round consists of an AWS account in which Amazon GuardDuty, Amazon Inspector, Amazon Macie and Amazon CloudTrail will run.  The CloudTrail logs will be sent to an Amazon S3 bucket. 
-The template also creates two AWS IAM roles.  The first role is for a Security Administrator which has full access to the External Security Services.  The second role is for Security Operators.  The Security Operator role *initially* is very similar to the Security Administrator role but you will modify the permissions of the Security Operator role to provide "read only" access to the External Security Services.  The use of Security Administrator/Operator roles is very common in organizations that want to delegate the use of security services to different security teams.
+## アーキテクチャの概要
 
-Here is a picture of what you will build.
+このラウンドの環境は、Amazon GuardDuty、Amazon Inspector、Amazon Macie、Amazon CloudTrail が動作する AWS アカウントで構成されます。CloudTrail のログは Amazon S3 バケットに送信されます。
+ また、このテンプレートにより 2 つの AWS IAM ロールが作成されます。1 つ目のロールは、これらのAWS サービスへのフルアクセス権を持つセキュリティ管理者用です。2 つ目のロールは、セキュリティオペレーター用です。セキュリティオペレーターロールは、*作成時点では*、セキュリティ管理者ロールによく似ていますが、セキュリティオペレーターロールのアクセス権を変更し、「読み取り専用」のアクセス権を付与します。セキュリティ管理者/オペレーターロールは、セキュリティサービスの使用を別のセキュリティチームに委任する組織でよく使用されます。
+
+構成は下記のようなイメージになります。
 
 ![ESS Round Drawing](./images/IamEssDrawing.png)
 
-## Preparation
+## 準備
 
-1. You will need an AWS account and the associated administrative login credentials.
-These may be provided by an event sponsor.
+1. AWS アカウントと、そのアカウントへ管理者ログインするための認証情報が必要です。この情報は、イベントスポンサーによって提供される場合があります。（この情報は、イベントによって提供される場合もあります）
 
-## [Click here to proceed to the Build Phase](./build.md)
+## 
 
+Next (次へ) をクリックし、**構築フェーズ**に進みます。

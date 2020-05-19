@@ -1,71 +1,71 @@
-# Permissions boundaries round <small>Build Phase</small>
+# パーミッションバウンダリー ラウンド <small>         構築フェーズ  </small>
 
-Below are a series of tasks to delegate permissions to the web admins. In these tasks you will be creating policies and testing them. It helps to divide the team into people doing the tasks and people testing things out. 
+Web 管理者に権限を委任する一連のタスクを以下に示します。これらのタスクでは、ポリシーを作成とテストを行います。チームでこのラウンドを行う場合は、タスクを実行する人とテストを行う人に担当をを分けることもできます。 
 
-## Setup Instructions
+## 設定手順
 
-To setup your environment please expand one of the following drop-downs (depending on how if you are doing this workshop at an **AWS event** or **individually**) and follow the instructions: 
+以下のドロップダウンのいずれかを展開し、指示に従ってください。 (このワークショップが **AWS** イベントか**個人**かによって選択してください)
 
-??? info "AWS Sponsored Event"
+??? info "AWS 主催のイベント"
 
-	**Console Login:** if you are attending this workshop at an official AWS event then your team should have the URL and login credentials for your account. This will allow you to login to the account using AWS SSO. Browse to that URL and login. 
-
-	After you login click **AWS Account** box, then click on the Account ID displayed below that (the red box in the image.) You should see a link below that for **Management console**. Click on that and you will be taken the AWS console. 
-
+	**コンソールログイン:** このワークショップに AWS の公式イベントで参加している場合、あなたのチームはアカウントの URL とログイン認証情報を所持している必要があります。AWS SSO を使ってアカウントにログインできるので、この URL を参照しログインします。 
+	
+	ログイン後、**AWS Account** ボックスをクリックし、その下に表示されている Account ID (アカウント ID) (画像の赤いボックス) をクリックします。**マネジメントコンソール** のリンクが表示されるので、これをクリックしてコンソールに移動します。 
+	
 	![login-page](./images/login.png)
-
-	Make sure the region is set to Ohio (us-east-2)
-
-	**CloudFormation:** Launch the CloudFormation stack below to setup the environment:
-
-	Region| Deploy
+	
+	リージョンが Ohio (us-east-2) に設定されていることを確認します。
+	
+	**CloudFormation:** 以下の CloudFormation スタックを起動して環境を設定します。
+	
+	リージョン| デプロイ
 	------|-----
 	US East 2 (Ohio) | [![Deploy permissions boundary round in us-east-2](./images/deploy-to-aws.png)](https://console.aws.amazon.com/cloudformation/home?region=us-east-2#/stacks/new?stackName=Perm-Bound&templateURL=https://s3-us-west-2.amazonaws.com/sa-security-specialist-workshops-us-west-2/identity-workshop/permissionboundary/identity-workshop-web-admins.yaml)
+	
+	1. 上の　**Deploy to AWS** ボタンをクリックします。これにより、テンプレートを実行するコンソールに自動的に移動します。 
+	2. **テンプレートの指定** セクションで **次へ** をクリックします。
+	3. **スタックの詳細を指定** セクションで **次へ** をクリックします (スタック名は既に入力されています。入力されていない場合は任意の名前を入力します)。
+	4. **スタックオプションの設定** セクションで **次へ** をクリックします。
+	5. 最後に、テンプレートによって **IAM ロールが作成されることを承認** し、**スタックの作成** をクリックします。
+	
+	これによって CloudFormation コンソールに戻ります。ページを更新すると、スタックの作成が開始されることが確認できます。次に進む前に、スタックが **CREATE_COMPLETE** であることを確認してください。
 
-	1. Click the **Deploy to AWS** button above.  This will automatically take you to the console to run the template.  
-	2. Click **Next** on the **Select Template** section.
-	3. Click **Next** on the **Specify Details** section (the stack name will be already filled - you can change it or leave it as is)
-	4. Click **Next** on the **Options** section.
-	5. Finally, acknowledge that the template will create IAM roles under **Capabilities** and click **Create**.
+??? info "個人の AWS アカウントを使用している場合"
 
-	This will bring you back to the CloudFormation console. You can refresh the page to see the stack starting to create. Before moving on, make sure the stack is in a **CREATE_COMPLETE**.
-
-??? info "Individual"
-
-	Log in to your account however you would normally
-
-	**CloudFormation:** Launch the CloudFormation stack below to setup the environment:
-
-	Region| Deploy
+	通常どおりアカウントにログインします。
+	
+	**CloudFormation:** 以下の CloudFormation スタックを起動して環境を設定します。
+	
+	リージョン| デプロイ
 	------|-----
 	US East 2 (Ohio) | [![Deploy permissions boundary round in us-east-2](./images/deploy-to-aws.png)](https://console.aws.amazon.com/cloudformation/home?region=us-east-2#/stacks/new?stackName=Perm-Bound&templateURL=https://s3-us-west-2.amazonaws.com/sa-security-specialist-workshops-us-west-2/identity-workshop/permissionboundary/identity-workshop-web-admins.yaml)
+	
+	1. 上の　**Deploy to AWS** ボタンをクリックします。これにより、テンプレートを実行するコンソールに自動的に移動します。 
+	2. **テンプレートの指定** セクションで **次へ** をクリックします。
+	3. **スタックの詳細を指定** セクションで **次へ** をクリックします (スタック名は既に入力されています。入力されていない場合は任意の名前を入力します)。
+	4. **スタックオプションの設定** セクションで **次へ** をクリックします。
+	5. 最後に、テンプレートによって **IAM ロールが作成されることを承認** し、**スタックの作成** をクリックします。
+	
+	これによって CloudFormation コンソールに戻ります。ページを更新すると、スタックの作成が開始されることが確認できます。次に進む前に、スタックが **CREATE_COMPLETE** であることを確認してください。
 
-	1. Click the **Deploy to AWS** button above.  This will automatically take you to the console to run the template.  
-	2. Click **Next** on the **Select Template** section.
-	3. Click **Next** on the **Specify Details** section (the stack name will already be filled - you can change it or leave it as is)
-	4. Click **Next** on the **Options** section.
-	5. Finally, acknowledge that the template will create IAM roles under **Capabilities** and click **Create**.
+## タスク１ <small>マネージドポリシー、IAM ロール、および Lambda 機能を作成する権限を持つ IAM ユーザー、IAM ポリシーを作成する</small>
 
-	This will bring you back to the CloudFormation console. You can refresh the page to see the stack starting to create. Before moving on, make sure the stack is in a **CREATE_COMPLETE**.
+IAM ポリシーを構築して、Web 管理者がマネージドポリシー、IAM ロール、および Lambda 機能を作成できるようにします。また、Web 管理者自身が作成したポリシー、ロール、Lambda 機能も編集できるようにします。 
 
-## Task 1 <small>Create an IAM user and an IAM policy with permission to create managed policies, IAM roles and Lambda functions</small>
+!!! Attention "注意"
+    各タスクで提供されているヒントを確認する際には、アカウント ID の追加、リソース制限を正しく使用してください。また必要に応じて、指定されたリージョンを変更してください。この項目のいずれかが間違っていると、ポリシーに問題が発生する可能性があります
 
-Build an IAM policy so that web admins can create customer managed policies, IAM roles and Lambda functions. They should only be able to edit the policies, roles and lambda functions they create. 
+### ウォークスルー
 
-!!! Attention
-	As you use the provided IAM policy hints in each task, keep in mind where you need to add the account ID, correctly use the resource restrictions and change the region specified if needed (although if you are taking this as part of an AWS event, please use the Ohio region or us-east-2.) Missing any of these items can cause issues with your policies
-
-### Walk Through
-
-* Browse to the [IAM console](https://console.aws.amazon.com/iam/home).
-* On the first screen you see in the IAM console (which should be the Dashboard) find the **IAM users sign-in link**. Copy that link because you will need the account ID in the URL for the policies and you will need the entire URL when you hand this account to another team for the **VERIFY** phase. 
+* [IAM コンソール](https://console.aws.amazon.com/iam/home) に移動します。  
+* IAM コンソールの最初の画面 (ダッシュボード画面) には、**IAM ユーザのサインインリンク**が表示されます。このリンクをコピーしてください。この URL にはアカウント ID が含まれており、このアカウントを他のチームに渡して検証フェーズを行う際に必要になります。  
 ![image1](./images/iam-dashboard.png)
-* Click **Users** on the left menu and create a new IAM user named **`webadmin`**. Check **AWS Management Console access** and then either autogenerate a password or set a custom password. Uncheck **Require password reset**. Attach the AWS managed policies **IAMReadOnlyAccess** & **AWSLambdaReadOnlyAccess** to the user.
+* 左側のメニューで **ユーザー** をクリックし、**ユーザを追加**をクリックします。`**webadmin**` という名前の新しい IAM ユーザーを作成します。**AWS** **マネジメントコンソールへのアクセス** のチェックボックスをオンにしてから、パスワードを自動生成するか、カスタムパスワードを設定します。**パスワードのリセットが必要** のチェックボックスを**オフ**にします。次のアクセス許可の設定で、AWS マネージドポリシー **IAMReadOnlyAccess** と **AWSLambdaReadOnlyAccess** をユーザーに付与します。  
 ![image1](./images/create-iam-user.png)
-* Next click **Policies** on the left menu. Create a new IAM policy based on the hint below. Attach this policy to the **`webadmin`** IAM user you just created.
+* 次に、左側のメニューで **ポリシー** をクリックします。以下のヒントに基づいて、新しい IAM ポリシーを作成します。作成した **`webadmin`** ユーザーにこのポリシーも付与します。  
 
-!!! hint
-	[IAM Identifiers](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_identifiers.html): You will want to use either naming or pathing resource restrictions in the IAM policy. The question marks "**????**" in the resource element below should be replaced with something that could act as a resource restriction. Examine the existing resources (roles, Lambda functions) to make sure the policy will give access to existing resources owned by the web admins. Replacing the question marks is really the key to this round. 
+!!! hint "ヒント"
+	[IAM ID](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_identifiers.html): IAM ポリシーでは、名前またはパス指定のリソース制限を使用します。以下の項目"Resource"にある「**????**」は、リソース制限として有効なものに置き換える必要があります。既存のリソース (ロール、Lambda 関数) を調べて、Web 管理者が所有する既存のリソースへのアクセス権がポリシーによって付与されることを確認します。「**????**」を置き換えることがこのラウンドの鍵となります。 
 
 ``` json
 {
@@ -125,31 +125,32 @@ Build an IAM policy so that web admins can create customer managed policies, IAM
 ```
 
 As you complete the following tests, keep in mind the resource restriction you set up in the policy above (**????**). Use the **IAM users sign-in link** you gathered earlier to login: 
+以下の動作確認をする際には、上記のポリシーで設定したリソース制限に注意してください(**?????部分**)。         ログインするには、前にコピーしておいた **IAM** **ユーザーのサインインリンク**を使用します。  
 
-* Login with the **webadmin** IAM user (using a different browser) to verify the user can create a policy. The permissions you set on the policy do not matter at this point. 
-* Also verify you can create a role (while following the resource restriction.) This role should use Lambda as the trusted entity (we will use this role to test the next task) an attach the policy you just created to it. 
-* Finally verify the user can create a lambda function with the role you just created attached.
+* 別のブラウザを使用して　**webadmin** IAM ユーザーでログインし、ユーザーがポリシーを作成できることを確認します。 （この時点ではポリシーの内容は重要ではありません）
+* リソース制限に従ってロールを作成できることを確認します。このロールは信頼できるエンティティとして Lambda を使用する必要があります (このロールを使用して次のタスクをテストします)。  
+* 最後に、先ほど作成したロールを付与した Lambda 関数を作成できることを確認します。
 
-!!! question
-	* Why are we using resource restrictions here?
-	* There are two ways of doing resource restrictions: naming and pathing. Which option are we using here? Which option allows you to create policies using both the AWS Console and CLI?
+!!! question "質問"
+	* ここでリソース制限を使用するのはなぜですか？
+	* リソース制限を行うには、命名とパス指定の 2 つの方法があります。AWS コンソールと CLI の両方を使用してポリシーを作成できるオプションはどちらですか？  
 
-## Task 2 <small>Create a permissions boundary</small>
+## タスク２ <small>パーミッションバウンダリーを作成する</small>
 
-The webadmin user can create IAM polices, IAM role and Lambda functions. We now need to limit the permissions of the roles the user create. If not then the web admins could simply create new policies with full admin rights, attach these to the roles, pass these roles to Lambda functions and escalate their permissions (either intentionally or inadvertently). We will use permissions boundaries to limits the effective permissions of the roles. The permissions boundary should allow the following [effective permissions](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_evaluation-logic.html) for any role created by the web admins:
+Web 管理者は、IAM ポリシー、IAM ロール、および Lambda 関数を作成できますが、作成できるロールのアクセス権限は制限する必要があります。もし制限しない場合、Web 管理者が完全な管理者権限を持つポリシーを新しく作成してロールに付与し、そのロールを Lambda 関数に渡して広範なアクセス権を付与することができてしまいます （故意か過失かにかかわらず）。ロールの有効なアクセス権に対して制限を設定するには、パーミッションバウンダリーを使用します。パーミッションバウンダリーを使って、Web 管理者が作成するロールに対して、以下の [有効なアクセス権](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_evaluation-logic.html) のみ許可できるよう制限する必要があります。
 
->	i. Create log groups (but can not overwrite any other log groups)
+>	i. ロググループの作成 (ただし、他のロググループを上書きすることはできません)
 
->	ii. Create log streams and put logs
+>	ii. ログストリームの作成とログの書き込み  
 
->	iii. List the objects from the S3 bucket name that starts with `"web-admins-"` and ends in `"-data"`
+>	iii. 名前が `"web-admins-"` で始まり `"-data"`で終わる S3 バケットのオブジェクトのリスト取得
 
-### Walk Through: 
+### ウォークスルー  : 
 
-* Create a new IAM policy that will act as the permissions boundary for the web admins.
+* Web 管理者向けのパーミッションバウンダリーとして使用する、新しい IAM ポリシーを作成します。  
 
-!!! hint
-	[IAM Identifiers](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_identifiers.html): The question marks **`????`** in the resource element below should be replaced with something that could act as a resource restriction. 
+!!! hint "ヒント"
+	[IAM ID](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_identifiers.html): 以下の項目"Resource"にある「**????**」は、リソース制限として有効なものに置き換える必要があります。
 
 ``` json
 {
@@ -182,23 +183,23 @@ The webadmin user can create IAM polices, IAM role and Lambda functions. We now 
 }
 ```
 
-Name the policy **`webadminpermissionboundary`**
+ポリシーの名前は **`webadminpermissionboundary`** とします。
 
-!!! question
-	* What do you attach the permission boundary to?
-	* How does a permissions boundary differ from a standard IAM policy?
-	* How could you test the permissions boundary at this point?
+!!! question "質問"
+	* このパーミッションバウンダリーを適用する対象は何ですか？  
+	* パーミッションバウンダリーと標準の IAM ポリシーの違いは何でしょうか？
+	* 現時点で、このパーミッションバウンダリーはどのようにしてテストできますか？  
 
-## Task 3 <small>Update the permission policy for the webadmin to incorporate the permissions boundary condition</small>
+## タスク３ <small>Web 管理者向けのアクセス権のポリシーを更新して、パーミッションバウンダリーを組み込む</small>
 
-### Walk Through
+### ウォークスルー
 
-Create a policy that references the permissions boundary we just created. It is recommended that you just create a new policy and use the example below. 
+先ほど作成したパーミッションバウンダリーを参照するポリシーを作成します。新しいポリシーの作成には、以下の例をそのまま使用することをお勧めします。
 
-Note that the policy below contains two additional sections (the last two sections) that we did not address in the earlier tasks. The additions are focused on denying the ability to change or delete the permission policy and the permissions boundary. 
+以下のポリシーには、これまで扱わなかった２つのセクションが追加されていることに注意してください (最後の 2 つのセクション)。このセクションは、アクセス権のポリシーやパーミッションバウンダリー自体の変更、削除を拒否することを目的としています。
 
-!!! hint 
-	[permissions boundaries](https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_boundaries.html): The question marks **`????`** in the resource elements below should be replaced with something that could act as a resource restriction. 
+!!! hint "ヒント"
+	[パーミッションバウンダリー](https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_boundaries.html): 以下の項目"Resource"にある「**????**」は、リソース制限として有効なものに置き換える必要があります。
 
 ``` json
 {
@@ -289,31 +290,35 @@ Note that the policy below contains two additional sections (the last two sectio
 }
 ```
 
-* Name the new policy **`webadminpermissionpolicy`** and attach it to the webadmin user. Remove the earlier policy you added during the testing.
-* When you are done the **webadmin** user should have only three policies attached: webadminpermissionpolicy, IAMReadOnlyAccess & AWSLambdaReadOnlyAccess.
-		
-* Again from the browser where you are logged into the console as the **webadmin**, verify the user can create a policy, create a role (attaching both a permission policy and permissions boundary to the role) and finally create a Lambda function into which you will pass that role. Keep in mind the resource restriction. 
+* 新しいポリシーに  **`webadminpermissionpolicy`** という名前を付け、webadmin ユーザーに関連付けます。以前に追加したテスト用のポリシーは削除します 。
+* 作業が完了すると、**webadmin** ユーザーには、webadminpermissionpolicy、IAMReadOnlyAccess、および AWSLambdaReadOnlyAccess の 3 つのポリシーのみが適用されている状態になります。
+* **webadmin** としてコンソールにログインしたブラウザから再度、ユーザーがポリシーの作成できることを確認し、ロールの作成 (ロールにアクセス権のポリシーとパーミッションバウンダリーの両方を割り当てる)、およびそのロールを渡す Lambda 関数を作成できることを確認します。リソース制限に注意してください。
 
-!!! question
-	* Why do we add the Deny for DeletePolicy actions regarding the webadminpermissionboundary & webadminpermissionpolicy?
-	* What would happen if we didn't deny the ability to delete permissions boundaries?
+!!! question "質問"
+    * DeletePolicy アクションの拒否を追加したのはなぜですか？
 
-## Task 4 <small>Gather info needed for the **VERIFY** phase</small>
+	* このパーミッションバウンダリー設定を削除する機能を拒否しなかった場合どうなりますか？
 
-### Walk Through
 
-Now that you have setup the IAM user for the web admins, it's time to pass this information on to the next team who will work through the **VERIFY** tasks. You need to gather some details about your setup and then hand this info to the next team.
+​	
 
-Here are all of the details you need to pass to another team. If you following the recommended naming conventions than you can use the answers below.  If you were given a form to fill out then enter the info into the form. This needs to be given to another team so they can do the **VERIFY** phase tasks. Your team should collect the **VERIFY** phase form from another team so you can also work through the **VERIFY** tasks. 
+## タスク４ <small>         **検証**フェーズに必要な情報を収集する</small>
 
-* IAM users sign-in link:	**https://Account_ID.signin.aws.amazon.com/console**
-* IAM user name:	**webadmin**
-* IAM user password:	
-* Resource restriction identifier:	
-* permissions boundary name: **webadminpermissionboundary**
-* Permission policy name: **webadminpermissionpolicy**
+### ウォークスルー
 
-!!! tip 
-	Do not hand out this info to the same team that is giving you the info - this way we will end up properly swapping between teams if we have an odd number of teams.
+Web 管理者用の IAM ユーザーが設定できたので、この情報を**検証タスク**を実施する別のチームに渡します。設定に関する情報をまとめて、その情報を次のチームに渡してください。
 
-### <small>[Click here to go to the VERIFY phase](./verify.md)</small>
+他のチームに渡す必要のある情報は以下のとおりです。 推奨される名前で設定した場合、下記のフォームがそのまま利用できます。また、あなたのチームも他のチームからフォームを入手し、あなたも**検証フェーズ**に取り組むことができるようにしてください。
+
+* IAM ユーザのサインインリンク:	**https://Account_ID.signin.aws.amazon.com/console**
+* IAM ユーザ名: **webadmin**
+* IAM ユーザ パスワード:	
+* リソース制限 ID :	
+* パーミッションバウンダリー名: **webadminpermissionboundary**
+* パーミッションバウンダリーのポリシー名: **webadminpermissionpolicy**
+
+!!! hint "ヒント" 
+	情報を提供してくれたチームに、あなたのチームの情報を配布しないようすると、チーム数が奇数の場合でも、配布先がないチームを出さないようにすることができます。
+
+以上のタスクを完了したら、**検証フェーズ**に進んでください。
+

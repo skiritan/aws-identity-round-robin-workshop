@@ -1,42 +1,43 @@
-# Serverless Identity Round <small>Task 1</small>
+# サーバーレス アイデンティティ ラウンド <small>タスク 1</small>
 
-Since you are championing the security tasks for your team, you pick up the two tasks for the WildRydes application.  Please read through and complete the following tasks.  Good Luck!
+あなたは、チームのセキュリティタスクを担当者として、WildRydes アプリケーションの 2 つのタスクを実行していきます。以下の手順をすすめてタスクを完了させてください。
 
-## Build Phase <small>Reduce the attack surface of the S3 origin</small>
+## 構築フェーズ  <small>S3オリジンの攻撃対象となりうる箇所を減らす</small>
 
-Ensure the application serves content out through the CloudFront Distribution and that your end users can **only** access the application through CloudFront URLs and not Amazon S3 URLs. As part of this configuration your end users should **not** be able to affect the availability or integrity of the application. 
+アプリケーションは CloudFront ディストリビューション経由でコンテンツを配信しています。攻撃対象となりうる箇所を減らすため、エンドユーザーは CloudFront の URL 経由で**のみ**アクセス可能とし、Amazon S3 の URL には直接アクセスできないよう設定を変更してください。またこの設定変更によって、エンドユーザーがアプリケーションの可用性や整合性に影響を与えないようにしてください。  
 
-!!! info "Key Security Benefits"
+!!! info "セキュリティ上の利点"
 
-    * Obfuscates the S3 origin
-    * Forces traffic over HTTPS with custom certificates
-    * Adds DDoS protection to your application and enables the future use of <a href="https://aws.amazon.com/waf/" target="_blank">AWS WAF</a> and <a href="https://aws.amazon.com/shield/" target="_blank">AWS Shield</a>
+    * S3 オリジンを難読化する
+    * カスタム証明書を使用し、強制的に HTTPS トラフィックを利用するようにする
+    * アプリケーションに DDoS 保護を追加し、将来的に <a href="https://aws.amazon.com/waf/" target="_blank">AWS WAF</a> や <a href="https://aws.amazon.com/shield/" target="_blank">AWS Shield</a> を使用できるようにする
 
-### View the Existing Policy
+### 既存ポリシーの確認
 
-First, view the existing S3 bucket policy to see what permissions the previous engineers created.
+まず、既存の S3 バケットポリシーを表示し、前任のエンジニアが作成したアクセス権を確認します。
 
-1. Go to the <a href="https://s3.console.aws.amazon.com/s3/home" target="_blank">Amazon S3</a> console
-2. Click on the **identity-wksp-serverless-<*ACCOUNT#*\>-us-east-1-wildrydes** bucket.
-3. Click on the **Permissions** tab and then click on **Bucket Policy**.
+1. <a href="https://s3.console.aws.amazon.com/s3/home" target="_blank">Amazon S3</a> コンソールに移動します。  
+2. **identity-wksp-serverless-<*ACCOUNT#*\>-us-east-1-wildrydes** バケットをクリックします。  .
+3. **アクセス権限** タブをクリックし、**バケットポリシー** をクリックします。
 
-!!! question "What's wrong with this policy? What does `"Principal": "*"` mean? "
+!!! question "このポリシーのどこが間違っているのでしょうか？ `"Principal": "*"` はどういう意味でしょうか? "
     
-    Both `"Principal": "*"` and `"Principal":{"AWS":"*"}` grant permission to everyone (also referred to as anonymous access).  Use caution when granting anonymous access to your S3 bucket. When you grant anonymous access, anyone in the world can access your bucket. We highly recommend that you never grant any kind of anonymous write access to your S3 bucket.
 
-### Modify Principal
+    `"Principal": "*"` および `"Principal":{"AWS":"*"}` の両方とも、全員にアクセス権を付与しています (匿名アクセスとも呼ばれます)。S3 バケットへの匿名アクセスを許可する場合は注意が必要です。匿名アクセスを許可すると、世界中の誰もがこのバケットにアクセス可能です。S3 バケットへの匿名書き込みアクセス権は許可しないことを強くお勧めします。
 
-Since the current bucket allows for anonymous access, you need to change this to only allow access from the CloudFront Distribution.
+### プリンシパルの変更
 
-1. Go to the <a href="https://console.aws.amazon.com/cloudfront/" target="_blank">Amazon CloudFront</a> console.  You should see a Web Distribution for the WildRydes web application.
-2. Click on **Origin Access Identities** in the left navigation. You should see an identity named **Unicorn OAI**. 
+現在の設定では匿名アクセスが許可されているため、これを変更して CloudFront ディストリビューションからのアクセスのみを許可する必要があります。
 
-    !!! info "CloudFront Origin Access Identity"
-        An Origin Access Identity (OAI) is a special CloudFront identity that you can associate with a Distribution in order restrict access using AWS IAM.  You can also find the OAI by viewing your Web Distribution
+1. <a href="https://console.aws.amazon.com/cloudfront/" target="_blank">Amazon CloudFront</a> コンソールに移動します。WildRydes ウェブアプリケーションのウェブディストリビューションが表示されます。
+2. 左のナビゲーションで **Origin Access Identities (オリジンアクセスアイデンティティ)** をクリックします。**Unicorn OAI** というアイデンティティが表示されます。 
 
-3. Copy down the ID.
-4. Go back to the <a href="https://s3.console.aws.amazon.com/s3/home" target="_blank">Amazon S3</a> console and open up the bucket policy.
-5. Replace the **principal** with the following and click **save**:
+    !!! info "CloudFront オリジンアクセスアイデンティティ"
+        オリジンアクセスアイデンティティ (OAI) とは、AWS IAM を使用してアクセスを制限することができる、ディストリビューションに関連付けることができる特別な CloudFront アイデンティティです。ウェブディストリビューションを表示して OAI を見つけることもできます。
+
+3. ID をコピーします。
+4. <a href="https://s3.console.aws.amazon.com/s3/home" target="_blank">Amazon S3</a> に戻り、バケットポリシーを開きます。  
+5. **principal** を以下のように置き換えて **保存** をクリックします。
 
 ``` json
 "Principal": {
@@ -44,64 +45,64 @@ Since the current bucket allows for anonymous access, you need to change this to
 },
 ```
 
-!!! info
+!!! info "補足"
 
-    You could also use the canonical user id as the principal: `"CanonicalUser": "<OAI S3CanonicalUserId>"`
+    次のように、CanonicalUser(正規ユーザー) IDをプリンシパルとして使用することもできます。"CanonicalUser": "<OAI S3CanonicalUserId>": `"CanonicalUser": "<OAI S3CanonicalUserId>"`
 
-### Modify Actions
+### アクションの変更
 
-Now that the principal is restricted to the identity associated with the CloudFront distribution you can take a closer look at the permissions.
+これで、プリンシパルは CloudFront ディストリビューションに関連付けられたアイデンティティに制限されました。引き続きアクセス権を詳細に確認していきます。
 
-1. Go back to the <a href="https://s3.console.aws.amazon.com/s3/home" target="_blank">Amazon S3</a> console and open up the bucket policy.
+1. <a href="https://s3.console.aws.amazon.com/s3/home" target="_blank">Amazon S3</a> に戻り、バケットポリシーを開いて確認します。  
 
-    !!! question "Does CloudFront really need access to Delete Objects?"
+    !!! question "CloudFront には、オブジェクトを削除するアクセス権が本当に必要でしょうか？"
 	
-2. The distribution is acting as a CDN for the static site so it only needs read access to the S3 bucket.  Change the actions to ensure an end user can not affect the integrity of the site.
+2. ディストリビューションは静的なサイトの CDN として動作するため、必要なのは S3 バケットへの読み取りアクセスのみです。エンドユーザーがサイトの整合性に影響を与えないように、アクションを変更します。（手順は記載していません）
 
-### Test the new bucket policy 
+### 新しいバケットポリシーのテスト
 
-Now that the bucket policy has been updated, go validate that you can not access the website using an S3 URL.
+バケットポリシーが更新されたので、S3 の URL を使用してウェブサイトに直接アクセスできないことを確認します。
 
-1. Open the <a href="https://console.aws.amazon.com/cloudformation/home?region=us-east-1#/stacks?filter=active" target="_blank">Amazon CloudFormation</a> console (us-east-1)
-2. Click on the **Identity-RR-Wksp-Serverless-Round** stack or the **module-a7932bd25ca64049a57fd5bb055782db** stack (this is the stack name when created using Event Engine).
-3. Click on **Outputs** and click on **WebsiteS3URL**.
+1. <a href="https://console.aws.amazon.com/cloudformation/home?region=us-east-1#/stacks?filter=active" target="_blank">Amazon CloudFormation</a> コンソール (us-east-1) を開きます。  
+2. **Identity-RR-Wksp-Serverless-Round** スタック （または **module-a7932bd25ca64049a57fd5bb055782db** スタック) をクリックします。  
+3. **出力** をクリックし、**WebsiteS3URL** をクリックします。
 
-!!! question "Are you still able to access the site using the S3 URL?"
+!!! question "まだ S3 の URL を使用してサイトにアクセスできますか？"
 
-### Solve the Mystery
+### 残された問題への対応
 
-So you've modified the bucket policy to restrict access to read only actions from the CloudFront Distribution but for some reason you are still able to access the site using S3 URLs.  Do some investigation into why this is the case and put in the additional control necessary to restrict the traffic.
+バケットポリシーを変更して、CloudFront ディストリビューションからのみの読取りアクセス許可としましたが、何らかの理由で S3 の URL を使用したアクセスができています。引き続き調査を行い、その理由を解明して、トラフィックを制限するために設定を追加してください。
 
-!!! tip
-    What other access controls exist within S3? Look into the following resources:
+!!! ヒント
+    S3 には他にどのようなアクセスコントロールがあるでしょうか?  次のリソースを確認してください。
 
-    * <a href="https://docs.aws.amazon.com/AmazonS3/latest/dev/access-control-block-public-access.html" target="_blank">S3 Block Public Access</a> (easiest)
-    * <a href="https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_elements_notprincipal.html" target="_blank">AWS IAM Policy Elements: NotPrincipal</a> (hardest)
+    * <a href="https://docs.aws.amazon.com/AmazonS3/latest/dev/access-control-block-public-access.html" target="_blank">S3 ブロックパブリックアクセスの使用</a> (最も簡単)
+    * <a href="https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_elements_notprincipal.html" target="_blank">AWS IAM ポリシーの要素: NotPrincipal </a> (難しい)
+    
+    動作確認時には、必ずキャッシュをクリアしてください。
 
-    Be sure to clear your cache when testing!
 
+## 検証フェーズ  <small>S3オリジンの攻撃対象となりうる箇所を減らす</small>
 
-## Verify Phase <small>Reduce the attack surface of the S3 origin</small>
+ ここまでで、アプリケーションにアイデンティティコントロールが追加されたので、あなたはエンドユーザーとして手動テストを行い、コントロールが正しく導入され、要件が満たされていることを確認する必要があります。
 
-Now that the additional identity control has been added to the application, you have been tasked with acting as an end user and manually testing to verify that the control has been put in place correctly and that the requirements have been met.
+アプリケーションが *CloudFront* ディストリビューション経由でコンテンツを提供すること、さらにはエンドユーザーが *CloudFront* の *URL* によってのみアプリケーションにアクセスでき、Amazon S3 の URL からはアクセスできないことを確認してください。この設定変更により、エンドユーザーがアプリケーションの可用性または整合性に影響を与えることがあってはいけません
 
-*Ensure the application serves content out through the CloudFront Distribution and that your end users can only access the application through CloudFront URLs and not Amazon S3 URLs. As part of this configuration your end users should not be able to affect the availability or integrity of the application.*
+!!! tip "確認チェックリスト"
 
-!!! tip "Verification Checklist"
-
-    * You can access the site through the CloudFront Distribution URL (<WebsiteCloudFrontURL\>).
-
-    * You are restricted from accessing any of the application resources through S3 URLs (<WebsiteS3URL\>).
-
-	    > Try some deep links (e.g. <WebsiteS3URL\>/js/vendor/unicorn-icon)
-
-    * You can not delete or modify any of the application resources through the CloudFront Distribution.
-
-	    > Try using something like curl or Postman to make requests with different HTTP verbs (e.g. Delete).  Below is an example using curl:  
-
+    * CloudFront ディストリビューション URL (<WebsiteCloudFrontURL\>)からサイトにアクセスできます。
+    
+    * S3 URL (<WebsiteS3URL\>)経由でのアプリケーションリソースへのアクセスが制限されています。
+    
+        > フォルダ以下にあるリンクも試してください (例: <WebsiteS3URL\>/js/vendor/unicorn-icon)
+    
+    * いずれのアプリケーションも、CloudFront ディストリビューションを経由して削除または変更することはできません。
+    
+        > curl や Postman などを使用して、異なる HTTP メソッド (例: Delete) でリクエストを実行してみてください。以下に、curl を使用した例を示します。   
+    
         ```
         curl -i -X DELETE <WebsiteCloudFrontURL>/index.html
         ```
 ***
 
-After you have completed task you can move on to task 2.
+以上のタスクを完了したら、タスク２に進んでください。

@@ -1,115 +1,107 @@
-# Access Delegation Round (Verify Phase)
+# アクセス 委任 ラウンド (検証フェーズ)
 
-| IMPORTANT NOTE!  |
+| 重要な注意事項 |
 |---|
-| Please make sure you have followed the instructions in the instructions in the **[scenario section](./index.md)** and the **[build phase](./build.md)** before continuing below. |
+| 以下の手順に進む前に、必ず**[シナリオセクション](./index.md)**と**[構築フェーズ](./build.md)** をお読みください。 |
 
-## The Verification Challenge:  Test how the environment was built
+## 検証の課題: 環境が正しく構築されたかのテスト
 
-In the previous phase, you tested the environment that *you* built.
-Your goal in this section is to evaluate the security of the environments that were built *by another team*.
+前の構築フェーズでは、*自分が*構築した環境をテストしました。このセクションの目標は、別のチームにより構築された環境のセキュリティを評価することです。
 
-| IMPORTANT NOTE!  |
+| 重要な注意事項 |
 |---|
-| Please make sure you use the **other team's credentials (login information)** for the verification below. |
+| 以下の確認には、**他のチームの資格情報（ログイン情報）**を使用してください。 |
 
-Depending on how you're doing this workshop, expand one of the following dropdowns to sign in to AWS.
+このワークショップの実施方法に応じて、以下のドロップダウンのいずれかを展開して AWS にサインインします。
 
-??? info  "Click here if you're at an *AWS event* where the *Event Engine* is being used" 
+??? info  "AWS 主催の Event Engine を利用したイベント " 
 
     <p style="font-size:20px;">
-      **Step 1** : Retrieve temporary credentials from Event Engine
+      **Step 1** : Event Engineの一時的な資格情報を取得する
     </p>
-	
-	1. Navigate to the <a href="https://dashboard.eventengine.run" target="_blank">Event Engine dashboard</a>
-	2. Enter your **team hash** code. 
-	3. Click **AWS Console**
-	4. Copy the **export** commands under the **Credentials** section for the temporary credentials (you will need these in the next step.)
-	5. Click **Open Console** from the Event Engine window
+    
+    1. <a href="https://dashboard.eventengine.run" target="_blank">Event Engine dashboard</a> ダッシューボードにアクセスします。
+    2. **チーム ハッシュコード** を入力します。
+    3. **AWS Console** をクリックします。
+    4. 資格情報セクションの下のエクスポートコマンドをコピーします（後の手順で必要になります）。
+    5. Event Engine ウィンドウで **コンソールを開く** をクリックします。 
 
-??? info "Click here if you're at an AWS-sponsored event and AWS provided an account to you"
+??? info "AWS 主催のイベント"
 
-    1.  In a separate tab in your web browser, go to the URL provided to you and login. 
-
-    2.  After you login click the **AWS Account** box, then click on the Account ID displayed below that (the red box in the image.) You should see a link below that for the **Management console**. Click on that and you will be taken to the AWS console. 
-
+    1. ウェブブラウザの別のタブで、指示された URL に移動し、ログインします。 
+    
+    2. ログイン後、AWS Account (AWS アカウント) ボックスをクリックし、その下に表示されている Account ID  (画像の赤いボックス) をクリックします。マネジメントコンソールの下にリンクが表示されるので、これをクリックして、AWS コンソールに移動します。  
+    
     ![login-page](./images/login.png)
 
-??? info "Click here if you are using your own AWS account (whether you are at an AWS event, a separate event or online)"
+??? info "個人の AWS アカウントを使用している場合"
 
-    In a separate tab in your web browser, go to https://aws.amazon.com/console and log into your account.
+    ウェブブラウザの別のタブで、https://aws.amazon.com/console にアクセスし、アカウントにログインします。
 
+## セキュリティオペレーターロールの検証
 
-## Verify the Security Operator role
+1. CloudFormation コンソールに移動し、*esslab* という名前の CloudFormation スタックの出力タブを表示します。
 
-1. Go to the CloudFormation console and view the outputs tab of the CloudFormation stack named *esslab*.
-
-2. Click on the URL next to SecOperatorRoleURL.
-A new browser tab window will appear showing information similar to the image below.
+2. SecOperatorRoleURL の隣にある URL をクリックします。新しいブラウザタブウィンドウが開き、以下の図が表示されます。
 
     ![SecOperatorRole](./images/IamEssSwitchSecOperRole.png)
 
-    The box contains the account ID (which is the ID of your AWS account), a role name that was created by CloudFormation, and a Display Name.
-You can also select a color that will be used to display the role you assume in the console.
+    ボックスには、アカウント ID (AWS アカウントの ID)、CloudFormation によって作成されたロール名、および表示名が含まれます。切り替えるロールの表示色も選択することもできます。
 
-    Click **Switch Role**.
+    **ロールの切り替え** をクリックします。
 
-    You will now see a new role label named *SecAdministrator* in the top of your console window as shown below.
+    下記のように、コンソールウィンドウの上部に *SecAdministrator* という名前の新しいロールラベルが表示されます。これは、 SecAdministrator ロールの権限が有効な権限として「一時的に」置き換えられたことを意味しています
 
     ![SecOperatorLabel](./images/IamEssSwitchSecOperRolePost.png)
 
-    This means that your *effective* privileges have been *temporarily*  replaced with those of the SecOperator role.
-
-3. Now go to the Amazon Inspector Console.  Click **Assessment Templates** and check the box to the left of both of the template name that begins with *LampInspectorAssessmentTemplate* and click **Delete**.  You will be asked to confirm the deletion.  Click **Yes**.  After 30 or so seconds you will see an error message telling you that you are not authorized to call the inspector:DeleteAssessmentTemplate action.  This is because you have read-only access to Inspector.
-This is because you have read-only access to Inspector.
-
-4. Now go to the GuardDuty console, click **Settings**, change the **Updated findings** field, and click **Save settings**.  You will see an error message telling you that you are not authorized to perform the UpdateDetector action (the message may appear beneath the first IAM error message).  This is because you have read-only access to GuardDuty.
-
-5.  Go to the Macie console, select the us-west-2 region, click on **Settings** and click on the Content Type icon.
-You will see a list of file types appear.
-Pick a file type such as *application/pdf*, edit it and change the value of the *Enabled* flag and click **Save**.
-You will receive an error message because you have read-only access to Macie.
-Close the Macie window.
-
-6.  Go back to the console session that you had for GuardDuty and from there go to the CloudTrail console.
-
-7.  Select the trail whose name begins with *esslab*.
-
-8. Toggle the Logging switch to OFF.  You will be asked to confirm.  Click **Continue**.  You will receive an error message because you have read-only access to CloudTrail.
-
-## Discuss your findings
-
-Discuss any variances you find and share them with the team that built the environment.
-
-## Clean Up
-
-In order to prevent charges to your account we recommend cleaning up the infrastructure that was created, especially if you are doing other Identity rounds. Expand one of the following dropdowns and follow the instructions:
-
-??? info  "Click here if you're at an *AWS event* where the *Event Engine* is being used"
-
-    Follow the steps below to remove the core components.
-
-    1. [Disable Amazon Macie](https://docs.aws.amazon.com/macie/latest/userguide/macie-disable.html).  You may need to "switch back" to the SecAdministrator role or sign into the console again to disable Macie.
-
-??? info "Click here if you're at an AWS-sponsored event and AWS provided an account to you"
-
-    No cleanup required! The responsibility falls to AWS.
-
-??? info "Click here if you are using your own AWS account (whether you are at an AWS event, a separate event or online)"
-
-    Follow the steps below to remove the core components.
-
-    1. [Delete the SecOperator role](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_manage_delete.html).
-
-    2. [Delete the CloudFormation stack](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/cfn-console-delete-stack.html).  Wait until stack have been deleted.
-
-    3. [Disable Amazon Macie](https://docs.aws.amazon.com/macie/latest/userguide/macie-disable.html).
-
-    4. [Disable Amazon GuardDuty](https://docs.aws.amazon.com/guardduty/latest/ug/guardduty_suspend-disable.html).
-
-    5. [Delete the logging bucket](https://docs.aws.amazon.com/AmazonS3/latest/user-guide/delete-bucket.html).
-
-    6. [Delete the Amazon Inspector templates](https://docs.aws.amazon.com/inspector/latest/userguide/inspector_assessments.html#delete_assessment_via_console).
+    では、セキュリティオペレーターとしてどのような権限があるか、各サービスに順番にアクセスして確認していきます。
 
 
-Congratulations on completing the Access Delegation round!
+3. Amazon Inspector コンソールに移動します。**評価テンプレート** をクリックし、*LampInspectorAssessmentTemplate* で始まるテンプレートの左にあるボックスを**両方**選択して **削除** をクリックします。削除の確認に **はい** をクリックします。数秒後に、inspector：DeleteAssessmentTemplateアクションを呼び出す権限がないことを示すエラーメッセージが表示されます。 これは、Inspector への読み取り専用のアクセス権しかないためです
+
+4. GuardDuty コンソールに移動し、**設定** をクリックし、**更新された結果の頻度** フィールドを別の値に変更し、**保存** をクリックします。UpdateDetector アクションを実行する権限がないことを示すエラーメッセージが表示されます (スクロールして表示する必要がある場合があります) 。これは、GuardDuty への読み取り専用のアクセス権しかないためです。
+
+5.  Macie コンソールに移動し、US East (N. Virginia) リージョンを選択して、**Settings** をクリックし、**Content Type**アイコンをクリックします。そうすると、ファイルタイプのリストが表示されます。*application/cap* などのファイルタイプを選択し、選択したファイルタイプを編集して *Enabled*  フラグの値を変更し、**Save** をクリックします。Macie への読み取り専用のアクセス権しかないため、エラーメッセージが表示されます。Macie ウィンドウを閉じます。
+
+6.  GuardDuty を作業したブラウザータブに戻り、そこから CloudTrail コンソールに移動します。
+
+7.  **証跡情報** をクリックし、名前が *esslab* で始まる証跡をクリックします。
+
+8. 画面右上の **ログ記録** スイッチを OFF (オフ) に切り替え、**次へ** をクリックします。CloudTrail への読み取り専用のアクセス権しかないため、エラーメッセージが表示されます。
+
+## 調査結果の共有
+
+この環境を構築したチームと調査結果を共有します。相違点があればそのことについても話し合ってください。
+
+## クリーンアップ
+
+アカウントへの請求を防ぐために (他のアイデンティティラウンドを行っている場合は特に)、ここで作成したインフラストラクチャをクリーンアップすることをお勧めします。以下のセクションのいずれかの指示に従ってください。
+
+??? info  "AWS 主催の Event Engine を利用したイベント " 
+
+    次の手順に従って、コンポーネントを削除します。
+    
+    1. [Amazon Macie の無効化](https://docs.aws.amazon.com/macie/latest/userguide/macie-disable.html).  Macie を無効にするには、SecAdministrator ロールに戻るか、コンソールに再度サインインする必要があるかもしれません。
+
+??? info "AWS 主催のイベント"
+
+    クリーンアップは必要ありません。AWS が実施します。
+
+??? info "個人の AWS アカウントを使用している場合"
+
+    次の手順に従って、コンポーネントを削除します。
+    
+    1. [SecOperator ロールの削除](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_manage_delete.html).
+    
+    2. [CloudFormation スタック(esslab)の削除](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/cfn-console-delete-stack.html).  スタックが削除されるまで待機します。
+    
+    3. [Amazon Macie の無効化](https://docs.aws.amazon.com/macie/latest/userguide/macie-disable.html).
+    
+    4. [Amazon GuardDuty の無効化](https://docs.aws.amazon.com/guardduty/latest/ug/guardduty_suspend-disable.html).
+    
+    5. [logging バケットの削除](https://docs.aws.amazon.com/AmazonS3/latest/user-guide/delete-bucket.html).
+    
+    6. [Amazon Inspector テンプレートの削除](https://docs.aws.amazon.com/inspector/latest/userguide/inspector_assessments.html#delete_assessment_via_console).
+
+
+おめでとうございます！  これでアクセス委任ラウンドが無事完了しました。

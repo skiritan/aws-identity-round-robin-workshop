@@ -3,12 +3,14 @@
 site_name: Identity Round Robin
 site_short_name: Identity Round Robin
 site_description: 'A hands-on workshop to learn about a variety of AWS identity topics.'
-site_author: 'aws-security-workshops@amazon.com'
-site_url: 'https://identity-round-robin.awssecworkshops.com/'
+# site_author: 'aws-security-workshops@amazon.com'
+# site_url: 'https://identity-round-robin.awssecworkshops.com/'
 
 # Repository
-repo_name: 'aws-samples/aws-identity-round-robin-workshop'
-repo_url: 'https://github.com/aws-samples/aws-identity-round-robin-workshop'
+#repo_name: 'aws-samples/aws-identity-round-robin-workshop'
+#repo_url: 'https://github.com/aws-samples/aws-identity-round-robin-workshop'
+repo_name: ' skiritan/aws-identity-round-robin-workshop'
+repo_url: 'https://github.com/skiritan/aws-identity-round-robin-workshop'
 
 # Copyright
 copyright: '&copy; 2019, Amazon Web Services, Inc. or its affiliates. All rights reserved.'
@@ -45,19 +47,19 @@ markdown_extensions:
 
 # Navigation
 nav:
-  - Overview: 'index.md'
-  - 'Serverless Identity':
-    - 'Scenario': 'serverless/index.md'
-    - 'Task 1': 'serverless/task1.md'
-    - 'Task 2': 'serverless/task2.md'
-  - 'Access Delegation':
-    - 'Scenario': 'delegation/index.md'
-    - 'Build Phase': 'delegation/build.md'
-    - 'Verify Phase': 'delegation/verify.md'
-  - 'Permissions Boundaries - Advanced':
-    - 'Scenario': 'permission-boundaries-advanced/index.md'
-    - 'Build Phase': 'permission-boundaries-advanced/build.md'
-    - 'Verify Phase': 'permission-boundaries-advanced/verify.md'
+  - '概要': 'index.md'
+  - 'サーバレスアイデンティティ':
+    - 'シナリオ': 'serverless/index.md'
+    - 'タスク１': 'serverless/task1.md'
+    - 'タスク２': 'serverless/task2.md'
+  - 'アクセス委任':
+    - 'シナリオ': 'delegation/index.md'
+    - '構築フェーズ': 'delegation/build.md'
+    - '検証フェーズ': 'delegation/verify.md'
+  - 'パーミッションバウンダリー':
+    - 'シナリオ': 'permission-boundaries/index.md'
+    - '構築フェーズ': 'permission-boundaries/build.md'
+    - '検証フェーズ': 'permission-boundaries/verify.md'
 
-  - Contributing: 'contribute.md'
+  - コントリビュート: 'contribute.md'
   - License: 'license.md'

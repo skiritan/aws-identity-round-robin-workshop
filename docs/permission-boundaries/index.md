@@ -1,26 +1,27 @@
-# Permission boundaries round
+# パーミッションバウンダリー ラウンド 
 
-Your customer has deployed a three tier web application in production. Different teams work on different aspects of the architecture but they don't always communicate well. Just recently the team responsible for the web front end set up a Lambda function that inadvertently impacted the application team's resources. The VP of Operations was furious. The VP has tasked you with setting up permissions for the web admins so that they can only impact their own resources while still being able to do their job. 
+あなたの会社は、AWS で３層の Web アプリケーションを本番稼働しています。多数のチームがこのアプリケーションの色々な部分で作業していますが、必ずしもチーム間のコミュニケーションがうまく取れているわけではありません。つい最近、ウェブフロントエンドを担当していたチームが Lambda 関数を誤って設定してしまい、アプリケーションチームのリソースに影響を与えてしまいました。あなたは副社長の依頼を受けて、Web 管理者が必要なロールを作成できるように、パーミッションバウンダリーを使用してアクセス権限を委譲します。またその一方で、権限を不正に昇格させたり、他のチームのリソースに影響を与えたりすることないがよう、安全で継続的に利用できる環境を構築していきます。
 
-**AWS Service/Feature Coverage**: 
+**AWS のサービス/機能の範囲**: 
 
-* AWS IAM [permission boundaries](https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_boundaries.html) 
-* AWS IAM [identifiers or resource restrictions](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_identifiers.html)
-* AWS IAM [users & roles](https://docs.aws.amazon.com/IAM/latest/UserGuide/id.html)
+* AWS IAM [のパーミッションバウンダリー](https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_boundaries.html) 
+* AWS IAM [ID またはリソース制限](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_identifiers.html)
+* AWS IAM [ユーザーとロール](https://docs.aws.amazon.com/IAM/latest/UserGuide/id.html)
 * AWS [Lambda](https://docs.aws.amazon.com/lambda/latest/dg/welcome.html)
- 
-## Agenda
 
-The round is broken down into a [**BUILD**](./build.md) phase followed by a [**VERIFY**](./verify.md) phase. 
+## アジェンダ
 
-**BUILD** (60 min): First each team will carry out the activities involved in the **BUILD** phase where they will set up access for the web admins and properly lock down the account. Then each team will hand credentials for an IAM user in their account to another team to act in the **VERIFY** phase. The **VERIFY** phase lasts about 30 min.
+このラウンドは <a href="./build/" target="_blank">**構築フェーズ**</a> と <a href="./verify/" target="_blank">**検証フェーズ**</a> に分かれています。 
 
-**VERIFY** (30 min): Each team will carry out the **VERIFY** activities as if they were part of the web admins team. The **VERIFY** activities will include validating that the requirements were set up correctly in the **BUILD** phase and also investigate if the web admins are able to take actions that they shouldn't be allowed to.
+**構築** (60 分): まず、アカウントの管理者として Web 管理者のアクセス権限を設定します。その後、この IAM ユーザーの認証情報を別のチームに渡し、そのチームが**検証**フェーズを行います。
 
-!!! info "Team or Individual Exercise"
-	This workshop can be done as a team exercise or individually. The instructions are written with assumption that you are working as part of a team but you could just as easily do the steps below on your own. If done as part of an AWS sponsored event then you'll be split into teams of around 4-6 people. Each team will do the **BUILD** phase and then hand off their accounts to another team. Then each team will do the **VERIFY** phase. 
+**検証** (30 分): 各チームは、Web 管理チームのメンバーになったつもりで**構築フェーズ**で設定が正しく行われたかの検証と、Web 管理者が許可されていないアクションが実行できないかの調査を行います。
 
-Using this workshop as an example, the three elements of a permission boundary are represented below. When your team does the **BUILD** tasks you will act as the admin. When your team does the **VERIFY** tasks you will act as the delegated admin. The delegated admins will create roles that can be considered **"bound"** since they will have permission boundaries attached.  
+!!! info "チーム演習または個人演習"
+	このワークショップは、チームで行うことも、個人で行うこともできます。AWS イベントの場合は、2～3人程度のチームに分かれて行うこともあります。この場合は作業を分担して行ってください。 
+
+このワークショップにおけるパーミッションバウンダリーの３つの要素を以下に示します。あなたがこのセクションの**構築フェーズ**を実行するとき、あなたはアカウントの管理者として行動します。次のセクションの**検証フェーズ**では、あなたは委任された管理者 (Web 管理者)として行動します。委任された管理者は、アクセス権の境界が設定されているため、**「制限されている」**と見なすことができる範囲でロールを作成できます。 
+
 
 ![mechanism](./images/permission-boundaries.png)
 
@@ -33,22 +34,22 @@ Points earned during **VERIFY** Phase:
 * 15 points for every major exploit found (components of an individual exploit cannot be combined, e.g. a public bucket that allows Read, Write and List is one exploit. 
 -->
 
-## Requirements
+## 要件
 
-??? info "Click here for the account architecture"
+??? info "アカウントの構成についてはここをクリックしてください"
 
 	Account architecture: ![architecture](./images/architecture.png)
 
-There are many teams working in this AWS account, including the web admins and the application admins.  The ultimate goal of this workshop is to set up the web admins so they can create a Lambda function to read an S3 bucket while making sure they are not able to impact the resources of other teams. The web admins should only have access to the following resources:
+このワークショップのゴールは、Web管理者を設定し、この Web 管理者が S3 バケットを読み込むための Lambda 関数用の IAM ロールを作成できるようにすることです。Web 管理者は、権限を不正に昇格させたり、同じ AWS アカウントの他のチームのリソースに影響を与えたりすることないよう、適切な制限を与える必要があります。Web管理者がアクセスできるのは以下のリソースのみです。
 
-1. IAM policies and roles created by the web admins 
-2. Lambda functions created by the web admins
-3. S3 buckets: The web admins are allowed access to the bucket that starts  with`"web-admins-"` and ends in `"-data"`
+1. Web 管理者が作成した IAM ポリシーとロール 
+2. Web 管理者が作成した Lambda 関数
+3. S3 バケット : Web 管理者は、``web-admins-``で始まり、``-data``で終わるバケットのみアクセスできます。
 
-## Presentation
+## プレゼンテーション
 
-If you are doing this workshop as part of an AWS event then there will usually be a 30 minute presentation before the hands-on exercise. Here is the [presentation deck](./presentation.pdf).
+このワークショップを AWS イベントとして行っている場合、通常、演習の前に 30 分間のプレゼンテーションが行われます。プレゼンテーション資料は、 [こちらのリンク](./presentation_JP.pdf)から参照可能です。
 
 
 
-#### [Click here to go to the BUILD phase](./build.md)
+Next (次へ) をクリックし、**構築フェーズ**に進みます。

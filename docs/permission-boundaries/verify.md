@@ -1,26 +1,32 @@
-# Permission boundaries round <small>VERIFY phase</small>
+# パーミッションバウンダリー ラウンド <small>検証フェーズ</small>
 
-You are now in the **VERIFY** phase. It is time to put on the hat of the web admins and test out their access. 
+ここからは**検証**フェーズです。Web 管理者の立場でアクセスのテストを行います。 
 
-You should have received from another team the following information:
+他のチームから以下の情報を入手しているはずです :
 
-* IAM users sign-in link:	**https://Account_ID.signin.aws.amazon.com/console**
-* IAM user name:	**webadmin**
-* IAM user password:	
-* Resource restriction identifier:	
-* Permission boundary name: **webadminpermissionboundary**
-* Permission policy name: **webadminpermissionpolicy**
+* IAM ユーザのサインインリンク:	**https://Account_ID.signin.aws.amazon.com/console**
+* IAM ユーザ名: **webadmin**
+* IAM ユーザ パスワード:	
+* リソース制限 ID :	
+* パーミッションバウンダリー名: **webadminpermissionboundary**
+* パーミッションバウンダリーのポリシー名: **webadminpermissionpolicy**
 
-You will be setting up an IAM policy, an IAM role and a Lambda function. The Lambda function should be able to list files in an S3 bucket. This is how you will verify you are able to do what the web admins are allowed to do.
+Web管理者がアクセスできるのは以下のリソースのみです :
 
-The web admins should not be able to impact any resources in the account  that they do not own (e.g. the Application admins) including IAM users, roles, S3 buckets, Lambda functions, etc.
 
-Application architecture: ![image1](./images/architecture.png)
+1. Web 管理者が作成した IAM ポリシーとロール 
+2. Web 管理者が作成した Lambda 関数
 
-## Task 1 <small>Create a customer managed IAM policy</small>
-	
-* The first step is to create an IAM policy. This will set the permissions of the role that you will pass to a Lambda function. Since the function will be working with S3 and since the point of this is to show how permission boundaries work, use the following policy which grants basic Lambda logging permissions and S3 full access. 
-* Keep in mind the resource restrictions put in place which will require you to use a certain name for the policy.
+Web 管理者が、自分が所有していないリソース (IAM ユーザー、ロール、S3 バケット、Lambda 関数など) に影響を与えることがあってはいけません。  
+
+IAM ポリシー、IAM ロール、および Lambda 関数を設定していきます。Lambda 関数は、S3 バケット内のファイルのリストを取得できるようにします。その結果を確認することで、Web 管理者が実行できる範囲がわかります。 
+
+アプリケーションのアーキテクチャ: ![image1](./images/architecture.png)
+
+## タスク１ <small>         カスタマー管理 IAM ポリシーを作成する  </small>
+
+* まず、カスタマー管理 IAM ポリシーを作成します。これは、Lambda 関数に付与するロールのアクセス権限です。この関数は S3 とともに動作しますが、ここではアクセス権の境界がどのように動作するかを確認するため、以下の基本的なポリシー（ Lambda ロギングアクセス権と S3 フルアクセス権）を付与します。  
+* リソース制限が設定されており、ポリシーに特定の名前を使用する必要があることに注意してください  
 
 ``` json
 {
@@ -40,14 +46,14 @@ Application architecture: ![image1](./images/architecture.png)
 }
 ```
 
-## Task 2 <small>Create an IAM role</small>
+## タスク２ <small>IAM ロールを作成する</small>
 
-* Next create an IAM Role. Choose Lambda as the service for this role. Attach the policy you just created and the permission boundary (which should be named:  **webadminpermissionboundary**)
-* Keep in mind the resource restrictions put in place which will require you to use a certain name for the role.
+* 次に、IAM ロールを作成します。このロールのサービスとして Lambda を選択します。作成したポリシーとパーミッションバウンダリー(標準名では **webadminpermissionboundary** ) を付与します。
+* リソース制限が設定されており、ロールに特定の名前を使用する必要があることに注意してください  
 	
-## Task 3 <small>Create a Lambda function</small>
+## タスク３ <small>Lambda 関数を作成する</small>
 
-* Finally you will create a **Node.js 8.10** Lambda function using the code below and attach the IAM role you just created to it. You will need to replace `"WEB_ADMIN_BUCKET_NAME"` with the bucket from the account that begins with `"web-admins-"` and ends in `"-data"`
+* 最後に、以下のコードを使用して **Node.js 8.10** の Lambda 関数を作成し、作成した IAM ロールをその関数に追加します。`"WEB_ADMIN_BUCKET_NAME"` を、`"web-admins-"` から始まり`"-data"`で終わるバケット名に置き換える必要があります。
 
 ``` node
 const AWS = require('aws-sdk');
@@ -72,8 +78,14 @@ async function getKeys(params, keys){
 }
 ```
 
-* Test the Lambda function and make sure it is generating logs in CloudWatch logs and that it is able to list the objects in the bucket.
+* Lambda 関数をテストし、CloudWatch logsにログが生成されていること、およびバケット内のオブジェクトの一覧が取得できることを確認します。（テストするには、テストイベントを作成する必要があります。テストのパラメータは重要ではありません）
 
-## Task 4 <small>Investigate if you are able to do anything else</small>
+## タスク４ <small>他にできることがあるかどうかを調査する</small>
 
-The final step is to determine if you can do anything else in the account. Can you impact any resources not owned by the web admins?
+最後のタスクは、アカウント内で他に何ができるかを調査することです、Web 管理者が所有していないリソースに影響を与える操作ができるか確認してください。
+
+
+
+#
+
+おめでとうございます！  これでパーミッションバウンダリー ラウンド が無事完了しました。

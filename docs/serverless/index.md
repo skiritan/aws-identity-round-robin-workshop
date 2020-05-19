@@ -1,4 +1,4 @@
-# Serverless Identity Round
+# サーバーレス アイデンティティ ラウンド
 
 <!--
 Welcome to the world of serverless!  Now you may be asking yourself, *What is serverless*? Well, it is an architecture paradigm that allows you to create your applications without provisioning or managing any servers.  Sounds great, right?  Organizations look at building serverless applications as a way of improving their scalability and reducing their operational overhead.  The responsibility of the underlying infrastructure is shifted off your plate so you can spend more time focusing on building your applications.
@@ -6,79 +6,78 @@ Welcome to the world of serverless!  Now you may be asking yourself, *What is se
 So with less infrastructure to manage you are no longer responsible for patching  your operating systems and the attack surface you need to worry about has been significantly reduced.  But with the use of serverless technologies comes *other* responsibility.  When you hear the word serverless you may think specifically of <a href="https://aws.amazon.com/lambda/" target="_blank">AWS Lambda</a> but it is important to remember that there are other services used within a serverless application and securing an application involves more than just securing your Lambda functions.  
 -->
 
-In this round you will be focused on improving the identity controls of the WildRydes serverless application (which is borrowed from <a href="https://github.com/aws-samples/aws-serverless-workshops/tree/master/WebApplication" target="_blank">aws-serverless-workshops</a> and retrofitted for the purposes of this round).  You will get exposed to different identity concepts through the use of a variety of services such as <a href="https://aws.amazon.com/iam/" target="_blank">AWS IAM</a>, <a href="https://aws.amazon.com/s3/" target="_blank">Amazon S3</a>, <a href="https://aws.amazon.com/cloudfront/" target="_blank">Amazon CloudFront</a>, and <a href="https://aws.amazon.com/cognito/" target="_blank">Amazon Cognito</a>.  Upon completion you should have a better idea of how to use native AWS identity controls to improve the security posture of a serverless application.
+このラウンドでは、WildRydes というサーバーレスアプリケーション ( [aws-serverless-workshops](https://github.com/aws-samples/aws-serverless-workshops/tree/master/WebApplication) をこのラウンドの目的に合わせて変更したもの) のアイデンティティコントロールを改善することに重点を置いています。[AWS IAM](https://aws.amazon.com/iam/)、[Amazon S3](https://aws.amazon.com/s3/)、[Amazon CloudFront](https://aws.amazon.com/cloudfront/)、および [Amazon Cognito](https://aws.amazon.com/cognito/) などのさまざまなサービスを使用することで、異なるアイデンティティの概念に触れることができます。このラウンドを完了すると、標準の AWS アイデンティティコントロール機能を使用して、サーバーレスアプリケーションのセキュリティをよりコントロールする方法が理解できます。
 
-**AWS Service/Feature Coverage**: 
+**AWS のサービス/機能の範囲** : 
 
-* S3 Bucket Policies
-* S3 ACLs
-* CloudFront Origin Access Identities
-* Cognito User Pools
+* S3 バケットポリシー
+* S3 ACL
+* CloudFront オリジンアクセスアイデンティティ
+* Cognito ユーザープール
 * Cognito Hosted UI
 
-## Agenda
+## **アジェンダ**
 
-This round is broken down into two tasks, both with a Build and Verify phase. The Build phase involves evaluating, implementing, and enhancing the identity controls of the WildRydes application based on a set of business level functional and non-functional requirements.  The Verify phase involves putting on the hat of an end user and testing the controls you put in place to ensure the requirements were met. In addition you will also ensure that a systems administrator is still able to manage the resources.
+このラウンドは２つのタスクに分けられ、どちらも構築フェーズと検証フェーズがあります。構築フェーズでは、一連のビジネスレベルの機能要と非機能要件に基づいて、WildRydes アプリケーションのアイデンティティコントロールを評価、実装、および強化します。検証フェーズでは、エンドユーザーに代わって、要件が満たされていることを確認するために、設定内容をテストします。また、システム管理者が引き続きリソースを管理できることも確認します。
 
-* **Task 1** (40 min): Reduce the attack surface of the S3 origin
-* **Task 2** (35 min): Set up application user management
+* **タスク１** (40分): S3オリジンの攻撃対象となりうる箇所を減らす
+* **タスク２** (35分): アプリケーションのユーザ管理を設定する
 
-!!! info "Team or Individual Exercise"
-    This workshop can be done as a team exercise or individually. The instructions are written with the assumption that you are working as part of a team but you could just as easily do the steps below individually. If done as part of an AWS sponsored event then you'll be split into teams of around 4-6 people. Each team will do the BUILD phase and then hand off their accounts to another team. Then each team will do the VERIFY phase.
+!!! info "チーム演習または個人演習"
+    このワークショップは、チームで行うことも、個人で行うこともできます。手順は、チームの一員として作業することを前提に記述されていますが、以下の手順を個人で実行することも可能です。AWS 主催のイベントとして行われる場合は、4～6 人程度のチームに分かれて実施します。各チームが構築フェーズを実施し、アカウントを別のチームに引き継ぎます。その後、各チームは検証フェーズを実行します。
 
-## Presentation
+## プレゼンテーション
 
-<a href="./Identity-RR-Serverless-Round.pdf" target="_blank">Workshop Presentation Powerpoint</a>
+<a href="./Identity-RR-Serverless-Round_JP.pdf" target="_blank">ワークショップのプレゼンテーション</a>
 
-## Environment setup
+## 環境設定
 
-To setup your environment please expand one of the following dropdown sections (depending on how you're doing this workshop) and follow the instructions: 
+環境を設定するには、次のドロップダウンセクションのいずれか (このワークショップの実施方法に応じて) を展開し、指示に従ってください。 
 
-??? info  "Click here if you're at an *AWS event* where the *Event Engine* is being used" 
+??? info "AWS 主催の Event Engine を利用したイベント" 
 
     <p style="font-size:20px;">
-      **Step 1** : Open the AWS Console
+      **Step 1** : AWS コンソールへの接続
     </p>
-	
-	1. Navigate to the <a href="https://dashboard.eventengine.run" target="_blank">Event Engine dashboard</a>
-	2. Enter your **team hash** code. 
-	3. Click **AWS Console**.  The CloudFormation template for this round has already been prerun.
+    
+    1. <a href="https://dashboard.eventengine.run" target="_blank">Event Engine ダッシューボード</a>にアクセスします。
+    2. **チームハッシュコード** を入力します. 
+    3. **AWS Console** をクリックします。（このラウンドのCloudFormationテンプレートは次善実行されています）
 
-??? info "Click here if you're running this individually in your own AWS Account"
-    Launch the CloudFormation stack below to setup the WildRydes application:
+??? info "個人の AWSアカウントを利用" 
 
-    Region| Deploy
+    リージョン| デプロイ
     ------|-----
     US East 1 (N. Virginia) | <a href="https://console.aws.amazon.com/cloudformation/home?region=us-east-1#/stacks/new?stackName=Identity-RR-Wksp-Serverless-Round&templateURL=https://s3-us-west-2.amazonaws.com/sa-security-specialist-workshops-us-west-2/identity-workshop/serverless/environment.yml" target="_blank">![Deploy in us-east-1](./images/deploy-to-aws.png)</a>
+    
+    1. 上の **Deploy to AWS** ボタンをクリックします (右クリックして新しいタブで開きます)。これにより、テンプレートを実行するコンソールに自動的に移動します。 
+    
+    2. テンプレートの指定 セクションで **次へ** をクリックします。
+    
+    3. **スタックの詳細を指定** ステップで、**次へ** をクリックします。 
+    
+    4. **スタックオプションの設定** セクションで **次へ** をクリックします。
+    5. 最後に、画面下部の **機能** の「テンプレートによって IAM ロールが作成されることを承認の **チェックボックスを有効** にし、**スタックの作成** をクリックします。
+    
+    上記を実行すると CloudFormation コンソールに戻ります。ページを更新すると、スタックの作成が開始されることが確認できます。次に進む前に、スタックが **CREATE_COMPLETE** になったことを確認してください。
 
-    1. Click the **Deploy to AWS** button above (right click and open in a new tab).  This will automatically take you to the console to run the template.  
+## WildRydes のアイデンティティの改善
 
-    2. Click **Next** on the **Specify Template** section.
+あなたは、動物のライドシェアアプリケーションを管理する新しい DevOps チームに参加しました。あなたはセキュリティに関する経験が買われて、セキュリティ関連のタスクを主導し、セキュリティのベストプラクティスを広め、セキュリティチームとの橋渡しを行う役割としてチームに加わっています。最近、チームは、WildRydes という新しいアプリケーションを引き継ぎました。
 
-    3. On the **Specify Details** step click **Next**. 
+## アプリケーションの表示
+1. <a href="https://console.aws.amazon.com/cloudformation/home?region=us-east-1#/stacks?filter=active" target="_blank">Amazon CloudFormation</a> コンソール (us-east-1) を開きます。
+2. **Identity-RR-Wksp-Serverless-Round** スタック (Event Engine利用時は   **module-a7932bd25ca64049a57fd5bb055782db** スタック) をクリックします。
+3. **出力** をクリックし、**WebsiteCloudFrontURL** をクリックします。
 
-    4. Click **Next** on the **Options** section.
-    5. Finally, acknowledge that the template will create IAM roles under **Capabilities** and click **Create**.
+チームへの引き継ぎの一環として、製品チームはアプリケーションのビジョンを共有し、将来のバージョンにはより動的な機能が含まれることになるだろうと述べました。アーキテクチャを確認したところ、WildRydes アプリケーションは S3 バケットでホストされる静的なウェブサイトであることがわかりました。コンテンツ配信ネットワークとして使用される CloudFront ディストリビューションが設定され、ユーザー管理には Cognito ユーザープールが使用されています。
 
-    This will bring you back to the CloudFormation console. You can refresh the page to see the stack starting to create. Before moving on, make sure the stack is in a **CREATE_COMPLETE**.
-
-## WildRydes identity overhaul
-
-You just joined a new DevOps team who manages a suite of animal-based ride sharing applications.  Given your security background you've been embedded on the team to take the lead on security related tasks, evangelize security best practices, and represent your team when interacting with your security organization.  Recently, your team inherited a new application; WildRydes.
-
-## View your application
-1. Open the <a href="https://console.aws.amazon.com/cloudformation/home?region=us-east-1#/stacks?filter=active" target="_blank">Amazon CloudFormation</a> console (us-east-1)
-2. Click on the **Identity-RR-Wksp-Serverless-Round** stack or the **module-a7932bd25ca64049a57fd5bb055782db** stack (this is the stack name when created using Event Engine).
-3. Click on **Outputs** and click on **WebsiteCloudFrontURL**.
-
-As part of the hand off to your team, the product team shared their vision for the application and stated that future iterations will include more dynamic features.  After doing an evaluation of the architecture you determined that the WildRydes application is a static website hosted in an S3 bucket.  There is a CloudFront Distribution setup to be used as a content delivery network and a Cognito User Pool for user management.
-
-## Current application architecture
+## 現在のアプリケーションアーキテクチャ
 
 ![Architecture](./images/architecture-start.png)
 
-After thoroughly evaluating the architecture and doing a threat modeling exercise your team has identified a number of broken features and misconfigurations.  It looks as though someone started putting in place certain security controls but were not able to fully implement them. These reviews resulted in the creation of a couple tasks that were added to the backlog for your team and given a high priority.
+チームでアーキテクチャの評価や、脅威モデリングを行った結果、動作していない機能や設定ミスを多数発見しました。どうやら、セキュリティ制御は完全に実装できていなかったようです。このレビューの結果、複数のタスクがチームのバックログに追加され、優先度の高いタスクがいくつか作成されました。
 
 ***
 
-Click Next to move on to  **Task 1**!
+Next (次へ) をクリックし、**タスク１**に進みます。

@@ -1,6 +1,6 @@
-## AWS Identity Round Robin
+## AWS アイデンティティラウンドロビン
 
-"Identity Round Robin" is a collection of identity workshops covering a range of identity and access management topics. Each workshop can be done separately and there is no dependency between the workshops. These topics cover identity in general, not just the AWS IAM service. To that end you will find coverage for platform identity, application identity and infrastructure identity on AWS. Some of the services covered include AWS IAM, AWS CloudTrail, Amazon CloudWatch Events, Amazon S3, AWS Lambda, Amazon Macie, Amazon Inspector AWS Security Hub and Amazon GuardDuty. Each round (workshop) is 2 hours long with 30 minutes devoted to a presentation and 1.5 hours of hands on work.
+「アイデンティティ ラウンドロビン」は、アイデンティティとアクセス管理に関するトピックを網羅したワークショップの集まりです。各ワークショップ間の依存関係はないので、個別に実施が可能です。ここで扱うトピックでは、AWS IAM サービスを説明するだけではなく、アイデンティティ全般について説明するために、 AWS のプラットフォームのアイデンティティ、アプリケーションのアイデンティティ、インフラストラクチャのアイデンティティを網羅しています。説明には、AWS IAM、AWS CloudTrail、Amazon CloudWatch イベント、Amazon S3、AWS Lambda、Amazon Macie、Amazon Inspector、AWS Security Hub、Amazon GuardDuty などのサービスが含まれます。各ラウンド (ワークショップ) は、プレゼンテーションに 30 分、演習に 1.5 時間かかり、合計約2時間かかります。
 
 ## Start the workshop:
 
