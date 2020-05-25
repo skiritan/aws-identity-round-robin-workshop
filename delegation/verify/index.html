@@ -718,7 +718,7 @@
                   <a href="https://github.com/skiritan/aws-identity-round-robin-workshop/edit/master/docs/delegation/verify.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
                 
                 
-                <h1 id="_1">アクセス 委任 ラウンド (検証フェーズ)</h1>
+                <h1 id="_1">アクセス委任 ラウンド (検証フェーズ)</h1>
 <table>
 <thead>
 <tr>
@@ -784,23 +784,17 @@
 <p>では、セキュリティオペレーターとしてどのような権限があるか、各サービスに順番にアクセスして確認していきます。</p>
 </li>
 <li>
-<p>Amazon Inspector コンソールに移動します。<strong>評価テンプレート</strong> をクリックし、<em>LampInspectorAssessmentTemplate</em> で始まるテンプレートの左にあるボックスを<strong>両方</strong>選択して <strong>削除</strong> をクリックします。削除の確認に <strong>はい</strong> をクリックします。数秒後に、inspector：DeleteAssessmentTemplateアクションを呼び出す権限がないことを示すエラーメッセージが表示されます。 これは、Inspector への読み取り専用のアクセス権しかないためです</p>
+<p><strong>Amazon Inspector コンソール</strong>に移動します。<strong>評価テンプレート</strong> をクリックし、<em>LampInspectorAssessmentTemplate</em> で始まるテンプレートの左にあるボックスを<strong>両方</strong>選択して <strong>削除</strong> をクリックします。削除の確認に <strong>はい</strong> をクリックします。数秒後に、inspector：DeleteAssessmentTemplateアクションを呼び出す権限がないことを示すエラーメッセージが表示されます。 これは、Inspector への読み取り専用のアクセス権しかないためです</p>
+</li>
+<li><strong>GuardDuty コンソール</strong>に移動し、<strong>設定</strong> をクリックし、<strong>更新された結果の頻度</strong> フィールドを別の値に変更し、<strong>保存</strong> をクリックします。UpdateDetector アクションを実行する権限がないことを示すエラーメッセージが表示されます (スクロールして表示する必要がある場合があります) 。これは、GuardDuty への読み取り専用のアクセス権しかないためです。</li>
+<li>
+<p>(2020年5月25日現在：Macieの機能拡張により正しくアクセスできない場合があります。その場合は次へ進んでください) <strong>Macie コンソール</strong>に移動し、US East (N. Virginia) リージョンを選択して、<strong>設定</strong> をクリックし、<strong>Content Type</strong>アイコンをクリックします。そうすると、ファイルタイプのリストが表示されます。<em>application/cap</em> などのファイルタイプを選択し、選択したファイルタイプを編集して <em>Enabled</em>  フラグの値を変更し、<strong>Save</strong> をクリックします。Macie への読み取り専用のアクセス権しかないため、エラーメッセージが表示されます。</p>
 </li>
 <li>
-<p>GuardDuty コンソールに移動し、<strong>設定</strong> をクリックし、<strong>更新された結果の頻度</strong> フィールドを別の値に変更し、<strong>保存</strong> をクリックします。UpdateDetector アクションを実行する権限がないことを示すエラーメッセージが表示されます (スクロールして表示する必要がある場合があります) 。これは、GuardDuty への読み取り専用のアクセス権しかないためです。</p>
+<p><strong>CloudTrail コンソール</strong>に移動します。</p>
 </li>
-<li>
-<p>Macie コンソールに移動し、US East (N. Virginia) リージョンを選択して、<strong>Settings</strong> をクリックし、<strong>Content Type</strong>アイコンをクリックします。そうすると、ファイルタイプのリストが表示されます。<em>application/cap</em> などのファイルタイプを選択し、選択したファイルタイプを編集して <em>Enabled</em>  フラグの値を変更し、<strong>Save</strong> をクリックします。Macie への読み取り専用のアクセス権しかないため、エラーメッセージが表示されます。Macie ウィンドウを閉じます。</p>
-</li>
-<li>
-<p>GuardDuty を作業したブラウザータブに戻り、そこから CloudTrail コンソールに移動します。</p>
-</li>
-<li>
-<p><strong>証跡情報</strong> をクリックし、名前が <em>esslab</em> で始まる証跡をクリックします。</p>
-</li>
-<li>
-<p>画面右上の <strong>ログ記録</strong> スイッチを OFF (オフ) に切り替え、<strong>次へ</strong> をクリックします。CloudTrail への読み取り専用のアクセス権しかないため、エラーメッセージが表示されます。</p>
-</li>
+<li><strong>証跡情報</strong> をクリックし、名前が <em>esslab</em> で始まる証跡をクリックします。</li>
+<li>画面右上の <strong>ログ記録</strong> スイッチを OFF (オフ) に切り替え、<strong>次へ</strong> をクリックします。CloudTrail への読み取り専用のアクセス権しかないため、エラーメッセージが表示されます。</li>
 </ol>
 <h2 id="_4">調査結果の共有</h2>
 <p>この環境を構築したチームと調査結果を共有します。相違点があればそのことについても話し合ってください。</p>
@@ -822,7 +816,7 @@
 <p><a href="https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/cfn-console-delete-stack.html">CloudFormation スタック(esslab)の削除</a>.  スタックが削除されるまで待機します。</p>
 </li>
 <li>
-<p><a href="https://docs.aws.amazon.com/macie/latest/userguide/macie-disable.html">Amazon Macie の無効化</a>.</p>
+<p><a href="https://docs.aws.amazon.com/ja_jp/macie/latest/user/macie-suspend-disable.html">Amazon Macie の無効化</a>.</p>
 </li>
 <li>
 <p><a href="https://docs.aws.amazon.com/guardduty/latest/ug/guardduty_suspend-disable.html">Amazon GuardDuty の無効化</a>.</p>

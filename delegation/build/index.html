@@ -526,8 +526,8 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#guardduty" title="GuardDutyを有効にする" class="md-nav__link">
-    GuardDutyを有効にする
+  <a href="#guardduty" title="GuardDuty を有効にする" class="md-nav__link">
+    GuardDuty を有効にする
   </a>
   
 </li>
@@ -707,8 +707,8 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#guardduty" title="GuardDutyを有効にする" class="md-nav__link">
-    GuardDutyを有効にする
+  <a href="#guardduty" title="GuardDuty を有効にする" class="md-nav__link">
+    GuardDuty を有効にする
   </a>
   
 </li>
@@ -760,7 +760,7 @@
                   <a href="https://github.com/skiritan/aws-identity-round-robin-workshop/edit/master/docs/delegation/build.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
                 
                 
-                <h1 id="_1">アクセス 委任 ラウンド (構築フェーズ)</h1>
+                <h1 id="_1">アクセス委任 ラウンド (構築フェーズ)</h1>
 <table>
 <thead>
 <tr>
@@ -810,22 +810,22 @@
 <h2 id="macie">Macie を有効にする</h2>
 <ol>
 <li>
-<p>このラボでは Macie を利用するので、まず Amazon Macie が有効になっているか確認します。メインコンソールから <strong>Macie</strong> を選択します。そうすると、新しいタブが開きます。</p>
+<p>このラボでは Macie を利用するので、まず Amazon Macie が有効になっているか確認します。メインコンソールから <strong>Macie</strong> を選択します。</p>
 </li>
 <li>
-<p>Macie コンソールで、<strong>US East（N. Virginia）</strong>リージョンを選択します。</p>
+<p><strong>米国東部（バージニア北部）</strong>リージョンを選択します。</p>
 </li>
 <li>
-<p>Macie コンソールで、<strong>Getting Started</strong> ボタンが表示された場合は、Amazon Macie が無効になっています。その場合は、<strong>Getting Started</strong> をクリックし、リージョンにUS East（N. Virginia）が選択されていることを確認して、<strong>Enable Macie</strong> をクリックします。数秒後、Macieコンソールが表示されるので、Macieコンソールのブラウザータブを閉じます。</p>
+<p>Macie コンソールで、<strong>Getting Started</strong> ボタンが表示された場合は、Amazon Macie が無効になっています。その場合は、<strong>Getting Started</strong> をクリックし、リージョンにバージニア北部が選択されていることを確認して、<strong>Macie を有効化</strong> をクリックします。</p>
 </li>
 </ol>
-<h2 id="guardduty">GuardDutyを有効にする</h2>
+<h2 id="guardduty">GuardDuty を有効にする</h2>
 <ol>
 <li>
-<p>このラボではGuardDutyも利用するので、GuardDutyを有効にします。</p>
+<p>このラボでは GuardDuty も利用するので、GuardDuty を有効にします。</p>
 </li>
 <li>
-<p>AWSコンソールに戻ります（必要に応じてアカウントに再度サインインします）。メインコンソールから<strong>GuardDuty</strong>を選択します。</p>
+<p>メインコンソールから <strong>GuardDuty</strong> を選択します。</p>
 </li>
 <li>
 <p><strong>今すぐ始める</strong> ボタンが表示されたら、クリックします。  </p>
@@ -846,7 +846,7 @@
 <p>スタックの作成 ページが表示されます。<strong>次へ</strong> をクリックします。</p>
 </li>
 <li>
-<p>スタックの詳細を指定 ページには値が自動的に入力されています。<strong>次へ</strong> をクリックします。</p>
+<p>スタックの詳細を指定 ページにはスタックの名前(<strong>esslab</strong>)が自動入力されています。<strong>次へ</strong> をクリックします。</p>
 </li>
 <li>
 <p>スタックオプション ページで、<strong>次へ</strong> をクリックします。</p>
@@ -869,7 +869,7 @@ CloudFormation がリソース作成を開始します。<strong>この作成に
 <li>
 <p><strong>概要</strong> タブをクリックし、<strong>AWSLogs</strong> フォルダをクリックします。そうすると、以下に示すようにアカウントの AWS アカウント ID が表示されます。</p>
 <p><img alt="LoggingBucket" src="../images/IamEssBucket.png" /></p>
-<p>これは、アカウントのAWS CloudTrailログがS3バケットに到達し始めたことを示しています。ログが表示されるまでに最大5分かかる場合があります。さらに年、月、日ごとのディレクトリに移動してログを確認できます。ログは「.gz」（gzip）形式で保存されます。ファイル解凍ツールがあり、これらのログファイルの中身を確認したい場合は、お使いのワークステーションにダウンロードしてアーカイブを展開してみてください。繰り返しますが、ログが表示されるまでに数分かかる場合があります。</p>
+<p>これは、アカウントの AWS CloudTrail ログが S3 バケットに到達し始めたことを示しています。ログが表示されるまでに最大5分かかる場合があります。さらに年、月、日ごとのディレクトリに移動してログを確認できます。ログは「.gz」（gzip）形式で保存されます。ファイル解凍ツールがあり、これらのログファイルの中身を確認したい場合は、お使いのワークステーションにダウンロードしてアーカイブを展開してみてください。繰り返しますが、ログが表示されるまでに数分かかる場合があります。</p>
 </li>
 </ol>
 <h2 id="_3">ロールについて</h2>
@@ -895,11 +895,11 @@ CloudFormation がリソース作成を開始します。<strong>この作成に
 </li>
 </ol>
 <h2 id="_4">セキュリティ管理者ロールへの切り替え</h2>
-<p>ここでは、AWS コンソールでロールを切り替える方法について説明します。ロールを切り替えると、AWS コンソールの権限を別のロールに含まれる権限に一時的に置き換えることができます。このラボでは、自分の AWS アカウントのロールに切り替えます。他の AWS アカウントのロールに切り替えて、自分のアカウント以外のリソースにアクセスすることもできます。これは、<em>クロスアカウントアクセス</em>と呼ばれます。（このラボではクロスアカウントアクセスは行いません）</p>
+<p>ここでは、AWS コンソールでロールを切り替える方法について説明します。ロールを切り替えると、AWS コンソールの権限を別のロールに含まれる権限に一時的に置き換えることができます。このラボでは、自分の AWS アカウントのロールに切り替えます。他の AWS アカウントのロールに切り替えて、自分のアカウント以外のリソースにアクセスすることもできます。これは<em>クロスアカウントアクセス</em>と呼ばれます。</p>
 <p>ロールを切り替えるには2つの方法があります。コンソールから自分のアカウント名をドロップダウンし[スイッチロール]をクリックする方法。または、切り替えを行うURLを使用する方法です。今回は両方の方法を使用してみます。  </p>
 <ol>
 <li>
-<p>CloudFormation コンソールに移動し、構築した <em>esslab</em> という名前の CloudFormation スタックの <strong>出力</strong> タブを表示します。</p>
+<p><strong>CloudFormation コンソール</strong>に移動し、構築した <em>esslab</em> という名前の CloudFormation スタックの <strong>出力</strong> タブを表示します。</p>
 </li>
 <li>
 <p><em>SecAdministratorRoleURL</em> の隣にある URL をクリックします。（この URL を表示するには下にスクロールする必要がある場合があります） 新しいブラウザタブウィンドウが開き、以下のような画面が表示されます。</p>
@@ -911,20 +911,21 @@ CloudFormation がリソース作成を開始します。<strong>この作成に
 <p>では、セキュリティ管理者としてどのような権限があるか、各サービスに順番にアクセスして確認していきます。</p>
 </li>
 <li>
-<p>Amazon EFS コンソールに移動します。コンソールにアクセスできないことを示すメッセージが表示されます。これは、このロールのポリシーが Amazon EFS へのアクセスを許可していないためです。</p>
+<p><strong>Amazon EFS コンソール</strong>に移動します。コンソールにアクセスできないことを示すメッセージが表示されます。これは、このロールのポリシーが Amazon EFS へのアクセスを許可していないためです。</p>
 <p><img alt="EFSConsole" src="../images/IamEssEFSConsole.png" /></p>
 </li>
 <li>
-<p>Amazon Inspector コンソールに移動します。Inspectorの管理権限があることを確認するために、既存のテンプレートのクローンを作成してみます。<strong>評価テンプレート</strong> をクリックし、<em>LampInspectorAssessmentTemplate</em> で始まるテンプレート名を選択して <strong>クローン</strong> をクリックします。フォームのセクションが表示されるので、下にスクロールダウンし[ <strong>作成</strong> ]ボタンをクリックします。画面を更新すると、<em>LampInspectorAssessment</em> で始まる2つのテンプレートが表示され、[名前] を広げると、新しくクローンが作成されていることがわかります。評価テンプレートを正常に複製できたことで、Inspector の管理アクセス権限を持っていることが確認できました。</p>
+<p><strong>Amazon Inspector コンソール</strong>に移動します。Inspectorの管理権限があることを確認するために、既存のテンプレートのクローンを作成してみます。<strong>評価テンプレート</strong> をクリックし、<em>LampInspectorAssessmentTemplate</em> で始まるテンプレート名を選択して <strong>クローン</strong> をクリックします。フォームのセクションが表示されるので、下にスクロールダウンし[ <strong>作成</strong> ]ボタンをクリックします。画面を更新すると、<em>LampInspectorAssessment</em> で始まる2つのテンプレートが表示され、[名前] を広げると、新しくクローンが作成されていることがわかります。評価テンプレートを正常に複製できたことで、Inspector の管理アクセス権限を持っていることが確認できました。</p>
 </li>
 <li>
 <p><strong>GuardDuty コンソール</strong> に移動し、<strong>設定</strong> メニュー項目を選択します。<strong>結果のエクスポートオプション</strong> の <strong>更新された結果の頻度</strong> という名前のフィールドまでスクロールし、値を[<strong>1時間ごとに CWE と S3 を更新する</strong> ]に変更し、<strong>保存</strong> をクリックします。ウィンドウの上部に、設定が保存されたことを示すメッセージが表示されます。これは、GuardDutyに完全にアクセスできることを示しています。</p>
 </li>
 <li>
-<p><strong>Macie コンソール</strong>に移動し、<strong>US East (N. Virginia)</strong> リージョンを選択して、<strong>Settings</strong> をクリックし、<strong>Content Type</strong>アイコンをクリックします。そうすると、ファイルタイプのリストが表示されます。<em>application/cap</em> などのファイルタイプの編集ボタン(鉛筆マーク) をクリックして、<em>Enabled</em> フラグの値を <strong><em>No-disabled</em></strong>  に変更して<strong>Save</strong> します。これは同様に、Macie への管理アクセス権があることを示しています。Macie ウィンドウを閉じます。</p>
+<p>(2020年5月25日現在：Macieの機能拡張により正しくアクセスできない場合があります。その場合は次へ進んでください)
+    <strong>Macie コンソール</strong>に移動し、<strong>US East (N. Virginia)</strong> リージョンを選択して、<strong>設定</strong> をクリックし、<strong>Content Type</strong>アイコンをクリックします。そうすると、ファイルタイプのリストが表示されます。<em>application/cap</em> などのファイルタイプの編集ボタン(鉛筆マーク) をクリックして、<em>Enabled</em> フラグの値を <strong><em>No-disabled</em></strong>  に変更して<strong>Save</strong> します。これは同様に、Macie への管理アクセス権があることを示しています。</p>
 </li>
 <li>
-<p>GuardDuty を作業したブラウザータブに戻り、CloudTrail コンソールに移動します。</p>
+<p><strong>CloudTrail コンソール</strong>に移動します。</p>
 </li>
 <li>
 <p><strong>証跡情報</strong> をクリックし、名前が <em>esslab</em> で始まる証跡をクリックします。</p>
@@ -975,13 +976,13 @@ CloudFormation がリソース作成を開始します。<strong>この作成に
 <p>では同様に、セキュリティオペレーターとしてどのような権限があるか、各サービスに順番にアクセスして確認していきます。</p>
 </li>
 <li>
-<p>Amazon Inspector コンソールに移動します。<strong>評価テンプレート</strong> をクリックし、<em>LampInspectorAssessmentTemplate</em> で始まるテンプレートの左にあるボックスを<strong>両方</strong>選択して <strong>削除</strong> をクリックします。削除の確認に <strong>はい</strong> をクリックします。数秒後に、inspector：DeleteAssessmentTemplateアクションを呼び出す権限がないことを示すエラーメッセージが表示されます。</p>
+<p><strong>Amazon Inspector コンソール</strong>に移動します。<strong>評価テンプレート</strong> をクリックし、<em>LampInspectorAssessmentTemplate</em> で始まるテンプレートの左にあるボックスを<strong>両方</strong>選択して <strong>削除</strong> をクリックします。削除の確認に <strong>はい</strong> をクリックします。数秒後に、inspector：DeleteAssessmentTemplateアクションを呼び出す権限がないことを示すエラーメッセージが表示されます。</p>
 </li>
 <li>
-<p>GuardDuty コンソールに移動し、<strong>設定</strong> をクリックし、<strong>更新された結果の頻度</strong> フィールドを別の値に変更し、<strong>保存</strong> をクリックします。UpdateDetector アクションを実行する権限がないことを示すエラーメッセージが表示されます (スクロールして表示する必要がある場合があります) 。これは、GuardDuty への読み取り専用のアクセス権しかないためです。</p>
+<p><strong>GuardDuty コンソール</strong>に移動し、<strong>設定</strong> をクリックし、<strong>更新された結果の頻度</strong> フィールドを別の値に変更し、<strong>保存</strong> をクリックします。UpdateDetector アクションを実行する権限がないことを示すエラーメッセージが表示されます (スクロールして表示する必要がある場合があります) 。これは、GuardDuty への読み取り専用のアクセス権しかないためです。</p>
 </li>
-<li>Macie コンソールに移動し、US East (N. Virginia) リージョンを選択して、<strong>Settings</strong> をクリックし、<strong>Content Type</strong>アイコンをクリックします。そうすると、ファイルタイプのリストが表示されます。<em>application/cap</em> などのファイルタイプを選択し、選択したファイルタイプを編集して <em>Enabled</em>  フラグの値を変更し、<strong>Save</strong> をクリックします。Macie への読み取り専用のアクセス権しかないため、エラーメッセージが表示されます。Macie ウィンドウを閉じます。</li>
-<li>GuardDuty を作業したブラウザータブに戻り、そこから CloudTrail コンソールに移動します。</li>
+<li>(2020年5月25日現在：Macieの機能拡張により正しくアクセスできない場合があります。その場合は次へ進んでください) <strong>Macie コンソール</strong>に移動し、US East (N. Virginia) リージョンを選択して、<strong>設定</strong> をクリックし、<strong>Content Type</strong>アイコンをクリックします。そうすると、ファイルタイプのリストが表示されます。<em>application/cap</em> などのファイルタイプを選択し、選択したファイルタイプを編集して <em>Enabled</em>  フラグの値を変更し、<strong>Save</strong> をクリックします。Macie への読み取り専用のアクセス権しかないため、エラーメッセージが表示されます。</li>
+<li><strong>CloudTrail コンソール</strong>に移動します。</li>
 <li><strong>証跡情報</strong> をクリックし、名前が <em>esslab</em> で始まる証跡をクリックします。</li>
 <li>画面右上の <strong>ログ記録</strong> スイッチを OFF (オフ) に切り替え、<strong>次へ</strong> をクリックします。CloudTrail への読み取り専用のアクセス権しかないため、エラーメッセージが表示されます。</li>
 <li>ここで、デフォルトのロールに戻ります。そうすると、SecOperator ロールラベルはコンソールに表示されなくなります。</li>
