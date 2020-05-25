@@ -1,4 +1,4 @@
-# アクセス 委任 ラウンド (検証フェーズ)
+# アクセス委任 ラウンド (検証フェーズ)
 
 | 重要な注意事項 |
 |---|
@@ -57,16 +57,12 @@
     では、セキュリティオペレーターとしてどのような権限があるか、各サービスに順番にアクセスして確認していきます。
 
 
-3. Amazon Inspector コンソールに移動します。**評価テンプレート** をクリックし、*LampInspectorAssessmentTemplate* で始まるテンプレートの左にあるボックスを**両方**選択して **削除** をクリックします。削除の確認に **はい** をクリックします。数秒後に、inspector：DeleteAssessmentTemplateアクションを呼び出す権限がないことを示すエラーメッセージが表示されます。 これは、Inspector への読み取り専用のアクセス権しかないためです
+3. **Amazon Inspector コンソール**に移動します。**評価テンプレート** をクリックし、*LampInspectorAssessmentTemplate* で始まるテンプレートの左にあるボックスを**両方**選択して **削除** をクリックします。削除の確認に **はい** をクリックします。数秒後に、inspector：DeleteAssessmentTemplateアクションを呼び出す権限がないことを示すエラーメッセージが表示されます。 これは、Inspector への読み取り専用のアクセス権しかないためです
+4. **GuardDuty コンソール**に移動し、**設定** をクリックし、**更新された結果の頻度** フィールドを別の値に変更し、**保存** をクリックします。UpdateDetector アクションを実行する権限がないことを示すエラーメッセージが表示されます (スクロールして表示する必要がある場合があります) 。これは、GuardDuty への読み取り専用のアクセス権しかないためです。
+5.  (2020年5月25日現在：Macieの機能拡張により正しくアクセスできない場合があります。その場合は次へ進んでください) **Macie コンソール**に移動し、US East (N. Virginia) リージョンを選択して、**設定** をクリックし、**Content Type**アイコンをクリックします。そうすると、ファイルタイプのリストが表示されます。*application/cap* などのファイルタイプを選択し、選択したファイルタイプを編集して *Enabled*  フラグの値を変更し、**Save** をクリックします。Macie への読み取り専用のアクセス権しかないため、エラーメッセージが表示されます。
 
-4. GuardDuty コンソールに移動し、**設定** をクリックし、**更新された結果の頻度** フィールドを別の値に変更し、**保存** をクリックします。UpdateDetector アクションを実行する権限がないことを示すエラーメッセージが表示されます (スクロールして表示する必要がある場合があります) 。これは、GuardDuty への読み取り専用のアクセス権しかないためです。
-
-5.  Macie コンソールに移動し、US East (N. Virginia) リージョンを選択して、**Settings** をクリックし、**Content Type**アイコンをクリックします。そうすると、ファイルタイプのリストが表示されます。*application/cap* などのファイルタイプを選択し、選択したファイルタイプを編集して *Enabled*  フラグの値を変更し、**Save** をクリックします。Macie への読み取り専用のアクセス権しかないため、エラーメッセージが表示されます。Macie ウィンドウを閉じます。
-
-6.  GuardDuty を作業したブラウザータブに戻り、そこから CloudTrail コンソールに移動します。
-
-7.  **証跡情報** をクリックし、名前が *esslab* で始まる証跡をクリックします。
-
+6. **CloudTrail コンソール**に移動します。
+7. **証跡情報** をクリックし、名前が *esslab* で始まる証跡をクリックします。
 8. 画面右上の **ログ記録** スイッチを OFF (オフ) に切り替え、**次へ** をクリックします。CloudTrail への読み取り専用のアクセス権しかないため、エラーメッセージが表示されます。
 
 ## 調査結果の共有
@@ -95,7 +91,7 @@
     
     2. [CloudFormation スタック(esslab)の削除](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/cfn-console-delete-stack.html).  スタックが削除されるまで待機します。
     
-    3. [Amazon Macie の無効化](https://docs.aws.amazon.com/macie/latest/userguide/macie-disable.html).
+    3. [Amazon Macie の無効化](https://docs.aws.amazon.com/ja_jp/macie/latest/user/macie-suspend-disable.html).
     
     4. [Amazon GuardDuty の無効化](https://docs.aws.amazon.com/guardduty/latest/ug/guardduty_suspend-disable.html).
     
