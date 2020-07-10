@@ -8,27 +8,25 @@ Web 管理者に権限を委任する一連のタスクを以下に示します�
 
 <details>
 <summary><strong> AWS 主催のイベント </strong></summary><p>
-	**コンソールログイン:** このワークショップに AWS の公式イベントで参加している場合、あなたのチームはアカウントの URL とログイン認証情報を所持している必要があります。AWS SSO を使ってアカウントにログインできるので、この URL を参照しログインします。 
+**コンソールログイン:** このワークショップに AWS の公式イベントで参加している場合、あなたのチームはアカウントの URL とログイン認証情報を所持している必要があります。AWS SSO を使ってアカウントにログインできるので、この URL を参照しログインします。 
+
+ログイン後、**AWS Account** ボックスをクリックし、その下に表示されている Account ID (アカウント ID) (画像の赤いボックス) をクリックします。**マネジメントコンソール** のリンクが表示されるので、これをクリックしてコンソールに移動します。 
+
+![login-page](./images/login.png)
+
+リージョンが Ohio (us-east-2) に設定されていることを確認します。
+**CloudFormation:** 以下の CloudFormation スタックを起動して環境を設定します。
+リージョン| デプロイ
+------|-----
+US East 2 (Ohio) | [![Deploy permissions boundary round in us-east-2](./images/deploy-to-aws.png)](https://console.aws.amazon.com/cloudformation/home?region=us-east-2#/stacks/new?stackName=Perm-Bound&templateURL=https://identity-round-robin.awssecworkshops.com/permission-boundaries/identity-workshop-web-admins.yaml)
 	
-	ログイン後、**AWS Account** ボックスをクリックし、その下に表示されている Account ID (アカウント ID) (画像の赤いボックス) をクリックします。**マネジメントコンソール** のリンクが表示されるので、これをクリックしてコンソールに移動します。 
+1. 上の　**Deploy to AWS** ボタンをクリックします。これにより、テンプレートを実行するコンソールに自動的に移動します。 
+2. **テンプレートの指定** セクションで **次へ** をクリックします。
+3. **スタックの詳細を指定** セクションで **次へ** をクリックします (スタック名は既に入力されています。入力されていない場合は任意の名前を入力します)。
+4. **スタックオプションの設定** セクションで **次へ** をクリックします。
+5. 最後に、テンプレートによって **IAM ロールが作成されることを承認** し、**スタックの作成** をクリックします。
 	
-	![login-page](./images/login.png)
-	
-	リージョンが Ohio (us-east-2) に設定されていることを確認します。
-	
-	**CloudFormation:** 以下の CloudFormation スタックを起動して環境を設定します。
-	
-	リージョン| デプロイ
-	------|-----
-	US East 2 (Ohio) | [![Deploy permissions boundary round in us-east-2](./images/deploy-to-aws.png)](https://console.aws.amazon.com/cloudformation/home?region=us-east-2#/stacks/new?stackName=Perm-Bound&templateURL=https://identity-round-robin.awssecworkshops.com/permission-boundaries/identity-workshop-web-admins.yaml)
-	
-	1. 上の　**Deploy to AWS** ボタンをクリックします。これにより、テンプレートを実行するコンソールに自動的に移動します。 
-	2. **テンプレートの指定** セクションで **次へ** をクリックします。
-	3. **スタックの詳細を指定** セクションで **次へ** をクリックします (スタック名は既に入力されています。入力されていない場合は任意の名前を入力します)。
-	4. **スタックオプションの設定** セクションで **次へ** をクリックします。
-	5. 最後に、テンプレートによって **IAM ロールが作成されることを承認** し、**スタックの作成** をクリックします。
-	
-	これによって CloudFormation コンソールに戻ります。ページを更新すると、スタックの作成が開始されることが確認できます。次に進む前に、スタックが **CREATE_COMPLETE** であることを確認してください。
+これによって CloudFormation コンソールに戻ります。ページを更新すると、スタックの作成が開始されることが確認できます。次に進む前に、スタックが **CREATE_COMPLETE** であることを確認してください。
 
 </details>
 
@@ -51,6 +49,10 @@ Web 管理者に権限を委任する一連のタスクを以下に示します�
 	5. 最後に、テンプレートによって **IAM ロールが作成されることを承認** し、**スタックの作成** をクリックします。
 	
 	これによって CloudFormation コンソールに戻ります。ページを更新すると、スタックの作成が開始されることが確認できます。次に進む前に、スタックが **CREATE_COMPLETE** であることを確認してください。
+
+</details>
+
+
 
 ## タスク１ <small>マネージドポリシー、IAM ロール、および Lambda 機能を作成する権限を持つ IAM ユーザー、IAM ポリシーを作成する</small>
 
