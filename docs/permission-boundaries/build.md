@@ -8,6 +8,7 @@ Web 管理者に権限を委任する一連のタスクを以下に示します�
 
 ??? info "AWS 主催のイベント"
 
+
 	**コンソールログイン:** このワークショップに AWS の公式イベントで参加している場合、あなたのチームはアカウントの URL とログイン認証情報を所持している必要があります。AWS SSO を使ってアカウントにログインできるので、この URL を参照しログインします。 
 	
 	ログイン後、**AWS Account** ボックスをクリックし、その下に表示されている Account ID (アカウント ID) (画像の赤いボックス) をクリックします。**マネジメントコンソール** のリンクが表示されるので、これをクリックしてコンソールに移動します。 
@@ -20,7 +21,7 @@ Web 管理者に権限を委任する一連のタスクを以下に示します�
 	
 	リージョン| デプロイ
 	------|-----
-	US East 2 (Ohio) | [![Deploy permissions boundary round in us-east-2](./images/deploy-to-aws.png)](https://console.aws.amazon.com/cloudformation/home?region=us-east-2#/stacks/new?stackName=Perm-Bound&templateURL=https://s3-us-west-2.amazonaws.com/sa-security-specialist-workshops-us-west-2/identity-workshop/permissionboundary/identity-workshop-web-admins.yaml)
+	US East 2 (Ohio) | [![Deploy permissions boundary round in us-east-2](./images/deploy-to-aws.png)](https://console.aws.amazon.com/cloudformation/home?region=us-east-2#/stacks/new?stackName=Perm-Bound&templateURL=https://identity-round-robin.awssecworkshops.com/permission-boundaries/identity-workshop-web-admins.yaml)
 	
 	1. 上の　**Deploy to AWS** ボタンをクリックします。これにより、テンプレートを実行するコンソールに自動的に移動します。 
 	2. **テンプレートの指定** セクションで **次へ** をクリックします。
@@ -30,7 +31,10 @@ Web 管理者に権限を委任する一連のタスクを以下に示します�
 	
 	これによって CloudFormation コンソールに戻ります。ページを更新すると、スタックの作成が開始されることが確認できます。次に進む前に、スタックが **CREATE_COMPLETE** であることを確認してください。
 
+
 ??? info "個人の AWS アカウントを使用している場合"
+
+
 
 	通常どおりアカウントにログインします。
 	
@@ -38,7 +42,7 @@ Web 管理者に権限を委任する一連のタスクを以下に示します�
 	
 	リージョン| デプロイ
 	------|-----
-	US East 2 (Ohio) | [![Deploy permissions boundary round in us-east-2](./images/deploy-to-aws.png)](https://console.aws.amazon.com/cloudformation/home?region=us-east-2#/stacks/new?stackName=Perm-Bound&templateURL=https://s3-us-west-2.amazonaws.com/sa-security-specialist-workshops-us-west-2/identity-workshop/permissionboundary/identity-workshop-web-admins.yaml)
+	US East 2 (Ohio) | [![Deploy permissions boundary round in us-east-2](./images/deploy-to-aws.png)](https://console.aws.amazon.com/cloudformation/home?region=us-east-2#/stacks/new?stackName=Perm-Bound&templateURL=https://identity-round-robin.awssecworkshops.com/permission-boundaries/identity-workshop-web-admins.yaml)
 	
 	1. 上の　**Deploy to AWS** ボタンをクリックします。これにより、テンプレートを実行するコンソールに自動的に移動します。 
 	2. **テンプレートの指定** セクションで **次へ** をクリックします。
@@ -60,7 +64,7 @@ IAM ポリシーを構築して、Web 管理者がマネージドポリシー、
 * [IAM コンソール](https://console.aws.amazon.com/iam/home) に移動します。  
 * IAM コンソールの最初の画面 (ダッシュボード画面) には、**IAM ユーザのサインインリンク**が表示されます。このリンクをコピーしてください。この URL にはアカウント ID が含まれており、このアカウントを他のチームに渡して検証フェーズを行う際に必要になります。  
 ![image1](./images/iam-dashboard.png)
-* 左側のメニューで **ユーザー** をクリックし、**ユーザを追加**をクリックします。`**webadmin**` という名前の新しい IAM ユーザーを作成します。**AWS** **マネジメントコンソールへのアクセス** のチェックボックスをオンにしてから、パスワードを自動生成するか、カスタムパスワードを設定します。**パスワードのリセットが必要** のチェックボックスを**オフ**にします。次のアクセス許可の設定で、AWS マネージドポリシー **IAMReadOnlyAccess** と **AWSLambdaReadOnlyAccess** をユーザーに付与します。  
+* 左側のメニューで **ユーザー** をクリックし、**ユーザを追加**をクリックします。**`webadmin`** という名前の新しい IAM ユーザーを作成します。**AWS** **マネジメントコンソールへのアクセス** のチェックボックスをオンにしてから、パスワードを自動生成するか、カスタムパスワードを設定します。**パスワードのリセットが必要** のチェックボックスを**オフ**にします。次のアクセス許可の設定で、AWS マネージドポリシー **IAMReadOnlyAccess** と **AWSLambdaReadOnlyAccess** をユーザーに付与します。  
 ![image1](./images/create-iam-user.png)
 * 次に、左側のメニューで **ポリシー** をクリックします。以下のヒントに基づいて、新しい IAM ポリシーを作成します。作成した **`webadmin`** ユーザーにこのポリシーも付与します。  
 
@@ -132,6 +136,7 @@ As you complete the following tests, keep in mind the resource restriction you s
 * 最後に、先ほど作成したロールを付与した Lambda 関数を作成できることを確認します。
 
 !!! question "質問"
+
 	* ここでリソース制限を使用するのはなぜですか？
 	* リソース制限を行うには、命名とパス指定の 2 つの方法があります。AWS コンソールと CLI の両方を使用してポリシーを作成できるオプションはどちらですか？  
 
@@ -186,6 +191,7 @@ Web 管理者は、IAM ポリシー、IAM ロール、および Lambda 関数を
 ポリシーの名前は **`webadminpermissionboundary`** とします。
 
 !!! question "質問"
+
 	* このパーミッションバウンダリーを適用する対象は何ですか？  
 	* パーミッションバウンダリーと標準の IAM ポリシーの違いは何でしょうか？
 	* 現時点で、このパーミッションバウンダリーはどのようにしてテストできますか？  
@@ -295,18 +301,16 @@ Web 管理者は、IAM ポリシー、IAM ロール、および Lambda 関数を
 * **webadmin** としてコンソールにログインしたブラウザから再度、ユーザーがポリシーの作成できることを確認し、ロールの作成 (ロールにアクセス権のポリシーとパーミッションバウンダリーの両方を割り当てる)、およびそのロールを渡す Lambda 関数を作成できることを確認します。リソース制限に注意してください。
 
 !!! question "質問"
-    * DeletePolicy アクションの拒否を追加したのはなぜですか？
 
+	* DeletePolicy アクションの拒否を追加したのはなぜですか？
 	* このパーミッションバウンダリー設定を削除する機能を拒否しなかった場合どうなりますか？
 
 
-​	
-
-## タスク４ <small>         **検証**フェーズに必要な情報を収集する</small>
+## タスク４ <small>     **検証**フェーズに必要な情報を収集する</small>
 
 ### ウォークスルー
 
-Web 管理者用の IAM ユーザーが設定できたので、この情報を**検証タスク**を実施する別のチームに渡します。設定に関する情報をまとめて、その情報を次のチームに渡してください。
+Web 管理者用の IAM ユーザーが設定できたので、この情報を **検証タスク** を実施する別のチームに渡します。設定に関する情報をまとめて、その情報を次のチームに渡してください。
 
 他のチームに渡す必要のある情報は以下のとおりです。 推奨される名前で設定した場合、下記のフォームがそのまま利用できます。また、あなたのチームも他のチームからフォームを入手し、あなたも**検証フェーズ**に取り組むことができるようにしてください。
 
@@ -320,5 +324,5 @@ Web 管理者用の IAM ユーザーが設定できたので、この情報を**
 !!! hint "ヒント" 
 	情報を提供してくれたチームに、あなたのチームの情報を配布しないようすると、チーム数が奇数の場合でも、配布先がないチームを出さないようにすることができます。
 
-以上のタスクを完了したら、**検証フェーズ**に進んでください。
+以上のタスクを完了したら、[**検証フェーズ**](./verify.md)に進んでください。
 
