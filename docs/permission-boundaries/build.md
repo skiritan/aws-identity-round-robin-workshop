@@ -20,13 +20,14 @@ Web 管理者に権限を委任する一連のタスクを以下に示します�
 リージョン| デプロイ
 ------|-----
 US East 2 (Ohio) | [![Deploy permissions boundary round in us-east-2](./images/deploy-to-aws.png)](https://console.aws.amazon.com/cloudformation/home?region=us-east-2#/stacks/new?stackName=Perm-Bound&templateURL=https://identity-round-robin.awssecworkshops.com/permission-boundaries/identity-workshop-web-admins.yaml)
-	
+
 1. 上の　**Deploy to AWS** ボタンをクリックします。これにより、テンプレートを実行するコンソールに自動的に移動します。 
 2. **テンプレートの指定** セクションで **次へ** をクリックします。
 3. **スタックの詳細を指定** セクションで **次へ** をクリックします (スタック名は既に入力されています。入力されていない場合は任意の名前を入力します)。
 4. **スタックオプションの設定** セクションで **次へ** をクリックします。
 5. 最後に、テンプレートによって **IAM ロールが作成されることを承認** し、**スタックの作成** をクリックします。
 	
+
 これによって CloudFormation コンソールに戻ります。ページを更新すると、スタックの作成が開始されることが確認できます。次に進む前に、スタックが **CREATE_COMPLETE** であることを確認してください。
 
 </details>
@@ -43,12 +44,12 @@ US East 2 (Ohio) | [![Deploy permissions boundary round in us-east-2](./images/d
 ------|-----
 US East 2 (Ohio) | [![Deploy permissions boundary round in us-east-2](./images/deploy-to-aws.png)](https://console.aws.amazon.com/cloudformation/home?region=us-east-2#/stacks/new?stackName=Perm-Bound)
 
-1. 上の **Deploy to AWS** ボタンをクリックします。これにより、テンプレートを実行するコンソールに自動的に移動します。 ()
-2. [こちら](https://identity-round-robin.awssecworkshops.com/permission-boundaries/identity-workshop-web-admins.yaml)を右クリックして **リンク先を保存** を選択し、ダウンロードします。
-2. **テンプレートの指定** セクションで **テンプレートファイルのアップロード** を選択し、ファイルの選択で、先程ダウンロードしたyamlファイルを指定して、 **次へ** をクリックします。
-3. **スタックの詳細を指定** セクションで **次へ** をクリックします (スタック名は既に入力されています。入力されていない場合は任意の名前を入力します)。
-4. **スタックオプションの設定** セクションで **次へ** をクリックします。
-5. 最後に、テンプレートによって **IAM ロールが作成されることを承認** し、**スタックの作成** をクリックします。
+1. まず、[こちら](https://identity-round-robin.awssecworkshops.com/permission-boundaries/identity-workshop-web-admins.yaml)をクリックして 、CloudFormation用のYAMLファイルをダウンロードします。
+2. 上の **Deploy to AWS** ボタンをクリックします（新しいタブを開くようにしてください）。これにより、テンプレートを実行するコンソールに自動的に移動します。 
+3. **テンプレートの指定** セクションで **テンプレートファイルのアップロード** を選択し、ファイルの選択で、先程ダウンロードしたYAMLファイルを指定して、 **次へ** をクリックします。
+4. **スタックの詳細を指定** セクションで **次へ** をクリックします (スタック名は既に入力されています。入力されていない場合は任意の名前を入力します)。
+5. **スタックオプションの設定** セクションで **次へ** をクリックします。
+6. 最後に、テンプレートによって **IAM ロールが作成されることを承認** し、**スタックの作成** をクリックします。
 
 これによって CloudFormation コンソールに戻ります。ページを更新すると、スタックの作成が開始されることが確認できます。次に進む前に、スタックが **CREATE_COMPLETE** であることを確認してください。
 
@@ -67,10 +68,16 @@ IAM ポリシーを構築して、Web 管理者がマネージドポリシー、
 ### ウォークスルー
 
 * [IAM コンソール](https://console.aws.amazon.com/iam/home) に移動します。  
+
 * IAM コンソールの最初の画面 (ダッシュボード画面) には、**IAM ユーザのサインインリンク**が表示されます。このリンクをコピーしてください。この URL にはアカウント ID が含まれており、このアカウントを他のチームに渡して検証フェーズを行う際に必要になります。  
-![image1](./images/iam-dashboard.png)
-* 左側のメニューで **ユーザー** をクリックし、**ユーザを追加**をクリックします。**`webadmin`** という名前の新しい IAM ユーザーを作成します。**AWS** **マネジメントコンソールへのアクセス** のチェックボックスをオンにしてから、パスワードを自動生成するか、カスタムパスワードを設定します。**パスワードのリセットが必要** のチェックボックスを**オフ**にします。次のアクセス許可の設定で、AWS マネージドポリシー **IAMReadOnlyAccess** と **AWSLambdaReadOnlyAccess** をユーザーに付与します。  
-![image1](./images/create-iam-user.png)
+  ![image1](./images/iam-dashboard.png)
+
+* 左側のメニューで **ユーザー** をクリックし、**ユーザを追加**をクリックします。**`webadmin`** という名前の新しい IAM ユーザーを作成します。**AWS** **マネジメントコンソールへのアクセス** のチェックボックスをオンにしてから、パスワードを自動生成するか、カスタムパスワードを設定します。**パスワードのリセットが必要** のチェックボックスを**オフ**にします。次のアクセス許可の設定で、AWS マネージドポリシー **IAMReadOnlyAccess** と **AWSLambdaReadOnlyAccess** をユーザーに付与します。 
+
+  
+
+* ![image1](./images/create-iam-user.png)
+
 * 次に、左側のメニューで **ポリシー** をクリックします。以下のヒントに基づいて、新しい IAM ポリシーを作成します。作成した **`webadmin`** ユーザーにこのポリシーも付与します。  
 
 !!! hint "ヒント"
@@ -133,7 +140,7 @@ IAM ポリシーを構築して、Web 管理者がマネージドポリシー、
 }
 ```
 
-As you complete the following tests, keep in mind the resource restriction you set up in the policy above (**????**). Use the **IAM users sign-in link** you gathered earlier to login: 
+
 以下の動作確認をする際には、上記のポリシーで設定したリソース制限に注意してください(**?????部分**)。         ログインするには、前にコピーしておいた **IAM** **ユーザーのサインインリンク**を使用します。  
 
 * 別のブラウザを使用して　**webadmin** IAM ユーザーでログインし、ユーザーがポリシーを作成できることを確認します。 （この時点ではポリシーの内容は重要ではありません）
@@ -141,8 +148,10 @@ As you complete the following tests, keep in mind the resource restriction you s
 * 最後に、先ほど作成したロールを付与した Lambda 関数を作成できることを確認します。
 
 !!! question "質問"
-	* ここでリソース制限を使用するのはなぜですか？
-	* リソース制限を行うには、命名とパス指定の 2 つの方法があります。AWS コンソールと CLI の両方を使用してポリシーを作成できるオプションはどちらですか？  
+
+* ここでリソース制限を使用するのはなぜですか？
+
+* リソース制限を行うには、命名とパス指定の 2 つの方法があります。AWS コンソールと CLI の両方を使用してポリシーを作成できるオプションはどちらですか？  
 
 ## タスク２ <small>パーミッションバウンダリーを作成する</small>
 
@@ -196,9 +205,13 @@ Web 管理者は、IAM ポリシー、IAM ロール、および Lambda 関数を
 
 !!! question "質問"
 
+
 	* このパーミッションバウンダリーを適用する対象は何ですか？  
+	
 	* パーミッションバウンダリーと標準の IAM ポリシーの違いは何でしょうか？
+	
 	* 現時点で、このパーミッションバウンダリーはどのようにしてテストできますか？  
+
 
 ## タスク３ <small>Web 管理者向けのアクセス権のポリシーを更新して、パーミッションバウンダリーを組み込む</small>
 
