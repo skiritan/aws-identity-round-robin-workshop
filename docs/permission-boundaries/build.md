@@ -43,8 +43,8 @@ US East 2 (Ohio) | [![Deploy permissions boundary round in us-east-2](./images/d
 ------|-----
 US East 2 (Ohio) | [![Deploy permissions boundary round in us-east-2](./images/deploy-to-aws.png)](https://console.aws.amazon.com/cloudformation/home?region=us-east-2#/stacks/new?stackName=Perm-Bound)
 
-1. 上の　**Deploy to AWS** ボタンをクリックします。これにより、テンプレートを実行するコンソールに自動的に移動します。 
-2. [こちら](./identity-workshop-web-admins.yaml)を右クリックしてダウンロードします。
+1. 上の **Deploy to AWS** ボタンをクリックします。これにより、テンプレートを実行するコンソールに自動的に移動します。 ()
+2. [こちら](https://identity-round-robin.awssecworkshops.com/permission-boundaries/identity-workshop-web-admins.yaml)を右クリックして **リンク先を保存** を選択し、ダウンロードします。
 2. **テンプレートの指定** セクションで **テンプレートファイルのアップロード** を選択し、ファイルの選択で、先程ダウンロードしたyamlファイルを指定して、 **次へ** をクリックします。
 3. **スタックの詳細を指定** セクションで **次へ** をクリックします (スタック名は既に入力されています。入力されていない場合は任意の名前を入力します)。
 4. **スタックオプションの設定** セクションで **次へ** をクリックします。
