@@ -36,10 +36,10 @@ Points earned during **VERIFY** Phase:
 
 ## 要件
 
-??? info "アカウントの構成についてはここをクリックしてください"
+アカウントの構成については下記のようになっています。
 
 
-	Account architecture: ![architecture](./images/architecture.png)
+![architecture](./images/architecture.png)
 
 このワークショップのゴールは、Web管理者を設定し、この Web 管理者が S3 バケットを読み込むための Lambda 関数用の IAM ロールを作成できるようにすることです。Web 管理者は、権限を不正に昇格させたり、同じ AWS アカウントの他のチームのリソースに影響を与えたりすることないよう、適切な制限を与える必要があります。Web管理者がアクセスできるのは以下のリソースのみです。
 
@@ -53,4 +53,4 @@ Points earned during **VERIFY** Phase:
 
 
 
-Next (次へ) をクリックし、[**構築フェーズ**](../build.md)に進みます。
+Next (次へ) をクリックし、[**構築フェーズ**](./build.md)に進みます。
